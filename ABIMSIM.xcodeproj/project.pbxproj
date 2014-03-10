@@ -17,13 +17,15 @@
 		B45FF13D18CE8708001662CD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B45FF13B18CE8708001662CD /* Main.storyboard */; };
 		B45FF14018CE8708001662CD /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B45FF13F18CE8708001662CD /* ViewController.m */; };
 		B45FF14318CE8708001662CD /* MyScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B45FF14218CE8708001662CD /* MyScene.m */; };
-		B45FF14518CE8708001662CD /* Spaceship.png in Resources */ = {isa = PBXBuildFile; fileRef = B45FF14418CE8708001662CD /* Spaceship.png */; };
 		B45FF14718CE8708001662CD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B45FF14618CE8708001662CD /* Images.xcassets */; };
 		B45FF14E18CE8708001662CD /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B45FF14D18CE8708001662CD /* XCTest.framework */; };
 		B45FF14F18CE8708001662CD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B45FF12718CE8708001662CD /* Foundation.framework */; };
 		B45FF15018CE8708001662CD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B45FF12B18CE8708001662CD /* UIKit.framework */; };
 		B45FF15818CE8708001662CD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B45FF15618CE8708001662CD /* InfoPlist.strings */; };
 		B45FF15A18CE8708001662CD /* ABIMSIMTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B45FF15918CE8708001662CD /* ABIMSIMTests.m */; };
+		B45FF16618CE8748001662CD /* Ship@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B45FF16318CE8748001662CD /* Ship@2x.png */; };
+		B45FF16718CE8748001662CD /* Space@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B45FF16418CE8748001662CD /* Space@2x.png */; };
+		B45FF16818CE8748001662CD /* Space2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B45FF16518CE8748001662CD /* Space2@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,13 +55,15 @@
 		B45FF13F18CE8708001662CD /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		B45FF14118CE8708001662CD /* MyScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyScene.h; sourceTree = "<group>"; };
 		B45FF14218CE8708001662CD /* MyScene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyScene.m; sourceTree = "<group>"; };
-		B45FF14418CE8708001662CD /* Spaceship.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Spaceship.png; sourceTree = "<group>"; };
 		B45FF14618CE8708001662CD /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		B45FF14C18CE8708001662CD /* ABIMSIMTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ABIMSIMTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B45FF14D18CE8708001662CD /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		B45FF15518CE8708001662CD /* ABIMSIMTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ABIMSIMTests-Info.plist"; sourceTree = "<group>"; };
 		B45FF15718CE8708001662CD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B45FF15918CE8708001662CD /* ABIMSIMTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ABIMSIMTests.m; sourceTree = "<group>"; };
+		B45FF16318CE8748001662CD /* Ship@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Ship@2x.png"; sourceTree = "<group>"; };
+		B45FF16418CE8748001662CD /* Space@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Space@2x.png"; sourceTree = "<group>"; };
+		B45FF16518CE8748001662CD /* Space2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Space2@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,7 +132,9 @@
 				B45FF13F18CE8708001662CD /* ViewController.m */,
 				B45FF14118CE8708001662CD /* MyScene.h */,
 				B45FF14218CE8708001662CD /* MyScene.m */,
-				B45FF14418CE8708001662CD /* Spaceship.png */,
+				B45FF16318CE8748001662CD /* Ship@2x.png */,
+				B45FF16418CE8748001662CD /* Space@2x.png */,
+				B45FF16518CE8748001662CD /* Space2@2x.png */,
 				B45FF14618CE8708001662CD /* Images.xcassets */,
 				B45FF13018CE8708001662CD /* Supporting Files */,
 			);
@@ -242,8 +248,10 @@
 			files = (
 				B45FF13418CE8708001662CD /* InfoPlist.strings in Resources */,
 				B45FF14718CE8708001662CD /* Images.xcassets in Resources */,
-				B45FF14518CE8708001662CD /* Spaceship.png in Resources */,
+				B45FF16818CE8748001662CD /* Space2@2x.png in Resources */,
+				B45FF16618CE8748001662CD /* Ship@2x.png in Resources */,
 				B45FF13D18CE8708001662CD /* Main.storyboard in Resources */,
+				B45FF16718CE8748001662CD /* Space@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
