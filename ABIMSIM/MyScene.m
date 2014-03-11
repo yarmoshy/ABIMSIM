@@ -24,6 +24,7 @@ static const uint32_t goalCategory = 0x1 << 3; // 000000000000000000000000000010
 @implementation MyScene {
     NSMutableArray *bumperSpritesArrays;
     NSMutableArray *currentBumperSpriteArray;
+    BOOL safeToTransition;
 }
 
 CGFloat DegreesToRadians(CGFloat degrees)
@@ -39,7 +40,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
         SKPhysicsBody* borderBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:self.frame];
         self.physicsBody = borderBody;
         self.physicsBody.friction = 0.0f;
-        
+        self.physicsWorld.contactDelegate = self;
+
         SKSpriteNode *ship = [SKSpriteNode spriteNodeWithImageNamed:@"Ship"];
         ship.name = shipCategoryName;
         ship.position = CGPointMake(self.frame.size.width/4, ship.size.height*2);
@@ -51,14 +53,11 @@ CGFloat DegreesToRadians(CGFloat degrees)
         ship.physicsBody.allowsRotation = NO;
         ship.physicsBody.categoryBitMask = shipCategory;
         ship.physicsBody.collisionBitMask = bumperCategory;
-        
+        ship.physicsBody.contactTestBitMask = goalCategory;
         bumperSpritesArrays = [NSMutableArray array];
         currentBumperSpriteArray = [NSMutableArray array];
         [self generateInitialLevels];
-        for (SKSpriteNode *bumper in currentBumperSpriteArray) {
-            bumper.hidden = NO;
-            [self addChild:bumper];
-        }
+        safeToTransition = YES;
     }
     return self;
 }
@@ -83,27 +82,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
     [self childNodeWithName:shipCategoryName].physicsBody.velocity = CGVectorMake(newVelocity.x, -newVelocity.y);
 }
 
--(void)generateInitialLevels {
-    for (int i = 1; i >= 0; i--) {
-        NSMutableArray *bumperArray = [NSMutableArray array];
-        SKSpriteNode *bumper = [SKSpriteNode spriteNodeWithColor:[UIColor whiteColor] size:CGSizeMake(50, 50)];
-        bumper.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:bumper.size];
-        bumper.physicsBody.friction = 0.0f;
-        bumper.physicsBody.dynamic = NO;
-        bumper.physicsBody.categoryBitMask = bumperCategory;
-        bumper.physicsBody.collisionBitMask = shipCategory;
-        bumper.name = bumperCategoryName;
-        float x = arc4random() % (int)self.frame.size.width * 1;
-        float y = arc4random() % (int)self.frame.size.height * 1;
-        bumper.position = CGPointMake(x, y);
-        bumper.zRotation = DegreesToRadians(arc4random() % 360);
-        bumper.hidden = YES;
-        [bumperArray addObject:bumper];
-        [bumperSpritesArrays addObject:bumperArray];
-    }
-    currentBumperSpriteArray = [bumperSpritesArrays lastObject];
-}
-
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     /* Called when a touch begins */
@@ -117,4 +95,99 @@ CGFloat DegreesToRadians(CGFloat degrees)
     /* Called before each frame is rendered */
 }
 
+- (void)didBeginContact:(SKPhysicsContact*)contact {
+    // 1 Create local variables for two physics bodies
+    SKPhysicsBody* firstBody;
+    SKPhysicsBody* secondBody;
+    // 2 Assign the two physics bodies so that the one with the lower category is always stored in firstBody
+    if (contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask) {
+        firstBody = contact.bodyA;
+        secondBody = contact.bodyB;
+    } else {
+        firstBody = contact.bodyB;
+        secondBody = contact.bodyA;
+    }
+    if (firstBody.categoryBitMask == shipCategory && secondBody.categoryBitMask == goalCategory) {
+        if (safeToTransition) {
+            safeToTransition = NO;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self advanceToNextLevel];
+            });
+        }
+    }
+}
+
+-(void)didEndContact:(SKPhysicsContact *)contact {
+    SKPhysicsBody* firstBody;
+    SKPhysicsBody* secondBody;
+    if (contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask) {
+        firstBody = contact.bodyA;
+        secondBody = contact.bodyB;
+    } else {
+        firstBody = contact.bodyB;
+        secondBody = contact.bodyA;
+    }
+    if (firstBody.categoryBitMask == shipCategory && secondBody.categoryBitMask == goalCategory) {
+        safeToTransition = YES;
+    }
+}
+
+-(void)generateInitialLevels {
+    BOOL endAtTop = YES;
+    for (int i = 0; i < 10; i++) {
+        NSMutableArray *bumperArray = [NSMutableArray array];
+        for (int j = 0; j <= i; j++) {
+            SKSpriteNode *bumper = [SKSpriteNode spriteNodeWithColor:[UIColor whiteColor] size:CGSizeMake(50, 50)];
+            bumper.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:bumper.size];
+            bumper.physicsBody.friction = 0.0f;
+            bumper.physicsBody.dynamic = NO;
+            bumper.physicsBody.categoryBitMask = bumperCategory;
+            bumper.physicsBody.collisionBitMask = shipCategory;
+            bumper.name = bumperCategoryName;
+            float x = arc4random() % (int)self.frame.size.width * 1;
+            float y = arc4random() % (int)self.frame.size.height * 1;
+            bumper.position = CGPointMake(x, y);
+            bumper.zRotation = DegreesToRadians(arc4random() % 360);
+            bumper.hidden = YES;
+            [bumperArray addObject:bumper];
+        }
+        CGRect goalRect;
+        if (endAtTop) {
+            goalRect = CGRectMake(self.frame.origin.x, self.frame.size.height, self.frame.size.width, 1);
+        } else {
+            goalRect = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, 1);
+        }
+        SKNode* goal = [SKNode node];
+        goal.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:goalRect];
+        goal.name = goalCategoryName;
+        goal.physicsBody.categoryBitMask = goalCategory;
+        [bumperArray addObject:goal];
+        
+        [bumperSpritesArrays addObject:bumperArray];
+        endAtTop = !endAtTop;
+    }
+    currentBumperSpriteArray = [bumperSpritesArrays firstObject];
+    [self showCurrentSprites];
+}
+
+-(void)advanceToNextLevel {
+    for (SKSpriteNode *sprite in currentBumperSpriteArray) {
+        [sprite removeFromParent];
+    }
+    [bumperSpritesArrays addObject:bumperSpritesArrays[0]];
+    [bumperSpritesArrays removeObjectAtIndex:0];
+    currentBumperSpriteArray = bumperSpritesArrays[0];
+    [self showCurrentSprites];
+}
+
+-(void)showCurrentSprites {
+    for (SKSpriteNode *sprite in currentBumperSpriteArray) {
+        if ([sprite.name isEqual:bumperCategoryName]) {
+            sprite.hidden = NO;
+            [self addChild:sprite];
+        } else if ([sprite.name isEqual:goalCategoryName]) {
+            [self addChild:sprite];
+        }
+    }
+}
 @end
