@@ -24,7 +24,7 @@ static const uint32_t goalCategory = 0x1 << 3; // 000000000000000000000000000010
 @implementation MyScene {
     NSMutableArray *bumperSpritesArrays;
     NSMutableArray *currentBumperSpriteArray;
-    BOOL safeToTransition;
+    NSNumber *safeToTransition;
 }
 
 CGFloat DegreesToRadians(CGFloat degrees)
@@ -57,7 +57,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         bumperSpritesArrays = [NSMutableArray array];
         currentBumperSpriteArray = [NSMutableArray array];
         [self generateInitialLevels];
-        safeToTransition = YES;
+        safeToTransition = @YES;
     }
     return self;
 }
@@ -97,22 +97,25 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
 - (void)didBeginContact:(SKPhysicsContact*)contact {
     // 1 Create local variables for two physics bodies
-    SKPhysicsBody* firstBody;
-    SKPhysicsBody* secondBody;
-    // 2 Assign the two physics bodies so that the one with the lower category is always stored in firstBody
-    if (contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask) {
-        firstBody = contact.bodyA;
-        secondBody = contact.bodyB;
-    } else {
-        firstBody = contact.bodyB;
-        secondBody = contact.bodyA;
-    }
-    if (firstBody.categoryBitMask == shipCategory && secondBody.categoryBitMask == goalCategory) {
-        if (safeToTransition) {
-            safeToTransition = NO;
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self advanceToNextLevel];
-            });
+    @synchronized (safeToTransition) {
+        SKPhysicsBody* firstBody;
+        SKPhysicsBody* secondBody;
+        // 2 Assign the two physics bodies so that the one with the lower category is always stored in firstBody
+        if (contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask) {
+            firstBody = contact.bodyA;
+            secondBody = contact.bodyB;
+        } else {
+            firstBody = contact.bodyB;
+            secondBody = contact.bodyA;
+        }
+        if (firstBody.categoryBitMask == shipCategory && secondBody.categoryBitMask == goalCategory) {
+            if ([safeToTransition isEqualToNumber:@YES]) {
+                safeToTransition = @NO;
+                [secondBody.node removeFromParent];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self advanceToNextLevel];
+                });
+            }
         }
     }
 }
@@ -128,7 +131,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         secondBody = contact.bodyA;
     }
     if (firstBody.categoryBitMask == shipCategory && secondBody.categoryBitMask == goalCategory) {
-        safeToTransition = YES;
+//        safeToTransition = YES;
     }
 }
 
@@ -178,6 +181,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     [bumperSpritesArrays removeObjectAtIndex:0];
     currentBumperSpriteArray = bumperSpritesArrays[0];
     [self showCurrentSprites];
+    safeToTransition = @YES;
 }
 
 -(void)showCurrentSprites {
