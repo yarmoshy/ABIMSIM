@@ -176,6 +176,12 @@ CGFloat DegreesToRadians(CGFloat degrees)
 -(void)advanceToNextLevel {
     for (SKSpriteNode *sprite in currentBumperSpriteArray) {
         [sprite removeFromParent];
+        if ([sprite.name isEqual:bumperCategoryName]) {
+            float x = arc4random() % (int)self.frame.size.width * 1;
+            float y = arc4random() % (int)self.frame.size.height * 1;
+            sprite.position = CGPointMake(x, y);
+            sprite.zRotation = DegreesToRadians(arc4random() % 360);
+        }
     }
     [bumperSpritesArrays addObject:bumperSpritesArrays[0]];
     [bumperSpritesArrays removeObjectAtIndex:0];
