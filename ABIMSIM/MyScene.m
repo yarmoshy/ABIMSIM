@@ -16,8 +16,8 @@ static const uint32_t lazerCategory = 0x1 << 2;  // 0000000000000000000000000000
 static const uint32_t goalCategory = 0x1 << 3; // 00000000000000000000000000001000
 
 
-#define MAX_VELOCITY 500
-#define MIN_VELOCITY 100
+#define MAX_VELOCITY 300
+#define MIN_VELOCITY 300
 
 #import "MyScene.h"
 
@@ -69,6 +69,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
 }
 
 -(void)handlePanGesture:(UIPanGestureRecognizer*)recognizer {
+    if (recognizer.state != UIGestureRecognizerStateEnded) {
+        return;
+    }
     CGPoint addVelocity = [recognizer velocityInView:recognizer.view];
     CGPoint newVelocity = addVelocity;
     float velocity = sqrtf(powf(newVelocity.x, 2) + powf(newVelocity.y, 2));
@@ -93,6 +96,15 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
 -(void)update:(CFTimeInterval)currentTime {
     /* Called before each frame is rendered */
+    SKNode* ball = [self childNodeWithName: shipCategoryName];
+    static int maxSpeed = MAX_VELOCITY;
+    float speed = sqrt(ball.physicsBody.velocity.dx*ball.physicsBody.velocity.dx + ball.physicsBody.velocity.dy * ball.physicsBody.velocity.dy);
+    if (speed > maxSpeed) {
+        ball.physicsBody.linearDamping = 0.4f;
+    } else {
+        ball.physicsBody.linearDamping = 0.0f;
+    }
+
 }
 
 - (void)didBeginContact:(SKPhysicsContact*)contact {
@@ -140,17 +152,16 @@ CGFloat DegreesToRadians(CGFloat degrees)
     for (int i = 0; i < 10; i++) {
         NSMutableArray *bumperArray = [NSMutableArray array];
         for (int j = 0; j <= i; j++) {
-            SKSpriteNode *bumper = [SKSpriteNode spriteNodeWithColor:[UIColor whiteColor] size:CGSizeMake(50, 50)];
-            bumper.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:bumper.size];
+            SKSpriteNode *bumper = [SKSpriteNode spriteNodeWithImageNamed:@"greyCircle"];// spriteNodeWithColor:[UIColor whiteColor] size:CGSizeMake(50, 50)];
+            bumper.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:bumper.size.width/2];
             bumper.physicsBody.friction = 0.0f;
-            bumper.physicsBody.dynamic = NO;
+            bumper.physicsBody.restitution = 1.0f;
+            bumper.physicsBody.linearDamping = 0.0f;
+            bumper.physicsBody.dynamic = YES;
             bumper.physicsBody.categoryBitMask = bumperCategory;
-            bumper.physicsBody.collisionBitMask = shipCategory;
+            bumper.physicsBody.collisionBitMask = shipCategory | bumperCategory;
             bumper.name = bumperCategoryName;
-            float x = arc4random() % (int)self.frame.size.width * 1;
-            float y = arc4random() % (int)self.frame.size.height * 1;
-            bumper.position = CGPointMake(x, y);
-            bumper.zRotation = DegreesToRadians(arc4random() % 360);
+            [self randomizeSprite:bumper];
             bumper.hidden = YES;
             [bumperArray addObject:bumper];
         }
@@ -177,10 +188,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     for (SKSpriteNode *sprite in currentBumperSpriteArray) {
         [sprite removeFromParent];
         if ([sprite.name isEqual:bumperCategoryName]) {
-            float x = arc4random() % (int)self.frame.size.width * 1;
-            float y = arc4random() % (int)self.frame.size.height * 1;
-            sprite.position = CGPointMake(x, y);
-            sprite.zRotation = DegreesToRadians(arc4random() % 360);
+           [self randomizeSprite:sprite];
         }
     }
     [bumperSpritesArrays addObject:bumperSpritesArrays[0]];
@@ -199,5 +207,22 @@ CGFloat DegreesToRadians(CGFloat degrees)
             [self addChild:sprite];
         }
     }
+}
+
+-(SKSpriteNode*)randomizeSprite:(SKSpriteNode*)sprite {
+//    float x = arc4random() % (int)self.frame.size.width * 1;
+//    float y = arc4random() % (int)self.frame.size.height * 1;
+//    sprite.position = CGPointMake(x, y);
+//    sprite.zRotation = DegreesToRadians(arc4random() % 360);
+
+    float x = arc4random() % (int)self.frame.size.width * 1;
+    float maxHeight = self.frame.size.height - ([self childNodeWithName:shipCategoryName].frame.size.height*2) - (sprite.size.height*2);
+    float y = (arc4random() % ((int)maxHeight)) + [self childNodeWithName:shipCategoryName].frame.size.height + sprite.size.height;
+    sprite.position = CGPointMake(x, y);
+    sprite.zRotation = DegreesToRadians(arc4random() % 360);
+    float velocity = arc4random() % MAX_VELOCITY;
+    sprite.physicsBody.velocity = CGVectorMake(velocity * cosf(sprite.zRotation), velocity * -sinf(sprite.zRotation));
+
+    return sprite;
 }
 @end

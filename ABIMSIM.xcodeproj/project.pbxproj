@@ -26,6 +26,7 @@
 		B45FF16618CE8748001662CD /* Ship@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B45FF16318CE8748001662CD /* Ship@2x.png */; };
 		B45FF16718CE8748001662CD /* Space@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B45FF16418CE8748001662CD /* Space@2x.png */; };
 		B45FF16818CE8748001662CD /* Space2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B45FF16518CE8748001662CD /* Space2@2x.png */; };
+		B4FFB6E418D1333100627796 /* greyCircle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4FFB6E318D1333100627796 /* greyCircle@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +65,7 @@
 		B45FF16318CE8748001662CD /* Ship@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Ship@2x.png"; sourceTree = "<group>"; };
 		B45FF16418CE8748001662CD /* Space@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Space@2x.png"; sourceTree = "<group>"; };
 		B45FF16518CE8748001662CD /* Space2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Space2@2x.png"; sourceTree = "<group>"; };
+		B4FFB6E318D1333100627796 /* greyCircle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "greyCircle@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +135,7 @@
 				B45FF14118CE8708001662CD /* MyScene.h */,
 				B45FF14218CE8708001662CD /* MyScene.m */,
 				B45FF16318CE8748001662CD /* Ship@2x.png */,
+				B4FFB6E318D1333100627796 /* greyCircle@2x.png */,
 				B45FF16418CE8748001662CD /* Space@2x.png */,
 				B45FF16518CE8748001662CD /* Space2@2x.png */,
 				B45FF14618CE8708001662CD /* Images.xcassets */,
@@ -217,6 +220,9 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Kevin Yarmosh";
 				TargetAttributes = {
+					B45FF12318CE8708001662CD = {
+						DevelopmentTeam = ZN27EFYD4F;
+					};
 					B45FF14B18CE8708001662CD = {
 						TestTargetID = B45FF12318CE8708001662CD;
 					};
@@ -246,6 +252,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B4FFB6E418D1333100627796 /* greyCircle@2x.png in Resources */,
 				B45FF13418CE8708001662CD /* InfoPlist.strings in Resources */,
 				B45FF14718CE8708001662CD /* Images.xcassets in Resources */,
 				B45FF16818CE8748001662CD /* Space2@2x.png in Resources */,
@@ -358,6 +365,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "DDCF90A3-E7B2-4402-ADB6-6CA36C8ECFB3";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -390,6 +398,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				PROVISIONING_PROFILE = "DDCF90A3-E7B2-4402-ADB6-6CA36C8ECFB3";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -400,10 +409,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ABIMSIM/ABIMSIM-Prefix.pch";
 				INFOPLIST_FILE = "ABIMSIM/ABIMSIM-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SPRITEKIT_TEXTURE_ATLAS_OUTPUT = YES;
 				WRAPPER_EXTENSION = app;
 			};
@@ -414,10 +426,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ABIMSIM/ABIMSIM-Prefix.pch";
 				INFOPLIST_FILE = "ABIMSIM/ABIMSIM-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SPRITEKIT_TEXTURE_ATLAS_OUTPUT = YES;
 				WRAPPER_EXTENSION = app;
 			};
@@ -484,6 +499,7 @@
 				B45FF15F18CE8708001662CD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B45FF16018CE8708001662CD /* Build configuration list for PBXNativeTarget "ABIMSIMTests" */ = {
 			isa = XCConfigurationList;
@@ -492,6 +508,7 @@
 				B45FF16218CE8708001662CD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
