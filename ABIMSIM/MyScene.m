@@ -18,13 +18,26 @@ static const uint32_t goalCategory = 0x1 << 3; // 000000000000000000000000000010
 
 #define MAX_VELOCITY 300
 #define MIN_VELOCITY 300
+#define MAX_ANGULAR_VELOCITY 1
+
+
+#define starScaleLarge 1
+#define starScaleMedium 0.65
+#define starScaleSmall 0.4
+
+#define starColorA @"ec52ea"
+#define starColorB @"3eaabd"
+#define starColorC @"ffffff"
 
 #import "MyScene.h"
+#import "HexColor.h"
 
 @implementation MyScene {
     NSMutableArray *bumperSpritesArrays;
+    NSMutableArray *starSprites;
     NSMutableArray *currentBumperSpriteArray;
     NSNumber *safeToTransition;
+    int currentLevel;
 }
 
 CGFloat DegreesToRadians(CGFloat degrees)
@@ -49,7 +62,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
         SKSpriteNode *ship = [SKSpriteNode spriteNodeWithImageNamed:@"Ship"];
         ship.name = shipCategoryName;
         ship.position = CGPointMake(self.frame.size.width/4, ship.size.height*2);
-        [self addChild:ship];
         ship.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:ship.frame.size.width/2];
         ship.physicsBody.friction = 0.0f;
         ship.physicsBody.restitution = 1.0f;
@@ -61,6 +73,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
         ship.physicsBody.mass = ship.frame.size.width;
         bumperSpritesArrays = [NSMutableArray array];
         currentBumperSpriteArray = [NSMutableArray array];
+        [self transitionStars];
+        [self addChild:ship];
         [self generateInitialLevels];
         safeToTransition = @YES;
     }
@@ -72,6 +86,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
     UIPanGestureRecognizer *recognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGesture:)];
     [self.view addGestureRecognizer:recognizer];
 }
+
+#pragma mark - Touch Handling
 
 -(void)handlePanGesture:(UIPanGestureRecognizer*)recognizer {
     if (recognizer.state != UIGestureRecognizerStateEnded) {
@@ -109,8 +125,24 @@ CGFloat DegreesToRadians(CGFloat degrees)
     } else {
         ball.physicsBody.linearDamping = 0.0f;
     }
+    for (SKSpriteNode *asteroid in currentBumperSpriteArray) {
+        if (fabs(asteroid.physicsBody.angularVelocity) > MAX_ANGULAR_VELOCITY) {
+            asteroid.physicsBody.angularDamping = 1.0f;
+        } else {
+            asteroid.physicsBody.angularDamping = 0.0f;
+        }
+        float speed = sqrt(asteroid.physicsBody.velocity.dx*asteroid.physicsBody.velocity.dx + asteroid.physicsBody.velocity.dy * asteroid.physicsBody.velocity.dy);
+        if (speed > maxSpeed) {
+            asteroid.physicsBody.linearDamping = 0.4f;
+        } else {
+            asteroid.physicsBody.linearDamping = 0.0f;
+        }
 
+    }
 }
+
+
+#pragma mark - Collisions and Contacts
 
 - (void)didBeginContact:(SKPhysicsContact*)contact {
     // 1 Create local variables for two physics bodies
@@ -131,6 +163,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
                 [secondBody.node removeFromParent];
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self advanceToNextLevel];
+                    [self transitionStars];
                 });
             }
         }
@@ -150,6 +183,100 @@ CGFloat DegreesToRadians(CGFloat degrees)
     if (firstBody.categoryBitMask == shipCategory && secondBody.categoryBitMask == goalCategory) {
 //        safeToTransition = YES;
     }
+}
+
+#pragma mark - Level generation
+
+-(void)transitionStars {
+    if (!starSprites) {
+        starSprites = [NSMutableArray array];
+        for (int i = 0; i < 10; i++) {
+            SKSpriteNode *star = [SKSpriteNode spriteNodeWithImageNamed:@"LargeStar"];
+            [starSprites addObject:star];
+            float x = arc4random() % (int)self.frame.size.width * 1;
+            float y = arc4random() % (int)self.frame.size.height * 1;
+            star.position = CGPointMake(x, y);
+            int size = arc4random() % 3;
+            switch (size) {
+                case 0:
+                    star.yScale = star.xScale = starScaleSmall;
+                    break;
+                case 1:
+                    star.yScale = star.xScale = starScaleMedium;
+                    break;
+                case 2:
+                    star.yScale = star.xScale = starScaleLarge;
+                    break;
+
+                default:
+                    break;
+            }
+            int color = arc4random() % 3;
+            switch (color) {
+                case 0:
+                    star.color = [UIColor colorWithHexString:starColorA];
+                    break;
+                case 1:
+                    star.color = [UIColor colorWithHexString:starColorB];
+                    break;
+                case 2:
+                    star.color = [UIColor colorWithHexString:starColorC];
+                    break;
+  
+                default:
+                    break;
+            }
+            star.colorBlendFactor = 1.0;
+            [self addChild:star];
+        }
+        for (int i = 0; i < 10; i++) {
+            SKSpriteNode *star = [SKSpriteNode spriteNodeWithImageNamed:@"LargeStar"];
+            [starSprites addObject:star];
+            star.xScale = star.yScale = 0;
+            [self addChild:star];
+        }
+    } else {
+        for (SKSpriteNode *star in starSprites) {
+            float x = arc4random() % (int)self.frame.size.width * 1;
+            float y = arc4random() % (int)self.frame.size.height * 1;
+            float scale = 0;
+            if (star.yScale == 0) {
+                star.position = CGPointMake(x, y);
+                int size = arc4random() % 3;
+                switch (size) {
+                    case 0:
+                        scale = starScaleSmall;
+                        break;
+                    case 1:
+                        scale = starScaleMedium;
+                        break;
+                    case 2:
+                        scale = starScaleLarge;
+                        break;
+                    default:
+                        break;
+                }
+                int colorInt = arc4random() % 3;
+                switch (colorInt) {
+                    case 0:
+                        star.color = [UIColor colorWithHexString:starColorA];
+                        break;
+                    case 1:
+                        star.color = [UIColor colorWithHexString:starColorB];
+                        break;
+                    case 2:
+                        star.color = [UIColor colorWithHexString:starColorC];
+                        break;
+                    default:
+                        break;
+                }
+                [star runAction:[SKAction scaleTo:scale duration:0.5]];
+            } else {
+                [star runAction:[SKAction scaleTo:0 duration:0.5]];
+            }
+        }
+    }
+    
 }
 
 -(void)generateInitialLevels {
@@ -224,11 +351,11 @@ CGFloat DegreesToRadians(CGFloat degrees)
     float y = (arc4random() % ((int)maxHeight)) + [self childNodeWithName:shipCategoryName].frame.size.height + sprite.size.height;
     sprite.position = CGPointMake(x, y);
     sprite.zRotation = DegreesToRadians(arc4random() % 360);
-    float velocity = arc4random() % MAX_VELOCITY;
+    float velocity = arc4random() % (MAX_VELOCITY/2);
     sprite.physicsBody.velocity = CGVectorMake(velocity * cosf(sprite.zRotation), velocity * -sinf(sprite.zRotation));
-
     return sprite;
 }
+
 
 -(CGMutablePathRef)pathForAsteroidNum:(int)asteroidNum withSprite:(SKSpriteNode*)sprite {
     CGFloat offsetX = sprite.frame.size.width * sprite.anchorPoint.x;
