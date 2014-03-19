@@ -7,18 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B45865D918DA153C005C9566 /* Asteroid_0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B45865CB18DA153C005C9566 /* Asteroid_0@2x.png */; };
-		B45865DA18DA153C005C9566 /* Asteroid_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B45865CC18DA153C005C9566 /* Asteroid_1@2x.png */; };
-		B45865DB18DA153C005C9566 /* Asteroid_2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B45865CD18DA153C005C9566 /* Asteroid_2@2x.png */; };
-		B45865DC18DA153C005C9566 /* Asteroid_3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B45865CE18DA153C005C9566 /* Asteroid_3@2x.png */; };
-		B45865DD18DA153C005C9566 /* Asteroid_4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B45865CF18DA153C005C9566 /* Asteroid_4@2x.png */; };
-		B45865DE18DA153C005C9566 /* Asteroid_5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B45865D018DA153C005C9566 /* Asteroid_5@2x.png */; };
-		B45865DF18DA153C005C9566 /* Asteroid_6@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B45865D118DA153C005C9566 /* Asteroid_6@2x.png */; };
-		B45865E018DA153C005C9566 /* Asteroid_7@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B45865D218DA153C005C9566 /* Asteroid_7@2x.png */; };
-		B45865E118DA153C005C9566 /* Asteroid_8@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B45865D318DA153C005C9566 /* Asteroid_8@2x.png */; };
-		B45865E218DA153C005C9566 /* Asteroid_9@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B45865D418DA153C005C9566 /* Asteroid_9@2x.png */; };
-		B45865E318DA153C005C9566 /* Asteroid_10@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B45865D518DA153C005C9566 /* Asteroid_10@2x.png */; };
-		B45865E418DA153C005C9566 /* Asteroid_11@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B45865D618DA153C005C9566 /* Asteroid_11@2x.png */; };
+		B45865D918DA153C005C9566 /* Asteroid_11@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B45865CB18DA153C005C9566 /* Asteroid_11@2x.png */; };
+		B45865DA18DA153C005C9566 /* Asteroid_7@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B45865CC18DA153C005C9566 /* Asteroid_7@2x.png */; };
+		B45865DB18DA153C005C9566 /* Asteroid_5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B45865CD18DA153C005C9566 /* Asteroid_5@2x.png */; };
+		B45865DC18DA153C005C9566 /* Asteroid_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B45865CE18DA153C005C9566 /* Asteroid_1@2x.png */; };
+		B45865DD18DA153C005C9566 /* Asteroid_10@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B45865CF18DA153C005C9566 /* Asteroid_10@2x.png */; };
+		B45865DE18DA153C005C9566 /* Asteroid_8@2x2.png in Resources */ = {isa = PBXBuildFile; fileRef = B45865D018DA153C005C9566 /* Asteroid_8@2x2.png */; };
+		B45865DF18DA153C005C9566 /* Asteroid_3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B45865D118DA153C005C9566 /* Asteroid_3@2x.png */; };
+		B45865E018DA153C005C9566 /* Asteroid_6@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B45865D218DA153C005C9566 /* Asteroid_6@2x.png */; };
+		B45865E118DA153C005C9566 /* Asteroid_9@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B45865D318DA153C005C9566 /* Asteroid_9@2x.png */; };
+		B45865E218DA153C005C9566 /* Asteroid_0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B45865D418DA153C005C9566 /* Asteroid_0@2x.png */; };
+		B45865E318DA153C005C9566 /* Asteroid_2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B45865D518DA153C005C9566 /* Asteroid_2@2x.png */; };
+		B45865E418DA153C005C9566 /* Asteroid_4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B45865D618DA153C005C9566 /* Asteroid_4@2x.png */; };
 		B45865E518DA153C005C9566 /* Background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B45865D718DA153C005C9566 /* Background@2x.png */; };
 		B45865E618DA153C005C9566 /* LargeStar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B45865D818DA153C005C9566 /* LargeStar@2x.png */; };
 		B45865E918DA15C9005C9566 /* Ship@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B45865E818DA15C9005C9566 /* Ship@2x.png */; };
@@ -52,18 +52,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		B45865CB18DA153C005C9566 /* Asteroid_0@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Asteroid_0@2x.png"; sourceTree = "<group>"; };
-		B45865CC18DA153C005C9566 /* Asteroid_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Asteroid_1@2x.png"; sourceTree = "<group>"; };
-		B45865CD18DA153C005C9566 /* Asteroid_2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Asteroid_2@2x.png"; sourceTree = "<group>"; };
-		B45865CE18DA153C005C9566 /* Asteroid_3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Asteroid_3@2x.png"; sourceTree = "<group>"; };
-		B45865CF18DA153C005C9566 /* Asteroid_4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Asteroid_4@2x.png"; sourceTree = "<group>"; };
-		B45865D018DA153C005C9566 /* Asteroid_5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Asteroid_5@2x.png"; sourceTree = "<group>"; };
-		B45865D118DA153C005C9566 /* Asteroid_6@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Asteroid_6@2x.png"; sourceTree = "<group>"; };
-		B45865D218DA153C005C9566 /* Asteroid_7@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Asteroid_7@2x.png"; sourceTree = "<group>"; };
-		B45865D318DA153C005C9566 /* Asteroid_8@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Asteroid_8@2x.png"; sourceTree = "<group>"; };
-		B45865D418DA153C005C9566 /* Asteroid_9@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Asteroid_9@2x.png"; sourceTree = "<group>"; };
-		B45865D518DA153C005C9566 /* Asteroid_10@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Asteroid_10@2x.png"; sourceTree = "<group>"; };
-		B45865D618DA153C005C9566 /* Asteroid_11@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Asteroid_11@2x.png"; sourceTree = "<group>"; };
+		B45865CB18DA153C005C9566 /* Asteroid_11@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Asteroid_11@2x.png"; sourceTree = "<group>"; };
+		B45865CC18DA153C005C9566 /* Asteroid_7@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Asteroid_7@2x.png"; sourceTree = "<group>"; };
+		B45865CD18DA153C005C9566 /* Asteroid_5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Asteroid_5@2x.png"; sourceTree = "<group>"; };
+		B45865CE18DA153C005C9566 /* Asteroid_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Asteroid_1@2x.png"; sourceTree = "<group>"; };
+		B45865CF18DA153C005C9566 /* Asteroid_10@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Asteroid_10@2x.png"; sourceTree = "<group>"; };
+		B45865D018DA153C005C9566 /* Asteroid_8@2x2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Asteroid_8@2x2.png"; sourceTree = "<group>"; };
+		B45865D118DA153C005C9566 /* Asteroid_3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Asteroid_3@2x.png"; sourceTree = "<group>"; };
+		B45865D218DA153C005C9566 /* Asteroid_6@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Asteroid_6@2x.png"; sourceTree = "<group>"; };
+		B45865D318DA153C005C9566 /* Asteroid_9@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Asteroid_9@2x.png"; sourceTree = "<group>"; };
+		B45865D418DA153C005C9566 /* Asteroid_0@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Asteroid_0@2x.png"; sourceTree = "<group>"; };
+		B45865D518DA153C005C9566 /* Asteroid_2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Asteroid_2@2x.png"; sourceTree = "<group>"; };
+		B45865D618DA153C005C9566 /* Asteroid_4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Asteroid_4@2x.png"; sourceTree = "<group>"; };
 		B45865D718DA153C005C9566 /* Background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Background@2x.png"; sourceTree = "<group>"; };
 		B45865D818DA153C005C9566 /* LargeStar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LargeStar@2x.png"; sourceTree = "<group>"; };
 		B45865E818DA15C9005C9566 /* Ship@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Ship@2x.png"; sourceTree = "<group>"; };
@@ -121,18 +121,18 @@
 		B45865E718DA154F005C9566 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
-				B45865CB18DA153C005C9566 /* Asteroid_0@2x.png */,
-				B45865CC18DA153C005C9566 /* Asteroid_1@2x.png */,
-				B45865CD18DA153C005C9566 /* Asteroid_2@2x.png */,
-				B45865CE18DA153C005C9566 /* Asteroid_3@2x.png */,
-				B45865CF18DA153C005C9566 /* Asteroid_4@2x.png */,
-				B45865D018DA153C005C9566 /* Asteroid_5@2x.png */,
-				B45865D118DA153C005C9566 /* Asteroid_6@2x.png */,
-				B45865D218DA153C005C9566 /* Asteroid_7@2x.png */,
-				B45865D318DA153C005C9566 /* Asteroid_8@2x.png */,
-				B45865D418DA153C005C9566 /* Asteroid_9@2x.png */,
-				B45865D518DA153C005C9566 /* Asteroid_10@2x.png */,
-				B45865D618DA153C005C9566 /* Asteroid_11@2x.png */,
+				B45865D418DA153C005C9566 /* Asteroid_0@2x.png */,
+				B45865CE18DA153C005C9566 /* Asteroid_1@2x.png */,
+				B45865D518DA153C005C9566 /* Asteroid_2@2x.png */,
+				B45865D118DA153C005C9566 /* Asteroid_3@2x.png */,
+				B45865D618DA153C005C9566 /* Asteroid_4@2x.png */,
+				B45865CD18DA153C005C9566 /* Asteroid_5@2x.png */,
+				B45865D218DA153C005C9566 /* Asteroid_6@2x.png */,
+				B45865CC18DA153C005C9566 /* Asteroid_7@2x.png */,
+				B45865D018DA153C005C9566 /* Asteroid_8@2x2.png */,
+				B45865D318DA153C005C9566 /* Asteroid_9@2x.png */,
+				B45865CF18DA153C005C9566 /* Asteroid_10@2x.png */,
+				B45865CB18DA153C005C9566 /* Asteroid_11@2x.png */,
 				B45865D718DA153C005C9566 /* Background@2x.png */,
 				B45865D818DA153C005C9566 /* LargeStar@2x.png */,
 				B45865E818DA15C9005C9566 /* Ship@2x.png */,
@@ -263,7 +263,7 @@
 		B45FF11C18CE8708001662CD /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Kevin Yarmosh";
 				TargetAttributes = {
 					B45FF12318CE8708001662CD = {
@@ -298,24 +298,24 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B45865E118DA153C005C9566 /* Asteroid_8@2x.png in Resources */,
-				B45865D918DA153C005C9566 /* Asteroid_0@2x.png in Resources */,
+				B45865E118DA153C005C9566 /* Asteroid_9@2x.png in Resources */,
+				B45865D918DA153C005C9566 /* Asteroid_11@2x.png in Resources */,
 				B45FF13418CE8708001662CD /* InfoPlist.strings in Resources */,
-				B45865E418DA153C005C9566 /* Asteroid_11@2x.png in Resources */,
+				B45865E418DA153C005C9566 /* Asteroid_4@2x.png in Resources */,
 				B45FF14718CE8708001662CD /* Images.xcassets in Resources */,
-				B45865DD18DA153C005C9566 /* Asteroid_4@2x.png in Resources */,
-				B45865DC18DA153C005C9566 /* Asteroid_3@2x.png in Resources */,
-				B45865DE18DA153C005C9566 /* Asteroid_5@2x.png in Resources */,
+				B45865DD18DA153C005C9566 /* Asteroid_10@2x.png in Resources */,
+				B45865DC18DA153C005C9566 /* Asteroid_1@2x.png in Resources */,
+				B45865DE18DA153C005C9566 /* Asteroid_8@2x2.png in Resources */,
 				B45865E618DA153C005C9566 /* LargeStar@2x.png in Resources */,
 				B45FF13D18CE8708001662CD /* Main.storyboard in Resources */,
-				B45865DB18DA153C005C9566 /* Asteroid_2@2x.png in Resources */,
+				B45865DB18DA153C005C9566 /* Asteroid_5@2x.png in Resources */,
 				B45865E918DA15C9005C9566 /* Ship@2x.png in Resources */,
-				B45865E218DA153C005C9566 /* Asteroid_9@2x.png in Resources */,
-				B45865DF18DA153C005C9566 /* Asteroid_6@2x.png in Resources */,
-				B45865E018DA153C005C9566 /* Asteroid_7@2x.png in Resources */,
-				B45865E318DA153C005C9566 /* Asteroid_10@2x.png in Resources */,
+				B45865E218DA153C005C9566 /* Asteroid_0@2x.png in Resources */,
+				B45865DF18DA153C005C9566 /* Asteroid_3@2x.png in Resources */,
+				B45865E018DA153C005C9566 /* Asteroid_6@2x.png in Resources */,
+				B45865E318DA153C005C9566 /* Asteroid_2@2x.png in Resources */,
 				B45865E518DA153C005C9566 /* Background@2x.png in Resources */,
-				B45865DA18DA153C005C9566 /* Asteroid_1@2x.png in Resources */,
+				B45865DA18DA153C005C9566 /* Asteroid_7@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -392,7 +392,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -432,7 +431,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -499,7 +497,6 @@
 		B45FF16118CE8708001662CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/ABIMSIM.app/ABIMSIM";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -522,7 +519,6 @@
 		B45FF16218CE8708001662CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/ABIMSIM.app/ABIMSIM";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
