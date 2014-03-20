@@ -29,6 +29,13 @@ static const uint32_t goalCategory = 0x1 << 3; // 000000000000000000000000000010
 #define starColorB @"3eaabd"
 #define starColorC @"ffffff"
 
+#define asteroidColorBlue @"2eb0ce"
+#define asteroidColorGreen @"6ecc32"
+#define asteroidColorOrange @"d65e34"
+#define asteroidColorBrownish @"c69b30"
+#define asteroidColorYella @"dbdb0b"
+#define asteroidColorPurple @"9e3dd1"
+
 #import "MyScene.h"
 #import "HexColor.h"
 
@@ -71,6 +78,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         ship.physicsBody.collisionBitMask = bumperCategory;
         ship.physicsBody.contactTestBitMask = goalCategory;
         ship.physicsBody.mass = ship.frame.size.width;
+
         bumperSpritesArrays = [NSMutableArray array];
         currentBumperSpriteArray = [NSMutableArray array];
         [self transitionStars];
@@ -284,7 +292,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     for (int i = 0; i < 10; i++) {
         NSMutableArray *bumperArray = [NSMutableArray array];
         for (int j = 0; j <= i; j++) {
-            int asteroidNum = arc4random() % 12;
+            int asteroidNum = 12;// arc4random() % 12;
             NSString *imageName = [NSString stringWithFormat:@"Asteroid_%d",asteroidNum];
             SKSpriteNode *bumper = [SKSpriteNode spriteNodeWithImageNamed:imageName];
             bumper.physicsBody = [SKPhysicsBody bodyWithPolygonFromPath:[self pathForAsteroidNum:asteroidNum withSprite:bumper]];
@@ -297,6 +305,30 @@ CGFloat DegreesToRadians(CGFloat degrees)
             bumper.physicsBody.mass = bumper.size.width;
             bumper.name = bumperCategoryName;
             bumper.physicsBody.allowsRotation = YES;
+            int colorInt = arc4random() % 6;
+            switch (colorInt) {
+                case 0:
+                    bumper.color = [UIColor colorWithHexString:asteroidColorBlue];
+                    break;
+                case 1:
+                    bumper.color = [UIColor colorWithHexString:asteroidColorBrownish];
+                    break;
+                case 2:
+                    bumper.color = [UIColor colorWithHexString:asteroidColorGreen];
+                    break;
+                case 3:
+                    bumper.color = [UIColor colorWithHexString:asteroidColorOrange];
+                    break;
+                case 4:
+                    bumper.color = [UIColor colorWithHexString:asteroidColorPurple];
+                    break;
+                case 5:
+                    bumper.color = [UIColor colorWithHexString:asteroidColorYella];
+                    break;
+                default:
+                    break;
+            }
+            bumper.colorBlendFactor = 1.0;
             [self randomizeSprite:bumper];
             bumper.hidden = YES;
             [bumperArray addObject:bumper];
@@ -529,7 +561,21 @@ CGFloat DegreesToRadians(CGFloat degrees)
             CGPathAddLineToPoint(path, NULL, 18 - offsetX, 32 - offsetY);
         }
             break;
-
+        case 12: {
+            CGPathMoveToPoint(path, NULL, 18 - offsetX, 36 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 9 - offsetX, 32 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 4 - offsetX, 24 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 3 - offsetX, 16 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 6 - offsetX, 10 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 10 - offsetX, 6 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 17 - offsetX, 3 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 26 - offsetX, 4 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 33 - offsetX, 8 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 36 - offsetX, 16 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 34 - offsetX, 28 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 27 - offsetX, 35 - offsetY);
+        }
+            break;
         default:
             break;
     }
