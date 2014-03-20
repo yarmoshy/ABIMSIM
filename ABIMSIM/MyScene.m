@@ -198,7 +198,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
 -(void)transitionStars {
     if (!starSprites) {
         starSprites = [NSMutableArray array];
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 12; i++) {
             SKSpriteNode *star = [SKSpriteNode spriteNodeWithImageNamed:@"LargeStar"];
             [starSprites addObject:star];
             float x = arc4random() % (int)self.frame.size.width * 1;
@@ -219,7 +219,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
                 default:
                     break;
             }
-            int color = arc4random() % 3;
+            int color = i % 3;
             switch (color) {
                 case 0:
                     star.color = [UIColor colorWithHexString:starColorA];
@@ -237,13 +237,15 @@ CGFloat DegreesToRadians(CGFloat degrees)
             star.colorBlendFactor = 1.0;
             [self addChild:star];
         }
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 12; i++) {
             SKSpriteNode *star = [SKSpriteNode spriteNodeWithImageNamed:@"LargeStar"];
             [starSprites addObject:star];
             star.xScale = star.yScale = 0;
+            star.colorBlendFactor = 1.0;
             [self addChild:star];
         }
     } else {
+        int i = 0;
         for (SKSpriteNode *star in starSprites) {
             float x = arc4random() % (int)self.frame.size.width * 1;
             float y = arc4random() % (int)self.frame.size.height * 1;
@@ -264,7 +266,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
                     default:
                         break;
                 }
-                int colorInt = arc4random() % 3;
+                int colorInt = i % 3;
                 switch (colorInt) {
                     case 0:
                         star.color = [UIColor colorWithHexString:starColorA];
@@ -282,6 +284,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
             } else {
                 [star runAction:[SKAction scaleTo:0 duration:0.5]];
             }
+            i++;
         }
     }
     
@@ -582,5 +585,42 @@ CGFloat DegreesToRadians(CGFloat degrees)
     
     CGPathCloseSubpath(path);
     return path;
+}
+
+- (UIImage *)radialGradientImage:(CGSize)size start:(UIColor*)start end:(UIColor*)end centre:(CGPoint)centre radius:(float)radius {
+	// Render a radial background
+	// http://developer.apple.com/library/ios/#documentation/GraphicsImaging/Conceptual/drawingwithquartz2d/dq_shadings/dq_shadings.html
+	
+	// Initialise
+	UIGraphicsBeginImageContextWithOptions(size, 0, 1);
+	
+	// Create the gradient's colours
+	size_t num_locations = 2;
+	CGFloat locations[2] = { 0.0, 1.0 };
+	CGFloat components[8] = { 0,0,0,0,  // Start color
+        0,0,0,0 }; // End color
+	[start getRed:&components[0] green:&components[1] blue:&components[2] alpha:&components[3]];
+	[end getRed:&components[4] green:&components[5] blue:&components[6] alpha:&components[7]];
+	
+	CGColorSpaceRef myColorspace = CGColorSpaceCreateDeviceRGB();
+	CGGradientRef myGradient = CGGradientCreateWithColorComponents (myColorspace, components, locations, num_locations);
+	
+	// Normalise the 0-1 ranged inputs to the width of the image
+	CGPoint myCentrePoint = CGPointMake(centre.x * size.width, centre.y * size.height);
+	float myRadius = MIN(size.width, size.height) * radius;
+	
+	// Draw it!
+	CGContextDrawRadialGradient (UIGraphicsGetCurrentContext(), myGradient, myCentrePoint,
+								 0, myCentrePoint, myRadius,
+								 kCGGradientDrawsAfterEndLocation);
+	
+	// Grab it as an autoreleased image
+	UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+	
+	// Clean up
+	CGColorSpaceRelease(myColorspace); // Necessary?
+	CGGradientRelease(myGradient); // Necessary?
+	UIGraphicsEndImageContext(); // Clean up
+	return image;
 }
 @end
