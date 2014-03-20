@@ -295,43 +295,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     for (int i = 0; i < 10; i++) {
         NSMutableArray *bumperArray = [NSMutableArray array];
         for (int j = 0; j <= i; j++) {
-            int asteroidNum = 12;// arc4random() % 12;
-            NSString *imageName = [NSString stringWithFormat:@"Asteroid_%d",asteroidNum];
-            SKSpriteNode *bumper = [SKSpriteNode spriteNodeWithImageNamed:imageName];
-            bumper.physicsBody = [SKPhysicsBody bodyWithPolygonFromPath:[self pathForAsteroidNum:asteroidNum withSprite:bumper]];
-            bumper.physicsBody.friction = 0.0f;
-            bumper.physicsBody.restitution = 1.0f;
-            bumper.physicsBody.linearDamping = 0.0f;
-            bumper.physicsBody.dynamic = YES;
-            bumper.physicsBody.categoryBitMask = bumperCategory;
-            bumper.physicsBody.collisionBitMask = shipCategory | bumperCategory;
-            bumper.physicsBody.mass = bumper.size.width;
-            bumper.name = bumperCategoryName;
-            bumper.physicsBody.allowsRotation = YES;
-            int colorInt = arc4random() % 6;
-            switch (colorInt) {
-                case 0:
-                    bumper.color = [UIColor colorWithHexString:asteroidColorBlue];
-                    break;
-                case 1:
-                    bumper.color = [UIColor colorWithHexString:asteroidColorBrownish];
-                    break;
-                case 2:
-                    bumper.color = [UIColor colorWithHexString:asteroidColorGreen];
-                    break;
-                case 3:
-                    bumper.color = [UIColor colorWithHexString:asteroidColorOrange];
-                    break;
-                case 4:
-                    bumper.color = [UIColor colorWithHexString:asteroidColorPurple];
-                    break;
-                case 5:
-                    bumper.color = [UIColor colorWithHexString:asteroidColorYella];
-                    break;
-                default:
-                    break;
-            }
-            bumper.colorBlendFactor = 1.0;
+            SKSpriteNode *bumper = [self randomAsteroid];
             [self randomizeSprite:bumper];
             bumper.hidden = YES;
             [bumperArray addObject:bumper];
@@ -356,17 +320,66 @@ CGFloat DegreesToRadians(CGFloat degrees)
 }
 
 -(void)advanceToNextLevel {
-    for (SKSpriteNode *sprite in currentBumperSpriteArray) {
-        [sprite removeFromParent];
-        if ([sprite.name isEqual:bumperCategoryName]) {
-           [self randomizeSprite:sprite];
+    for (int i = 0; i < currentBumperSpriteArray.count; i++) {
+        if ([[currentBumperSpriteArray[i] name] isEqual:bumperCategoryName]) {
+            [currentBumperSpriteArray[i] removeFromParent];
+            currentBumperSpriteArray[i] = [self randomAsteroid];
+            [self randomizeSprite:currentBumperSpriteArray[i]];
+            [currentBumperSpriteArray[i] setHidden:YES];
         }
     }
+//    for (__strong SKSpriteNode *sprite in currentBumperSpriteArray) {
+//        [sprite removeFromParent];
+//        if ([sprite.name isEqual:bumperCategoryName]) {
+//            sprite = [self randomAsteroid];
+//           [self randomizeSprite:sprite];
+//        }
+//    }
     [bumperSpritesArrays addObject:bumperSpritesArrays[0]];
     [bumperSpritesArrays removeObjectAtIndex:0];
     currentBumperSpriteArray = bumperSpritesArrays[0];
     [self showCurrentSprites];
     safeToTransition = @YES;
+}
+-(SKSpriteNode*)randomAsteroid {
+    int asteroidNum = arc4random() % 12;
+    NSString *imageName = [NSString stringWithFormat:@"Asteroid_%d",asteroidNum];
+    SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithImageNamed:imageName];
+    sprite.physicsBody = [SKPhysicsBody bodyWithPolygonFromPath:[self pathForAsteroidNum:asteroidNum withSprite:sprite]];
+    sprite.physicsBody.friction = 0.0f;
+    sprite.physicsBody.restitution = 1.0f;
+    sprite.physicsBody.linearDamping = 0.0f;
+    sprite.physicsBody.dynamic = YES;
+    sprite.physicsBody.categoryBitMask = bumperCategory;
+    sprite.physicsBody.collisionBitMask = shipCategory | bumperCategory;
+    sprite.physicsBody.mass = sprite.size.width;
+    sprite.name = bumperCategoryName;
+    sprite.physicsBody.allowsRotation = YES;
+    int colorInt = arc4random() % 6;
+    switch (colorInt) {
+        case 0:
+            sprite.color = [UIColor colorWithHexString:asteroidColorBlue];
+            break;
+        case 1:
+            sprite.color = [UIColor colorWithHexString:asteroidColorBrownish];
+            break;
+        case 2:
+            sprite.color = [UIColor colorWithHexString:asteroidColorGreen];
+            break;
+        case 3:
+            sprite.color = [UIColor colorWithHexString:asteroidColorOrange];
+            break;
+        case 4:
+            sprite.color = [UIColor colorWithHexString:asteroidColorPurple];
+            break;
+        case 5:
+            sprite.color = [UIColor colorWithHexString:asteroidColorYella];
+            break;
+        default:
+            break;
+    }
+    sprite.colorBlendFactor = 1.0;
+    return sprite;
 }
 
 -(void)showCurrentSprites {
@@ -399,172 +412,159 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
     switch (asteroidNum) {
         case 0: {
-            CGPathMoveToPoint(path, NULL, 4 - offsetX, 15 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 2 - offsetX, 13 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 0 - offsetX, 9 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 0 - offsetX, 5 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 2 - offsetX, 1 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 5 - offsetX, 0 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 9 - offsetX, 0 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 12 - offsetX, 2 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 14 - offsetX, 5 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 14 - offsetX, 10 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 11 - offsetX, 14 - offsetY);
+            CGPathMoveToPoint(path, NULL, 9 - offsetX, 18 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 5 - offsetX, 16 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 3 - offsetX, 12 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 3 - offsetX, 8 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 6 - offsetX, 4 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 9 - offsetX, 3 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 12 - offsetX, 3 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 16 - offsetX, 6 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 18 - offsetX, 11 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 17 - offsetX, 12 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 15 - offsetX, 17 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 12 - offsetX, 18 - offsetY);
         }
             break;
         case 1:{
-            CGPathMoveToPoint(path, NULL, 4 - offsetX, 14 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 0 - offsetX, 10 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 0 - offsetX, 4 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 2 - offsetX, 1 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 5 - offsetX, 0 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 11 - offsetX, 0 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 14 - offsetX, 1 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 15 - offsetX, 5 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 15 - offsetX, 11 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 13 - offsetX, 14 - offsetY);
+            CGPathMoveToPoint(path, NULL, 8 - offsetX, 18 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 5 - offsetX, 16 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 3 - offsetX, 12 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 3 - offsetX, 8 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 8 - offsetX, 3 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 15 - offsetX, 3 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 19 - offsetX, 6 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 19 - offsetX, 13 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 18 - offsetX, 16 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 15 - offsetX, 18 - offsetY);
         }
             break;
         case 2: {
-            CGPathMoveToPoint(path, NULL, 0 - offsetX, 11 - offsetY);
+            CGPathMoveToPoint(path, NULL, 7 - offsetX, 19 - offsetY);
             CGPathAddLineToPoint(path, NULL, 4 - offsetX, 16 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 8 - offsetX, 15 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 14 - offsetX, 14 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 16 - offsetX, 12 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 16 - offsetX, 2 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 13 - offsetX, 0 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 2 - offsetX, 0 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 0 - offsetX, 2 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 3 - offsetX, 7 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 5 - offsetX, 4 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 16 - offsetX, 3 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 20 - offsetX, 5 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 20 - offsetX, 15 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 18 - offsetX, 18 - offsetY);
         }
             break;
         case 3: {
             CGPathMoveToPoint(path, NULL, 3 - offsetX, 21 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 0 - offsetX, 18 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 0 - offsetX, 7 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 1 - offsetX, 1 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 8 - offsetX, 0 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 12 - offsetX, 0 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 15 - offsetX, 2 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 15 - offsetX, 11 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 16 - offsetX, 14 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 16 - offsetX, 18 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 12 - offsetX, 21 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 3 - offsetX, 12 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 4 - offsetX, 7 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 5 - offsetX, 4 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 12 - offsetX, 3 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 16 - offsetX, 3 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 18 - offsetX, 6 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 18 - offsetX, 14 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 20 - offsetX, 19 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 17 - offsetX, 24 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 6 - offsetX, 24 - offsetY);
         }
             break;
         case 4: {
-            CGPathMoveToPoint(path, NULL, 8 - offsetX, 20 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 1 - offsetX, 19 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 0 - offsetX, 10 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 0 - offsetX, 3 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 3 - offsetX, 0 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 9 - offsetX, 0 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 17 - offsetX, 2 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 25 - offsetX, 3 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 26 - offsetX, 5 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 26 - offsetX, 11 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 24 - offsetX, 20 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 22 - offsetX, 22 - offsetY);
+            CGPathMoveToPoint(path, NULL, 5 - offsetX, 22 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 3 - offsetX, 11 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 3 - offsetX, 7 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 7 - offsetX, 2 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 13 - offsetX, 3 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 20 - offsetX, 6 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 28 - offsetX, 6 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 30 - offsetX, 9 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 28 - offsetX, 18 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 27 - offsetX, 23 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 23 - offsetX, 25 - offsetY);
         }
             break;
         case 5: {
-            CGPathMoveToPoint(path, NULL, 3 - offsetX, 17 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 0 - offsetX, 7 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 0 - offsetX, 3 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 3 - offsetX, 0 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 11 - offsetX, 0 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 25 - offsetX, 2 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 28 - offsetX, 4 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 28 - offsetX, 10 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 26 - offsetX, 17 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 23 - offsetX, 19 - offsetY);
+            CGPathMoveToPoint(path, NULL, 26 - offsetX, 22 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 7 - offsetX, 21 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 5 - offsetX, 19 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 5 - offsetX, 16 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 3 - offsetX, 9 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 4 - offsetX, 6 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 8 - offsetX, 3 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 21 - offsetX, 5 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 30 - offsetX, 5 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 32 - offsetX, 9 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 29 - offsetX, 20 - offsetY);
         }
             break;
         case 6: {
-            CGPathMoveToPoint(path, NULL, 13 - offsetX, 25 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 7 - offsetX, 20 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 0 - offsetX, 13 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 0 - offsetX, 8 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 7 - offsetX, 0 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 12 - offsetX, 0 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 17 - offsetX, 2 - offsetY);
+            CGPathMoveToPoint(path, NULL, 17 - offsetX, 29 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 3 - offsetX, 17 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 3 - offsetX, 12 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 11 - offsetX, 3 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 16 - offsetX, 3 - offsetY);
             CGPathAddLineToPoint(path, NULL, 22 - offsetX, 6 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 24 - offsetX, 13 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 24 - offsetX, 19 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 18 - offsetX, 24 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 27 - offsetX, 16 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 28 - offsetX, 22 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 23 - offsetX, 26 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 20 - offsetX, 28 - offsetY);
         }
             break;
         case 7: {
-            CGPathMoveToPoint(path, NULL, 10 - offsetX, 22 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 4 - offsetX, 19 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 0 - offsetX, 13 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 0 - offsetX, 8 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 2 - offsetX, 4 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 10 - offsetX, 0 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 18 - offsetX, 0 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 25 - offsetX, 3 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 28 - offsetX, 8 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 28 - offsetX, 15 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 25 - offsetX, 19 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 18 - offsetX, 21 - offsetY);
+            CGPathMoveToPoint(path, NULL, 3 - offsetX, 17 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 7 - offsetX, 23 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 14 - offsetX, 25 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 22 - offsetX, 25 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 29 - offsetX, 22 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 32 - offsetX, 17 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 32 - offsetX, 11 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 27 - offsetX, 6 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 19 - offsetX, 3 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 11 - offsetX, 4 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 5 - offsetX, 8 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 3 - offsetX, 13 - offsetY);
         }
             break;
         case 8: {
-            CGPathMoveToPoint(path, NULL, 11 - offsetX, 31 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 0 - offsetX, 21 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 0 - offsetX, 9 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 2 - offsetX, 4 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 9 - offsetX, 0 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 16 - offsetX, 0 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 20 - offsetX, 2 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 23 - offsetX, 6 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 24 - offsetX, 16 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 25 - offsetX, 18 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 25 - offsetX, 21 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 18 - offsetX, 29 - offsetY);
+            CGPathMoveToPoint(path, NULL, 15 - offsetX, 34 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 2 - offsetX, 24 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 3 - offsetX, 13 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 5 - offsetX, 7 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 12 - offsetX, 3 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 17 - offsetX, 3 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 22 - offsetX, 5 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 26 - offsetX, 9 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 26 - offsetX, 20 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 26 - offsetX, 20 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 28 - offsetX, 23 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 23 - offsetX, 32 - offsetY);
         }
             break;
         case 9: {
-            CGPathMoveToPoint(path, NULL, 8 - offsetX, 26 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 5 - offsetX, 24 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 0 - offsetX, 16 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 0 - offsetX, 6 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 6 - offsetX, 3 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 11 - offsetX, 0 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 17 - offsetX, 0 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 28 - offsetX, 6 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 28 - offsetX, 20 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 19 - offsetX, 26 - offsetY);
+            CGPathMoveToPoint(path, NULL, 13 - offsetX, 29 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 7 - offsetX, 27 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 4 - offsetX, 20 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 3 - offsetX, 11 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 5 - offsetX, 8 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 17 - offsetX, 3 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 26 - offsetX, 6 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 31 - offsetX, 9 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 31 - offsetX, 23 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 26 - offsetX, 27 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 20 - offsetX, 29 - offsetY);
         }
             break;
         case 10: {
-            CGPathMoveToPoint(path, NULL, 9 - offsetX, 29 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 0 - offsetX, 19 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 0 - offsetX, 10 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 4 - offsetX, 3 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 12 - offsetX, 0 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 19 - offsetX, 0 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 25 - offsetX, 3 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 30 - offsetX, 10 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 30 - offsetX, 18 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 24 - offsetX, 27 - offsetY);
+            CGPathMoveToPoint(path, NULL, 13 - offsetX, 33 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 4 - offsetX, 25 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 3 - offsetX, 19 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 3 - offsetX, 13 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 9 - offsetX, 6 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 15 - offsetX, 3 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 22 - offsetX, 3 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 30 - offsetX, 7 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 33 - offsetX, 15 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 33 - offsetX, 22 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 28 - offsetX, 30 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 22 - offsetX, 32 - offsetY);
         }
             break;
         case 11: {
-            CGPathMoveToPoint(path, NULL, 14 - offsetX, 32 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 4 - offsetX, 27 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 0 - offsetX, 18 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 0 - offsetX, 10 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 5 - offsetX, 3 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 12 - offsetX, 0 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 21 - offsetX, 0 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 30 - offsetX, 6 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 32 - offsetX, 11 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 32 - offsetX, 20 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 25 - offsetX, 30 - offsetY);
-            CGPathAddLineToPoint(path, NULL, 18 - offsetX, 32 - offsetY);
-        }
-            break;
-        case 12: {
             CGPathMoveToPoint(path, NULL, 18 - offsetX, 36 - offsetY);
             CGPathAddLineToPoint(path, NULL, 9 - offsetX, 32 - offsetY);
             CGPathAddLineToPoint(path, NULL, 4 - offsetX, 24 - offsetY);
