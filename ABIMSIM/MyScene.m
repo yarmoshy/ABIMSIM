@@ -20,6 +20,8 @@ static const uint32_t goalCategory = 0x1 << 3; // 000000000000000000000000000010
 #define MIN_VELOCITY 300
 #define MAX_ANGULAR_VELOCITY 1
 
+#define starBackMovement 1.2
+#define starFrontMovement 1.4
 
 #define starScaleLarge 1
 #define starScaleMedium 0.65
@@ -44,6 +46,8 @@ static const uint32_t goalCategory = 0x1 << 3; // 000000000000000000000000000010
     NSMutableArray *starSprites;
     NSMutableArray *currentBumperSpriteArray;
     NSNumber *safeToTransition;
+    SKSpriteNode *starBackLayer;
+    SKSpriteNode *starFrontLayer;
     int currentLevel;
 }
 
@@ -56,6 +60,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
 -(id)initWithSize:(CGSize)size {
     if (self = [super initWithSize:size]) {
         /* Setup your scene here */
+        
         self.physicsWorld.gravity = CGVectorMake(0.0f, 0.0f);
         SKPhysicsBody* borderBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:self.frame];
         self.physicsBody = borderBody;
@@ -65,6 +70,14 @@ CGFloat DegreesToRadians(CGFloat degrees)
         SKSpriteNode *background = [SKSpriteNode spriteNodeWithImageNamed:@"Background"];
         background.anchorPoint = CGPointZero;
         [self addChild:background];
+
+        starBackLayer = [[SKSpriteNode alloc] initWithColor:[UIColor clearColor] size:CGSizeMake(size.width, size.height * starBackMovement)];
+        starFrontLayer = [[SKSpriteNode alloc] initWithColor:[UIColor clearColor] size:CGSizeMake(size.width, size.height * starFrontMovement)];
+        starFrontLayer.anchorPoint = CGPointZero;
+        starBackLayer.anchorPoint = CGPointZero;
+        starBackLayer.position = starFrontLayer.position = CGPointMake(0, 0);
+        [self addChild:starBackLayer];
+        [self addChild:starFrontLayer];
 
         SKSpriteNode *ship = [SKSpriteNode spriteNodeWithImageNamed:@"Ship"];
         ship.name = shipCategoryName;
@@ -81,6 +94,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
         bumperSpritesArrays = [NSMutableArray array];
         currentBumperSpriteArray = [NSMutableArray array];
+        
+        
+        
         [self transitionStars];
         [self addChild:ship];
         [self generateInitialLevels];
@@ -126,6 +142,17 @@ CGFloat DegreesToRadians(CGFloat degrees)
 -(void)update:(CFTimeInterval)currentTime {
     /* Called before each frame is rendered */
     SKNode* ball = [self childNodeWithName: shipCategoryName];
+    
+    float yPercentageFromCenter = (ball.position.y - (self.view.frame.size.height/2.0))  / (self.view.frame.size.height / 2.0);
+    float frontMaxY = ((self.view.frame.size.height * starFrontMovement) - self.view.frame.size.height)/2.0;
+    float backMaxY = ((self.view.frame.size.height * starBackMovement) - self.view.frame.size.height)/2.0;
+    float frontY = (yPercentageFromCenter * frontMaxY);
+    frontY = frontY + (frontMaxY);
+    float backY = (yPercentageFromCenter * backMaxY);
+    backY = backY + (backMaxY);
+    starFrontLayer.position = CGPointMake(starFrontLayer.position.x, -frontY);
+    starBackLayer.position = CGPointMake(starBackLayer.position.x, -backY);
+
     static int maxSpeed = MAX_VELOCITY;
     float speed = sqrt(ball.physicsBody.velocity.dx*ball.physicsBody.velocity.dx + ball.physicsBody.velocity.dy * ball.physicsBody.velocity.dy);
     if (speed > maxSpeed) {
@@ -202,7 +229,12 @@ CGFloat DegreesToRadians(CGFloat degrees)
             SKSpriteNode *star = [SKSpriteNode spriteNodeWithImageNamed:@"LargeStar"];
             [starSprites addObject:star];
             float x = arc4random() % (int)self.frame.size.width * 1;
-            float y = arc4random() % (int)self.frame.size.height * 1;
+            float y;
+            if (i < 6) {
+                y = arc4random() % (int)(self.frame.size.height * starBackMovement * 1);
+            } else {
+                y = arc4random() % (int)(self.frame.size.height * starFrontMovement * 1);
+            }
             star.position = CGPointMake(x, y);
             int size = arc4random() % 3;
             switch (size) {
@@ -235,20 +267,33 @@ CGFloat DegreesToRadians(CGFloat degrees)
                     break;
             }
             star.colorBlendFactor = 1.0;
-            [self addChild:star];
+            if (i < 6) {
+                [starBackLayer addChild:star];
+            } else {
+                [starFrontLayer addChild:star];
+            }
         }
         for (int i = 0; i < 12; i++) {
             SKSpriteNode *star = [SKSpriteNode spriteNodeWithImageNamed:@"LargeStar"];
             [starSprites addObject:star];
             star.xScale = star.yScale = 0;
             star.colorBlendFactor = 1.0;
-            [self addChild:star];
+            if (i < 6) {
+                [starBackLayer addChild:star];
+            } else {
+                [starFrontLayer addChild:star];
+            }
         }
     } else {
         int i = 0;
         for (SKSpriteNode *star in starSprites) {
             float x = arc4random() % (int)self.frame.size.width * 1;
-            float y = arc4random() % (int)self.frame.size.height * 1;
+            float y;
+            if (i < 6) {
+                y = arc4random() % (int)(self.frame.size.height * starBackMovement * 1);
+            } else {
+                y = arc4random() % (int)(self.frame.size.height * starFrontMovement * 1);
+            }
             float scale = 0;
             if (star.yScale == 0) {
                 star.position = CGPointMake(x, y);
