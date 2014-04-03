@@ -8,14 +8,13 @@
 static NSString* shipCategoryName = @"ship";
 static NSString* asteroidCategoryName = @"asteroid";
 static NSString* planetCategoryName = @"planet";
-//static NSString* planetBorderCategoryName = @"planetBorder";
 static NSString* goalCategoryName = @"goal";
 
-static const uint32_t shipCategory  = 0x1 << 0;  // 00000000000000000000000000000001
-static const uint32_t asteroidCategory = 0x1 << 1; // 00000000000000000000000000000010
-static const uint32_t planetCategory = 0x1 << 2;  // 00000000000000000000000000000100
-//static const uint32_t planetBorderCategory = 0x1 << 3;  // 00000000000000000000000000001000
-static const uint32_t goalCategory = 0x1 << 3; // 00000000000000000000000000010000
+static const uint32_t borderCategory  = 0x1 << 0;  // 00000000000000000000000000000001
+static const uint32_t shipCategory  = 0x1 << 1;  // 00000000000000000000000000000001
+static const uint32_t asteroidCategory = 0x1 << 2; // 00000000000000000000000000000010
+static const uint32_t planetCategory = 0x1 << 3;  // 00000000000000000000000000000100
+static const uint32_t goalCategory = 0x1 << 4; // 00000000000000000000000000001000
 
 
 #define MAX_VELOCITY 300
@@ -39,6 +38,10 @@ static const uint32_t goalCategory = 0x1 << 3; // 000000000000000000000000000100
 #define asteroidColorBrownish @"c69b30"
 #define asteroidColorYella @"dbdb0b"
 #define asteroidColorPurple @"9e3dd1"
+
+
+#define orbitJoint @"orbitJoint"
+#define moonsArray @"moonsArray"
 
 #import "MyScene.h"
 #import "HexColor.h"
@@ -65,6 +68,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         
         self.physicsWorld.gravity = CGVectorMake(0.0f, 0.0f);
         SKPhysicsBody* borderBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:self.frame];
+        borderBody.categoryBitMask = borderCategory;
         self.physicsBody = borderBody;
         self.physicsBody.friction = 0.0f;
         self.physicsWorld.contactDelegate = self;
@@ -90,7 +94,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         ship.physicsBody.linearDamping = 0.0f;
         ship.physicsBody.allowsRotation = NO;
         ship.physicsBody.categoryBitMask = shipCategory;
-        ship.physicsBody.collisionBitMask = asteroidCategory | planetCategory;
+        ship.physicsBody.collisionBitMask = borderCategory | asteroidCategory | planetCategory;
         ship.physicsBody.contactTestBitMask = goalCategory;
         ship.physicsBody.mass = ship.frame.size.width;
 
@@ -351,7 +355,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
             [spriteArray addObject:asteroid];
         }
         SKSpriteNode *planet = [self randomPlanet];
-        [self randomizeSprite:planet];
         planet.hidden = YES;
         [spriteArray addObject:planet];
         CGRect goalRect;
@@ -382,8 +385,10 @@ CGFloat DegreesToRadians(CGFloat degrees)
             [currentSpriteArray[i] setHidden:YES];
         }if ([[currentSpriteArray[i] name] isEqual:planetCategoryName]) {
             [currentSpriteArray[i] removeFromParent];
+            for (SKSpriteNode *moon in ((SKSpriteNode*)currentSpriteArray[i]).userData[moonsArray]) {
+                [moon removeFromParent];
+            }
             currentSpriteArray[i] = [self randomPlanet];
-            [self randomizeSprite:currentSpriteArray[i]];
             [currentSpriteArray[i] setHidden:YES];
         }
     }
@@ -404,7 +409,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     sprite.physicsBody.linearDamping = 0.0f;
     sprite.physicsBody.dynamic = YES;
     sprite.physicsBody.categoryBitMask = asteroidCategory;
-    sprite.physicsBody.collisionBitMask = shipCategory | asteroidCategory | planetCategory;
+    sprite.physicsBody.collisionBitMask = borderCategory | shipCategory | asteroidCategory | planetCategory;
     sprite.physicsBody.mass = sprite.size.width;
     sprite.name = asteroidCategoryName;
     sprite.physicsBody.allowsRotation = YES;
@@ -463,7 +468,10 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
     
     [sprite runAction:[SKAction repeatActionForever:[SKAction followPath:hoverPath.CGPath asOffset:YES orientToPath:NO duration:30]]];
+    [self randomizeSprite:sprite];
 
+    sprite.userData = [NSMutableDictionary dictionary];
+    sprite.userData[moonsArray] = @[[self moonForPlanetNum:planetNum withPlanet:sprite]];
     return sprite;
 }
 
@@ -479,6 +487,53 @@ CGFloat DegreesToRadians(CGFloat degrees)
     }
 }
 
+-(SKSpriteNode*)moonForPlanetNum:(int)planetNum withPlanet:(SKSpriteNode*)planet {
+    NSString *imageName = [NSString stringWithFormat:@"Asteroid_%d",planetNum];
+    SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithImageNamed:imageName];
+    sprite.physicsBody = [SKPhysicsBody bodyWithPolygonFromPath:[self pathForAsteroidNum:planetNum withSprite:sprite]];
+    sprite.physicsBody.friction = 0.0f;
+    sprite.physicsBody.restitution = 1.0f;
+    sprite.physicsBody.linearDamping = 0.0f;
+    sprite.physicsBody.dynamic = YES;
+    sprite.physicsBody.categoryBitMask = asteroidCategory;
+    sprite.physicsBody.collisionBitMask = shipCategory | asteroidCategory | planetCategory;
+    sprite.physicsBody.mass = sprite.size.width;
+    sprite.name = asteroidCategoryName;
+    sprite.physicsBody.allowsRotation = YES;
+    int colorInt = arc4random() % 6;
+    switch (colorInt) {
+        case 0:
+            sprite.color = [UIColor colorWithHexString:asteroidColorBlue];
+            break;
+        case 1:
+            sprite.color = [UIColor colorWithHexString:asteroidColorBrownish];
+            break;
+        case 2:
+            sprite.color = [UIColor colorWithHexString:asteroidColorGreen];
+            break;
+        case 3:
+            sprite.color = [UIColor colorWithHexString:asteroidColorOrange];
+            break;
+        case 4:
+            sprite.color = [UIColor colorWithHexString:asteroidColorPurple];
+            break;
+        case 5:
+            sprite.color = [UIColor colorWithHexString:asteroidColorYella];
+            break;
+        default:
+            break;
+    }
+    sprite.colorBlendFactor = 1.0;
+    
+    sprite.position = CGPointMake(planet.position.x + planet.size.width/4 + sprite.size.width * 2, planet.position.y) ;
+
+    SKPhysicsJointPin *centerPin = [SKPhysicsJointPin jointWithBodyA:sprite.physicsBody bodyB: planet.physicsBody anchor:planet.position];
+    sprite.userData = [NSMutableDictionary dictionary];
+    sprite.userData[orbitJoint] = centerPin;
+    sprite.hidden = YES;
+    return sprite;
+}
+
 -(void)showCurrentSprites {
     for (SKSpriteNode *sprite in currentSpriteArray) {
         if ([sprite.name isEqual:asteroidCategoryName]) {
@@ -487,6 +542,14 @@ CGFloat DegreesToRadians(CGFloat degrees)
         } else if ([sprite.name isEqual:planetCategoryName]) {
             sprite.hidden = NO;
             [self addChild:sprite];
+            for (SKSpriteNode *moon in sprite.userData[moonsArray]) {
+                moon.hidden = NO;
+                [self addChild:moon];
+                [self.physicsWorld addJoint:moon.userData[orbitJoint]];
+                CGVector impulse = CGVectorMake(0,100);
+                [moon.physicsBody applyImpulse:impulse];
+                NSLog(@"test");
+            }
         } else if ([sprite.name isEqual:goalCategoryName]) {
             [self addChild:sprite];
         }
