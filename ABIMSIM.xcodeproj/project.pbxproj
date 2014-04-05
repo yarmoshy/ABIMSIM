@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		B400A32D18EF89030068E4A9 /* Planet_0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B400A32C18EF89030068E4A9 /* Planet_0@2x.png */; };
-		B400A33918EF98F50068E4A9 /* WarpBack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B400A33818EF98F50068E4A9 /* WarpBack@2x.png */; };
-		B400A33B18EF98FC0068E4A9 /* WarpFront@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B400A33A18EF98FC0068E4A9 /* WarpFront@2x.png */; };
 		B45865E518DA153C005C9566 /* Background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B45865D718DA153C005C9566 /* Background@2x.png */; };
 		B45865E918DA15C9005C9566 /* Ship@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B45865E818DA15C9005C9566 /* Ship@2x.png */; };
 		B45865EC18DA3ACA005C9566 /* HexColor.m in Sources */ = {isa = PBXBuildFile; fileRef = B45865EB18DA3ACA005C9566 /* HexColor.m */; };
@@ -56,8 +54,6 @@
 
 /* Begin PBXFileReference section */
 		B400A32C18EF89030068E4A9 /* Planet_0@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_0@2x.png"; sourceTree = "<group>"; };
-		B400A33818EF98F50068E4A9 /* WarpBack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WarpBack@2x.png"; sourceTree = "<group>"; };
-		B400A33A18EF98FC0068E4A9 /* WarpFront@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "WarpFront@2x.png"; sourceTree = "<group>"; };
 		B45865D718DA153C005C9566 /* Background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Background@2x.png"; sourceTree = "<group>"; };
 		B45865E818DA15C9005C9566 /* Ship@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Ship@2x.png"; sourceTree = "<group>"; };
 		B45865EA18DA3ACA005C9566 /* HexColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HexColor.h; sourceTree = "<group>"; };
@@ -190,8 +186,6 @@
 				B45FF13F18CE8708001662CD /* ViewController.m */,
 				B45FF14118CE8708001662CD /* MyScene.h */,
 				B45FF14218CE8708001662CD /* MyScene.m */,
-				B400A33818EF98F50068E4A9 /* WarpBack@2x.png */,
-				B400A33A18EF98FC0068E4A9 /* WarpFront@2x.png */,
 				B45865E718DA154F005C9566 /* Assets */,
 				B45FF14618CE8708001662CD /* Images.xcassets */,
 				B45FF13018CE8708001662CD /* Supporting Files */,
@@ -324,8 +318,6 @@
 				B47E22D718DBA7E200F42EBB /* Asteroid_10@2x.png in Resources */,
 				B45865E518DA153C005C9566 /* Background@2x.png in Resources */,
 				B47E22D318DBA7E200F42EBB /* Asteroid_6@2x.png in Resources */,
-				B400A33918EF98F50068E4A9 /* WarpBack@2x.png in Resources */,
-				B400A33B18EF98FC0068E4A9 /* WarpFront@2x.png in Resources */,
 				B47E22CF18DBA7E200F42EBB /* Asteroid_2@2x.png in Resources */,
 				B47E22D418DBA7E200F42EBB /* Asteroid_7@2x.png in Resources */,
 			);

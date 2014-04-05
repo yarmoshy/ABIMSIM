@@ -103,32 +103,32 @@ CGFloat DegreesToRadians(CGFloat degrees)
         spritesArrays = [NSMutableArray array];
         currentSpriteArray = [NSMutableArray array];
         
-        SKSpriteNode *warpBack = [SKSpriteNode spriteNodeWithImageNamed:@"WarpBack"];
-        warpBack.anchorPoint = CGPointMake(0, 1);
-        warpBack.position = CGPointMake(0, size.height);
-        warpBack.alpha = 0.3;
-        
-        SKSpriteNode *warpFront = [SKSpriteNode spriteNodeWithImageNamed:@"WarpFront"];
-        warpFront.anchorPoint = CGPointMake(0, 1);
-        warpFront.position = CGPointMake(0, size.height);
-
-        SKSpriteNode *warpBack2 = [SKSpriteNode spriteNodeWithImageNamed:@"WarpBack"];
-        warpBack2.anchorPoint = CGPointMake(0, 0);
-        warpBack2.position = CGPointMake(size.width, warpBack2.size.height);
-        warpBack2.alpha = 0.3;
-        warpBack2.zRotation = M_PI;
-
-        SKSpriteNode *warpFront2 = [SKSpriteNode spriteNodeWithImageNamed:@"WarpFront"];
-        warpFront2.anchorPoint = CGPointMake(0, 0);
-        warpFront2.position = CGPointMake(size.width, warpFront2.size.height);
-        warpFront2.zRotation = M_PI;
+//        SKSpriteNode *warpBack = [SKSpriteNode spriteNodeWithImageNamed:@"WarpBack"];
+//        warpBack.anchorPoint = CGPointMake(0, 1);
+//        warpBack.position = CGPointMake(0, size.height);
+//        warpBack.alpha = 0.3;
+//        
+//        SKSpriteNode *warpFront = [SKSpriteNode spriteNodeWithImageNamed:@"WarpFront"];
+//        warpFront.anchorPoint = CGPointMake(0, 1);
+//        warpFront.position = CGPointMake(0, size.height);
+//
+//        SKSpriteNode *warpBack2 = [SKSpriteNode spriteNodeWithImageNamed:@"WarpBack"];
+//        warpBack2.anchorPoint = CGPointMake(0, 0);
+//        warpBack2.position = CGPointMake(size.width, warpBack2.size.height);
+//        warpBack2.alpha = 0.3;
+//        warpBack2.zRotation = M_PI;
+//
+//        SKSpriteNode *warpFront2 = [SKSpriteNode spriteNodeWithImageNamed:@"WarpFront"];
+//        warpFront2.anchorPoint = CGPointMake(0, 0);
+//        warpFront2.position = CGPointMake(size.width, warpFront2.size.height);
+//        warpFront2.zRotation = M_PI;
         
         [self transitionStars];
-        [self addChild:warpBack];
-        [self addChild:warpBack2];
+//        [self addChild:warpBack];
+//        [self addChild:warpBack2];
         [self addChild:ship];
-        [self addChild:warpFront];
-        [self addChild:warpFront2];
+//        [self addChild:warpFront];
+//        [self addChild:warpFront2];
 
         [self generateInitialLevels];
         safeToTransition = @YES;
@@ -236,6 +236,10 @@ CGFloat DegreesToRadians(CGFloat degrees)
                 });
             }
         }
+        if (firstBody.categoryBitMask == asteroidCategory && secondBody.categoryBitMask == goalCategory) {
+            [firstBody.node removeFromParent];
+        }
+
     }
 }
 
@@ -436,6 +440,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
     sprite.physicsBody.dynamic = YES;
     sprite.physicsBody.categoryBitMask = asteroidCategory;
     sprite.physicsBody.collisionBitMask = borderCategory | shipCategory | asteroidCategory | planetCategory;
+    sprite.physicsBody.contactTestBitMask = goalCategory;
+
     sprite.physicsBody.mass = sprite.size.width;
     sprite.name = asteroidCategoryName;
     sprite.physicsBody.allowsRotation = YES;
@@ -470,12 +476,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
     int planetNum = arc4random() % 1;
     NSString *imageName = [NSString stringWithFormat:@"Planet_%d",planetNum];
     SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithImageNamed:imageName];
-    sprite.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:[self radiusForPlanetNum:planetNum]];
-    sprite.physicsBody.dynamic = NO;
-    sprite.physicsBody.categoryBitMask = planetCategory;
-    sprite.physicsBody.collisionBitMask = shipCategory | asteroidCategory | planetCategory;
-    sprite.name = planetCategoryName;
-    sprite.physicsBody.allowsRotation = NO;
     
     UIBezierPath *hoverPath = [UIBezierPath bezierPath];
 	[hoverPath moveToPoint:sprite.position];
@@ -491,13 +491,21 @@ CGFloat DegreesToRadians(CGFloat degrees)
 	[hoverPath addCurveToPoint:sprite.position
 				 controlPoint1:CGPointMake(sprite.position.x - (sprite.size.width * 0.1), sprite.position.y - sprite.size.height * 0.1)
 				 controlPoint2:CGPointMake(sprite.position.x, sprite.position.y - sprite.size.height * 0.1)];
-
+    
     
     [sprite runAction:[SKAction repeatActionForever:[SKAction followPath:hoverPath.CGPath asOffset:YES orientToPath:NO duration:30]]];
     [self randomizeSprite:sprite];
 
+    sprite.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:[self radiusForPlanetNum:planetNum]];
+    sprite.physicsBody.dynamic = NO;
+    sprite.physicsBody.categoryBitMask = planetCategory;
+    sprite.physicsBody.collisionBitMask = shipCategory | asteroidCategory | planetCategory;
+    sprite.name = planetCategoryName;
+    sprite.physicsBody.allowsRotation = NO;
+    
     sprite.userData = [NSMutableDictionary dictionary];
     sprite.userData[moonsArray] = @[[self moonForPlanetNum:planetNum withPlanet:sprite]];
+
     return sprite;
 }
 
@@ -516,6 +524,10 @@ CGFloat DegreesToRadians(CGFloat degrees)
 -(SKSpriteNode*)moonForPlanetNum:(int)planetNum withPlanet:(SKSpriteNode*)planet {
     NSString *imageName = [NSString stringWithFormat:@"Asteroid_%d",planetNum];
     SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithImageNamed:imageName];
+    float distance = planet.size.width/2 + sprite.size.width/2;
+    float angle = arc4random() % 360;
+    sprite.position = CGPointMake(planet.position.x + (cosf(DegreesToRadians(angle)) * distance), planet.position.y + (sinf(DegreesToRadians(angle)) * distance)) ;
+
     sprite.physicsBody = [SKPhysicsBody bodyWithPolygonFromPath:[self pathForAsteroidNum:planetNum withSprite:sprite]];
     sprite.physicsBody.friction = 0.0f;
     sprite.physicsBody.restitution = 1.0f;
@@ -550,9 +562,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
             break;
     }
     sprite.colorBlendFactor = 1.0;
-    float distance = planet.size.width/2 + sprite.size.width/2;
-    float angle = arc4random() % 360;
-    sprite.position = CGPointMake(planet.position.x + (cosf(DegreesToRadians(angle)) * distance), planet.position.y + (sinf(DegreesToRadians(angle)) * distance)) ;
 
     SKPhysicsJointPin *centerPin = [SKPhysicsJointPin jointWithBodyA:sprite.physicsBody bodyB: planet.physicsBody anchor:planet.position];
     sprite.userData = [NSMutableDictionary dictionary];
