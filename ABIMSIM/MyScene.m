@@ -478,11 +478,11 @@ CGFloat DegreesToRadians(CGFloat degrees)
 -(float)radiusForPlanetNum:(int)planetNum {
     switch (planetNum) {
         case 0:
-            return 60.5f;
+            return 30.f;
             break;
             
         default:
-            return 60.5f;
+            return 30.f;
             break;
     }
 }
@@ -524,8 +524,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
             break;
     }
     sprite.colorBlendFactor = 1.0;
-    
-    sprite.position = CGPointMake(planet.position.x + planet.size.width/4 + sprite.size.width * 2, planet.position.y) ;
+    float distance = planet.size.width/2 + sprite.size.width/2;
+    float angle = arc4random() % 360;
+    sprite.position = CGPointMake(planet.position.x + (cosf(DegreesToRadians(angle)) * distance), planet.position.y + (sinf(DegreesToRadians(angle)) * distance)) ;
 
     SKPhysicsJointPin *centerPin = [SKPhysicsJointPin jointWithBodyA:sprite.physicsBody bodyB: planet.physicsBody anchor:planet.position];
     sprite.userData = [NSMutableDictionary dictionary];
@@ -546,9 +547,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
                 moon.hidden = NO;
                 [self addChild:moon];
                 [self.physicsWorld addJoint:moon.userData[orbitJoint]];
-                CGVector impulse = CGVectorMake(0,100);
-                [moon.physicsBody applyImpulse:impulse];
-                NSLog(@"test");
+                moon.physicsBody.angularVelocity = 100;
             }
         } else if ([sprite.name isEqual:goalCategoryName]) {
             [self addChild:sprite];
@@ -561,8 +560,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
     float maxHeight = self.frame.size.height - ([self childNodeWithName:shipCategoryName].frame.size.height*2) - (sprite.size.height*2);
     float y = (arc4random() % ((int)maxHeight)) + [self childNodeWithName:shipCategoryName].frame.size.height + sprite.size.height;
     sprite.position = CGPointMake(x, y);
-    sprite.zRotation = DegreesToRadians(arc4random() % 360);
     if ([sprite.name isEqualToString:asteroidCategoryName]) {
+        sprite.zRotation = DegreesToRadians(arc4random() % 360);
         float velocity = arc4random() % (MAX_VELOCITY/2);
         sprite.physicsBody.velocity = CGVectorMake(velocity * cosf(sprite.zRotation), velocity * -sinf(sprite.zRotation));
     }
