@@ -17,6 +17,8 @@ static const uint32_t planetCategory = 0x1 << 3;  // 000000000000000000000000000
 static const uint32_t goalCategory = 0x1 << 4; // 00000000000000000000000000001000
 
 
+#define kExtraSpaceOffScreen 50
+
 #define MAX_VELOCITY 300
 #define MIN_VELOCITY 300
 #define MAX_ANGULAR_VELOCITY 1
@@ -67,7 +69,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         /* Setup your scene here */
         
         self.physicsWorld.gravity = CGVectorMake(0.0f, 0.0f);
-        SKPhysicsBody* borderBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:self.frame];
+        SKPhysicsBody* borderBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:CGRectMake(0, -kExtraSpaceOffScreen, size.width, size.height+kExtraSpaceOffScreen*2)];
         borderBody.categoryBitMask = borderCategory;
         self.physicsBody = borderBody;
         self.physicsBody.friction = 0.0f;
@@ -101,10 +103,33 @@ CGFloat DegreesToRadians(CGFloat degrees)
         spritesArrays = [NSMutableArray array];
         currentSpriteArray = [NSMutableArray array];
         
+        SKSpriteNode *warpBack = [SKSpriteNode spriteNodeWithImageNamed:@"WarpBack"];
+        warpBack.anchorPoint = CGPointMake(0, 1);
+        warpBack.position = CGPointMake(0, size.height);
+        warpBack.alpha = 0.3;
         
+        SKSpriteNode *warpFront = [SKSpriteNode spriteNodeWithImageNamed:@"WarpFront"];
+        warpFront.anchorPoint = CGPointMake(0, 1);
+        warpFront.position = CGPointMake(0, size.height);
+
+        SKSpriteNode *warpBack2 = [SKSpriteNode spriteNodeWithImageNamed:@"WarpBack"];
+        warpBack2.anchorPoint = CGPointMake(0, 0);
+        warpBack2.position = CGPointMake(size.width, warpBack2.size.height);
+        warpBack2.alpha = 0.3;
+        warpBack2.zRotation = M_PI;
+
+        SKSpriteNode *warpFront2 = [SKSpriteNode spriteNodeWithImageNamed:@"WarpFront"];
+        warpFront2.anchorPoint = CGPointMake(0, 0);
+        warpFront2.position = CGPointMake(size.width, warpFront2.size.height);
+        warpFront2.zRotation = M_PI;
         
         [self transitionStars];
+        [self addChild:warpBack];
+        [self addChild:warpBack2];
         [self addChild:ship];
+        [self addChild:warpFront];
+        [self addChild:warpFront2];
+
         [self generateInitialLevels];
         safeToTransition = @YES;
     }
@@ -359,9 +384,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
         [spriteArray addObject:planet];
         CGRect goalRect;
         if (endAtTop) {
-            goalRect = CGRectMake(self.frame.origin.x, self.frame.size.height, self.frame.size.width, 1);
+            goalRect = CGRectMake(self.frame.origin.x, self.frame.size.height + kExtraSpaceOffScreen, self.frame.size.width, 1);
         } else {
-            goalRect = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, 1);
+            goalRect = CGRectMake(self.frame.origin.x, self.frame.origin.y - kExtraSpaceOffScreen, self.frame.size.width, 1);
         }
         SKNode* goal = [SKNode node];
         goal.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:goalRect];
@@ -370,7 +395,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         [spriteArray addObject:goal];
         
         [spritesArrays addObject:spriteArray];
-        endAtTop = !endAtTop;
+//        endAtTop = !endAtTop;
     }
     currentSpriteArray = [spritesArrays firstObject];
     [self showCurrentSprites];
@@ -397,6 +422,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     currentSpriteArray = spritesArrays[0];
     [self showCurrentSprites];
     safeToTransition = @YES;
+    [self childNodeWithName:shipCategoryName].position = CGPointMake([self childNodeWithName:shipCategoryName].position.x, -kExtraSpaceOffScreen + ((SKSpriteNode*)[self childNodeWithName:shipCategoryName]).size.height/2);
 }
 
 -(SKSpriteNode*)randomAsteroid {
