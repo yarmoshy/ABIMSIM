@@ -40,6 +40,9 @@
 		B47E22D618DBA7E200F42EBB /* Asteroid_9@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B47E22CA18DBA7E200F42EBB /* Asteroid_9@2x.png */; };
 		B47E22D718DBA7E200F42EBB /* Asteroid_10@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B47E22CB18DBA7E200F42EBB /* Asteroid_10@2x.png */; };
 		B47E22D818DBA7E200F42EBB /* Asteroid_11@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B47E22CC18DBA7E200F42EBB /* Asteroid_11@2x.png */; };
+		B4B66FF718F6229300E2BE70 /* ShipShield@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4B66FF618F6229300E2BE70 /* ShipShield@2x.png */; };
+		B4B66FFB18F6290E00E2BE70 /* ShieldPowerUp@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4B66FFA18F6290E00E2BE70 /* ShieldPowerUp@2x.png */; };
+		B4B66FFD18F62B2700E2BE70 /* ShipShieldImpact@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4B66FFC18F62B2700E2BE70 /* ShipShieldImpact@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,6 +96,9 @@
 		B47E22CA18DBA7E200F42EBB /* Asteroid_9@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Asteroid_9@2x.png"; sourceTree = "<group>"; };
 		B47E22CB18DBA7E200F42EBB /* Asteroid_10@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Asteroid_10@2x.png"; sourceTree = "<group>"; };
 		B47E22CC18DBA7E200F42EBB /* Asteroid_11@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Asteroid_11@2x.png"; sourceTree = "<group>"; };
+		B4B66FF618F6229300E2BE70 /* ShipShield@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ShipShield@2x.png"; sourceTree = "<group>"; };
+		B4B66FFA18F6290E00E2BE70 /* ShieldPowerUp@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ShieldPowerUp@2x.png"; sourceTree = "<group>"; };
+		B4B66FFC18F62B2700E2BE70 /* ShipShieldImpact@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ShipShieldImpact@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +129,10 @@
 		B45865E718DA154F005C9566 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				B4B66FF618F6229300E2BE70 /* ShipShield@2x.png */,
+				B4B66FFA18F6290E00E2BE70 /* ShieldPowerUp@2x.png */,
+				B4B66FFC18F62B2700E2BE70 /* ShipShieldImpact@2x.png */,
+				B45865E818DA15C9005C9566 /* Ship@2x.png */,
 				B47E22C118DBA7E200F42EBB /* Asteroid_0@2x.png */,
 				B47E22C218DBA7E200F42EBB /* Asteroid_1@2x.png */,
 				B47E22C318DBA7E200F42EBB /* Asteroid_2@2x.png */,
@@ -138,7 +148,6 @@
 				B400A32C18EF89030068E4A9 /* Planet_0@2x.png */,
 				B45865D718DA153C005C9566 /* Background@2x.png */,
 				B45865ED18DA6612005C9566 /* LargeStar@2x.png */,
-				B45865E818DA15C9005C9566 /* Ship@2x.png */,
 			);
 			name = Assets;
 			sourceTree = "<group>";
@@ -312,10 +321,13 @@
 				B47E22D518DBA7E200F42EBB /* Asteroid_8@2x.png in Resources */,
 				B47E22D218DBA7E200F42EBB /* Asteroid_5@2x.png in Resources */,
 				B45FF13D18CE8708001662CD /* Main.storyboard in Resources */,
+				B4B66FF718F6229300E2BE70 /* ShipShield@2x.png in Resources */,
+				B4B66FFB18F6290E00E2BE70 /* ShieldPowerUp@2x.png in Resources */,
 				B47E22D018DBA7E200F42EBB /* Asteroid_3@2x.png in Resources */,
 				B45865EE18DA6612005C9566 /* LargeStar@2x.png in Resources */,
 				B45865E918DA15C9005C9566 /* Ship@2x.png in Resources */,
 				B47E22D718DBA7E200F42EBB /* Asteroid_10@2x.png in Resources */,
+				B4B66FFD18F62B2700E2BE70 /* ShipShieldImpact@2x.png in Resources */,
 				B45865E518DA153C005C9566 /* Background@2x.png in Resources */,
 				B47E22D318DBA7E200F42EBB /* Asteroid_6@2x.png in Resources */,
 				B47E22CF18DBA7E200F42EBB /* Asteroid_2@2x.png in Resources */,
