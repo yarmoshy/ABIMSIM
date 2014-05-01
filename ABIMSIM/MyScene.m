@@ -432,7 +432,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
 }
 
 -(void)generateInitialLevels {
-    for (int i = 0; i < 10; i++) {
+    currentLevel = 1;
+    for (int i = 1; i <= 10; i++) {
         NSMutableArray *spriteArray = [NSMutableArray array];
         NSMutableArray *asteroids = [self asteroidsForLevel:i];
         [spriteArray addObjectsFromArray:asteroids];
@@ -471,7 +472,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     [currentSpriteArray addObjectsFromArray:asteroids];
     NSMutableArray *planets = [self planetsForLevel:currentLevel+10];
     [currentSpriteArray addObjectsFromArray:planets];
-    
+    currentLevel++;
     CGRect goalRect;
     goalRect = CGRectMake(self.frame.origin.x, self.frame.size.height + kExtraSpaceOffScreen, self.frame.size.width, 1);
     SKNode* goal = [SKNode node];
@@ -493,7 +494,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
 -(NSMutableArray*)asteroidsForLevel:(int)level {
     NSMutableArray *asteroids = [NSMutableArray array];
-    int numOfAsteroids = arc4random() % [self maxNumberOfAsteroidsForLevel:level];
+    int numOfAsteroids = arc4random() % ([self maxNumberOfAsteroidsForLevel:level]+1);
     if (numOfAsteroids < [self minNumberOfAsteroidsForLevel:level]) {
         numOfAsteroids = [self minNumberOfAsteroidsForLevel:level];
     }
@@ -508,15 +509,79 @@ CGFloat DegreesToRadians(CGFloat degrees)
 }
 
 -(int)maxAsteroidNumForLevel:(int)level {
-    return 12;
+    if (level <= 2) {
+        return 1;
+    } else if (level <= 5) {
+        return 2;
+    } else if (level <= 10) {
+        return 3;
+    } else if (level <= 15) {
+        return 4;
+    } else if (level <= 20) {
+        return 5;
+    } else if (level <= 25) {
+        return 6;
+    } else if (level <= 30) {
+        return 7;
+    } else if (level <= 35) {
+        return 8;
+    } else if (level <= 40) {
+        return 9;
+    } else if (level <= 45) {
+        return 10;
+    } else if (level <= 55) {
+        return 11;
+    } else {
+        return 12;
+    }
 }
 
 -(int)maxNumberOfAsteroidsForLevel:(int)level {
-    return 11;
+    if (level <= 2) {
+        return 1;
+    } else if (level <= 5) {
+        return 2;
+    } else if (level <= 10) {
+        return 3;
+    } else if (level <= 20) {
+        return 4;
+    } else if (level <= 30) {
+        return 5;
+    } else if (level <= 40) {
+        return 6;
+    } else if (level <= 45) {
+        return 7;
+    } else if (level <= 50) {
+        return 8;
+    } else if (level <= 60) {
+        return 9;
+    } else {
+        return 10;
+    }
 }
 
 -(int)minNumberOfAsteroidsForLevel:(int)level {
-    return 1;
+    if (level <= 2) {
+        return 1;
+    } else if (level <= 15) {
+        return 2;
+    } else if (level <= 25) {
+        return 3;
+    } else if (level <= 35) {
+        return 4;
+    } else if (level <= 50) {
+        return 5;
+    } else if (level <= 65) {
+        return 6;
+    } else if (level <= 70) {
+        return 7;
+    } else if (level <= 75) {
+        return 8;
+    } else if (level <= 90) {
+        return 9;
+    } else {
+        return 10;
+    }
 }
 
 -(SKSpriteNode*)randomAsteroidForLevel:(int)level {
@@ -565,7 +630,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
 -(NSMutableArray*)planetsForLevel:(int)level {
     NSMutableArray *planets = [NSMutableArray array];
-    int numOfPlanets = arc4random() % [self maxNumberOfPlanetsForLevel:level];
+    int numOfPlanets = arc4random() % ([self maxNumberOfPlanetsForLevel:level] + 1);
     if (numOfPlanets < [self minNumberOfPlanetsForLevel:level]) {
         numOfPlanets = [self minNumberOfPlanetsForLevel:level];
     }
@@ -580,15 +645,41 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
 
 -(int)maxPlanetNumForLevel:(int)level {
-    return 6;
+    if (level <= 5) {
+        return 1;
+    } else if (level <= 10) {
+        return 2;
+    } else if (level <= 15) {
+        return 3;
+    } else if (level <= 20) {
+        return 4;
+    } else if (level <= 25) {
+        return 5;
+    } else {
+        return 6;
+    }
 }
 
 -(int)maxNumberOfPlanetsForLevel:(int)level {
-    return 4;
+    if (level <= 5) {
+        return 0;
+    } else if (level <= 10) {
+        return 1;
+    } else if (level <= 20) {
+        return 2;
+    } else {
+        return 3;
+    }
 }
 
 -(int)minNumberOfPlanetsForLevel:(int)level {
-    return 0;
+    if (level <= 15) {
+        return 0;
+    } else if (level <= 30) {
+        return 1;
+    } else {
+        return 2;
+    }
 }
 
 
