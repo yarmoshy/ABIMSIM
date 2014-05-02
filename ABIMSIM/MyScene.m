@@ -121,6 +121,14 @@ CGFloat DegreesToRadians(CGFloat degrees)
         spritesArrays = [NSMutableArray array];
         currentSpriteArray = [NSMutableArray array];
         
+        SKLabelNode *level = [[SKLabelNode alloc] initWithFontNamed:@"ariel"];
+        level.text = [NSString stringWithFormat:@"%d",currentLevel];
+        level.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeLeft;
+        level.zPosition = 100;
+        level.name =@"level";
+        [self addChild:level];
+        
+        
 //        SKSpriteNode *warpBack = [SKSpriteNode spriteNodeWithImageNamed:@"WarpBack"];
 //        warpBack.anchorPoint = CGPointMake(0, 1);
 //        warpBack.position = CGPointMake(0, size.height);
@@ -473,6 +481,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     NSMutableArray *planets = [self planetsForLevel:currentLevel+10];
     [currentSpriteArray addObjectsFromArray:planets];
     currentLevel++;
+    ((SKLabelNode*)[self childNodeWithName:@"level"]).text = [NSString stringWithFormat:@"%d",currentLevel];
     CGRect goalRect;
     goalRect = CGRectMake(self.frame.origin.x, self.frame.size.height + kExtraSpaceOffScreen, self.frame.size.width, 1);
     SKNode* goal = [SKNode node];
@@ -813,9 +822,23 @@ CGFloat DegreesToRadians(CGFloat degrees)
 -(float)radiusForPlanetNum:(int)planetNum {
     switch (planetNum) {
         case 0:
-            return 30.f;
+            return 25.0f;
             break;
-            
+        case 1:
+            return 32.5f;
+            break;
+        case 2:
+            return 40.5f;
+            break;
+        case 3:
+            return 50.0f;
+            break;
+        case 4:
+            return 60.0f;
+            break;
+        case 5:
+            return 325.f;
+            break;
         default:
             return 30.f;
             break;
