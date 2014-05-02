@@ -591,13 +591,13 @@ CGFloat DegreesToRadians(CGFloat degrees)
 }
 
 -(int)maxNumberOfAsteroidsForLevel:(int)level {
-    if (level <= 2) {
+    if (level <= 1) {
         return 1;
-    } else if (level <= 5) {
+    } else if (level <= 2) {
         return 2;
-    } else if (level <= 10) {
+    } else if (level <= 7) {
         return 3;
-    } else if (level <= 20) {
+    } else if (level <= 15) {
         return 4;
     } else if (level <= 30) {
         return 5;
@@ -615,9 +615,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
 }
 
 -(int)minNumberOfAsteroidsForLevel:(int)level {
-    if (level <= 2) {
+    if (level <= 1) {
         return 1;
-    } else if (level <= 15) {
+    } else if (level <= 2) {
         return 2;
     } else if (level <= 25) {
         return 3;
@@ -715,7 +715,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
 }
 
 -(int)maxNumberOfPlanetsForLevel:(int)level {
-    if (level <= 5) {
+    if (level <= 3) {
         return 0;
     } else if (level <= 10) {
         return 1;
