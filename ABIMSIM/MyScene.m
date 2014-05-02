@@ -9,6 +9,9 @@ static NSString* shipCategoryName = @"ship";
 static NSString* asteroidCategoryName = @"asteroid";
 static NSString* planetCategoryName = @"planet";
 static NSString* goalCategoryName = @"goal";
+static NSString* levelNodeName = @"level";
+static NSString* shipImageSpriteName = @"shipImageSprite";
+static NSString* shipShieldSpriteName = @"shipShieldSprite";
 
 static const uint32_t borderCategory  = 0x1 << 0;  // 00000000000000000000000000000001
 static const uint32_t shipCategory  = 0x1 << 1;  // 00000000000000000000000000000001
@@ -60,6 +63,9 @@ static const uint32_t goalCategory = 0x1 << 5;
     SKSpriteNode *starFrontLayer;
     int currentLevel;
     BOOL shipWarping;
+    BOOL hasShield;
+    int shieldHitPoints;
+    int shipHitPoints;
 }
 
 CGFloat DegreesToRadians(CGFloat degrees)
@@ -100,24 +106,20 @@ CGFloat DegreesToRadians(CGFloat degrees)
         [self addChild:starBackLayer];
         [self addChild:starFrontLayer];
 
+        hasShield = YES;
+        shieldHitPoints = 2;
+        shipHitPoints = 1;
         SKSpriteNode *shipImage = [SKSpriteNode spriteNodeWithImageNamed:@"Ship"];
+        shipImage.name = shipImageSpriteName;
         SKSpriteNode *shipShieldImage = [SKSpriteNode spriteNodeWithImageNamed:@"ShipShield"];
+        shipShieldImage.name = shipShieldSpriteName;
         SKSpriteNode *ship = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:shipShieldImage.size];
         [ship addChild:shipImage];
         [ship addChild:shipShieldImage];
         ship.name = shipCategoryName;
         ship.position = CGPointMake(self.frame.size.width/4, ship.size.height*2);
-        ship.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:ship.frame.size.width/2];
-        ship.physicsBody.friction = 0.0f;
-        ship.physicsBody.restitution = 1.0f;
-        ship.physicsBody.linearDamping = 0.0f;
-        ship.physicsBody.allowsRotation = NO;
-        ship.physicsBody.categoryBitMask = shipCategory;
-        ship.physicsBody.collisionBitMask = borderCategory | secondaryBorderCategory | asteroidCategory | planetCategory;
-        ship.physicsBody.contactTestBitMask = goalCategory;
-        ship.physicsBody.mass = ship.frame.size.width;
         ship.zPosition = 1;
-
+        
         spritesArrays = [NSMutableArray array];
         currentSpriteArray = [NSMutableArray array];
         
@@ -125,7 +127,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         level.text = [NSString stringWithFormat:@"%d",currentLevel];
         level.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeLeft;
         level.zPosition = 100;
-        level.name =@"level";
+        level.name = levelNodeName;
         [self addChild:level];
         
         
@@ -153,6 +155,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
 //        [self addChild:warpBack];
 //        [self addChild:warpBack2];
         [self addChild:ship];
+        [self updateShipPhysics];
+
 //        [self addChild:warpFront];
 //        [self addChild:warpFront2];
 
@@ -194,6 +198,28 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     
+}
+
+-(void)updateShipPhysics {
+    SKSpriteNode *ship = (SKSpriteNode*)[self childNodeWithName:shipCategoryName];
+    CGVector velocity = ship.physicsBody.velocity;
+    float width = 40;
+    if (hasShield) {
+        [ship childNodeWithName:shipShieldSpriteName].hidden = NO;
+        width = ship.size.width;
+    } else {
+        [ship childNodeWithName:shipShieldSpriteName].hidden = YES;
+    }
+    ship.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:width/2];
+    ship.physicsBody.friction = 0.0f;
+    ship.physicsBody.restitution = 1.0f;
+    ship.physicsBody.linearDamping = 0.0f;
+    ship.physicsBody.allowsRotation = NO;
+    ship.physicsBody.categoryBitMask = shipCategory;
+    ship.physicsBody.collisionBitMask = borderCategory | secondaryBorderCategory | asteroidCategory | planetCategory;
+    ship.physicsBody.contactTestBitMask = goalCategory | asteroidCategory;
+    ship.physicsBody.mass = width;
+    ship.physicsBody.velocity = velocity;
 }
 
 -(void)update:(CFTimeInterval)currentTime {
@@ -243,6 +269,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
 #pragma mark - Collisions and Contacts
 
+
 - (void)didBeginContact:(SKPhysicsContact*)contact {
     // 1 Create local variables for two physics bodies
     @synchronized (safeToTransition) {
@@ -270,7 +297,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
         if (firstBody.categoryBitMask == asteroidCategory && secondBody.categoryBitMask == goalCategory) {
             [firstBody.node removeFromParent];
         }
-
     }
 }
 
@@ -284,9 +310,27 @@ CGFloat DegreesToRadians(CGFloat degrees)
         firstBody = contact.bodyB;
         secondBody = contact.bodyA;
     }
-    if (firstBody.categoryBitMask == shipCategory && secondBody.categoryBitMask == goalCategory) {
-//        safeToTransition = YES;
+    if (firstBody.categoryBitMask == shipCategory && secondBody.categoryBitMask == asteroidCategory) {
+        if (hasShield) {
+            shieldHitPoints--;
+            if (shieldHitPoints <= 0) {
+                hasShield = NO;
+                [self updateShipPhysics];
+            }
+        } else {
+            shipHitPoints--;
+            if (shipHitPoints <= 0) {
+                [[self childNodeWithName:shipCategoryName] childNodeWithName:shipImageSpriteName].hidden = YES;
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    SKScene * scene = [MyScene sceneWithSize:self.view.bounds.size];
+                    scene.scaleMode = SKSceneScaleModeAspectFill;
+                    
+                    [self.view presentScene:scene transition:[SKTransition doorsOpenHorizontalWithDuration:2]];
+                });
+            }
+        }
     }
+
 }
 
 #pragma mark - Level generation
@@ -441,6 +485,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
 -(void)generateInitialLevels {
     currentLevel = 1;
+    ((SKLabelNode*)[self childNodeWithName:levelNodeName]).text = @"1";
     for (int i = 1; i <= 10; i++) {
         NSMutableArray *spriteArray = [NSMutableArray array];
         NSMutableArray *asteroids = [self asteroidsForLevel:i];
@@ -481,7 +526,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     NSMutableArray *planets = [self planetsForLevel:currentLevel+10];
     [currentSpriteArray addObjectsFromArray:planets];
     currentLevel++;
-    ((SKLabelNode*)[self childNodeWithName:@"level"]).text = [NSString stringWithFormat:@"%d",currentLevel];
+    ((SKLabelNode*)[self childNodeWithName:levelNodeName]).text = [NSString stringWithFormat:@"%d",currentLevel];
     CGRect goalRect;
     goalRect = CGRectMake(self.frame.origin.x, self.frame.size.height + kExtraSpaceOffScreen, self.frame.size.width, 1);
     SKNode* goal = [SKNode node];
@@ -604,7 +649,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     sprite.physicsBody.dynamic = YES;
     sprite.physicsBody.categoryBitMask = asteroidCategory;
     sprite.physicsBody.collisionBitMask = borderCategory | secondaryBorderCategory | shipCategory | asteroidCategory | planetCategory;
-    sprite.physicsBody.contactTestBitMask = goalCategory;
+    sprite.physicsBody.contactTestBitMask = goalCategory | shipCategory;
 
     sprite.physicsBody.mass = sprite.size.width;
     sprite.name = asteroidCategoryName;
