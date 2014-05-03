@@ -50,6 +50,7 @@ static const uint32_t goalCategory = 0x1 << 5;
 
 #define orbitJoint @"orbitJoint"
 #define moonsArray @"moonsArray"
+#define planetNumber @"planetNumber"
 
 #import "MyScene.h"
 #import "HexColor.h"
@@ -691,7 +692,52 @@ CGFloat DegreesToRadians(CGFloat degrees)
     for (int j = 0; j < numOfPlanets; j++) {
         SKSpriteNode *planet = [self randomPlanetForLevel:level];
         planet.hidden = YES;
-        [planets addObject:planet];
+        float thisWidth = planet.size.width;
+        CGPoint thisCenter = planet.position;
+        float otherWidthA, otherWidthB;
+        CGPoint otherCenterA, otherCenterB;
+        float distanceA, distanceB;
+        distanceA = distanceB = MAXFLOAT;
+        otherWidthA = otherWidthB = 0;
+        if (planets.count > 0) {
+            SKSpriteNode *otherPlanetA = planets[0];
+            otherWidthA = otherPlanetA.size.width;
+            otherCenterA = otherPlanetA.position;
+            distanceA = sqrtf(powf(thisCenter.x - otherCenterA.x, 2) + pow(thisCenter.y - otherCenterA.y, 2));
+        }
+        if (planets.count > 1) {
+            SKSpriteNode *otherPlanetB = planets[1];
+            otherWidthB = otherPlanetB.size.width;
+            otherCenterB = otherPlanetB.position;
+            distanceB = sqrtf(powf(thisCenter.x - otherCenterB.x, 2) + pow(thisCenter.y - otherCenterB.y, 2));
+        }
+        BOOL addPlanet = YES;
+        int attempt = 0;
+        while ((distanceA - (thisWidth/2) - (otherWidthA/2) < ((SKSpriteNode*)[self childNodeWithName:shipCategoryName]).size.width + 10) ||
+               (distanceB - (thisWidth/2) - (otherWidthB/2) < ((SKSpriteNode*)[self childNodeWithName:shipCategoryName]).size.width + 10)) {
+            if (attempt > 4) {
+                addPlanet = NO;
+                break;
+            }
+            [self randomizeSprite:planet];
+            thisCenter = planet.position;
+            if (planets.count > 0) {
+                distanceA = sqrtf(powf(thisCenter.x - otherCenterA.x, 2) + pow(thisCenter.y - otherCenterA.y, 2));
+            }
+            if (planets.count > 1) {
+                distanceB = sqrtf(powf(thisCenter.x - otherCenterB.x, 2) + pow(thisCenter.y - otherCenterB.y, 2));
+            }
+            attempt++;
+        }
+        if (addPlanet) {
+            planet.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:[self radiusForPlanetNum:[planet.userData[planetNumber] intValue]]];
+            planet.physicsBody.dynamic = NO;
+            planet.physicsBody.categoryBitMask = planetCategory;
+            planet.physicsBody.collisionBitMask = shipCategory | asteroidCategory | planetCategory;
+            planet.physicsBody.allowsRotation = NO;
+            planet.userData[moonsArray] = @[[self moonForPlanetNum:[planet.userData[planetNumber] intValue] withPlanet:planet]];
+            [planets addObject:planet];
+        }
     }
     
     return planets;
@@ -738,6 +784,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
 
 -(SKSpriteNode*)randomPlanetForLevel:(int)level {
+//    int planetNum = level % 6;
     int planetNum = arc4random() % [self maxPlanetNumForLevel:level];
     NSString *imageName = [NSString stringWithFormat:@"Planet_%d",planetNum];
     SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithImageNamed:imageName];
@@ -767,15 +814,10 @@ CGFloat DegreesToRadians(CGFloat degrees)
             [sprite setPosition:CGPointMake((sprite.frame.size.width/-2) + 100,sprite.position.y)];
         }
     }
-    sprite.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:[self radiusForPlanetNum:planetNum]];
-    sprite.physicsBody.dynamic = NO;
-    sprite.physicsBody.categoryBitMask = planetCategory;
-    sprite.physicsBody.collisionBitMask = shipCategory | asteroidCategory | planetCategory;
     sprite.name = planetCategoryName;
-    sprite.physicsBody.allowsRotation = NO;
     
     sprite.userData = [NSMutableDictionary dictionary];
-    sprite.userData[moonsArray] = @[[self moonForPlanetNum:planetNum withPlanet:sprite]];
+    sprite.userData[planetNumber] = @(planetNum);
     sprite.zPosition = 1;
     return sprite;
 }
