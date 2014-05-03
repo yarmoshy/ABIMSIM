@@ -322,6 +322,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
             shipHitPoints--;
             if (shipHitPoints <= 0) {
                 [[self childNodeWithName:shipCategoryName] childNodeWithName:shipImageSpriteName].hidden = YES;
+                [self childNodeWithName:shipCategoryName].physicsBody = nil;
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     SKScene * scene = [MyScene sceneWithSize:self.view.bounds.size];
                     scene.scaleMode = SKSceneScaleModeAspectFill;

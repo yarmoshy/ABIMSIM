@@ -26,6 +26,12 @@
     
     // Present the scene.
     [skView presentScene:scene];
+    
+
+}
+
+- (BOOL)prefersStatusBarHidden {
+    return YES;
 }
 
 - (BOOL)shouldAutorotate
@@ -35,11 +41,7 @@
 
 - (NSUInteger)supportedInterfaceOrientations
 {
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        return UIInterfaceOrientationMaskAllButUpsideDown;
-    } else {
-        return UIInterfaceOrientationMaskAll;
-    }
+    return UIInterfaceOrientationMaskPortrait;
 }
 
 - (void)didReceiveMemoryWarning
