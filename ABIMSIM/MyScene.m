@@ -12,6 +12,7 @@ static NSString* goalCategoryName = @"goal";
 static NSString* levelNodeName = @"level";
 static NSString* shipImageSpriteName = @"shipImageSprite";
 static NSString* shipShieldSpriteName = @"shipShieldSprite";
+static NSString* directionsSpriteName = @"directionsSpriteName";
 
 static const uint32_t borderCategory  = 0x1 << 0;  // 00000000000000000000000000000001
 static const uint32_t shipCategory  = 0x1 << 1;  // 00000000000000000000000000000001
@@ -178,6 +179,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
 -(void)handlePanGesture:(UIPanGestureRecognizer*)recognizer {
     if (recognizer.state != UIGestureRecognizerStateEnded) {
         return;
+    }
+    if ([self childNodeWithName:directionsSpriteName]) {
+        [[self childNodeWithName:directionsSpriteName] removeFromParent];
     }
     CGPoint addVelocity = [recognizer velocityInView:recognizer.view];
     CGPoint newVelocity = addVelocity;
@@ -891,6 +895,16 @@ CGFloat DegreesToRadians(CGFloat degrees)
         } else if ([sprite.name isEqual:goalCategoryName]) {
             [self addChild:sprite];
         }
+    }
+    if (currentLevel == 1) {
+        
+        SKLabelNode *direction = [SKLabelNode labelNodeWithFontNamed:@"Voltaire"];
+        direction.text = @"Swipe any direction to propel the ship.";
+        direction.fontSize = 16;
+        direction.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
+        direction.zPosition = 100;
+        [self addChild:direction];
+        direction.name = directionsSpriteName;
     }
 }
 

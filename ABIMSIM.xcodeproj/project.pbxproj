@@ -27,6 +27,7 @@
 		B45FF15018CE8708001662CD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B45FF12B18CE8708001662CD /* UIKit.framework */; };
 		B45FF15818CE8708001662CD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B45FF15618CE8708001662CD /* InfoPlist.strings */; };
 		B45FF15A18CE8708001662CD /* ABIMSIMTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B45FF15918CE8708001662CD /* ABIMSIMTests.m */; };
+		B47923DC19157805002B8467 /* Voltaire-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B47923DB19157805002B8467 /* Voltaire-Regular.ttf */; };
 		B47E22CD18DBA7E200F42EBB /* Asteroid_0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B47E22C118DBA7E200F42EBB /* Asteroid_0@2x.png */; };
 		B47E22CE18DBA7E200F42EBB /* Asteroid_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B47E22C218DBA7E200F42EBB /* Asteroid_1@2x.png */; };
 		B47E22CF18DBA7E200F42EBB /* Asteroid_2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B47E22C318DBA7E200F42EBB /* Asteroid_2@2x.png */; };
@@ -88,6 +89,7 @@
 		B45FF15518CE8708001662CD /* ABIMSIMTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ABIMSIMTests-Info.plist"; sourceTree = "<group>"; };
 		B45FF15718CE8708001662CD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B45FF15918CE8708001662CD /* ABIMSIMTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ABIMSIMTests.m; sourceTree = "<group>"; };
+		B47923DB19157805002B8467 /* Voltaire-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Voltaire-Regular.ttf"; sourceTree = "<group>"; };
 		B47E22C118DBA7E200F42EBB /* Asteroid_0@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Asteroid_0@2x.png"; sourceTree = "<group>"; };
 		B47E22C218DBA7E200F42EBB /* Asteroid_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Asteroid_1@2x.png"; sourceTree = "<group>"; };
 		B47E22C318DBA7E200F42EBB /* Asteroid_2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Asteroid_2@2x.png"; sourceTree = "<group>"; };
@@ -139,6 +141,7 @@
 		B45865E718DA154F005C9566 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				B47923DB19157805002B8467 /* Voltaire-Regular.ttf */,
 				B4B66FF618F6229300E2BE70 /* ShipShield@2x.png */,
 				B4B66FFA18F6290E00E2BE70 /* ShieldPowerUp@2x.png */,
 				B4B66FFC18F62B2700E2BE70 /* ShipShieldImpact@2x.png */,
@@ -342,6 +345,7 @@
 				B47E22D018DBA7E200F42EBB /* Asteroid_3@2x.png in Resources */,
 				B45865EE18DA6612005C9566 /* LargeStar@2x.png in Resources */,
 				B45865E918DA15C9005C9566 /* Ship@2x.png in Resources */,
+				B47923DC19157805002B8467 /* Voltaire-Regular.ttf in Resources */,
 				B4D4202B190F23ED0069DA98 /* Planet_2@2x.png in Resources */,
 				B47E22D718DBA7E200F42EBB /* Asteroid_10@2x.png in Resources */,
 				B4D4202C190F23ED0069DA98 /* Planet_3@2x.png in Resources */,
