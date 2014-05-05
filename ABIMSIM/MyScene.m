@@ -256,6 +256,12 @@ CGFloat DegreesToRadians(CGFloat degrees)
         if (![asteroid.name isEqualToString:asteroidCategoryName]) {
             continue;
         }
+        if (asteroid.position.y - asteroid.size.height/2 > self.frame.size.height) {
+            if (asteroid.parent) {
+                [asteroid removeFromParent];
+                continue;
+            }
+        }
         if (fabs(asteroid.physicsBody.angularVelocity) > MAX_ANGULAR_VELOCITY) {
             asteroid.physicsBody.angularDamping = 1.0f;
         } else {
