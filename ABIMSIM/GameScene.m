@@ -1,5 +1,5 @@
 //
-//  MyScene.m
+//  GameScene
 //  ABIMSIM
 //
 //  Created by Kevin Yarmosh on 3/5/14.
@@ -54,10 +54,10 @@ static const uint32_t goalCategory = 0x1 << 5;
 #define planetNumber @"planetNumber"
 #define planetFlavorNumber @"planetFlavorNumber"
 
-#import "MyScene.h"
+#import "GameScene.h"
 #import "HexColor.h"
 
-@implementation MyScene {
+@implementation GameScene {
     NSMutableArray *spritesArrays;
     NSMutableArray *starSprites;
     NSMutableArray *currentSpriteArray;
@@ -335,7 +335,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
                 [[self childNodeWithName:shipCategoryName] childNodeWithName:shipImageSpriteName].hidden = YES;
                 [self childNodeWithName:shipCategoryName].physicsBody = nil;
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    SKScene * scene = [MyScene sceneWithSize:self.view.bounds.size];
+                    SKScene * scene = [GameScene sceneWithSize:self.view.bounds.size];
                     scene.scaleMode = SKSceneScaleModeAspectFill;
                     
                     [self.view presentScene:scene transition:[SKTransition doorsOpenHorizontalWithDuration:2]];
@@ -493,7 +493,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
             }
         }
     }
-    
 }
 
 -(void)generateInitialLevels {
@@ -515,7 +514,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
         [spriteArray addObject:goal];
         
         [spritesArrays addObject:spriteArray];
-//        endAtTop = !endAtTop;
     }
     currentSpriteArray = [spritesArrays firstObject];
     [self showCurrentSprites];
@@ -558,6 +556,37 @@ CGFloat DegreesToRadians(CGFloat degrees)
     [self childNodeWithName:shipCategoryName].position = CGPointMake([self childNodeWithName:shipCategoryName].position.x, -kExtraSpaceOffScreen + ((SKSpriteNode*)[self childNodeWithName:shipCategoryName]).size.height/2);
     shipWarping = YES;
 }
+
+-(void)showCurrentSprites {
+    for (SKSpriteNode *sprite in currentSpriteArray) {
+        if ([sprite.name isEqual:asteroidCategoryName]) {
+            sprite.hidden = NO;
+            [self addChild:sprite];
+        } else if ([sprite.name isEqual:planetCategoryName]) {
+            sprite.hidden = NO;
+            [self addChild:sprite];
+            for (SKSpriteNode *moon in sprite.userData[moonsArray]) {
+                moon.hidden = NO;
+                [self addChild:moon];
+                [self.physicsWorld addJoint:moon.userData[orbitJoint]];
+                moon.physicsBody.angularVelocity = 100;
+            }
+        } else if ([sprite.name isEqual:goalCategoryName]) {
+            [self addChild:sprite];
+        }
+    }
+    if (currentLevel == 1) {
+        
+        SKLabelNode *direction = [SKLabelNode labelNodeWithFontNamed:@"Voltaire"];
+        direction.text = @"Swipe any direction to propel the ship.";
+        direction.fontSize = 16;
+        direction.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
+        direction.zPosition = 100;
+        [self addChild:direction];
+        direction.name = directionsSpriteName;
+    }
+}
+
 
 -(SKSpriteNode*)randomizeSprite:(SKSpriteNode*)sprite {
     float x = arc4random() % (int)self.frame.size.width * 1;
@@ -899,13 +928,19 @@ CGFloat DegreesToRadians(CGFloat degrees)
 -(NSMutableArray*)planetsForLevel:(int)level {
     NSMutableArray *planets = [NSMutableArray array];
     int numOfPlanets = arc4random() % ([self maxNumberOfPlanetsForLevel:level] + 1);
+//    numOfPlanets = 3;
     if (numOfPlanets < [self minNumberOfPlanetsForLevel:level]) {
         numOfPlanets = [self minNumberOfPlanetsForLevel:level];
     }
     for (int j = 0; j < numOfPlanets; j++) {
         SKSpriteNode *planet = [self randomPlanetForLevel:level];
         planet.hidden = YES;
-        float thisWidth = planet.size.width;
+        float thisWidth;
+        if (planet.size.width >= planet.size.height) {
+            thisWidth = planet.size.width;
+        } else {
+            thisWidth = planet.size.height;
+        }
         CGPoint thisCenter = planet.position;
         float otherWidthA, otherWidthB;
         CGPoint otherCenterA, otherCenterB;
@@ -914,13 +949,22 @@ CGFloat DegreesToRadians(CGFloat degrees)
         otherWidthA = otherWidthB = 0;
         if (planets.count > 0) {
             SKSpriteNode *otherPlanetA = planets[0];
-            otherWidthA = otherPlanetA.size.width;
+            if (otherPlanetA.size.width >= otherPlanetA.size.height) {
+                otherWidthA = otherPlanetA.size.width;
+            } else {
+                otherWidthA = otherPlanetA.size.height;
+            }
             otherCenterA = otherPlanetA.position;
             distanceA = sqrtf(powf(thisCenter.x - otherCenterA.x, 2) + pow(thisCenter.y - otherCenterA.y, 2));
         }
         if (planets.count > 1) {
             SKSpriteNode *otherPlanetB = planets[1];
-            otherWidthB = otherPlanetB.size.width;
+            if (otherPlanetB.size.width >= otherPlanetB.size.height) {
+                otherWidthB = otherPlanetB.size.width;
+            } else {
+                otherWidthB = otherPlanetB.size.height;
+            }
+
             otherCenterB = otherPlanetB.position;
             distanceB = sqrtf(powf(thisCenter.x - otherCenterB.x, 2) + pow(thisCenter.y - otherCenterB.y, 2));
         }
@@ -928,7 +972,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         int attempt = 0;
         while ((distanceA - (thisWidth/2) - (otherWidthA/2) < ((SKSpriteNode*)[self childNodeWithName:shipCategoryName]).size.width + 10) ||
                (distanceB - (thisWidth/2) - (otherWidthB/2) < ((SKSpriteNode*)[self childNodeWithName:shipCategoryName]).size.width + 10)) {
-            if (attempt > 4) {
+            if (attempt > 200) {
                 addPlanet = NO;
                 break;
             }
@@ -943,6 +987,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
             attempt++;
         }
         if (addPlanet) {
+//            NSLog(@"%d %d",attempt, level);
             planet.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:[self radiusForPlanetNum:[planet.userData[planetNumber] intValue]]];
             planet.physicsBody.dynamic = NO;
             planet.physicsBody.categoryBitMask = planetCategory;
@@ -1105,36 +1150,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
     sprite.hidden = YES;
     sprite.zPosition = 1;
     return sprite;
-}
-
--(void)showCurrentSprites {
-    for (SKSpriteNode *sprite in currentSpriteArray) {
-        if ([sprite.name isEqual:asteroidCategoryName]) {
-            sprite.hidden = NO;
-            [self addChild:sprite];
-        } else if ([sprite.name isEqual:planetCategoryName]) {
-            sprite.hidden = NO;
-            [self addChild:sprite];
-            for (SKSpriteNode *moon in sprite.userData[moonsArray]) {
-                moon.hidden = NO;
-                [self addChild:moon];
-                [self.physicsWorld addJoint:moon.userData[orbitJoint]];
-                moon.physicsBody.angularVelocity = 100;
-            }
-        } else if ([sprite.name isEqual:goalCategoryName]) {
-            [self addChild:sprite];
-        }
-    }
-    if (currentLevel == 1) {
-        
-        SKLabelNode *direction = [SKLabelNode labelNodeWithFontNamed:@"Voltaire"];
-        direction.text = @"Swipe any direction to propel the ship.";
-        direction.fontSize = 16;
-        direction.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
-        direction.zPosition = 100;
-        [self addChild:direction];
-        direction.name = directionsSpriteName;
-    }
 }
 
 -(float)radiusForPlanetNum:(int)planetNum {

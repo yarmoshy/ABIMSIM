@@ -21,7 +21,7 @@
 		B45FF13A18CE8708001662CD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B45FF13918CE8708001662CD /* AppDelegate.m */; };
 		B45FF13D18CE8708001662CD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B45FF13B18CE8708001662CD /* Main.storyboard */; };
 		B45FF14018CE8708001662CD /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B45FF13F18CE8708001662CD /* ViewController.m */; };
-		B45FF14318CE8708001662CD /* MyScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B45FF14218CE8708001662CD /* MyScene.m */; };
+		B45FF14318CE8708001662CD /* GameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B45FF14218CE8708001662CD /* GameScene.m */; };
 		B45FF14718CE8708001662CD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B45FF14618CE8708001662CD /* Images.xcassets */; };
 		B45FF14E18CE8708001662CD /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B45FF14D18CE8708001662CD /* XCTest.framework */; };
 		B45FF14F18CE8708001662CD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B45FF12718CE8708001662CD /* Foundation.framework */; };
@@ -83,8 +83,8 @@
 		B45FF13C18CE8708001662CD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B45FF13E18CE8708001662CD /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		B45FF13F18CE8708001662CD /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		B45FF14118CE8708001662CD /* MyScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyScene.h; sourceTree = "<group>"; };
-		B45FF14218CE8708001662CD /* MyScene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyScene.m; sourceTree = "<group>"; };
+		B45FF14118CE8708001662CD /* GameScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameScene.h; sourceTree = "<group>"; };
+		B45FF14218CE8708001662CD /* GameScene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameScene.m; sourceTree = "<group>"; };
 		B45FF14618CE8708001662CD /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		B45FF14C18CE8708001662CD /* ABIMSIMTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ABIMSIMTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B45FF14D18CE8708001662CD /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -214,8 +214,8 @@
 				B45FF13B18CE8708001662CD /* Main.storyboard */,
 				B45FF13E18CE8708001662CD /* ViewController.h */,
 				B45FF13F18CE8708001662CD /* ViewController.m */,
-				B45FF14118CE8708001662CD /* MyScene.h */,
-				B45FF14218CE8708001662CD /* MyScene.m */,
+				B45FF14118CE8708001662CD /* GameScene.h */,
+				B45FF14218CE8708001662CD /* GameScene.m */,
 				B45865E718DA154F005C9566 /* Assets */,
 				B45FF14618CE8708001662CD /* Images.xcassets */,
 				B45FF13018CE8708001662CD /* Supporting Files */,
@@ -379,7 +379,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B45865EC18DA3ACA005C9566 /* HexColor.m in Sources */,
-				B45FF14318CE8708001662CD /* MyScene.m in Sources */,
+				B45FF14318CE8708001662CD /* GameScene.m in Sources */,
 				B45FF14018CE8708001662CD /* ViewController.m in Sources */,
 				B45FF13A18CE8708001662CD /* AppDelegate.m in Sources */,
 				B45FF13618CE8708001662CD /* main.m in Sources */,
