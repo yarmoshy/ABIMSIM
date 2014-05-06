@@ -12,6 +12,7 @@ static NSString* goalCategoryName = @"goal";
 static NSString* levelNodeName = @"level";
 static NSString* shipImageSpriteName = @"shipImageSprite";
 static NSString* shipShieldSpriteName = @"shipShieldSprite";
+static NSString* sunObjectSpriteName = @"sunObjectSpriteName";
 static NSString* directionsSpriteName = @"directionsSpriteName";
 static NSString* pauseSpriteName = @"pauseSpriteName";
 
@@ -339,6 +340,34 @@ CGFloat DegreesToRadians(CGFloat degrees)
         if (firstBody.categoryBitMask == asteroidCategory && secondBody.categoryBitMask == goalCategory) {
             [firstBody.node removeFromParent];
         }
+        if ([firstBody.node.name isEqualToString:sunObjectSpriteName]) {
+            if (secondBody.categoryBitMask == shipCategory) {
+                if (hasShield) {
+                    shieldHitPoints = 0;
+                    if (shieldHitPoints <= 0) {
+                        hasShield = NO;
+                        [self updateShipPhysics];
+                    }
+                } else
+                    [self killShipAndStartOver];
+            } else {
+                [secondBody.node removeFromParent];
+            }
+        }
+        if ([secondBody.node.name isEqualToString:sunObjectSpriteName]) {
+            if (firstBody.categoryBitMask == shipCategory) {
+                if (hasShield) {
+                    shieldHitPoints = 0;
+                    if (shieldHitPoints <= 0) {
+                        hasShield = NO;
+                        [self updateShipPhysics];
+                    }
+                } else
+                [self killShipAndStartOver];
+            } else {
+                [firstBody.node removeFromParent];
+            }
+        }
     }
 }
 
@@ -362,17 +391,23 @@ CGFloat DegreesToRadians(CGFloat degrees)
         } else {
             shipHitPoints--;
             if (shipHitPoints <= 0) {
-                [[self childNodeWithName:shipCategoryName] childNodeWithName:shipImageSpriteName].hidden = YES;
-                [self childNodeWithName:shipCategoryName].physicsBody = nil;
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    SKScene * scene = [GameScene sceneWithSize:self.view.bounds.size];
-                    scene.scaleMode = SKSceneScaleModeAspectFill;
-                    
-                    [self.view presentScene:scene transition:[SKTransition doorsOpenHorizontalWithDuration:2]];
-                });
+                [self killShipAndStartOver];
             }
         }
     }
+
+}
+
+-(void)killShipAndStartOver {
+    [[self childNodeWithName:shipCategoryName] childNodeWithName:shipShieldSpriteName].hidden = YES;
+    [[self childNodeWithName:shipCategoryName] childNodeWithName:shipImageSpriteName].hidden = YES;
+    [self childNodeWithName:shipCategoryName].physicsBody = nil;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        SKScene * scene = [GameScene sceneWithSize:self.view.bounds.size];
+        scene.scaleMode = SKSceneScaleModeAspectFill;
+        
+        [self.view presentScene:scene transition:[SKTransition doorsOpenHorizontalWithDuration:2]];
+    });
 
 }
 
@@ -554,7 +589,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
         if ([[currentSpriteArray[i] name] isEqual:asteroidCategoryName]) {
             [currentSpriteArray[i] removeFromParent];
         }
-        if ([[currentSpriteArray[i] name] isEqual:planetCategoryName]) {
+        if ([[currentSpriteArray[i] name] isEqual:planetCategoryName] ||
+            [[currentSpriteArray[i] name] isEqual:sunObjectSpriteName] ) {
             [currentSpriteArray[i] removeFromParent];
             for (SKSpriteNode *moon in ((SKSpriteNode*)currentSpriteArray[i]).userData[moonsArray]) {
                 [moon removeFromParent];
@@ -592,7 +628,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
         if ([sprite.name isEqual:asteroidCategoryName]) {
             sprite.hidden = NO;
             [self addChild:sprite];
-        } else if ([sprite.name isEqual:planetCategoryName]) {
+        } else if ([sprite.name isEqual:planetCategoryName] ||
+                   [sprite.name isEqual:sunObjectSpriteName]) {
             sprite.hidden = NO;
             [self addChild:sprite];
             for (SKSpriteNode *moon in sprite.userData[moonsArray]) {
@@ -971,8 +1008,19 @@ CGFloat DegreesToRadians(CGFloat degrees)
     if (numOfPlanets < [self minNumberOfPlanetsForLevel:level]) {
         numOfPlanets = [self minNumberOfPlanetsForLevel:level];
     }
+    BOOL forceSun = NO;
+    if (level > 25) {
+        if (arc4random() % 10 == 0) {
+            forceSun = YES;
+        }
+    }
     for (int j = 0; j < numOfPlanets; j++) {
-        SKSpriteNode *planet = [self randomPlanetForLevel:level];
+        SKSpriteNode *planet;
+        if (j == 0 && forceSun) {
+            planet = [self randomSun];
+        } else {
+            planet = [self randomPlanetForLevel:level sunFlavor:forceSun];
+        }
         planet.hidden = YES;
         float thisWidth;
         if (planet.size.width >= planet.size.height) {
@@ -1031,8 +1079,11 @@ CGFloat DegreesToRadians(CGFloat degrees)
             planet.physicsBody.dynamic = NO;
             planet.physicsBody.categoryBitMask = planetCategory;
             planet.physicsBody.collisionBitMask = shipCategory | asteroidCategory | planetCategory;
+            if (forceSun) {
+                planet.physicsBody.contactTestBitMask = shipCategory | asteroidCategory;
+            }
             planet.physicsBody.allowsRotation = NO;
-            if (![self addRingPhysicsBodyIfApplicableForPlanet:planet])
+            if (![self addRingPhysicsBodyIfApplicableForPlanet:planet] && ![planet.name isEqualToString:sunObjectSpriteName])
                 planet.userData[moonsArray] = @[[self moonForPlanetNum:[planet.userData[planetNumber] intValue] withPlanet:planet]];
             [planets addObject:planet];
         }
@@ -1097,15 +1148,18 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
 
 -(SKSpriteNode*)randomPlanetForLevel:(int)level {
+    return [self randomPlanetForLevel:level sunFlavor:NO];
+}
+
+-(SKSpriteNode*)randomPlanetForLevel:(int)level sunFlavor:(BOOL)sunFlavor{
+
 //    int planetNum = level % 6;
     int planetNum = arc4random() % [self maxPlanetNumForLevel:level];
-    int planetFlavor = 0;
-    NSString *imageName;
-    if (planetNum == 1) {
-        imageName = [NSString stringWithFormat:@"Planet_%d_%d",planetNum, planetFlavor];
-    } else {
-        imageName = [NSString stringWithFormat:@"Planet_%d",planetNum];
+    int planetFlavor =  arc4random() % 3;
+    if (sunFlavor) {
+        planetFlavor = 3;
     }
+    NSString *imageName = [NSString stringWithFormat:@"Planet_%d_%d",planetNum, planetFlavor];
     SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithImageNamed:imageName];
     
     UIBezierPath *hoverPath = [UIBezierPath bezierPath];
@@ -1133,13 +1187,58 @@ CGFloat DegreesToRadians(CGFloat degrees)
             [sprite setPosition:CGPointMake((sprite.frame.size.width/-2) + 100,sprite.position.y)];
         }
     }
-    sprite.name = planetCategoryName;
+    if (sunFlavor) {
+        sprite.name = sunObjectSpriteName;
+    } else {
+        sprite.name = planetCategoryName;
+    }
     
     sprite.userData = [NSMutableDictionary dictionary];
     sprite.userData[planetNumber] = @(planetNum);
     sprite.userData[planetFlavorNumber] = @(planetFlavor);
     sprite.zPosition = 1;
     return sprite;
+}
+
+-(SKSpriteNode*)randomSun {
+    NSLog(@"sun!!");
+    int planetNum = 5;
+    NSString *imageName = [NSString stringWithFormat:@"Planet_%d_S",planetNum];
+    SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithImageNamed:imageName];
+    
+    UIBezierPath *hoverPath = [UIBezierPath bezierPath];
+	[hoverPath moveToPoint:sprite.position];
+	[hoverPath addCurveToPoint:CGPointMake(sprite.position.x + (sprite.size.width * 0.1), sprite.position.y)
+				 controlPoint1:CGPointMake(sprite.position.x, sprite.position.y + sprite.size.height * 0.1)
+				 controlPoint2:CGPointMake(sprite.position.x + (sprite.size.width * 0.1), sprite.position.y + sprite.size.height * 0.1)];
+	[hoverPath addCurveToPoint:sprite.position
+				 controlPoint1:CGPointMake(sprite.position.x + (sprite.size.width * 0.1), sprite.position.y - sprite.size.height * 0.1)
+				 controlPoint2:CGPointMake(sprite.position.x, sprite.position.y - sprite.size.height * 0.1)];
+	[hoverPath addCurveToPoint:CGPointMake(sprite.position.x - (sprite.size.width * 0.1), sprite.position.y)
+				 controlPoint1:CGPointMake(sprite.position.x, sprite.position.y + sprite.size.height * 0.1)
+				 controlPoint2:CGPointMake(sprite.position.x - (sprite.size.width * 0.1), sprite.position.y + sprite.size.height * 0.1)];
+	[hoverPath addCurveToPoint:sprite.position
+				 controlPoint1:CGPointMake(sprite.position.x - (sprite.size.width * 0.1), sprite.position.y - sprite.size.height * 0.1)
+				 controlPoint2:CGPointMake(sprite.position.x, sprite.position.y - sprite.size.height * 0.1)];
+    
+    
+    [sprite runAction:[SKAction repeatActionForever:[SKAction followPath:hoverPath.CGPath asOffset:YES orientToPath:NO duration:30]]];
+    [self randomizeSprite:sprite];
+    if (planetNum == 5) {
+        if (sprite.position.x > self.frame.size.width/2) {
+            [sprite setPosition:CGPointMake((sprite.frame.size.width/2) + self.frame.size.width - 100,sprite.position.y)];
+        } else {
+            [sprite setPosition:CGPointMake((sprite.frame.size.width/-2) + 100,sprite.position.y)];
+        }
+    }
+    sprite.name = sunObjectSpriteName;
+    
+    sprite.userData = [NSMutableDictionary dictionary];
+    sprite.userData[planetNumber] = @(planetNum);
+    sprite.userData[planetFlavorNumber] = @(4);
+    sprite.zPosition = 1;
+    return sprite;
+
 }
 
 
