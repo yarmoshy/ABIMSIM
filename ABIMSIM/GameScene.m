@@ -179,6 +179,13 @@ CGFloat DegreesToRadians(CGFloat degrees)
     [super didMoveToView:view];
     UIPanGestureRecognizer *recognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGesture:)];
     [self.view addGestureRecognizer:recognizer];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        self.paused = NO;
+    });
+}
+
+-(void)willMoveFromView:(SKView *)view {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 -(void)pause {
@@ -192,7 +199,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
 #pragma mark - Touch Handling
 
 -(void)handlePanGesture:(UIPanGestureRecognizer*)recognizer {
-    if (recognizer.state != UIGestureRecognizerStateEnded) {
+    if (recognizer.state != UIGestureRecognizerStateEnded || self.paused) {
         return;
     }
     while ([self childNodeWithName:directionsSpriteName]) {
@@ -248,6 +255,10 @@ CGFloat DegreesToRadians(CGFloat degrees)
 }
 
 -(void)update:(CFTimeInterval)currentTime {
+    if ([UIApplication sharedApplication].applicationState != UIApplicationStateActive) {
+        [self pause];
+    }
+
     /* Called before each frame is rendered */
     SKNode* ship = [self childNodeWithName:shipCategoryName];
     if (shipWarping && ship.position.y > ship.frame.size.height/2) {
