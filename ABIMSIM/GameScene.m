@@ -13,6 +13,7 @@ static NSString* levelNodeName = @"level";
 static NSString* shipImageSpriteName = @"shipImageSprite";
 static NSString* shipShieldSpriteName = @"shipShieldSprite";
 static NSString* directionsSpriteName = @"directionsSpriteName";
+static NSString* pauseSpriteName = @"pauseSpriteName";
 
 static const uint32_t borderCategory  = 0x1 << 0;  // 00000000000000000000000000000001
 static const uint32_t shipCategory  = 0x1 << 1;  // 00000000000000000000000000000001
@@ -133,7 +134,11 @@ CGFloat DegreesToRadians(CGFloat degrees)
         level.name = levelNodeName;
         [self addChild:level];
         
-        
+        SKSpriteNode *pauseButton = [SKSpriteNode spriteNodeWithImageNamed:@"Pause"];
+        pauseButton.name = pauseSpriteName;
+        pauseButton.zPosition = 100;
+        [self addChild:pauseButton];
+        pauseButton.position = CGPointMake(size.width - pauseButton.size.width/2, pauseButton.size.height/2);
 //        SKSpriteNode *warpBack = [SKSpriteNode spriteNodeWithImageNamed:@"WarpBack"];
 //        warpBack.anchorPoint = CGPointMake(0, 1);
 //        warpBack.position = CGPointMake(0, size.height);
@@ -165,6 +170,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
         [self generateInitialLevels];
         safeToTransition = @YES;
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pause) name:UIApplicationWillResignActiveNotification object:nil];
     }
     return self;
 }
@@ -175,13 +181,21 @@ CGFloat DegreesToRadians(CGFloat degrees)
     [self.view addGestureRecognizer:recognizer];
 }
 
+-(void)pause {
+    self.paused = YES;
+}
+
+-(void)pauseTapped:(id)sender {
+    self.paused = !self.paused;
+}
+
 #pragma mark - Touch Handling
 
 -(void)handlePanGesture:(UIPanGestureRecognizer*)recognizer {
     if (recognizer.state != UIGestureRecognizerStateEnded) {
         return;
     }
-    if ([self childNodeWithName:directionsSpriteName]) {
+    while ([self childNodeWithName:directionsSpriteName]) {
         [[self childNodeWithName:directionsSpriteName] removeFromParent];
     }
     CGPoint addVelocity = [recognizer velocityInView:recognizer.view];
@@ -203,7 +217,12 @@ CGFloat DegreesToRadians(CGFloat degrees)
 }
 
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-    
+    UITouch *touch = [touches anyObject];
+    CGPoint location = [touch locationInNode:self];
+    SKNode *node = [self nodeAtPoint:location];
+    if ([node.name isEqualToString:pauseSpriteName]) {
+        [self pauseTapped:nil];
+    }
 }
 
 -(void)updateShipPhysics {
@@ -576,14 +595,23 @@ CGFloat DegreesToRadians(CGFloat degrees)
         }
     }
     if (currentLevel == 1) {
-        
+//         \nAvoid asteroids on your way to the worm hole!
         SKLabelNode *direction = [SKLabelNode labelNodeWithFontNamed:@"Voltaire"];
-        direction.text = @"Swipe any direction to propel the ship.";
+        direction.text = @"Propel the ship by flicking any direction.";
         direction.fontSize = 16;
         direction.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
         direction.zPosition = 100;
         [self addChild:direction];
         direction.name = directionsSpriteName;
+        
+        SKLabelNode *direction2 = [SKLabelNode labelNodeWithFontNamed:@"Voltaire"];
+        direction2.text = @"Avoid asteroids on your way to the worm hole!";
+        direction2.fontSize = 16;
+        direction2.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2 - 20);
+        direction2.zPosition = 100;
+        [self addChild:direction2];
+        direction2.name = directionsSpriteName;
+
     }
 }
 
