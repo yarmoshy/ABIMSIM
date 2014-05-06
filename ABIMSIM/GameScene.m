@@ -1032,8 +1032,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
             planet.physicsBody.categoryBitMask = planetCategory;
             planet.physicsBody.collisionBitMask = shipCategory | asteroidCategory | planetCategory;
             planet.physicsBody.allowsRotation = NO;
-            [self addRingPhysicsBodyIfApplicableForPlanet:planet];
-            planet.userData[moonsArray] = @[[self moonForPlanetNum:[planet.userData[planetNumber] intValue] withPlanet:planet]];
+            if (![self addRingPhysicsBodyIfApplicableForPlanet:planet])
+                planet.userData[moonsArray] = @[[self moonForPlanetNum:[planet.userData[planetNumber] intValue] withPlanet:planet]];
             [planets addObject:planet];
         }
     }
@@ -1041,7 +1041,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     return planets;
 }
 
--(void)addRingPhysicsBodyIfApplicableForPlanet:(SKSpriteNode*)planet {
+-(BOOL)addRingPhysicsBodyIfApplicableForPlanet:(SKSpriteNode*)planet {
     if ([planet.userData[planetNumber] isEqualToNumber:@1]) {
         if ([planet.userData[planetFlavorNumber] isEqualToNumber:@0]) {
             SKSpriteNode *extraBodySprite = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:planet.size];
@@ -1051,8 +1051,10 @@ CGFloat DegreesToRadians(CGFloat degrees)
             extraBodySprite.physicsBody.collisionBitMask = shipCategory | asteroidCategory | planetCategory;
             extraBodySprite.physicsBody.allowsRotation = NO;
             [planet addChild:extraBodySprite];
+            return YES;
         }
     }
+    return NO;
 }
 
 -(int)maxPlanetNumForLevel:(int)level {
