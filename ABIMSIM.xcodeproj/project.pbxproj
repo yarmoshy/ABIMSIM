@@ -357,7 +357,7 @@
 				ORGANIZATIONNAME = "Kevin Yarmosh";
 				TargetAttributes = {
 					B45FF12318CE8708001662CD = {
-						DevelopmentTeam = ZN27EFYD4F;
+						DevelopmentTeam = 6QXVXEAWF9;
 					};
 					B45FF14B18CE8708001662CD = {
 						TestTargetID = B45FF12318CE8708001662CD;
