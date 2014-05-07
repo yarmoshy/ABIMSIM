@@ -1224,6 +1224,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     
     [sprite runAction:[SKAction repeatActionForever:[SKAction followPath:hoverPath.CGPath asOffset:YES orientToPath:NO duration:30]]];
     [self randomizeSprite:sprite];
+    sprite.position = CGPointMake(0, sprite.position.y);
     if (planetNum == 5) {
         if (sprite.position.x > self.frame.size.width/2) {
             [sprite setPosition:CGPointMake((sprite.frame.size.width/2) + self.frame.size.width - 100,sprite.position.y)];
