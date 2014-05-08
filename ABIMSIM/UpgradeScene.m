@@ -107,7 +107,7 @@ static NSString* nextUpgradeDucketCostLabelName = @"nextUpgradeDucketCostLabelNa
 
 -(NSInteger)survivabilityUpgradeCost {
     NSInteger upgradeLevel = [ABIMSIMDefaults integerForKey:kSurvivabilityLevel];
-    NSInteger upgradeCost = 20 * (upgradeLevel+1);
+    NSInteger upgradeCost = 10 * (upgradeLevel+1);
     return upgradeCost;
 }
 

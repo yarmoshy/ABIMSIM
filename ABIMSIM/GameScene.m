@@ -76,6 +76,7 @@ static const uint32_t powerUpShieldCategory = 0x1 << 6;
     NSInteger shieldHitPoints;
     NSInteger shieldFireHitPoints;
     NSInteger shipHitPoints;
+    UIPanGestureRecognizer *flickRecognizer;
 }
 
 CGFloat DegreesToRadians(CGFloat degrees)
@@ -195,8 +196,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
 -(void)didMoveToView:(SKView *)view {
     [super didMoveToView:view];
-    UIPanGestureRecognizer *recognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGesture:)];
-    [self.view addGestureRecognizer:recognizer];
+    flickRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGesture:)];
+    [self.view addGestureRecognizer:flickRecognizer];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         self.paused = NO;
     });
@@ -204,6 +205,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
 -(void)willMoveFromView:(SKView *)view {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self.view removeGestureRecognizer:flickRecognizer];
 }
 
 -(void)pause {
