@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B400F40D191AFC6D00A483E2 /* UpgradesButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B400F40C191AFC6D00A483E2 /* UpgradesButton@2x.png */; };
+		B400F410191AFCA100A483E2 /* UpgradeScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B400F40F191AFCA100A483E2 /* UpgradeScene.m */; };
+		B400F412191B048D00A483E2 /* BlankButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B400F411191B048D00A483E2 /* BlankButton@2x.png */; };
 		B45865E518DA153C005C9566 /* Background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B45865D718DA153C005C9566 /* Background@2x.png */; };
 		B45865E918DA15C9005C9566 /* Ship@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B45865E818DA15C9005C9566 /* Ship@2x.png */; };
 		B45865EC18DA3ACA005C9566 /* HexColor.m in Sources */ = {isa = PBXBuildFile; fileRef = B45865EB18DA3ACA005C9566 /* HexColor.m */; };
@@ -82,6 +85,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B400F40C191AFC6D00A483E2 /* UpgradesButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "UpgradesButton@2x.png"; sourceTree = "<group>"; };
+		B400F40E191AFCA100A483E2 /* UpgradeScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpgradeScene.h; sourceTree = "<group>"; };
+		B400F40F191AFCA100A483E2 /* UpgradeScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpgradeScene.m; sourceTree = "<group>"; };
+		B400F411191B048D00A483E2 /* BlankButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BlankButton@2x.png"; sourceTree = "<group>"; };
 		B45865D718DA153C005C9566 /* Background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Background@2x.png"; sourceTree = "<group>"; };
 		B45865E818DA15C9005C9566 /* Ship@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Ship@2x.png"; sourceTree = "<group>"; };
 		B45865EA18DA3ACA005C9566 /* HexColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HexColor.h; sourceTree = "<group>"; };
@@ -181,6 +188,8 @@
 		B45865E718DA154F005C9566 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				B400F411191B048D00A483E2 /* BlankButton@2x.png */,
+				B400F40C191AFC6D00A483E2 /* UpgradesButton@2x.png */,
 				B478CF8D19197C2C001A9DB6 /* Pause@2x.png */,
 				B47923DB19157805002B8467 /* Voltaire-Regular.ttf */,
 				B4B66FF618F6229300E2BE70 /* ShipShield@2x.png */,
@@ -273,6 +282,8 @@
 				B45FF13F18CE8708001662CD /* ViewController.m */,
 				B45FF14118CE8708001662CD /* GameScene.h */,
 				B45FF14218CE8708001662CD /* GameScene.m */,
+				B400F40E191AFCA100A483E2 /* UpgradeScene.h */,
+				B400F40F191AFCA100A483E2 /* UpgradeScene.m */,
 				B45865E718DA154F005C9566 /* Assets */,
 				B45FF14618CE8708001662CD /* Images.xcassets */,
 				B45FF13018CE8708001662CD /* Supporting Files */,
@@ -395,6 +406,7 @@
 				B478CFB619199C0E001A9DB6 /* Planet_4_0@2x.png in Resources */,
 				B478CFBB19199C0E001A9DB6 /* Planet_5_1@2x.png in Resources */,
 				B478CFAB19199C0E001A9DB6 /* Planet_1_1@2x.png in Resources */,
+				B400F412191B048D00A483E2 /* BlankButton@2x.png in Resources */,
 				B47E22CD18DBA7E200F42EBB /* Asteroid_0@2x.png in Resources */,
 				B478CFB119199C0E001A9DB6 /* Planet_2_3@2x.png in Resources */,
 				B47E22D818DBA7E200F42EBB /* Asteroid_11@2x.png in Resources */,
@@ -402,6 +414,7 @@
 				B47E22D518DBA7E200F42EBB /* Asteroid_8@2x.png in Resources */,
 				B478CFA619199C0E001A9DB6 /* Planet_0_0@2x.png in Resources */,
 				B47E22D218DBA7E200F42EBB /* Asteroid_5@2x.png in Resources */,
+				B400F40D191AFC6D00A483E2 /* UpgradesButton@2x.png in Resources */,
 				B478CFA719199C0E001A9DB6 /* Planet_0_1@2x.png in Resources */,
 				B45FF13D18CE8708001662CD /* Main.storyboard in Resources */,
 				B4B66FF718F6229300E2BE70 /* ShipShield@2x.png in Resources */,
@@ -457,6 +470,7 @@
 				B45865EC18DA3ACA005C9566 /* HexColor.m in Sources */,
 				B45FF14318CE8708001662CD /* GameScene.m in Sources */,
 				B45FF14018CE8708001662CD /* ViewController.m in Sources */,
+				B400F410191AFCA100A483E2 /* UpgradeScene.m in Sources */,
 				B45FF13A18CE8708001662CD /* AppDelegate.m in Sources */,
 				B45FF13618CE8708001662CD /* main.m in Sources */,
 			);

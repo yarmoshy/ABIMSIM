@@ -10,11 +10,14 @@ static NSString* asteroidCategoryName = @"asteroid";
 static NSString* planetCategoryName = @"planet";
 static NSString* goalCategoryName = @"goal";
 static NSString* levelNodeName = @"level";
+static NSString* powerUpShieldName = @"shield";
+
 static NSString* shipImageSpriteName = @"shipImageSprite";
 static NSString* shipShieldSpriteName = @"shipShieldSprite";
 static NSString* sunObjectSpriteName = @"sunObjectSpriteName";
 static NSString* directionsSpriteName = @"directionsSpriteName";
 static NSString* pauseSpriteName = @"pauseSpriteName";
+static NSString* upgradeSpriteName = @"upgradeSpriteName";
 
 static const uint32_t borderCategory  = 0x1 << 0;  // 00000000000000000000000000000001
 static const uint32_t shipCategory  = 0x1 << 1;  // 00000000000000000000000000000001
@@ -22,6 +25,7 @@ static const uint32_t secondaryBorderCategory  = 0x1 << 2;  // 00000000000000000
 static const uint32_t asteroidCategory = 0x1 << 3;
 static const uint32_t planetCategory = 0x1 << 4;
 static const uint32_t goalCategory = 0x1 << 5;
+static const uint32_t powerUpShieldCategory = 0x1 << 6;
 
 
 #define kExtraSpaceOffScreen 50
@@ -50,7 +54,6 @@ static const uint32_t goalCategory = 0x1 << 5;
 #define asteroidColorYella @"dbdb0b"
 #define asteroidColorPurple @"9e3dd1"
 
-
 #define orbitJoint @"orbitJoint"
 #define moonsArray @"moonsArray"
 #define planetNumber @"planetNumber"
@@ -58,6 +61,7 @@ static const uint32_t goalCategory = 0x1 << 5;
 
 #import "GameScene.h"
 #import "HexColor.h"
+#import "UpgradeScene.h"
 
 @implementation GameScene {
     NSMutableArray *spritesArrays;
@@ -70,6 +74,7 @@ static const uint32_t goalCategory = 0x1 << 5;
     BOOL shipWarping;
     BOOL hasShield;
     int shieldHitPoints;
+    int shieldFireHitPoints;
     int shipHitPoints;
 }
 
@@ -111,9 +116,14 @@ CGFloat DegreesToRadians(CGFloat degrees)
         [self addChild:starBackLayer];
         [self addChild:starFrontLayer];
 
-        hasShield = YES;
-        shieldHitPoints = 2;
-        shipHitPoints = 1;
+        hasShield = [ABIMSIMDefaults boolForKey:kShieldOnStart];
+        if (hasShield) {
+            shieldHitPoints = 1 + [ABIMSIMDefaults integerForKey:kShieldDurabilityLevel];
+            shieldFireHitPoints = [ABIMSIMDefaults integerForKey:kShieldFireDurabilityLevel];
+        } else {
+            shieldHitPoints = 0;
+        }
+        shipHitPoints = 1000 + [ABIMSIMDefaults integerForKey:kHullDurabilityLevel];
         SKSpriteNode *shipImage = [SKSpriteNode spriteNodeWithImageNamed:@"Ship"];
         shipImage.name = shipImageSpriteName;
         SKSpriteNode *shipShieldImage = [SKSpriteNode spriteNodeWithImageNamed:@"ShipShield"];
@@ -140,6 +150,13 @@ CGFloat DegreesToRadians(CGFloat degrees)
         pauseButton.zPosition = 100;
         [self addChild:pauseButton];
         pauseButton.position = CGPointMake(size.width - pauseButton.size.width/2, pauseButton.size.height/2);
+        
+        SKSpriteNode *upgradeButton = [SKSpriteNode spriteNodeWithImageNamed:@"UpgradesButton"];
+        upgradeButton.name = upgradeSpriteName;
+        upgradeButton.zPosition = 100;
+        [self addChild:upgradeButton];
+        upgradeButton.position = CGPointMake(size.width/2, size.height/2 - 50);
+
 //        SKSpriteNode *warpBack = [SKSpriteNode spriteNodeWithImageNamed:@"WarpBack"];
 //        warpBack.anchorPoint = CGPointMake(0, 1);
 //        warpBack.position = CGPointMake(0, size.height);
@@ -197,14 +214,24 @@ CGFloat DegreesToRadians(CGFloat degrees)
     self.paused = !self.paused;
 }
 
+-(void)upgradeTapped:(id)sender {
+    UpgradeScene *us = [[UpgradeScene alloc] initWithSize:self.size];
+    [self.view presentScene:us transition:[SKTransition pushWithDirection:SKTransitionDirectionLeft duration:1]];
+}
+
 #pragma mark - Touch Handling
 
 -(void)handlePanGesture:(UIPanGestureRecognizer*)recognizer {
     if (recognizer.state != UIGestureRecognizerStateEnded || self.paused) {
         return;
     }
-    while ([self childNodeWithName:directionsSpriteName]) {
-        [[self childNodeWithName:directionsSpriteName] removeFromParent];
+    if (currentLevel == 1) {
+        while ([self childNodeWithName:directionsSpriteName]) {
+            [[self childNodeWithName:directionsSpriteName] removeFromParent];
+        }
+        while ([self childNodeWithName:upgradeSpriteName]) {
+            [[self childNodeWithName:upgradeSpriteName] removeFromParent];
+        }
     }
     CGPoint addVelocity = [recognizer velocityInView:recognizer.view];
     CGPoint newVelocity = addVelocity;
@@ -231,6 +258,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
     if ([node.name isEqualToString:pauseSpriteName]) {
         [self pauseTapped:nil];
     }
+    if ([node.name isEqualToString:upgradeSpriteName]) {
+        [self upgradeTapped:nil];
+    }
 }
 
 -(void)updateShipPhysics {
@@ -250,7 +280,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     ship.physicsBody.allowsRotation = NO;
     ship.physicsBody.categoryBitMask = shipCategory;
     ship.physicsBody.collisionBitMask = borderCategory | secondaryBorderCategory | asteroidCategory | planetCategory;
-    ship.physicsBody.contactTestBitMask = goalCategory | asteroidCategory;
+    ship.physicsBody.contactTestBitMask = goalCategory | asteroidCategory | powerUpShieldCategory;
     ship.physicsBody.mass = width;
     ship.physicsBody.velocity = velocity;
 }
@@ -340,6 +370,14 @@ CGFloat DegreesToRadians(CGFloat degrees)
         if (firstBody.categoryBitMask == asteroidCategory && secondBody.categoryBitMask == goalCategory) {
             [firstBody.node removeFromParent];
         }
+        if (firstBody.categoryBitMask == shipCategory && secondBody.categoryBitMask == powerUpShieldCategory) {
+            [secondBody.node removeFromParent];
+            hasShield = YES;
+            shieldHitPoints = 1 + [ABIMSIMDefaults integerForKey:kShieldDurabilityLevel];
+            shieldFireHitPoints = [ABIMSIMDefaults integerForKey:kShieldFireDurabilityLevel];
+            [self updateShipPhysics];
+        }
+
         if ([firstBody.node.name isEqualToString:sunObjectSpriteName]) {
             if (secondBody.categoryBitMask == shipCategory) {
                 if (hasShield) {
@@ -399,6 +437,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
 }
 
 -(void)killShipAndStartOver {
+    [ABIMSIMDefaults setInteger:[ABIMSIMDefaults integerForKey:kUserDuckets]+currentLevel forKey:kUserDuckets];
+    [ABIMSIMDefaults synchronize];
     [[self childNodeWithName:shipCategoryName] childNodeWithName:shipShieldSpriteName].hidden = YES;
     [[self childNodeWithName:shipCategoryName] childNodeWithName:shipImageSpriteName].hidden = YES;
     [self childNodeWithName:shipCategoryName].physicsBody = nil;
@@ -569,7 +609,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
         [spriteArray addObjectsFromArray:asteroids];
         NSMutableArray *planets = [self planetsForLevel:i];
         [spriteArray addObjectsFromArray:planets];
-
+        NSMutableArray *powerUps = [self powerUpsForLevel:i];
+        [spriteArray addObjectsFromArray:powerUps];
+        
         CGRect goalRect;
         goalRect = CGRectMake(self.frame.origin.x, self.frame.size.height + kExtraSpaceOffScreen, self.frame.size.width, 1);
         SKNode* goal = [SKNode node];
@@ -602,6 +644,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
     [currentSpriteArray addObjectsFromArray:asteroids];
     NSMutableArray *planets = [self planetsForLevel:currentLevel+10];
     [currentSpriteArray addObjectsFromArray:planets];
+    NSMutableArray *powerUps = [self powerUpsForLevel:currentLevel+10];
+    [currentSpriteArray addObjectsFromArray:powerUps];
+
     currentLevel++;
     ((SKLabelNode*)[self childNodeWithName:levelNodeName]).text = [NSString stringWithFormat:@"%d",currentLevel];
     CGRect goalRect;
@@ -640,6 +685,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
             }
         } else if ([sprite.name isEqual:goalCategoryName]) {
             [self addChild:sprite];
+        } else if ([sprite.name isEqual:powerUpShieldName]) {
+            sprite.hidden = NO;
+            [self addChild:sprite];
         }
     }
     if (currentLevel == 1) {
@@ -659,7 +707,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
         direction2.zPosition = 100;
         [self addChild:direction2];
         direction2.name = directionsSpriteName;
-
+        
+        
     }
 }
 
@@ -675,6 +724,34 @@ CGFloat DegreesToRadians(CGFloat degrees)
         sprite.physicsBody.velocity = CGVectorMake(velocity * cosf(sprite.zRotation), velocity * -sinf(sprite.zRotation));
     }
     return sprite;
+}
+
+#pragma mark - Power Ups
+
+-(NSMutableArray*)powerUpsForLevel:(int)level {
+    NSMutableArray *powerUps = [[NSMutableArray alloc] init];
+    if ([ABIMSIMDefaults integerForKey:kShieldOccuranceLevel] > 0) {
+        if (level % 10 == 0) {
+            if (level == 10 || ((arc4random() % 100)+1) <= 10 * [ABIMSIMDefaults integerForKey:kShieldOccuranceLevel]) {
+                SKSpriteNode *shieldPowerUp = [self shieldPowerUp];
+                [powerUps addObject:shieldPowerUp];
+            }
+        }
+    }
+    return powerUps;
+}
+
+-(SKSpriteNode*)shieldPowerUp {
+    SKSpriteNode *shieldPowerUp = [SKSpriteNode spriteNodeWithImageNamed:@"ShieldPowerUp"];
+    shieldPowerUp.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:shieldPowerUp.size.width/2];
+    shieldPowerUp.physicsBody.dynamic = NO;
+    shieldPowerUp.physicsBody.categoryBitMask = powerUpShieldCategory;
+    shieldPowerUp.physicsBody.contactTestBitMask = shipCategory;
+    shieldPowerUp.name = powerUpShieldName;
+    shieldPowerUp.position = CGPointMake(self.size.width/2, 100);
+    shieldPowerUp.zPosition = 1;
+
+    return shieldPowerUp;
 }
 
 

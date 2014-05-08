@@ -13,4 +13,16 @@
 #ifdef __OBJC__
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
+
+    //NSUserDefaults
+    #define kShieldOccuranceLevel @"kShieldOccuranceLevel"
+    #define kShieldDurabilityLevel @"kShieldDurabilityLevel"
+    #define kShieldFireDurabilityLevel @"kShieldFireDurabilityLevel"
+    #define kShieldOnStart @"kShieldOnStart"
+    #define kHullDurabilityLevel @"kHullDurabilityLevel"
+    #define kSurvivabilityLevel @"kSurvivabilityLevel"
+    #define kUserDuckets @"kUserDuckets"
+
+    #define ABIMSIMDefaults [NSUserDefaults standardUserDefaults]
+
 #endif
