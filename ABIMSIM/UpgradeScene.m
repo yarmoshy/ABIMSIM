@@ -26,7 +26,7 @@ static NSString* nextUpgradeDucketCostLabelName = @"nextUpgradeDucketCostLabelNa
         [self addChild:ducketLabel];
         
         SKLabelNode *ducketCount = [SKLabelNode labelNodeWithFontNamed:@"Voltaire"];
-        ducketCount.text = [NSString stringWithFormat:@"%d", [ABIMSIMDefaults integerForKey:kUserDuckets]];
+        ducketCount.text = [NSString stringWithFormat:@"%ld", (long)[ABIMSIMDefaults integerForKey:kUserDuckets]];
         ducketCount.fontSize = 26;
         ducketCount.position = CGPointMake(self.frame.size.width/2, self.frame.size.height*3/4 - 30);
         ducketCount.zPosition = 100;
@@ -50,7 +50,7 @@ static NSString* nextUpgradeDucketCostLabelName = @"nextUpgradeDucketCostLabelNa
         [self addChild:survivabilityLabel];
         
         SKLabelNode *survivabilityCostLabel = [SKLabelNode labelNodeWithFontNamed:@"Voltaire"];
-        survivabilityCostLabel.text = [NSString stringWithFormat:@"%d", [self survivabilityUpgradeCost]];
+        survivabilityCostLabel.text = [NSString stringWithFormat:@"%ld", (long)[self survivabilityUpgradeCost]];
         survivabilityCostLabel.fontSize = 26;
         survivabilityCostLabel.position = CGPointMake(self.frame.size.width/2, self.frame.size.height*3/4 - 130);
         survivabilityCostLabel.zPosition = 100;
@@ -70,44 +70,85 @@ static NSString* nextUpgradeDucketCostLabelName = @"nextUpgradeDucketCostLabelNa
 
 -(NSString*)survivabilityUpgradeAvailableString {
     NSString *upgradeString = @"";
-    int upgradeLevel = [ABIMSIMDefaults integerForKey:kSurvivabilityLevel];
+    NSInteger upgradeLevel = [ABIMSIMDefaults integerForKey:kSurvivabilityLevel];
     switch (upgradeLevel) {
         case 0:
             upgradeString = @"Unlock Shield";
             break;
-            
-        default:
+        case 1:
+        case 2:
+        case 4:
+        case 5:
+        case 7:
+        case 8:
+        case 10:
+        case 11:
+        case 13:
             upgradeString = @"Increase Shield Occurance";
+            break;
+        case 6:
+        case 14:
+        case 18:
+            upgradeString = @"Boost Shield Fire Resistance";
+            break;
+        case 9:
+            upgradeString = @"Start With Shield";
+            break;
+        case 3:
+        case 12:
+            upgradeString = @"Increase Shield Strength";
+            break;
+        default:
+            upgradeString = @"Increase Hull Strength";
             break;
     }
     return upgradeString;
 }
 
--(int)survivabilityUpgradeCost {
-    int upgradeLevel = [ABIMSIMDefaults integerForKey:kSurvivabilityLevel];
-    int upgradeCost = 20 * (upgradeLevel+1);
+-(NSInteger)survivabilityUpgradeCost {
+    NSInteger upgradeLevel = [ABIMSIMDefaults integerForKey:kSurvivabilityLevel];
+    NSInteger upgradeCost = 20 * (upgradeLevel+1);
     return upgradeCost;
 }
 
 -(void)upgradeSurvivability {
     if ([ABIMSIMDefaults integerForKey:kUserDuckets] >= [self survivabilityUpgradeCost]) {
-        int upgradeLevel = [ABIMSIMDefaults integerForKey:kSurvivabilityLevel];
+        NSInteger upgradeLevel = [ABIMSIMDefaults integerForKey:kSurvivabilityLevel];
         switch (upgradeLevel) {
             case 0:
+            case 1:
+            case 2:
+            case 4:
+            case 5:
+            case 7:
+            case 8:
+            case 10:
+            case 11:
+            case 13:
                 [ABIMSIMDefaults setInteger:[ABIMSIMDefaults integerForKey:kShieldOccuranceLevel]+1 forKey:kShieldOccuranceLevel];
                 break;
-                
+            case 6:
+            case 14:
+            case 18:
+                [ABIMSIMDefaults setInteger:[ABIMSIMDefaults integerForKey:kShieldFireDurabilityLevel]+1 forKey:kShieldFireDurabilityLevel];
+                break;
+            case 9:
+                [ABIMSIMDefaults setBool:YES forKey:kShieldOnStart];
+                break;
+            case 3:
+            case 12:
+                [ABIMSIMDefaults setInteger:[ABIMSIMDefaults integerForKey:kShieldDurabilityLevel]+1 forKey:kShieldDurabilityLevel];
+                break;
             default:
-                [ABIMSIMDefaults setInteger:[ABIMSIMDefaults integerForKey:kShieldOccuranceLevel]+1 forKey:kShieldOccuranceLevel];
+                [ABIMSIMDefaults setInteger:[ABIMSIMDefaults integerForKey:kHullDurabilityLevel]+1 forKey:kHullDurabilityLevel];
                 break;
         }
         [ABIMSIMDefaults setInteger:[ABIMSIMDefaults integerForKey:kUserDuckets] - [self survivabilityUpgradeCost] forKey:kUserDuckets];
         [ABIMSIMDefaults setInteger:upgradeLevel+1 forKey:kSurvivabilityLevel];
         [ABIMSIMDefaults synchronize];
-        ((SKLabelNode*)[self childNodeWithName:ducketCountLabelName]).text = [NSString stringWithFormat:@"%d",[ABIMSIMDefaults integerForKey:kUserDuckets]];
+        ((SKLabelNode*)[self childNodeWithName:ducketCountLabelName]).text = [NSString stringWithFormat:@"%ld",(long)[ABIMSIMDefaults integerForKey:kUserDuckets]];
         ((SKLabelNode*)[self childNodeWithName:survivabilityNextUpgradeLabelName]).text = [self survivabilityUpgradeAvailableString];
-        ((SKLabelNode*)[self childNodeWithName:nextUpgradeDucketCostLabelName]).text = [NSString stringWithFormat:@"%d",[self survivabilityUpgradeCost]];
-
+        ((SKLabelNode*)[self childNodeWithName:nextUpgradeDucketCostLabelName]).text = [NSString stringWithFormat:@"%ld",(long)[self survivabilityUpgradeCost]];
     }
 }
 

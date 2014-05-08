@@ -73,9 +73,9 @@ static const uint32_t powerUpShieldCategory = 0x1 << 6;
     int currentLevel;
     BOOL shipWarping;
     BOOL hasShield;
-    int shieldHitPoints;
-    int shieldFireHitPoints;
-    int shipHitPoints;
+    NSInteger shieldHitPoints;
+    NSInteger shieldFireHitPoints;
+    NSInteger shipHitPoints;
 }
 
 CGFloat DegreesToRadians(CGFloat degrees)
@@ -123,7 +123,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         } else {
             shieldHitPoints = 0;
         }
-        shipHitPoints = 1000 + [ABIMSIMDefaults integerForKey:kHullDurabilityLevel];
+        shipHitPoints = 1 + [ABIMSIMDefaults integerForKey:kHullDurabilityLevel];
         SKSpriteNode *shipImage = [SKSpriteNode spriteNodeWithImageNamed:@"Ship"];
         shipImage.name = shipImageSpriteName;
         SKSpriteNode *shipShieldImage = [SKSpriteNode spriteNodeWithImageNamed:@"ShipShield"];
@@ -381,8 +381,10 @@ CGFloat DegreesToRadians(CGFloat degrees)
         if ([firstBody.node.name isEqualToString:sunObjectSpriteName]) {
             if (secondBody.categoryBitMask == shipCategory) {
                 if (hasShield) {
-                    shieldHitPoints = 0;
-                    if (shieldHitPoints <= 0) {
+                    if (shieldFireHitPoints > 0) {
+                        shieldFireHitPoints--;
+                    } else {
+                        shieldHitPoints = 0;
                         hasShield = NO;
                         [self updateShipPhysics];
                     }
@@ -395,13 +397,15 @@ CGFloat DegreesToRadians(CGFloat degrees)
         if ([secondBody.node.name isEqualToString:sunObjectSpriteName]) {
             if (firstBody.categoryBitMask == shipCategory) {
                 if (hasShield) {
-                    shieldHitPoints = 0;
-                    if (shieldHitPoints <= 0) {
+                    if (shieldFireHitPoints > 0) {
+                        shieldFireHitPoints--;
+                    } else {
+                        shieldHitPoints = 0;
                         hasShield = NO;
                         [self updateShipPhysics];
                     }
                 } else
-                [self killShipAndStartOver];
+                    [self killShipAndStartOver];
             } else {
                 [firstBody.node removeFromParent];
             }
