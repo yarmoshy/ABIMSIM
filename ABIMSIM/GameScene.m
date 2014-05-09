@@ -71,16 +71,21 @@ static const uint32_t powerUpShieldCategory = 0x1 << 6;
     NSNumber *safeToTransition;
     SKSpriteNode *starBackLayer;
     SKSpriteNode *starFrontLayer;
+    
     int currentLevel;
     BOOL shipWarping;
     BOOL hasShield;
+    
     NSInteger shieldHitPoints;
     NSInteger shieldFireHitPoints;
     NSInteger shipHitPoints;
+    
     UIPanGestureRecognizer *flickRecognizer;
     
     BOOL showGameCenter;
     BOOL lastLevelPanned;
+    NSTimeInterval lastTimeHit;
+    int timesHitWithinSecond;
 }
 
 CGFloat DegreesToRadians(CGFloat degrees)
@@ -92,7 +97,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
 -(id)initWithSize:(CGSize)size {
     if (self = [super initWithSize:size]) {
         /* Setup your scene here */
-        
+        lastTimeHit = 0;
+        timesHitWithinSecond = 0;
         self.physicsWorld.gravity = CGVectorMake(0.0f, 0.0f);
         SKPhysicsBody* borderBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:CGRectMake(0, -kExtraSpaceOffScreen, size.width, size.height+kExtraSpaceOffScreen*2)];
         borderBody.categoryBitMask = borderCategory;
@@ -287,7 +293,18 @@ CGFloat DegreesToRadians(CGFloat degrees)
 }
 
 #pragma mark - Achievements
-
+-(void)checkHitAchievement {
+    NSTimeInterval now = [NSDate date].timeIntervalSince1970;
+    if (now - lastTimeHit <= 1) {
+        timesHitWithinSecond++;
+        if (timesHitWithinSecond >= 3) {
+            [self sendAchievementWithIdentifier:@"poorUnfortunateSoul"];
+        }
+    } else {
+        lastTimeHit = now;
+        timesHitWithinSecond = 0;
+    }
+}
 
 -(void)checkLevelAchievements {
     NSString *identifier;
@@ -356,6 +373,25 @@ CGFloat DegreesToRadians(CGFloat degrees)
     }
 }
 
+- (void) showGameCenter
+{
+    //    if ([GKLocalPlayer localPlayer].authenticated) {
+    GKGameCenterViewController *gameCenterController = [[GKGameCenterViewController alloc] init];
+    if (gameCenterController != nil)
+    {
+        gameCenterController.gameCenterDelegate = self;
+        self.paused = YES;
+        [self.viewController presentViewController: gameCenterController animated: YES completion:nil];
+    }
+    //    }
+}
+
+- (void)gameCenterViewControllerDidFinish:(GKGameCenterViewController *)gameCenterViewController
+{
+    [self.viewController dismissViewControllerAnimated:YES completion:^{
+        self.paused = NO;
+    }];
+}
 
 
 #pragma mark - Touch Handling
@@ -444,6 +480,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
         if ([firstBody.node.name isEqualToString:sunObjectSpriteName]) {
             if (secondBody.categoryBitMask == shipCategory) {
+                [self checkHitAchievement];
                 if (hasShield) {
                     if (shieldFireHitPoints > 0) {
                         shieldFireHitPoints--;
@@ -462,6 +499,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         }
         if ([secondBody.node.name isEqualToString:sunObjectSpriteName]) {
             if (firstBody.categoryBitMask == shipCategory) {
+                [self checkHitAchievement];
                 if (hasShield) {
                     if (shieldFireHitPoints > 0) {
                         shieldFireHitPoints--;
@@ -492,6 +530,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         secondBody = contact.bodyA;
     }
     if (firstBody.categoryBitMask == shipCategory && secondBody.categoryBitMask == asteroidCategory) {
+        [self checkHitAchievement];
         if (hasShield) {
             shieldHitPoints--;
             if (shieldHitPoints <= 0) {
@@ -1543,25 +1582,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
 #pragma mark - Extra
 
-- (void) showGameCenter
-{
-//    if ([GKLocalPlayer localPlayer].authenticated) {
-        GKGameCenterViewController *gameCenterController = [[GKGameCenterViewController alloc] init];
-        if (gameCenterController != nil)
-        {
-            gameCenterController.gameCenterDelegate = self;
-            self.paused = YES;
-            [self.viewController presentViewController: gameCenterController animated: YES completion:nil];
-        }
-//    }
-}
-
-- (void)gameCenterViewControllerDidFinish:(GKGameCenterViewController *)gameCenterViewController
-{
-    [self.viewController dismissViewControllerAnimated:YES completion:^{
-        self.paused = NO;
-    }];
-}
 
 
 
