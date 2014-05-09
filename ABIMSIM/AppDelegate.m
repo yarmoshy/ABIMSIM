@@ -14,6 +14,32 @@
 {
     // Override point for customization after application launch.
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationNone];
+    GKLocalPlayer *localPlayer = [GKLocalPlayer localPlayer];
+    
+    localPlayer.authenticateHandler = ^(UIViewController *loginVC, NSError *error) {
+        if ([GKLocalPlayer localPlayer].authenticated) {
+            //enable game center
+            NSLog(@"authenticated!");
+        } else if (loginVC) {
+            NSLog(@"show loginVC");
+//        if (![ABIMSIMDefaults boolForKey:kGameCenterCancelled]) {
+                [self.window.rootViewController presentViewController:loginVC animated:YES completion:^{
+                    ;
+                }];
+//          }
+            // pause game and present loginVC
+        } else {
+            if ([error.domain isEqual:@"GKErrorDomain"]) {
+                if (error.code == 2) {
+//                    [ABIMSIMDefaults setBool:YES forKey:kGameCenterCancelled];
+//                    [ABIMSIMDefaults synchronize];
+                }
+            }
+            NSLog(@"Error: %@", error);
+            // disableGameCenter
+        }
+    };
+
 
     return YES;
 }

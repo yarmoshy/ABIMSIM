@@ -163,7 +163,9 @@ static NSString* nextUpgradeDucketCostLabelName = @"nextUpgradeDucketCostLabelNa
     if ([node.name isEqualToString:survivabilityButtonName]) {
         [self upgradeSurvivability];
     } else {
-        [self.view presentScene:[GameScene sceneWithSize:self.size] transition:[SKTransition pushWithDirection:SKTransitionDirectionRight duration:1]];
+        GameScene *gameScene = [GameScene sceneWithSize:self.size];
+        gameScene.viewController = self.viewController;
+        [self.view presentScene:gameScene transition:[SKTransition pushWithDirection:SKTransitionDirectionRight duration:1]];
     }
 }
 

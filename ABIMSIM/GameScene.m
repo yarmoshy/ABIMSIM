@@ -18,6 +18,7 @@ static NSString* sunObjectSpriteName = @"sunObjectSpriteName";
 static NSString* directionsSpriteName = @"directionsSpriteName";
 static NSString* pauseSpriteName = @"pauseSpriteName";
 static NSString* upgradeSpriteName = @"upgradeSpriteName";
+static NSString* gameCenterSpriteName = @"gameCenterSpriteName";
 
 static const uint32_t borderCategory  = 0x1 << 0;  // 00000000000000000000000000000001
 static const uint32_t shipCategory  = 0x1 << 1;  // 00000000000000000000000000000001
@@ -63,7 +64,7 @@ static const uint32_t powerUpShieldCategory = 0x1 << 6;
 #import "HexColor.h"
 #import "UpgradeScene.h"
 
-@implementation GameScene {
+@implementation GameScene  {
     NSMutableArray *spritesArrays;
     NSMutableArray *starSprites;
     NSMutableArray *currentSpriteArray;
@@ -77,6 +78,8 @@ static const uint32_t powerUpShieldCategory = 0x1 << 6;
     NSInteger shieldFireHitPoints;
     NSInteger shipHitPoints;
     UIPanGestureRecognizer *flickRecognizer;
+    
+    BOOL showGameCenter;
 }
 
 CGFloat DegreesToRadians(CGFloat degrees)
@@ -158,6 +161,12 @@ CGFloat DegreesToRadians(CGFloat degrees)
         [self addChild:upgradeButton];
         upgradeButton.position = CGPointMake(size.width/2, size.height/2 - 50);
 
+        SKSpriteNode *gameCenterButton = [SKSpriteNode spriteNodeWithImageNamed:@"game-center-hero"];
+        gameCenterButton.name = gameCenterSpriteName;
+        gameCenterButton.zPosition = 100;
+        [self addChild:gameCenterButton];
+        gameCenterButton.position = CGPointMake(size.width/2, size.height/2 - 100);
+
 //        SKSpriteNode *warpBack = [SKSpriteNode spriteNodeWithImageNamed:@"WarpBack"];
 //        warpBack.anchorPoint = CGPointMake(0, 1);
 //        warpBack.position = CGPointMake(0, size.height);
@@ -218,8 +227,64 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
 -(void)upgradeTapped:(id)sender {
     UpgradeScene *us = [[UpgradeScene alloc] initWithSize:self.size];
+    us.viewController = self.viewController;
     [self.view presentScene:us transition:[SKTransition pushWithDirection:SKTransitionDirectionLeft duration:1]];
 }
+
+-(void)update:(CFTimeInterval)currentTime {
+    if ([UIApplication sharedApplication].applicationState != UIApplicationStateActive) {
+        [self pause];
+    }
+    
+    /* Called before each frame is rendered */
+    SKNode* ship = [self childNodeWithName:shipCategoryName];
+    if (shipWarping && ship.position.y > ship.frame.size.height/2) {
+        shipWarping = NO;
+        ship.physicsBody.collisionBitMask = borderCategory | secondaryBorderCategory | asteroidCategory | planetCategory;
+    }
+    
+    float yPercentageFromCenter = (ship.position.y - (self.view.frame.size.height/2.0))  / (self.view.frame.size.height / 2.0);
+    float frontMaxY = ((self.view.frame.size.height * starFrontMovement) - self.view.frame.size.height)/2.0;
+    float backMaxY = ((self.view.frame.size.height * starBackMovement) - self.view.frame.size.height)/2.0;
+    float frontY = (yPercentageFromCenter * frontMaxY);
+    frontY = frontY + (frontMaxY);
+    float backY = (yPercentageFromCenter * backMaxY);
+    backY = backY + (backMaxY);
+    starFrontLayer.position = CGPointMake(starFrontLayer.position.x, -frontY);
+    starBackLayer.position = CGPointMake(starBackLayer.position.x, -backY);
+    
+    static int maxSpeed = MAX_VELOCITY;
+    float speed = sqrt(ship.physicsBody.velocity.dx*ship.physicsBody.velocity.dx + ship.physicsBody.velocity.dy * ship.physicsBody.velocity.dy);
+    if (speed > maxSpeed) {
+        ship.physicsBody.linearDamping = 0.4f;
+    } else {
+        ship.physicsBody.linearDamping = 0.0f;
+    }
+    for (SKSpriteNode *asteroid in currentSpriteArray) {
+        if (![asteroid.name isEqualToString:asteroidCategoryName]) {
+            continue;
+        }
+        if (asteroid.position.y - asteroid.size.height/2 > self.frame.size.height) {
+            if (asteroid.parent) {
+                [asteroid removeFromParent];
+                continue;
+            }
+        }
+        if (fabs(asteroid.physicsBody.angularVelocity) > MAX_ANGULAR_VELOCITY) {
+            asteroid.physicsBody.angularDamping = 1.0f;
+        } else {
+            asteroid.physicsBody.angularDamping = 0.0f;
+        }
+        float speed = sqrt(asteroid.physicsBody.velocity.dx*asteroid.physicsBody.velocity.dx + asteroid.physicsBody.velocity.dy * asteroid.physicsBody.velocity.dy);
+        if (speed > maxSpeed) {
+            asteroid.physicsBody.linearDamping = 0.4f;
+        } else {
+            asteroid.physicsBody.linearDamping = 0.0f;
+        }
+        
+    }
+}
+
 
 #pragma mark - Touch Handling
 
@@ -228,12 +293,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         return;
     }
     if (currentLevel == 1) {
-        while ([self childNodeWithName:directionsSpriteName]) {
-            [[self childNodeWithName:directionsSpriteName] removeFromParent];
-        }
-        while ([self childNodeWithName:upgradeSpriteName]) {
-            [[self childNodeWithName:upgradeSpriteName] removeFromParent];
-        }
+        [self removeOverlayChildren];
     }
     CGPoint addVelocity = [recognizer velocityInView:recognizer.view];
     CGPoint newVelocity = addVelocity;
@@ -263,83 +323,12 @@ CGFloat DegreesToRadians(CGFloat degrees)
     if ([node.name isEqualToString:upgradeSpriteName]) {
         [self upgradeTapped:nil];
     }
-}
-
--(void)updateShipPhysics {
-    SKSpriteNode *ship = (SKSpriteNode*)[self childNodeWithName:shipCategoryName];
-    CGVector velocity = ship.physicsBody.velocity;
-    float width = 40;
-    if (hasShield) {
-        [ship childNodeWithName:shipShieldSpriteName].hidden = NO;
-        width = ship.size.width;
-    } else {
-        [ship childNodeWithName:shipShieldSpriteName].hidden = YES;
-    }
-    ship.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:width/2];
-    ship.physicsBody.friction = 0.0f;
-    ship.physicsBody.restitution = 1.0f;
-    ship.physicsBody.linearDamping = 0.0f;
-    ship.physicsBody.allowsRotation = NO;
-    ship.physicsBody.categoryBitMask = shipCategory;
-    ship.physicsBody.collisionBitMask = borderCategory | secondaryBorderCategory | asteroidCategory | planetCategory;
-    ship.physicsBody.contactTestBitMask = goalCategory | asteroidCategory | powerUpShieldCategory;
-    ship.physicsBody.mass = width;
-    ship.physicsBody.velocity = velocity;
-}
-
--(void)update:(CFTimeInterval)currentTime {
-    if ([UIApplication sharedApplication].applicationState != UIApplicationStateActive) {
-        [self pause];
-    }
-
-    /* Called before each frame is rendered */
-    SKNode* ship = [self childNodeWithName:shipCategoryName];
-    if (shipWarping && ship.position.y > ship.frame.size.height/2) {
-        shipWarping = NO;
-        ship.physicsBody.collisionBitMask = borderCategory | secondaryBorderCategory | asteroidCategory | planetCategory;
-    }
-    
-    float yPercentageFromCenter = (ship.position.y - (self.view.frame.size.height/2.0))  / (self.view.frame.size.height / 2.0);
-    float frontMaxY = ((self.view.frame.size.height * starFrontMovement) - self.view.frame.size.height)/2.0;
-    float backMaxY = ((self.view.frame.size.height * starBackMovement) - self.view.frame.size.height)/2.0;
-    float frontY = (yPercentageFromCenter * frontMaxY);
-    frontY = frontY + (frontMaxY);
-    float backY = (yPercentageFromCenter * backMaxY);
-    backY = backY + (backMaxY);
-    starFrontLayer.position = CGPointMake(starFrontLayer.position.x, -frontY);
-    starBackLayer.position = CGPointMake(starBackLayer.position.x, -backY);
-
-    static int maxSpeed = MAX_VELOCITY;
-    float speed = sqrt(ship.physicsBody.velocity.dx*ship.physicsBody.velocity.dx + ship.physicsBody.velocity.dy * ship.physicsBody.velocity.dy);
-    if (speed > maxSpeed) {
-        ship.physicsBody.linearDamping = 0.4f;
-    } else {
-        ship.physicsBody.linearDamping = 0.0f;
-    }
-    for (SKSpriteNode *asteroid in currentSpriteArray) {
-        if (![asteroid.name isEqualToString:asteroidCategoryName]) {
-            continue;
-        }
-        if (asteroid.position.y - asteroid.size.height/2 > self.frame.size.height) {
-            if (asteroid.parent) {
-                [asteroid removeFromParent];
-                continue;
-            }
-        }
-        if (fabs(asteroid.physicsBody.angularVelocity) > MAX_ANGULAR_VELOCITY) {
-            asteroid.physicsBody.angularDamping = 1.0f;
-        } else {
-            asteroid.physicsBody.angularDamping = 0.0f;
-        }
-        float speed = sqrt(asteroid.physicsBody.velocity.dx*asteroid.physicsBody.velocity.dx + asteroid.physicsBody.velocity.dy * asteroid.physicsBody.velocity.dy);
-        if (speed > maxSpeed) {
-            asteroid.physicsBody.linearDamping = 0.4f;
-        } else {
-            asteroid.physicsBody.linearDamping = 0.0f;
-        }
-
+    if ([node.name isEqualToString:gameCenterSpriteName]) {
+        [self showGameCenter];
     }
 }
+
+
 
 
 #pragma mark - Collisions and Contacts
@@ -445,13 +434,21 @@ CGFloat DegreesToRadians(CGFloat degrees)
 -(void)killShipAndStartOver {
     [ABIMSIMDefaults setInteger:[ABIMSIMDefaults integerForKey:kUserDuckets]+currentLevel forKey:kUserDuckets];
     [ABIMSIMDefaults synchronize];
+    GKScore *newScore = [[GKScore alloc] initWithLeaderboardIdentifier:@"distance"];
+    newScore.value = currentLevel;
+    [GKScore reportScores:@[newScore] withCompletionHandler:^(NSError *error) {
+        if (error) {
+            NSLog(@"Score Submit Error: %@", error);
+        }
+    }];
     [[self childNodeWithName:shipCategoryName] childNodeWithName:shipShieldSpriteName].hidden = YES;
     [[self childNodeWithName:shipCategoryName] childNodeWithName:shipImageSpriteName].hidden = YES;
     [self childNodeWithName:shipCategoryName].physicsBody = nil;
+    
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        SKScene * scene = [GameScene sceneWithSize:self.view.bounds.size];
+        GameScene * scene = [GameScene sceneWithSize:self.view.bounds.size];
         scene.scaleMode = SKSceneScaleModeAspectFill;
-        
+        scene.viewController = self.viewController;
         [self.view presentScene:scene transition:[SKTransition doorsOpenHorizontalWithDuration:2]];
     });
 
@@ -633,6 +630,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
 }
 
 -(void)advanceToNextLevel {
+    [self removeOverlayChildren];
     for (int i = 0; i < currentSpriteArray.count; i++) {
         if ([[currentSpriteArray[i] name] isEqual:asteroidCategoryName]) {
             [currentSpriteArray[i] removeFromParent];
@@ -718,6 +716,18 @@ CGFloat DegreesToRadians(CGFloat degrees)
     }
 }
 
+-(void)removeOverlayChildren {
+    while ([self childNodeWithName:directionsSpriteName]) {
+        [[self childNodeWithName:directionsSpriteName] removeFromParent];
+    }
+    while ([self childNodeWithName:upgradeSpriteName]) {
+        [[self childNodeWithName:upgradeSpriteName] removeFromParent];
+    }
+    while ([self childNodeWithName:gameCenterSpriteName]) {
+        [[self childNodeWithName:gameCenterSpriteName] removeFromParent];
+    }
+}
+
 
 -(SKSpriteNode*)randomizeSprite:(SKSpriteNode*)sprite {
     float x = arc4random() % (int)self.frame.size.width * 1;
@@ -760,6 +770,27 @@ CGFloat DegreesToRadians(CGFloat degrees)
     return shieldPowerUp;
 }
 
+-(void)updateShipPhysics {
+    SKSpriteNode *ship = (SKSpriteNode*)[self childNodeWithName:shipCategoryName];
+    CGVector velocity = ship.physicsBody.velocity;
+    float width = 40;
+    if (hasShield) {
+        [ship childNodeWithName:shipShieldSpriteName].hidden = NO;
+        width = ship.size.width;
+    } else {
+        [ship childNodeWithName:shipShieldSpriteName].hidden = YES;
+    }
+    ship.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:width/2];
+    ship.physicsBody.friction = 0.0f;
+    ship.physicsBody.restitution = 1.0f;
+    ship.physicsBody.linearDamping = 0.0f;
+    ship.physicsBody.allowsRotation = NO;
+    ship.physicsBody.categoryBitMask = shipCategory;
+    ship.physicsBody.collisionBitMask = borderCategory | secondaryBorderCategory | asteroidCategory | planetCategory;
+    ship.physicsBody.contactTestBitMask = goalCategory | asteroidCategory | powerUpShieldCategory;
+    ship.physicsBody.mass = width;
+    ship.physicsBody.velocity = velocity;
+}
 
 #pragma mark - Asteroids
 
@@ -1432,6 +1463,27 @@ CGFloat DegreesToRadians(CGFloat degrees)
 }
 
 #pragma mark - Extra
+
+- (void) showGameCenter
+{
+//    if ([GKLocalPlayer localPlayer].authenticated) {
+        GKGameCenterViewController *gameCenterController = [[GKGameCenterViewController alloc] init];
+        if (gameCenterController != nil)
+        {
+            gameCenterController.gameCenterDelegate = self;
+            [self.viewController presentViewController: gameCenterController animated: YES completion:nil];
+        }
+//    }
+}
+
+- (void)gameCenterViewControllerDidFinish:(GKGameCenterViewController *)gameCenterViewController
+{
+    [self.viewController dismissViewControllerAnimated:YES completion:^{
+        self.paused = NO;
+    }];
+}
+
+
 
 - (UIImage *)radialGradientImage:(CGSize)size start:(UIColor*)start end:(UIColor*)end centre:(CGPoint)centre radius:(float)radius {
 	// Render a radial background
