@@ -83,7 +83,7 @@ static const uint32_t powerUpShieldCategory = 0x1 << 6;
     UIPanGestureRecognizer *flickRecognizer;
     
     BOOL showGameCenter;
-    BOOL lastLevelPanned;
+    int lastLevelPanned;
     NSTimeInterval lastTimeHit;
     int timesHitWithinSecond;
 }
@@ -341,7 +341,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
 }
 
 -(void)checkLevelAchievements {
-    NSString *identifier;
+    NSString *identifier = @"";
     switch (currentLevel) {
         case 2:
             if (lastLevelPanned == 0) {
@@ -396,12 +396,23 @@ CGFloat DegreesToRadians(CGFloat degrees)
     if (achievement)
     {
         achievement.percentComplete = 100.0;
-        achievement.showsCompletionBanner = YES;
         [GKAchievement reportAchievements:@[achievement] withCompletionHandler:^(NSError *error)
          {
-             if (error != nil)
-             {
-                 NSLog(@"Error in reporting achievements: %@", error);
+             if (![ABIMSIMDefaults boolForKey:identifier]) {
+                 [GKAchievementDescription loadAchievementDescriptionsWithCompletionHandler:^(NSArray *descriptions, NSError *error) {
+                     for (GKAchievementDescription *description in descriptions) {
+                         if ([description.identifier isEqualToString:identifier]) {
+                             [GKNotificationBanner showBannerWithTitle:description.title message:description.achievedDescription duration:1 completionHandler:^{
+                                 [ABIMSIMDefaults setBool:YES forKey:identifier];
+                                 [ABIMSIMDefaults synchronize];
+                             }];
+                         }
+                     }
+                 }];
+                 if (error != nil)
+                 {
+                     NSLog(@"Error in reporting achievements: %@", error);
+                 }
              }
         }];
     }
