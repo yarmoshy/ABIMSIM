@@ -25,6 +25,13 @@
     #define kSurvivabilityLevel @"kSurvivabilityLevel"
     #define kUserDuckets @"kUserDuckets"
 
+    #define kPlanet0Hit @"kPlanet0Hit"
+    #define kPlanet1Hit @"kPlanet1Hit"
+    #define kPlanet2Hit @"kPlanet2Hit"
+    #define kPlanet3Hit @"kPlanet3Hit"
+    #define kPlanet4Hit @"kPlanet4Hit"
+    #define kPlanet5Hit @"kPlanet5Hit"
+
     #define ABIMSIMDefaults [NSUserDefaults standardUserDefaults]
 
 #endif

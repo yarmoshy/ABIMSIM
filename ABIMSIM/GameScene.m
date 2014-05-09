@@ -293,6 +293,40 @@ CGFloat DegreesToRadians(CGFloat degrees)
 }
 
 #pragma mark - Achievements
+-(void)checkPlanetHitAchievement:(int)planetNum {
+    switch (planetNum) {
+        case 0:
+            [ABIMSIMDefaults setBool:YES forKey:kPlanet0Hit];
+            break;
+        case 1:
+            [ABIMSIMDefaults setBool:YES forKey:kPlanet1Hit];
+            break;
+        case 2:
+            [ABIMSIMDefaults setBool:YES forKey:kPlanet2Hit];
+            break;
+        case 3:
+            [ABIMSIMDefaults setBool:YES forKey:kPlanet3Hit];
+            break;
+        case 4:
+            [ABIMSIMDefaults setBool:YES forKey:kPlanet4Hit];
+            break;
+        case 5:
+            [ABIMSIMDefaults setBool:YES forKey:kPlanet5Hit];
+            break;
+        default:
+            break;
+    }
+    [ABIMSIMDefaults synchronize];
+    if ([ABIMSIMDefaults boolForKey:kPlanet0Hit] &&
+        [ABIMSIMDefaults boolForKey:kPlanet1Hit] &&
+        [ABIMSIMDefaults boolForKey:kPlanet2Hit] &&
+        [ABIMSIMDefaults boolForKey:kPlanet3Hit] &&
+        [ABIMSIMDefaults boolForKey:kPlanet4Hit] &&
+        [ABIMSIMDefaults boolForKey:kPlanet5Hit]) {
+        [self sendAchievementWithIdentifier:@"allAroundTheWorlds"];
+    }
+}
+
 -(void)checkHitAchievement {
     NSTimeInterval now = [NSDate date].timeIntervalSince1970;
     if (now - lastTimeHit <= 1) {
@@ -442,7 +476,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
 #pragma mark - Collisions and Contacts
 
-
 - (void)didBeginContact:(SKPhysicsContact*)contact {
     // 1 Create local variables for two physics bodies
     @synchronized (safeToTransition) {
@@ -466,6 +499,11 @@ CGFloat DegreesToRadians(CGFloat degrees)
                 });
 
             }
+        }
+        if (firstBody.categoryBitMask == shipCategory && secondBody.categoryBitMask == planetCategory) {
+            SKSpriteNode *planet = (SKSpriteNode*)secondBody.node;
+            int planetNum = [planet.userData[planetNumber] intValue];
+            [self checkPlanetHitAchievement:planetNum];
         }
         if (firstBody.categoryBitMask == asteroidCategory && secondBody.categoryBitMask == goalCategory) {
             [firstBody.node removeFromParent];
@@ -905,7 +943,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     ship.physicsBody.allowsRotation = NO;
     ship.physicsBody.categoryBitMask = shipCategory;
     ship.physicsBody.collisionBitMask = borderCategory | secondaryBorderCategory | asteroidCategory | planetCategory;
-    ship.physicsBody.contactTestBitMask = goalCategory | asteroidCategory | powerUpShieldCategory;
+    ship.physicsBody.contactTestBitMask = goalCategory | asteroidCategory | planetCategory | powerUpShieldCategory;
     ship.physicsBody.mass = width;
     ship.physicsBody.velocity = velocity;
 }
@@ -1311,6 +1349,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
             planet.physicsBody.dynamic = NO;
             planet.physicsBody.categoryBitMask = planetCategory;
             planet.physicsBody.collisionBitMask = shipCategory | asteroidCategory | planetCategory;
+            planet.physicsBody.contactTestBitMask = planetCategory;
             if (forceSun) {
                 planet.physicsBody.contactTestBitMask = shipCategory | asteroidCategory;
             }
