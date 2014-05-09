@@ -80,6 +80,7 @@ static const uint32_t powerUpShieldCategory = 0x1 << 6;
     UIPanGestureRecognizer *flickRecognizer;
     
     BOOL showGameCenter;
+    BOOL lastLevelPanned;
 }
 
 CGFloat DegreesToRadians(CGFloat degrees)
@@ -291,6 +292,11 @@ CGFloat DegreesToRadians(CGFloat degrees)
 -(void)checkLevelAchievements {
     NSString *identifier;
     switch (currentLevel) {
+        case 2:
+            if (lastLevelPanned == 0) {
+                identifier = @"iGuessThatWorks";
+            }
+            break;
         case 10:
             identifier = @"learningToFly";
             break;
@@ -328,6 +334,10 @@ CGFloat DegreesToRadians(CGFloat degrees)
     if (![identifier isEqualToString:@""]) {
         [self sendAchievementWithIdentifier:identifier];
     }
+    if (currentLevel - lastLevelPanned >= 5) {
+        identifier = @"Autopilot";
+        [self sendAchievementWithIdentifier:identifier];
+    }
 }
 
 -(void)sendAchievementWithIdentifier:(NSString*)identifier {
@@ -354,6 +364,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     if (recognizer.state != UIGestureRecognizerStateEnded || self.paused) {
         return;
     }
+    lastLevelPanned = currentLevel;
     if (currentLevel == 1) {
         [self removeOverlayChildren];
     }
@@ -1539,6 +1550,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         if (gameCenterController != nil)
         {
             gameCenterController.gameCenterDelegate = self;
+            self.paused = YES;
             [self.viewController presentViewController: gameCenterController animated: YES completion:nil];
         }
 //    }
