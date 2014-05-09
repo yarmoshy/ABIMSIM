@@ -285,6 +285,68 @@ CGFloat DegreesToRadians(CGFloat degrees)
     }
 }
 
+#pragma mark - Achievements
+
+
+-(void)checkLevelAchievements {
+    NSString *identifier;
+    switch (currentLevel) {
+        case 10:
+            identifier = @"learningToFly";
+            break;
+        case 20:
+            identifier = @"explorerReporting";
+            break;
+        case 30:
+            identifier = @"adventureIsOutThere";
+            break;
+        case 40:
+            identifier = @"gettinKindaHectic";
+            break;
+        case 50:
+            identifier = @"deepSpace";
+            break;
+        case 60:
+            identifier = @"toBoldyGo";
+            break;
+        case 70:
+            identifier = @"whereNoManHasGoneBefore";
+            break;
+        case 80:
+            identifier = @"acrossTheCosmos";
+            break;
+        case 90:
+            identifier = @"theObservableUniverse";
+            break;
+        case 100:
+            identifier = @"theEdgeOfSpace";
+            break;
+        default:
+            identifier = @"";
+            break;
+    }
+    if (![identifier isEqualToString:@""]) {
+        [self sendAchievementWithIdentifier:identifier];
+    }
+}
+
+-(void)sendAchievementWithIdentifier:(NSString*)identifier {
+    GKAchievement *achievement = [[GKAchievement alloc] initWithIdentifier:identifier];
+    if (achievement)
+    {
+        achievement.percentComplete = 100.0;
+        achievement.showsCompletionBanner = YES;
+        [GKAchievement reportAchievements:@[achievement] withCompletionHandler:^(NSError *error)
+         {
+             if (error != nil)
+             {
+                 NSLog(@"Error in reporting achievements: %@", error);
+             }
+        }];
+    }
+}
+
+
 
 #pragma mark - Touch Handling
 
@@ -379,8 +441,10 @@ CGFloat DegreesToRadians(CGFloat degrees)
                         hasShield = NO;
                         [self updateShipPhysics];
                     }
-                } else
+                } else {
+                    [self sendAchievementWithIdentifier:@"setTheControlsForTheHeartOfTheSun"];
                     [self killShipAndStartOver];
+                }
             } else {
                 [secondBody.node removeFromParent];
             }
@@ -395,8 +459,10 @@ CGFloat DegreesToRadians(CGFloat degrees)
                         hasShield = NO;
                         [self updateShipPhysics];
                     }
-                } else
+                } else {
+                    [self sendAchievementWithIdentifier:@"setTheControlsForTheHeartOfTheSun"];
                     [self killShipAndStartOver];
+                }
             } else {
                 [firstBody.node removeFromParent];
             }
@@ -652,6 +718,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
     [currentSpriteArray addObjectsFromArray:powerUps];
 
     currentLevel++;
+    [self checkLevelAchievements];
+    
     ((SKLabelNode*)[self childNodeWithName:levelNodeName]).text = [NSString stringWithFormat:@"%d",currentLevel];
     CGRect goalRect;
     goalRect = CGRectMake(self.frame.origin.x, self.frame.size.height + kExtraSpaceOffScreen, self.frame.size.width, 1);

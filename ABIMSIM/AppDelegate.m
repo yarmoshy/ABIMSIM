@@ -20,26 +20,23 @@
         if ([GKLocalPlayer localPlayer].authenticated) {
             //enable game center
             NSLog(@"authenticated!");
+//            [GKAchievement resetAchievementsWithCompletionHandler:^(NSError *error)
+//             {
+//                 if (error != nil) {
+//                     // handle the error.
+//                }
+//             }];
         } else if (loginVC) {
             NSLog(@"show loginVC");
-//        if (![ABIMSIMDefaults boolForKey:kGameCenterCancelled]) {
-                [self.window.rootViewController presentViewController:loginVC animated:YES completion:^{
-                    ;
-                }];
-//          }
+            [self.window.rootViewController presentViewController:loginVC animated:YES completion:^{
+                ;
+            }];
             // pause game and present loginVC
         } else {
-            if ([error.domain isEqual:@"GKErrorDomain"]) {
-                if (error.code == 2) {
-//                    [ABIMSIMDefaults setBool:YES forKey:kGameCenterCancelled];
-//                    [ABIMSIMDefaults synchronize];
-                }
-            }
             NSLog(@"Error: %@", error);
             // disableGameCenter
         }
     };
-
 
     return YES;
 }
