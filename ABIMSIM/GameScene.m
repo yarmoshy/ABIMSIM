@@ -1345,6 +1345,13 @@ CGFloat DegreesToRadians(CGFloat degrees)
                 break;
             }
             [self randomizeSprite:planet];
+            if ([planet.userData[planetNumber] intValue] == 5) {
+                if (planet.position.x > self.frame.size.width/2) {
+                    [planet setPosition:CGPointMake((planet.frame.size.width/2) + self.frame.size.width - 100,planet.position.y)];
+                } else {
+                    [planet setPosition:CGPointMake((planet.frame.size.width/-2) + 100,planet.position.y)];
+                }
+            }
             thisCenter = planet.position;
             if (planets.count > 0) {
                 distanceA = sqrtf(powf(thisCenter.x - otherCenterA.x, 2) + pow(thisCenter.y - otherCenterA.y, 2));
@@ -1375,17 +1382,15 @@ CGFloat DegreesToRadians(CGFloat degrees)
 }
 
 -(BOOL)addRingPhysicsBodyIfApplicableForPlanet:(SKSpriteNode*)planet {
-    if ([planet.userData[planetNumber] isEqualToNumber:@1]) {
-        if ([planet.userData[planetFlavorNumber] isEqualToNumber:@0]) {
-            SKSpriteNode *extraBodySprite = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:planet.size];
-            extraBodySprite.physicsBody = [SKPhysicsBody bodyWithPolygonFromPath:[self pathForRingWithPlanetNum:[planet.userData[planetNumber] intValue] withSprite:planet]];
-            extraBodySprite.physicsBody.dynamic = NO;
-            extraBodySprite.physicsBody.categoryBitMask = planetCategory;
-            extraBodySprite.physicsBody.collisionBitMask = shipCategory | asteroidCategory | planetCategory;
-            extraBodySprite.physicsBody.allowsRotation = NO;
-            [planet addChild:extraBodySprite];
-            return YES;
-        }
+    if ([planet.userData[planetFlavorNumber] isEqualToNumber:@2] && [planet.userData[planetNumber] intValue] != 5) {
+        SKSpriteNode *extraBodySprite = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:planet.size];
+        extraBodySprite.physicsBody = [SKPhysicsBody bodyWithPolygonFromPath:[self pathForRingWithPlanetNum:[planet.userData[planetNumber] intValue] withSprite:planet]];
+        extraBodySprite.physicsBody.dynamic = NO;
+        extraBodySprite.physicsBody.categoryBitMask = planetCategory;
+        extraBodySprite.physicsBody.collisionBitMask = shipCategory | asteroidCategory | planetCategory;
+        extraBodySprite.physicsBody.allowsRotation = NO;
+        [planet addChild:extraBodySprite];
+        return YES;
     }
     return NO;
 }
@@ -1435,12 +1440,13 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
 -(SKSpriteNode*)randomPlanetForLevel:(int)level sunFlavor:(BOOL)sunFlavor{
 
-//    int planetNum = level % 6;
+//    int planetNum = level % 5;
     int planetNum = arc4random() % [self maxPlanetNumForLevel:level];
     int planetFlavor =  arc4random() % 3;
     if (sunFlavor) {
         planetFlavor = 3;
     }
+//    planetFlavor = 2;
     NSString *imageName = [NSString stringWithFormat:@"Planet_%d_%d",planetNum, planetFlavor];
     SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithImageNamed:imageName];
     
@@ -1607,6 +1613,20 @@ CGFloat DegreesToRadians(CGFloat degrees)
     CGMutablePathRef path = CGPathCreateMutable();
     
     switch (planetNum) {
+        case 0: {
+            CGPathMoveToPoint(path, NULL, 30 - offsetX, 37 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 21 - offsetX, 38 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 5 - offsetX, 37 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 0 - offsetX, 34 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 0 - offsetX, 31 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 12 - offsetX, 24 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 32 - offsetX, 17 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 89 - offsetX, 8 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 104 - offsetX, 10 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 108 - offsetX, 15 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 89 - offsetX, 26 - offsetY);
+        }
+            break;
         case 1: {
             CGPathMoveToPoint(path, NULL, 37 - offsetX, 46 - offsetY);
             CGPathAddLineToPoint(path, NULL, 14 - offsetX, 36 - offsetY);
@@ -1620,6 +1640,72 @@ CGFloat DegreesToRadians(CGFloat degrees)
             CGPathAddLineToPoint(path, NULL, 129 - offsetX, 55 - offsetY);
             CGPathAddLineToPoint(path, NULL, 119 - offsetX, 58 - offsetY);
             CGPathAddLineToPoint(path, NULL, 96 - offsetX, 58 - offsetY);
+        }
+            break;
+        case 2: {
+            CGPathMoveToPoint(path, NULL, 38 - offsetX, 81 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 28 - offsetX, 76 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 17 - offsetX, 67 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 10 - offsetX, 55 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 7 - offsetX, 44 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 10 - offsetX, 31 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 19 - offsetX, 19 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 29 - offsetX, 12 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 41 - offsetX, 7 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 53 - offsetX, 4 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 68 - offsetX, 4 - offsetY);
+            
+            SKSpriteNode *extraBodySprite = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:sprite.size];
+            CGMutablePathRef path2 = CGPathCreateMutable();
+            CGPathMoveToPoint(path2, NULL, 84 - offsetX, 81 - offsetY);
+            CGPathAddLineToPoint(path2, NULL, 99 - offsetX, 73 - offsetY);
+            CGPathAddLineToPoint(path2, NULL, 109 - offsetX, 62 - offsetY);
+            CGPathAddLineToPoint(path2, NULL, 114 - offsetX, 50 - offsetY);
+            CGPathAddLineToPoint(path2, NULL, 114 - offsetX, 39 - offsetY);
+            CGPathAddLineToPoint(path2, NULL, 108 - offsetX, 25 - offsetY);
+            CGPathAddLineToPoint(path2, NULL, 100 - offsetX, 16 - offsetY);
+            CGPathAddLineToPoint(path2, NULL, 91 - offsetX, 10 - offsetY);
+            CGPathAddLineToPoint(path2, NULL, 80 - offsetX, 6 - offsetY);
+            CGPathAddLineToPoint(path2, NULL, 68 - offsetX, 4 - offsetY);
+            CGPathAddLineToPoint(path2, NULL, 58 - offsetX, 4 - offsetY);
+            CGPathCloseSubpath(path2);
+            extraBodySprite.physicsBody = [SKPhysicsBody bodyWithPolygonFromPath:path2];
+            extraBodySprite.physicsBody.dynamic = NO;
+            extraBodySprite.physicsBody.categoryBitMask = planetCategory;
+            extraBodySprite.physicsBody.collisionBitMask = shipCategory | asteroidCategory | planetCategory;
+            extraBodySprite.physicsBody.allowsRotation = NO;
+            [sprite addChild:extraBodySprite];
+
+        }
+            break;
+        case 3: {
+            CGPathMoveToPoint(path, NULL, 34 - offsetX, 80 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 16 - offsetX, 73 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 4 - offsetX, 64 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 3 - offsetX, 54 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 13 - offsetX, 42 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 37 - offsetX, 32 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 123 - offsetX, 32 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 144 - offsetX, 40 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 157 - offsetX, 56 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 155 - offsetX, 63 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 142 - offsetX, 73 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 125 - offsetX, 80 - offsetY);
+        }
+            break;
+        case 4: {
+            CGPathMoveToPoint(path, NULL, 24 - offsetX, 57 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 10 - offsetX, 20 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 10 - offsetX, 7 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 16 - offsetX, 5 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 27 - offsetX, 12 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 53 - offsetX, 39 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 114 - offsetX, 137 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 129 - offsetX, 179 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 128 - offsetX, 187 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 125 - offsetX, 190 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 111 - offsetX, 182 - offsetY);
+            CGPathAddLineToPoint(path, NULL, 85 - offsetX, 155 - offsetY);
         }
             break;
         default:

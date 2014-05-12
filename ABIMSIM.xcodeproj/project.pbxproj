@@ -31,26 +31,6 @@
 		B45FF15818CE8708001662CD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B45FF15618CE8708001662CD /* InfoPlist.strings */; };
 		B45FF15A18CE8708001662CD /* ABIMSIMTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B45FF15918CE8708001662CD /* ABIMSIMTests.m */; };
 		B478CF8E19197C2C001A9DB6 /* Pause@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B478CF8D19197C2C001A9DB6 /* Pause@2x.png */; };
-		B478CFA619199C0E001A9DB6 /* Planet_0_0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B478CF8F19199C0E001A9DB6 /* Planet_0_0@2x.png */; };
-		B478CFA719199C0E001A9DB6 /* Planet_0_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B478CF9019199C0E001A9DB6 /* Planet_0_1@2x.png */; };
-		B478CFA819199C0E001A9DB6 /* Planet_0_2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B478CF9119199C0E001A9DB6 /* Planet_0_2@2x.png */; };
-		B478CFA919199C0E001A9DB6 /* Planet_0_3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B478CF9219199C0E001A9DB6 /* Planet_0_3@2x.png */; };
-		B478CFAA19199C0E001A9DB6 /* Planet_1_0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B478CF9319199C0E001A9DB6 /* Planet_1_0@2x.png */; };
-		B478CFAB19199C0E001A9DB6 /* Planet_1_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B478CF9419199C0E001A9DB6 /* Planet_1_1@2x.png */; };
-		B478CFAC19199C0E001A9DB6 /* Planet_1_2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B478CF9519199C0E001A9DB6 /* Planet_1_2@2x.png */; };
-		B478CFAD19199C0E001A9DB6 /* Planet_1_3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B478CF9619199C0E001A9DB6 /* Planet_1_3@2x.png */; };
-		B478CFAE19199C0E001A9DB6 /* Planet_2_0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B478CF9719199C0E001A9DB6 /* Planet_2_0@2x.png */; };
-		B478CFAF19199C0E001A9DB6 /* Planet_2_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B478CF9819199C0E001A9DB6 /* Planet_2_1@2x.png */; };
-		B478CFB019199C0E001A9DB6 /* Planet_2_2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B478CF9919199C0E001A9DB6 /* Planet_2_2@2x.png */; };
-		B478CFB119199C0E001A9DB6 /* Planet_2_3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B478CF9A19199C0E001A9DB6 /* Planet_2_3@2x.png */; };
-		B478CFB219199C0E001A9DB6 /* Planet_3_0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B478CF9B19199C0E001A9DB6 /* Planet_3_0@2x.png */; };
-		B478CFB319199C0E001A9DB6 /* Planet_3_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B478CF9C19199C0E001A9DB6 /* Planet_3_1@2x.png */; };
-		B478CFB419199C0E001A9DB6 /* Planet_3_2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B478CF9D19199C0E001A9DB6 /* Planet_3_2@2x.png */; };
-		B478CFB519199C0E001A9DB6 /* Planet_3_3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B478CF9E19199C0E001A9DB6 /* Planet_3_3@2x.png */; };
-		B478CFB619199C0E001A9DB6 /* Planet_4_0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B478CF9F19199C0E001A9DB6 /* Planet_4_0@2x.png */; };
-		B478CFB719199C0E001A9DB6 /* Planet_4_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B478CFA019199C0E001A9DB6 /* Planet_4_1@2x.png */; };
-		B478CFB819199C0E001A9DB6 /* Planet_4_2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B478CFA119199C0E001A9DB6 /* Planet_4_2@2x.png */; };
-		B478CFB919199C0E001A9DB6 /* Planet_4_3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B478CFA219199C0E001A9DB6 /* Planet_4_3@2x.png */; };
 		B478CFBA19199C0E001A9DB6 /* Planet_5_0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B478CFA319199C0E001A9DB6 /* Planet_5_0@2x.png */; };
 		B478CFBB19199C0E001A9DB6 /* Planet_5_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B478CFA419199C0E001A9DB6 /* Planet_5_1@2x.png */; };
 		B478CFBC19199C0E001A9DB6 /* Planet_5_2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B478CFA519199C0E001A9DB6 /* Planet_5_2@2x.png */; };
@@ -74,6 +54,26 @@
 		B4B66FF718F6229300E2BE70 /* ShipShield@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4B66FF618F6229300E2BE70 /* ShipShield@2x.png */; };
 		B4B66FFB18F6290E00E2BE70 /* ShieldPowerUp@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4B66FFA18F6290E00E2BE70 /* ShieldPowerUp@2x.png */; };
 		B4B66FFD18F62B2700E2BE70 /* ShipShieldImpact@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4B66FFC18F62B2700E2BE70 /* ShipShieldImpact@2x.png */; };
+		B4D4B617191FFF4F00834942 /* Planet_0_0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4D4B603191FFF4F00834942 /* Planet_0_0@2x.png */; };
+		B4D4B618191FFF4F00834942 /* Planet_0_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4D4B604191FFF4F00834942 /* Planet_0_1@2x.png */; };
+		B4D4B619191FFF4F00834942 /* Planet_0_2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4D4B605191FFF4F00834942 /* Planet_0_2@2x.png */; };
+		B4D4B61A191FFF4F00834942 /* Planet_0_3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4D4B606191FFF4F00834942 /* Planet_0_3@2x.png */; };
+		B4D4B61B191FFF4F00834942 /* Planet_1_0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4D4B607191FFF4F00834942 /* Planet_1_0@2x.png */; };
+		B4D4B61C191FFF4F00834942 /* Planet_1_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4D4B608191FFF4F00834942 /* Planet_1_1@2x.png */; };
+		B4D4B61D191FFF4F00834942 /* Planet_1_2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4D4B609191FFF4F00834942 /* Planet_1_2@2x.png */; };
+		B4D4B61E191FFF4F00834942 /* Planet_1_3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4D4B60A191FFF4F00834942 /* Planet_1_3@2x.png */; };
+		B4D4B61F191FFF4F00834942 /* Planet_2_0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4D4B60B191FFF4F00834942 /* Planet_2_0@2x.png */; };
+		B4D4B620191FFF4F00834942 /* Planet_2_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4D4B60C191FFF4F00834942 /* Planet_2_1@2x.png */; };
+		B4D4B621191FFF4F00834942 /* Planet_2_2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4D4B60D191FFF4F00834942 /* Planet_2_2@2x.png */; };
+		B4D4B622191FFF4F00834942 /* Planet_2_3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4D4B60E191FFF4F00834942 /* Planet_2_3@2x.png */; };
+		B4D4B623191FFF4F00834942 /* Planet_3_0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4D4B60F191FFF4F00834942 /* Planet_3_0@2x.png */; };
+		B4D4B624191FFF4F00834942 /* Planet_3_2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4D4B610191FFF4F00834942 /* Planet_3_2@2x.png */; };
+		B4D4B625191FFF4F00834942 /* Planet_3_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4D4B611191FFF4F00834942 /* Planet_3_1@2x.png */; };
+		B4D4B626191FFF4F00834942 /* Planet_3_3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4D4B612191FFF4F00834942 /* Planet_3_3@2x.png */; };
+		B4D4B627191FFF4F00834942 /* Planet_4_2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4D4B613191FFF4F00834942 /* Planet_4_2@2x.png */; };
+		B4D4B628191FFF4F00834942 /* Planet_4_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4D4B614191FFF4F00834942 /* Planet_4_1@2x.png */; };
+		B4D4B629191FFF4F00834942 /* Planet_4_0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4D4B615191FFF4F00834942 /* Planet_4_0@2x.png */; };
+		B4D4B62A191FFF4F00834942 /* Planet_4_3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4D4B616191FFF4F00834942 /* Planet_4_3@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -119,26 +119,6 @@
 		B45FF15718CE8708001662CD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B45FF15918CE8708001662CD /* ABIMSIMTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ABIMSIMTests.m; sourceTree = "<group>"; };
 		B478CF8D19197C2C001A9DB6 /* Pause@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Pause@2x.png"; sourceTree = "<group>"; };
-		B478CF8F19199C0E001A9DB6 /* Planet_0_0@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_0_0@2x.png"; sourceTree = "<group>"; };
-		B478CF9019199C0E001A9DB6 /* Planet_0_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_0_1@2x.png"; sourceTree = "<group>"; };
-		B478CF9119199C0E001A9DB6 /* Planet_0_2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_0_2@2x.png"; sourceTree = "<group>"; };
-		B478CF9219199C0E001A9DB6 /* Planet_0_3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_0_3@2x.png"; sourceTree = "<group>"; };
-		B478CF9319199C0E001A9DB6 /* Planet_1_0@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_1_0@2x.png"; sourceTree = "<group>"; };
-		B478CF9419199C0E001A9DB6 /* Planet_1_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_1_1@2x.png"; sourceTree = "<group>"; };
-		B478CF9519199C0E001A9DB6 /* Planet_1_2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_1_2@2x.png"; sourceTree = "<group>"; };
-		B478CF9619199C0E001A9DB6 /* Planet_1_3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_1_3@2x.png"; sourceTree = "<group>"; };
-		B478CF9719199C0E001A9DB6 /* Planet_2_0@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_2_0@2x.png"; sourceTree = "<group>"; };
-		B478CF9819199C0E001A9DB6 /* Planet_2_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_2_1@2x.png"; sourceTree = "<group>"; };
-		B478CF9919199C0E001A9DB6 /* Planet_2_2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_2_2@2x.png"; sourceTree = "<group>"; };
-		B478CF9A19199C0E001A9DB6 /* Planet_2_3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_2_3@2x.png"; sourceTree = "<group>"; };
-		B478CF9B19199C0E001A9DB6 /* Planet_3_0@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_3_0@2x.png"; sourceTree = "<group>"; };
-		B478CF9C19199C0E001A9DB6 /* Planet_3_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_3_1@2x.png"; sourceTree = "<group>"; };
-		B478CF9D19199C0E001A9DB6 /* Planet_3_2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_3_2@2x.png"; sourceTree = "<group>"; };
-		B478CF9E19199C0E001A9DB6 /* Planet_3_3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_3_3@2x.png"; sourceTree = "<group>"; };
-		B478CF9F19199C0E001A9DB6 /* Planet_4_0@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_4_0@2x.png"; sourceTree = "<group>"; };
-		B478CFA019199C0E001A9DB6 /* Planet_4_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_4_1@2x.png"; sourceTree = "<group>"; };
-		B478CFA119199C0E001A9DB6 /* Planet_4_2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_4_2@2x.png"; sourceTree = "<group>"; };
-		B478CFA219199C0E001A9DB6 /* Planet_4_3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_4_3@2x.png"; sourceTree = "<group>"; };
 		B478CFA319199C0E001A9DB6 /* Planet_5_0@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_5_0@2x.png"; sourceTree = "<group>"; };
 		B478CFA419199C0E001A9DB6 /* Planet_5_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_5_1@2x.png"; sourceTree = "<group>"; };
 		B478CFA519199C0E001A9DB6 /* Planet_5_2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_5_2@2x.png"; sourceTree = "<group>"; };
@@ -162,6 +142,26 @@
 		B4B66FF618F6229300E2BE70 /* ShipShield@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ShipShield@2x.png"; sourceTree = "<group>"; };
 		B4B66FFA18F6290E00E2BE70 /* ShieldPowerUp@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ShieldPowerUp@2x.png"; sourceTree = "<group>"; };
 		B4B66FFC18F62B2700E2BE70 /* ShipShieldImpact@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ShipShieldImpact@2x.png"; sourceTree = "<group>"; };
+		B4D4B603191FFF4F00834942 /* Planet_0_0@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_0_0@2x.png"; sourceTree = "<group>"; };
+		B4D4B604191FFF4F00834942 /* Planet_0_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_0_1@2x.png"; sourceTree = "<group>"; };
+		B4D4B605191FFF4F00834942 /* Planet_0_2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_0_2@2x.png"; sourceTree = "<group>"; };
+		B4D4B606191FFF4F00834942 /* Planet_0_3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_0_3@2x.png"; sourceTree = "<group>"; };
+		B4D4B607191FFF4F00834942 /* Planet_1_0@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_1_0@2x.png"; sourceTree = "<group>"; };
+		B4D4B608191FFF4F00834942 /* Planet_1_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_1_1@2x.png"; sourceTree = "<group>"; };
+		B4D4B609191FFF4F00834942 /* Planet_1_2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_1_2@2x.png"; sourceTree = "<group>"; };
+		B4D4B60A191FFF4F00834942 /* Planet_1_3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_1_3@2x.png"; sourceTree = "<group>"; };
+		B4D4B60B191FFF4F00834942 /* Planet_2_0@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_2_0@2x.png"; sourceTree = "<group>"; };
+		B4D4B60C191FFF4F00834942 /* Planet_2_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_2_1@2x.png"; sourceTree = "<group>"; };
+		B4D4B60D191FFF4F00834942 /* Planet_2_2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_2_2@2x.png"; sourceTree = "<group>"; };
+		B4D4B60E191FFF4F00834942 /* Planet_2_3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_2_3@2x.png"; sourceTree = "<group>"; };
+		B4D4B60F191FFF4F00834942 /* Planet_3_0@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_3_0@2x.png"; sourceTree = "<group>"; };
+		B4D4B610191FFF4F00834942 /* Planet_3_2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_3_2@2x.png"; sourceTree = "<group>"; };
+		B4D4B611191FFF4F00834942 /* Planet_3_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_3_1@2x.png"; sourceTree = "<group>"; };
+		B4D4B612191FFF4F00834942 /* Planet_3_3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_3_3@2x.png"; sourceTree = "<group>"; };
+		B4D4B613191FFF4F00834942 /* Planet_4_2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_4_2@2x.png"; sourceTree = "<group>"; };
+		B4D4B614191FFF4F00834942 /* Planet_4_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_4_1@2x.png"; sourceTree = "<group>"; };
+		B4D4B615191FFF4F00834942 /* Planet_4_0@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_4_0@2x.png"; sourceTree = "<group>"; };
+		B4D4B616191FFF4F00834942 /* Planet_4_3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_4_3@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -214,26 +214,26 @@
 				B47E22CA18DBA7E200F42EBB /* Asteroid_9@2x.png */,
 				B47E22CB18DBA7E200F42EBB /* Asteroid_10@2x.png */,
 				B47E22CC18DBA7E200F42EBB /* Asteroid_11@2x.png */,
-				B478CF8F19199C0E001A9DB6 /* Planet_0_0@2x.png */,
-				B478CF9019199C0E001A9DB6 /* Planet_0_1@2x.png */,
-				B478CF9119199C0E001A9DB6 /* Planet_0_2@2x.png */,
-				B478CF9219199C0E001A9DB6 /* Planet_0_3@2x.png */,
-				B478CF9319199C0E001A9DB6 /* Planet_1_0@2x.png */,
-				B478CF9419199C0E001A9DB6 /* Planet_1_1@2x.png */,
-				B478CF9519199C0E001A9DB6 /* Planet_1_2@2x.png */,
-				B478CF9619199C0E001A9DB6 /* Planet_1_3@2x.png */,
-				B478CF9719199C0E001A9DB6 /* Planet_2_0@2x.png */,
-				B478CF9819199C0E001A9DB6 /* Planet_2_1@2x.png */,
-				B478CF9919199C0E001A9DB6 /* Planet_2_2@2x.png */,
-				B478CF9A19199C0E001A9DB6 /* Planet_2_3@2x.png */,
-				B478CF9B19199C0E001A9DB6 /* Planet_3_0@2x.png */,
-				B478CF9C19199C0E001A9DB6 /* Planet_3_1@2x.png */,
-				B478CF9D19199C0E001A9DB6 /* Planet_3_2@2x.png */,
-				B478CF9E19199C0E001A9DB6 /* Planet_3_3@2x.png */,
-				B478CF9F19199C0E001A9DB6 /* Planet_4_0@2x.png */,
-				B478CFA019199C0E001A9DB6 /* Planet_4_1@2x.png */,
-				B478CFA119199C0E001A9DB6 /* Planet_4_2@2x.png */,
-				B478CFA219199C0E001A9DB6 /* Planet_4_3@2x.png */,
+				B4D4B603191FFF4F00834942 /* Planet_0_0@2x.png */,
+				B4D4B604191FFF4F00834942 /* Planet_0_1@2x.png */,
+				B4D4B605191FFF4F00834942 /* Planet_0_2@2x.png */,
+				B4D4B606191FFF4F00834942 /* Planet_0_3@2x.png */,
+				B4D4B607191FFF4F00834942 /* Planet_1_0@2x.png */,
+				B4D4B608191FFF4F00834942 /* Planet_1_1@2x.png */,
+				B4D4B609191FFF4F00834942 /* Planet_1_2@2x.png */,
+				B4D4B60A191FFF4F00834942 /* Planet_1_3@2x.png */,
+				B4D4B60B191FFF4F00834942 /* Planet_2_0@2x.png */,
+				B4D4B60C191FFF4F00834942 /* Planet_2_1@2x.png */,
+				B4D4B60D191FFF4F00834942 /* Planet_2_2@2x.png */,
+				B4D4B60E191FFF4F00834942 /* Planet_2_3@2x.png */,
+				B4D4B60F191FFF4F00834942 /* Planet_3_0@2x.png */,
+				B4D4B611191FFF4F00834942 /* Planet_3_1@2x.png */,
+				B4D4B610191FFF4F00834942 /* Planet_3_2@2x.png */,
+				B4D4B612191FFF4F00834942 /* Planet_3_3@2x.png */,
+				B4D4B615191FFF4F00834942 /* Planet_4_0@2x.png */,
+				B4D4B614191FFF4F00834942 /* Planet_4_1@2x.png */,
+				B4D4B613191FFF4F00834942 /* Planet_4_2@2x.png */,
+				B4D4B616191FFF4F00834942 /* Planet_4_3@2x.png */,
 				B478CFA319199C0E001A9DB6 /* Planet_5_0@2x.png */,
 				B478CFA419199C0E001A9DB6 /* Planet_5_1@2x.png */,
 				B478CFA519199C0E001A9DB6 /* Planet_5_2@2x.png */,
@@ -411,56 +411,56 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B4D4B621191FFF4F00834942 /* Planet_2_2@2x.png in Resources */,
 				B45FF13418CE8708001662CD /* InfoPlist.strings in Resources */,
 				B47E22D618DBA7E200F42EBB /* Asteroid_9@2x.png in Resources */,
+				B4D4B619191FFF4F00834942 /* Planet_0_2@2x.png in Resources */,
 				B47E22CE18DBA7E200F42EBB /* Asteroid_1@2x.png in Resources */,
 				B47E22D118DBA7E200F42EBB /* Asteroid_4@2x.png in Resources */,
-				B478CFB619199C0E001A9DB6 /* Planet_4_0@2x.png in Resources */,
 				B478CFBB19199C0E001A9DB6 /* Planet_5_1@2x.png in Resources */,
-				B478CFAB19199C0E001A9DB6 /* Planet_1_1@2x.png in Resources */,
+				B4D4B623191FFF4F00834942 /* Planet_3_0@2x.png in Resources */,
+				B4D4B629191FFF4F00834942 /* Planet_4_0@2x.png in Resources */,
 				B400F412191B048D00A483E2 /* BlankButton@2x.png in Resources */,
+				B4D4B618191FFF4F00834942 /* Planet_0_1@2x.png in Resources */,
+				B4D4B620191FFF4F00834942 /* Planet_2_1@2x.png in Resources */,
+				B4D4B628191FFF4F00834942 /* Planet_4_1@2x.png in Resources */,
+				B4D4B61A191FFF4F00834942 /* Planet_0_3@2x.png in Resources */,
+				B4D4B624191FFF4F00834942 /* Planet_3_2@2x.png in Resources */,
 				B47E22CD18DBA7E200F42EBB /* Asteroid_0@2x.png in Resources */,
-				B478CFB119199C0E001A9DB6 /* Planet_2_3@2x.png in Resources */,
 				B47E22D818DBA7E200F42EBB /* Asteroid_11@2x.png in Resources */,
 				B45FF14718CE8708001662CD /* Images.xcassets in Resources */,
 				B47E22D518DBA7E200F42EBB /* Asteroid_8@2x.png in Resources */,
-				B478CFA619199C0E001A9DB6 /* Planet_0_0@2x.png in Resources */,
 				B47E22D218DBA7E200F42EBB /* Asteroid_5@2x.png in Resources */,
 				B400F40D191AFC6D00A483E2 /* UpgradesButton@2x.png in Resources */,
-				B478CFA719199C0E001A9DB6 /* Planet_0_1@2x.png in Resources */,
+				B4D4B625191FFF4F00834942 /* Planet_3_1@2x.png in Resources */,
 				B45FF13D18CE8708001662CD /* Main.storyboard in Resources */,
 				B4B66FF718F6229300E2BE70 /* ShipShield@2x.png in Resources */,
 				B478CFBC19199C0E001A9DB6 /* Planet_5_2@2x.png in Resources */,
 				B478CFBE19199C27001A9DB6 /* Planet_5_3@2x.png in Resources */,
-				B478CFB719199C0E001A9DB6 /* Planet_4_1@2x.png in Resources */,
-				B478CFAA19199C0E001A9DB6 /* Planet_1_0@2x.png in Resources */,
+				B4D4B617191FFF4F00834942 /* Planet_0_0@2x.png in Resources */,
 				B4B66FFB18F6290E00E2BE70 /* ShieldPowerUp@2x.png in Resources */,
+				B4D4B61B191FFF4F00834942 /* Planet_1_0@2x.png in Resources */,
 				B47E22D018DBA7E200F42EBB /* Asteroid_3@2x.png in Resources */,
 				B45865EE18DA6612005C9566 /* LargeStar@2x.png in Resources */,
 				B478CFBA19199C0E001A9DB6 /* Planet_5_0@2x.png in Resources */,
-				B478CFB019199C0E001A9DB6 /* Planet_2_2@2x.png in Resources */,
-				B478CFAE19199C0E001A9DB6 /* Planet_2_0@2x.png in Resources */,
+				B4D4B626191FFF4F00834942 /* Planet_3_3@2x.png in Resources */,
 				B45865E918DA15C9005C9566 /* Ship@2x.png in Resources */,
-				B478CFAF19199C0E001A9DB6 /* Planet_2_1@2x.png in Resources */,
-				B478CFB219199C0E001A9DB6 /* Planet_3_0@2x.png in Resources */,
-				B478CFB819199C0E001A9DB6 /* Planet_4_2@2x.png in Resources */,
+				B4D4B61F191FFF4F00834942 /* Planet_2_0@2x.png in Resources */,
+				B4D4B61C191FFF4F00834942 /* Planet_1_1@2x.png in Resources */,
 				B47923DC19157805002B8467 /* Voltaire-Regular.ttf in Resources */,
-				B478CFB519199C0E001A9DB6 /* Planet_3_3@2x.png in Resources */,
-				B478CFB419199C0E001A9DB6 /* Planet_3_2@2x.png in Resources */,
-				B478CFB919199C0E001A9DB6 /* Planet_4_3@2x.png in Resources */,
-				B478CFAD19199C0E001A9DB6 /* Planet_1_3@2x.png in Resources */,
 				B47E22D718DBA7E200F42EBB /* Asteroid_10@2x.png in Resources */,
+				B4D4B627191FFF4F00834942 /* Planet_4_2@2x.png in Resources */,
 				B478CF8E19197C2C001A9DB6 /* Pause@2x.png in Resources */,
 				B4B66FFD18F62B2700E2BE70 /* ShipShieldImpact@2x.png in Resources */,
+				B4D4B61D191FFF4F00834942 /* Planet_1_2@2x.png in Resources */,
 				B45865E518DA153C005C9566 /* Background@2x.png in Resources */,
+				B4D4B622191FFF4F00834942 /* Planet_2_3@2x.png in Resources */,
+				B4D4B62A191FFF4F00834942 /* Planet_4_3@2x.png in Resources */,
 				B478CFC019199FA5001A9DB6 /* Planet_5_S@2x.png in Resources */,
-				B478CFA819199C0E001A9DB6 /* Planet_0_2@2x.png in Resources */,
-				B478CFAC19199C0E001A9DB6 /* Planet_1_2@2x.png in Resources */,
 				B47E22D318DBA7E200F42EBB /* Asteroid_6@2x.png in Resources */,
+				B4D4B61E191FFF4F00834942 /* Planet_1_3@2x.png in Resources */,
 				B47E22CF18DBA7E200F42EBB /* Asteroid_2@2x.png in Resources */,
-				B478CFB319199C0E001A9DB6 /* Planet_3_1@2x.png in Resources */,
 				B4A792A9191C5455005317AD /* game-center-hero@2x.png in Resources */,
-				B478CFA919199C0E001A9DB6 /* Planet_0_3@2x.png in Resources */,
 				B47E22D418DBA7E200F42EBB /* Asteroid_7@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
