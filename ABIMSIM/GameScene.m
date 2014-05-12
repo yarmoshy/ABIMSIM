@@ -1300,7 +1300,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         if (j == 0 && forceSun) {
             planet = [self randomSun];
         } else {
-            planet = [self randomPlanetForLevel:level sunFlavor:forceSun];
+            planet = [self randomPlanetForLevel:level sunFlavor:forceSun currentPlanets:planets];
         }
         planet.hidden = YES;
         float thisWidth;
@@ -1433,18 +1433,29 @@ CGFloat DegreesToRadians(CGFloat degrees)
     }
 }
 
-
--(SKSpriteNode*)randomPlanetForLevel:(int)level {
-    return [self randomPlanetForLevel:level sunFlavor:NO];
-}
-
--(SKSpriteNode*)randomPlanetForLevel:(int)level sunFlavor:(BOOL)sunFlavor{
+-(SKSpriteNode*)randomPlanetForLevel:(int)level sunFlavor:(BOOL)sunFlavor currentPlanets:planets {
 
 //    int planetNum = level % 5;
     int planetNum = arc4random() % [self maxPlanetNumForLevel:level];
     int planetFlavor =  arc4random() % 3;
     if (sunFlavor) {
         planetFlavor = 3;
+    }
+    BOOL safeToContinue = NO;
+    while (!safeToContinue) {
+        safeToContinue = YES;
+        for (SKSpriteNode *planet in planets) {
+            if ([planet.userData[planetNumber] intValue] == planetNum &&
+                [planet.userData[planetFlavorNumber] intValue] == planetFlavor) {
+                safeToContinue = NO;
+                planetNum = arc4random() % [self maxPlanetNumForLevel:level];
+                planetFlavor =  arc4random() % 3;
+                if (sunFlavor) {
+                    planetFlavor = 3;
+                }
+                break;
+            }
+        }
     }
 //    planetFlavor = 2;
     NSString *imageName = [NSString stringWithFormat:@"Planet_%d_%d",planetNum, planetFlavor];
