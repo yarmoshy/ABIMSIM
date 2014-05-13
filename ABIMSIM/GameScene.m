@@ -46,6 +46,8 @@ static const uint32_t powerUpShieldCategory = 0x1 << 6;
 
 #define bufferZoneHeight 150
 
+#define largePlanetWidth 650
+
 #define starColorA @"ec52ea"
 #define starColorB @"3eaabd"
 #define starColorC @"ffffff"
@@ -1342,7 +1344,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
         }
         planet.hidden = YES;
         float thisWidth;
-        if (planet.size.width >= planet.size.height) {
+        if ([planet.userData[planetNumber] intValue] == 5) {
+            thisWidth = largePlanetWidth;
+        } else if (planet.size.width >= planet.size.height) {
             thisWidth = planet.size.width;
         } else {
             thisWidth = planet.size.height;
@@ -1355,7 +1359,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
         otherWidthA = otherWidthB = 0;
         if (planets.count > 0) {
             SKSpriteNode *otherPlanetA = planets[0];
-            if (otherPlanetA.size.width >= otherPlanetA.size.height) {
+            if ([otherPlanetA.userData[planetNumber] intValue] == 5) {
+                otherWidthA = largePlanetWidth;
+            } else if (otherPlanetA.size.width >= otherPlanetA.size.height) {
                 otherWidthA = otherPlanetA.size.width;
             } else {
                 otherWidthA = otherPlanetA.size.height;
@@ -1365,7 +1371,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
         }
         if (planets.count > 1) {
             SKSpriteNode *otherPlanetB = planets[1];
-            if (otherPlanetB.size.width >= otherPlanetB.size.height) {
+            if ([otherPlanetB.userData[planetNumber] intValue] == 5) {
+                otherWidthB = largePlanetWidth;
+            } else if (otherPlanetB.size.width >= otherPlanetB.size.height) {
                 otherWidthB = otherPlanetB.size.width;
             } else {
                 otherWidthB = otherPlanetB.size.height;
@@ -1383,15 +1391,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
             }
             [self randomizeSprite:planet];
             if ([planet.userData[planetNumber] intValue] == 5) {
-                float additionalDistance = 100;
-                if ([planet.userData[planetFlavorNumber] intValue] == 3) {
-                    additionalDistance = 200;
-                }
-                if (planet.position.x > self.frame.size.width/2) {
-                    [planet setPosition:CGPointMake((planet.frame.size.width/2) + self.frame.size.width - additionalDistance,planet.position.y)];
-                } else {
-                    [planet setPosition:CGPointMake((planet.frame.size.width/-2) + additionalDistance ,planet.position.y)];
-                }
+                [self adjustGiantPlanet:planet];
             }
             thisCenter = planet.position;
             if (planets.count > 0) {
@@ -1476,7 +1476,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
 -(SKSpriteNode*)randomPlanetForLevel:(int)level sunFlavor:(BOOL)sunFlavor currentPlanets:planets {
 
-//    int planetNum = level % 5;
+//    int planetNum = level % 6;
     int planetNum = arc4random() % [self maxPlanetNumForLevel:level];
     int planetFlavor =  arc4random() % 3;
     if (sunFlavor) {
@@ -1521,15 +1521,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     [sprite runAction:[SKAction repeatActionForever:[SKAction followPath:hoverPath.CGPath asOffset:YES orientToPath:NO duration:30]]];
     [self randomizeSprite:sprite];
     if (planetNum == 5) {
-        float additionalDistance = 100;
-        if (planetFlavor == 3) {
-            additionalDistance = 200;
-        }
-        if (sprite.position.x > self.frame.size.width/2) {
-            [sprite setPosition:CGPointMake((sprite.frame.size.width/2) + self.frame.size.width - additionalDistance,sprite.position.y)];
-        } else {
-            [sprite setPosition:CGPointMake((sprite.frame.size.width/-2) + additionalDistance ,sprite.position.y)];
-        }
+        [self adjustGiantPlanet:sprite];
     }
     if (sunFlavor) {
         sprite.name = sunObjectSpriteName;
@@ -1570,15 +1562,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     [self randomizeSprite:sprite];
     sprite.position = CGPointMake(0, sprite.position.y);
     if (planetNum == 5) {
-        float additionalDistance = 100;
-        if (NO) {
-            additionalDistance = 200;
-        }
-        if (sprite.position.x > self.frame.size.width/2) {
-            [sprite setPosition:CGPointMake((sprite.frame.size.width/2) + self.frame.size.width - additionalDistance,sprite.position.y)];
-        } else {
-            [sprite setPosition:CGPointMake((sprite.frame.size.width/-2) + additionalDistance ,sprite.position.y)];
-        }
+        [self adjustGiantPlanet:sprite];
     }
     sprite.name = sunObjectSpriteName;
     
@@ -1588,6 +1572,15 @@ CGFloat DegreesToRadians(CGFloat degrees)
     sprite.zPosition = 1;
     return sprite;
 
+}
+
+-(void)adjustGiantPlanet:(SKSpriteNode*)planet {
+    float additionalDistance = 175;
+    if (planet.position.x > self.frame.size.width/2) {
+        [planet setPosition:CGPointMake((planet.frame.size.width/2) + self.frame.size.width - additionalDistance,planet.position.y)];
+    } else {
+        [planet setPosition:CGPointMake((planet.frame.size.width/-2) + additionalDistance ,planet.position.y)];
+    }
 }
 
 
