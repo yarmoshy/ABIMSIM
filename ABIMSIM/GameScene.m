@@ -19,6 +19,8 @@ static NSString* directionsSpriteName = @"directionsSpriteName";
 static NSString* pauseSpriteName = @"pauseSpriteName";
 static NSString* upgradeSpriteName = @"upgradeSpriteName";
 static NSString* gameCenterSpriteName = @"gameCenterSpriteName";
+static NSString* twitterSpriteName = @"twitterSpriteName";
+static NSString* facebokSpriteName = @"facebokSpriteName";
 
 static const uint32_t borderCategory  = 0x1 << 0;  // 00000000000000000000000000000001
 static const uint32_t shipCategory  = 0x1 << 1;  // 00000000000000000000000000000001
@@ -59,6 +61,8 @@ static const uint32_t powerUpShieldCategory = 0x1 << 6;
 #define moonsArray @"moonsArray"
 #define planetNumber @"planetNumber"
 #define planetFlavorNumber @"planetFlavorNumber"
+
+#define appStoreLink @"http://itunes.com/app/ABIMSIM"
 
 #import "GameScene.h"
 #import "HexColor.h"
@@ -162,18 +166,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
         [self addChild:pauseButton];
         pauseButton.position = CGPointMake(size.width - pauseButton.size.width/2, pauseButton.size.height/2);
         
-        SKSpriteNode *upgradeButton = [SKSpriteNode spriteNodeWithImageNamed:@"UpgradesButton"];
-        upgradeButton.name = upgradeSpriteName;
-        upgradeButton.zPosition = 100;
-        [self addChild:upgradeButton];
-        upgradeButton.position = CGPointMake(size.width/2, size.height/2 - 50);
-
-        SKSpriteNode *gameCenterButton = [SKSpriteNode spriteNodeWithImageNamed:@"game-center-hero"];
-        gameCenterButton.name = gameCenterSpriteName;
-        gameCenterButton.zPosition = 100;
-        [self addChild:gameCenterButton];
-        gameCenterButton.position = CGPointMake(size.width/2, size.height/2 - 100);
-
 //        SKSpriteNode *warpBack = [SKSpriteNode spriteNodeWithImageNamed:@"WarpBack"];
 //        warpBack.anchorPoint = CGPointMake(0, 1);
 //        warpBack.position = CGPointMake(0, size.height);
@@ -480,6 +472,24 @@ CGFloat DegreesToRadians(CGFloat degrees)
     if ([node.name isEqualToString:gameCenterSpriteName]) {
         [self showGameCenter];
     }
+    if ([node.name isEqualToString:twitterSpriteName]) {
+        if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter])
+        {
+            SLComposeViewController *tweetSheetOBJ = [SLComposeViewController
+                                                      composeViewControllerForServiceType:SLServiceTypeTwitter];
+            [tweetSheetOBJ setInitialText:[NSString stringWithFormat:@"I'm playing ABIMSIM! Check it out! %@",appStoreLink]];
+            [self.viewController presentViewController:tweetSheetOBJ animated:YES completion:nil];
+        }
+    }
+    if ([node.name isEqualToString:facebokSpriteName]) {
+        if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook])
+        {
+            SLComposeViewController *facebookSheetOBJ = [SLComposeViewController
+                                                      composeViewControllerForServiceType:SLServiceTypeFacebook];
+            [facebookSheetOBJ setInitialText:[NSString stringWithFormat:@"I'm playing ABIMSIM! Check it out! %@",appStoreLink]];
+            [self.viewController presentViewController:facebookSheetOBJ animated:YES completion:nil];
+        }
+    }
 }
 
 
@@ -616,7 +626,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
         scene.viewController = self.viewController;
         [self.view presentScene:scene transition:[SKTransition doorsOpenHorizontalWithDuration:2]];
     });
-
 }
 
 #pragma mark - Level generation
@@ -862,7 +871,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
         }
     }
     if (currentLevel == 1) {
-//         \nAvoid asteroids on your way to the worm hole!
         SKLabelNode *direction = [SKLabelNode labelNodeWithFontNamed:@"Voltaire"];
         direction.text = @"Propel the ship by flicking any direction.";
         direction.fontSize = 16;
@@ -879,7 +887,30 @@ CGFloat DegreesToRadians(CGFloat degrees)
         [self addChild:direction2];
         direction2.name = directionsSpriteName;
         
+        SKSpriteNode *upgradeButton = [SKSpriteNode spriteNodeWithImageNamed:@"UpgradesButton"];
+        upgradeButton.name = upgradeSpriteName;
+        upgradeButton.zPosition = 100;
+        [self addChild:upgradeButton];
+        upgradeButton.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2 - 50);
         
+        SKSpriteNode *gameCenterButton = [SKSpriteNode spriteNodeWithImageNamed:@"game-center-hero"];
+        gameCenterButton.name = gameCenterSpriteName;
+        gameCenterButton.zPosition = 100;
+        [self addChild:gameCenterButton];
+        gameCenterButton.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2 - 100);
+
+        SKSpriteNode *twitterButton = [SKSpriteNode spriteNodeWithImageNamed:@"Twitter"];
+        twitterButton.name = twitterSpriteName;
+        twitterButton.zPosition = 100;
+        [self addChild:twitterButton];
+        twitterButton.position = CGPointMake(self.frame.size.width/2 - 100, self.frame.size.height/2 - 100);
+
+        SKSpriteNode *facebookButton = [SKSpriteNode spriteNodeWithImageNamed:@"Facebook"];
+        facebookButton.name = facebokSpriteName;
+        facebookButton.zPosition = 100;
+        [self addChild:facebookButton];
+        facebookButton.position = CGPointMake(self.frame.size.width/2 + 100, self.frame.size.height/2 - 100);
+
     }
 }
 
@@ -893,6 +924,13 @@ CGFloat DegreesToRadians(CGFloat degrees)
     while ([self childNodeWithName:gameCenterSpriteName]) {
         [[self childNodeWithName:gameCenterSpriteName] removeFromParent];
     }
+    while ([self childNodeWithName:facebokSpriteName]) {
+        [[self childNodeWithName:facebokSpriteName] removeFromParent];
+    }
+    while ([self childNodeWithName:twitterSpriteName]) {
+        [[self childNodeWithName:twitterSpriteName] removeFromParent];
+    }
+
 }
 
 
@@ -1332,7 +1370,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
             } else {
                 otherWidthB = otherPlanetB.size.height;
             }
-
             otherCenterB = otherPlanetB.position;
             distanceB = sqrtf(powf(thisCenter.x - otherCenterB.x, 2) + pow(thisCenter.y - otherCenterB.y, 2));
         }
@@ -1346,10 +1383,14 @@ CGFloat DegreesToRadians(CGFloat degrees)
             }
             [self randomizeSprite:planet];
             if ([planet.userData[planetNumber] intValue] == 5) {
+                float additionalDistance = 100;
+                if ([planet.userData[planetFlavorNumber] intValue] == 3) {
+                    additionalDistance = 200;
+                }
                 if (planet.position.x > self.frame.size.width/2) {
-                    [planet setPosition:CGPointMake((planet.frame.size.width/2) + self.frame.size.width - 100,planet.position.y)];
+                    [planet setPosition:CGPointMake((planet.frame.size.width/2) + self.frame.size.width - additionalDistance,planet.position.y)];
                 } else {
-                    [planet setPosition:CGPointMake((planet.frame.size.width/-2) + 100,planet.position.y)];
+                    [planet setPosition:CGPointMake((planet.frame.size.width/-2) + additionalDistance ,planet.position.y)];
                 }
             }
             thisCenter = planet.position;
@@ -1480,10 +1521,14 @@ CGFloat DegreesToRadians(CGFloat degrees)
     [sprite runAction:[SKAction repeatActionForever:[SKAction followPath:hoverPath.CGPath asOffset:YES orientToPath:NO duration:30]]];
     [self randomizeSprite:sprite];
     if (planetNum == 5) {
+        float additionalDistance = 100;
+        if (planetFlavor == 3) {
+            additionalDistance = 200;
+        }
         if (sprite.position.x > self.frame.size.width/2) {
-            [sprite setPosition:CGPointMake((sprite.frame.size.width/2) + self.frame.size.width - 100,sprite.position.y)];
+            [sprite setPosition:CGPointMake((sprite.frame.size.width/2) + self.frame.size.width - additionalDistance,sprite.position.y)];
         } else {
-            [sprite setPosition:CGPointMake((sprite.frame.size.width/-2) + 100,sprite.position.y)];
+            [sprite setPosition:CGPointMake((sprite.frame.size.width/-2) + additionalDistance ,sprite.position.y)];
         }
     }
     if (sunFlavor) {
@@ -1525,10 +1570,14 @@ CGFloat DegreesToRadians(CGFloat degrees)
     [self randomizeSprite:sprite];
     sprite.position = CGPointMake(0, sprite.position.y);
     if (planetNum == 5) {
+        float additionalDistance = 100;
+        if (NO) {
+            additionalDistance = 200;
+        }
         if (sprite.position.x > self.frame.size.width/2) {
-            [sprite setPosition:CGPointMake((sprite.frame.size.width/2) + self.frame.size.width - 100,sprite.position.y)];
+            [sprite setPosition:CGPointMake((sprite.frame.size.width/2) + self.frame.size.width - additionalDistance,sprite.position.y)];
         } else {
-            [sprite setPosition:CGPointMake((sprite.frame.size.width/-2) + 100,sprite.position.y)];
+            [sprite setPosition:CGPointMake((sprite.frame.size.width/-2) + additionalDistance ,sprite.position.y)];
         }
     }
     sprite.name = sunObjectSpriteName;

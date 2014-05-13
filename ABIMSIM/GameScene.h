@@ -7,6 +7,7 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
+#import <Social/Social.h>
 
 @interface GameScene : SKScene <SKPhysicsContactDelegate, GKGameCenterControllerDelegate>
 @property (strong, nonatomic) UIViewController *viewController;
