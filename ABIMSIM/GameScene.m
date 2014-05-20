@@ -7,7 +7,9 @@
 //
 static NSString* shipCategoryName = @"ship";
 static NSString* asteroidCategoryName = @"asteroid";
+static NSString* asteroidInShieldCategoryName = @"asteroidInShield";
 static NSString* planetCategoryName = @"planet";
+static NSString* asteroidShieldCategoryName = @"asteroidShield";
 static NSString* goalCategoryName = @"goal";
 static NSString* levelNodeName = @"level";
 static NSString* powerUpShieldName = @"shield";
@@ -26,9 +28,11 @@ static const uint32_t borderCategory  = 0x1 << 0;  // 00000000000000000000000000
 static const uint32_t shipCategory  = 0x1 << 1;  // 00000000000000000000000000000001
 static const uint32_t secondaryBorderCategory  = 0x1 << 2;  // 00000000000000000000000000000100
 static const uint32_t asteroidCategory = 0x1 << 3;
-static const uint32_t planetCategory = 0x1 << 4;
-static const uint32_t goalCategory = 0x1 << 5;
-static const uint32_t powerUpShieldCategory = 0x1 << 6;
+static const uint32_t asteroidInShieldCategory = 0x1 << 4;
+static const uint32_t planetCategory = 0x1 << 5;
+static const uint32_t asteroidShieldCategory = 0x1 << 6;
+static const uint32_t goalCategory = 0x1 << 7;
+static const uint32_t powerUpShieldCategory = 0x1 << 8;
 
 
 #define kExtraSpaceOffScreen 50
@@ -63,6 +67,10 @@ static const uint32_t powerUpShieldCategory = 0x1 << 6;
 #define moonsArray @"moonsArray"
 #define planetNumber @"planetNumber"
 #define planetFlavorNumber @"planetFlavorNumber"
+#define asteroidShieldTag @"asteroidShieldTag"
+
+#define asteroidShield0 6
+#define asteroidShield1 7
 
 #define appStoreLink @"http://itunes.com/app/ABIMSIM"
 
@@ -262,11 +270,12 @@ CGFloat DegreesToRadians(CGFloat degrees)
         ship.physicsBody.linearDamping = 0.0f;
     }
     for (SKSpriteNode *asteroid in currentSpriteArray) {
-        if (![asteroid.name isEqualToString:asteroidCategoryName]) {
+        if (![asteroid.name isEqualToString:asteroidCategoryName] &&
+            ![asteroid.name isEqualToString:asteroidInShieldCategoryName]) {
             continue;
         }
         if (asteroid.position.y - asteroid.size.height/2 > self.frame.size.height) {
-            if (asteroid.parent) {
+            if (asteroid.parent && [asteroid.name isEqualToString:asteroidCategoryName]) {
                 [asteroid removeFromParent];
                 continue;
             }
@@ -512,6 +521,21 @@ CGFloat DegreesToRadians(CGFloat degrees)
             firstBody = contact.bodyB;
             secondBody = contact.bodyA;
         }
+        if (firstBody.categoryBitMask == shipCategory && secondBody.categoryBitMask == asteroidShieldCategory) {
+            [secondBody.node removeFromParent];
+            for (SKSpriteNode *asteroid in [self children]) {
+                if ([asteroid.name isEqual:asteroidInShieldCategoryName] &&
+                    [asteroid.userData[asteroidShieldTag] intValue] == [secondBody.node.userData[asteroidShieldTag] intValue]) {
+                    asteroid.physicsBody.categoryBitMask = asteroidCategory;
+                    asteroid.physicsBody.collisionBitMask = borderCategory | secondaryBorderCategory | shipCategory | asteroidCategory | planetCategory | asteroidShieldCategory;
+                    asteroid.physicsBody.contactTestBitMask = goalCategory | shipCategory | asteroidShieldCategory;
+                    asteroid.zRotation = DegreesToRadians(arc4random() % 360);
+                    float velocity = MAX_VELOCITY;
+                    asteroid.physicsBody.velocity = CGVectorMake(velocity * cosf(asteroid.zRotation), velocity * -sinf(asteroid.zRotation));
+                }
+            }
+        }
+
         if (firstBody.categoryBitMask == shipCategory && secondBody.categoryBitMask == goalCategory) {
             if ([safeToTransition isEqualToNumber:@YES]) {
                 safeToTransition = @NO;
@@ -808,11 +832,13 @@ CGFloat DegreesToRadians(CGFloat degrees)
 -(void)advanceToNextLevel {
     [self removeOverlayChildren];
     for (int i = 0; i < currentSpriteArray.count; i++) {
-        if ([[currentSpriteArray[i] name] isEqual:asteroidCategoryName]) {
+        if ([[currentSpriteArray[i] name] isEqual:asteroidCategoryName] ||
+            [[currentSpriteArray[i] name] isEqual:asteroidInShieldCategoryName]) {
             [currentSpriteArray[i] removeFromParent];
         }
         if ([[currentSpriteArray[i] name] isEqual:planetCategoryName] ||
-            [[currentSpriteArray[i] name] isEqual:sunObjectSpriteName] ) {
+            [[currentSpriteArray[i] name] isEqual:sunObjectSpriteName] ||
+            [[currentSpriteArray[i] name] isEqual:asteroidShieldCategoryName] ) {
             [currentSpriteArray[i] removeFromParent];
             for (SKSpriteNode *moon in ((SKSpriteNode*)currentSpriteArray[i]).userData[moonsArray]) {
                 [moon removeFromParent];
@@ -852,11 +878,13 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
 -(void)showCurrentSprites {
     for (SKSpriteNode *sprite in currentSpriteArray) {
-        if ([sprite.name isEqual:asteroidCategoryName]) {
+        if ([sprite.name isEqual:asteroidCategoryName] ||
+            [sprite.name isEqual:asteroidInShieldCategoryName]) {
             sprite.hidden = NO;
             [self addChild:sprite];
         } else if ([sprite.name isEqual:planetCategoryName] ||
-                   [sprite.name isEqual:sunObjectSpriteName]) {
+                   [sprite.name isEqual:sunObjectSpriteName] ||
+                   [sprite.name isEqual:asteroidShieldCategoryName]) {
             sprite.hidden = NO;
             [self addChild:sprite];
             for (SKSpriteNode *moon in sprite.userData[moonsArray]) {
@@ -994,7 +1022,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     ship.physicsBody.allowsRotation = NO;
     ship.physicsBody.categoryBitMask = shipCategory;
     ship.physicsBody.collisionBitMask = borderCategory | secondaryBorderCategory | asteroidCategory | planetCategory;
-    ship.physicsBody.contactTestBitMask = goalCategory | asteroidCategory | planetCategory | powerUpShieldCategory;
+    ship.physicsBody.contactTestBitMask = goalCategory | asteroidCategory | planetCategory | powerUpShieldCategory | asteroidShieldCategory;
     ship.physicsBody.mass = width;
     ship.physicsBody.velocity = velocity;
 }
@@ -1103,8 +1131,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
     sprite.physicsBody.linearDamping = 0.0f;
     sprite.physicsBody.dynamic = YES;
     sprite.physicsBody.categoryBitMask = asteroidCategory;
-    sprite.physicsBody.collisionBitMask = borderCategory | secondaryBorderCategory | shipCategory | asteroidCategory | planetCategory;
-    sprite.physicsBody.contactTestBitMask = goalCategory | shipCategory;
+    sprite.physicsBody.collisionBitMask = borderCategory | secondaryBorderCategory | shipCategory | asteroidCategory | asteroidInShieldCategory | planetCategory | asteroidShieldCategory;
+    sprite.physicsBody.contactTestBitMask = goalCategory | shipCategory | asteroidShieldCategory;
 
     sprite.physicsBody.mass = sprite.size.width;
     sprite.name = asteroidCategoryName;
@@ -1325,7 +1353,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
 -(NSMutableArray*)planetsForLevel:(int)level {
     NSMutableArray *planets = [NSMutableArray array];
     int numOfPlanets = arc4random() % ([self maxNumberOfPlanetsForLevel:level] + 1);
-//    numOfPlanets = 3;
     if (numOfPlanets < [self minNumberOfPlanetsForLevel:level]) {
         numOfPlanets = [self minNumberOfPlanetsForLevel:level];
     }
@@ -1403,27 +1430,61 @@ CGFloat DegreesToRadians(CGFloat degrees)
             attempt++;
         }
         if (addPlanet) {
-//            NSLog(@"%d %d",attempt, level);
-            planet.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:[self radiusForPlanetNum:[planet.userData[planetNumber] intValue]]];
-            planet.physicsBody.dynamic = NO;
-            planet.physicsBody.categoryBitMask = planetCategory;
-            planet.physicsBody.collisionBitMask = shipCategory | asteroidCategory | planetCategory;
-            planet.physicsBody.contactTestBitMask = planetCategory;
-            if (forceSun) {
-                planet.physicsBody.contactTestBitMask = shipCategory | asteroidCategory;
+            if ([planet.userData[planetNumber] intValue] >= asteroidShield0) {
+                float radius = [self radiusForPlanetNum:[planet.userData[planetNumber] intValue]];
+                CGMutablePathRef path = CGPathCreateMutable();
+                CGPathAddArc(path, NULL, 0, 0, radius, 0, M_PI * 2, YES);
+                planet.physicsBody = [SKPhysicsBody bodyWithEdgeChainFromPath:path];
+                planet.physicsBody.categoryBitMask = asteroidShieldCategory;
+                planet.physicsBody.contactTestBitMask = asteroidShieldCategory;
+            } else {
+                planet.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:[self radiusForPlanetNum:[planet.userData[planetNumber] intValue]]];
+                planet.physicsBody.categoryBitMask = planetCategory;
+                planet.physicsBody.contactTestBitMask = planetCategory;
+                if (forceSun) {
+                    planet.physicsBody.contactTestBitMask = shipCategory | asteroidCategory;
+                }
             }
+            planet.physicsBody.dynamic = NO;
+            planet.physicsBody.collisionBitMask = shipCategory | asteroidCategory | asteroidInShieldCategory | planetCategory | asteroidShieldCategory;
             planet.physicsBody.allowsRotation = NO;
-            if (![self addRingPhysicsBodyIfApplicableForPlanet:planet] && ![planet.name isEqualToString:sunObjectSpriteName])
+            if (![self addRingPhysicsBodyIfApplicableForPlanet:planet] && ![planet.name isEqualToString:sunObjectSpriteName] && [planet.userData[planetNumber] intValue] < 5)
                 planet.userData[moonsArray] = @[[self moonForPlanetNum:[planet.userData[planetNumber] intValue] withPlanet:planet]];
             [planets addObject:planet];
         }
     }
-    
+    NSMutableArray *asteroidsToAdd = [NSMutableArray array];
+    int shieldCount = 0;
+    for (SKSpriteNode *aPlanet in planets) {
+        if ([aPlanet.userData[planetNumber] intValue] >= asteroidShield0) {
+            aPlanet.userData[asteroidShieldTag] = @(shieldCount);
+            int levelToUse = level;
+            if (levelToUse > 14) {
+                levelToUse = 14;
+            }
+            for (int i = 0; i < [aPlanet.userData[planetNumber] intValue]; i++) {
+                SKSpriteNode *asteroid = [self randomAsteroidForLevel:levelToUse];
+                asteroid.position = aPlanet.position;
+                asteroid.zRotation = DegreesToRadians(arc4random() % 360);
+                float velocity = 20;
+                asteroid.physicsBody.velocity = CGVectorMake(velocity * cosf(asteroid.zRotation), velocity * -sinf(asteroid.zRotation));
+                asteroid.name = asteroidInShieldCategoryName;
+                asteroid.physicsBody.categoryBitMask = asteroidInShieldCategory;
+                asteroid.physicsBody.collisionBitMask = shipCategory | asteroidCategory | asteroidInShieldCategory | planetCategory | asteroidShieldCategory;
+                asteroid.physicsBody.contactTestBitMask = shipCategory | asteroidShieldCategory;
+                asteroid.userData = [NSMutableDictionary new];
+                asteroid.userData[asteroidShieldTag] = @(shieldCount);
+                [asteroidsToAdd addObject:asteroid];
+            }
+            shieldCount++;
+        }
+    }
+    [planets addObjectsFromArray:asteroidsToAdd];
     return planets;
 }
 
 -(BOOL)addRingPhysicsBodyIfApplicableForPlanet:(SKSpriteNode*)planet {
-    if ([planet.userData[planetFlavorNumber] isEqualToNumber:@2] && [planet.userData[planetNumber] intValue] != 5) {
+    if ([planet.userData[planetFlavorNumber] isEqualToNumber:@2] && [planet.userData[planetNumber] intValue] < 5) {
         SKSpriteNode *extraBodySprite = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:planet.size];
         extraBodySprite.physicsBody = [SKPhysicsBody bodyWithPolygonFromPath:[self pathForRingWithPlanetNum:[planet.userData[planetNumber] intValue] withSprite:planet]];
         extraBodySprite.physicsBody.dynamic = NO;
@@ -1476,7 +1537,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
 -(SKSpriteNode*)randomPlanetForLevel:(int)level sunFlavor:(BOOL)sunFlavor currentPlanets:planets {
 
-//    int planetNum = level % 6;
     int planetNum = arc4random() % [self maxPlanetNumForLevel:level];
     int planetFlavor =  arc4random() % 3;
     if (sunFlavor) {
@@ -1498,8 +1558,18 @@ CGFloat DegreesToRadians(CGFloat degrees)
             }
         }
     }
-//    planetFlavor = 2;
     NSString *imageName = [NSString stringWithFormat:@"Planet_%d_%d",planetNum, planetFlavor];
+    BOOL isAsteroidShield = NO;
+    if ((planetNum == 4 || planetNum == 3) && !sunFlavor) {
+        if (arc4random() % 2 == 0) { //50%
+            if (planetNum == 4) {
+                imageName = @"AsteroidShield_1";
+            } else {
+                imageName = @"AsteroidShield_0";
+            }
+            isAsteroidShield = YES;
+        }
+    }
     SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithImageNamed:imageName];
     
     UIBezierPath *hoverPath = [UIBezierPath bezierPath];
@@ -1525,12 +1595,22 @@ CGFloat DegreesToRadians(CGFloat degrees)
     }
     if (sunFlavor) {
         sprite.name = sunObjectSpriteName;
+    } else if (isAsteroidShield) {
+        sprite.name = asteroidShieldCategoryName;
     } else {
         sprite.name = planetCategoryName;
     }
     
     sprite.userData = [NSMutableDictionary dictionary];
-    sprite.userData[planetNumber] = @(planetNum);
+    if (isAsteroidShield) {
+        if (planetNum == 3) {
+            sprite.userData[planetNumber] = @(asteroidShield0);
+        } else {
+            sprite.userData[planetNumber] = @(asteroidShield1);
+        }
+    } else {
+        sprite.userData[planetNumber] = @(planetNum);
+    }
     sprite.userData[planetFlavorNumber] = @(planetFlavor);
     sprite.zPosition = 1;
     return sprite;
@@ -1654,6 +1734,11 @@ CGFloat DegreesToRadians(CGFloat degrees)
         case 5:
             return 325.f;
             break;
+        case asteroidShield0:
+            return 50.0;
+            break;
+        case asteroidShield1:
+            return 60.0f;
         default:
             return 30.f;
             break;
