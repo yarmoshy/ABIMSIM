@@ -523,6 +523,29 @@ CGFloat DegreesToRadians(CGFloat degrees)
             firstBody = contact.bodyB;
             secondBody = contact.bodyA;
         }
+        
+        if ((firstBody.categoryBitMask == asteroidCategory || firstBody.categoryBitMask == asteroidInShieldCategory) && secondBody.categoryBitMask == asteroidShieldCategory) {
+            NSString *imageName = @"";
+            if ([secondBody.node.userData[planetNumber] intValue] == asteroidShield0) {
+                imageName = @"AsteroidShield_Impact_0";
+            } else {
+                imageName = @"AsteroidShield_Impact_1";
+            }
+            SKSpriteNode *impactSprite = [SKSpriteNode spriteNodeWithImageNamed:imageName];
+            [secondBody.node addChild:impactSprite];
+            SKAction *fadeAway = [SKAction fadeAlphaTo:0 duration:0.5];
+            SKAction *remove = [SKAction customActionWithDuration:0 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
+                [node removeFromParent];
+            }];
+            SKAction *sequence = [SKAction sequence:@[fadeAway,remove]];
+            [impactSprite runAction:sequence];
+            CGPoint p1 = secondBody.node.position;
+            CGPoint p2 = firstBody.node.position;
+            
+            CGFloat f = [self pointPairToBearingDegrees:p1 secondPoint:p2] - 90;
+            impactSprite.zRotation = DegreesToRadians(f);
+        }
+        
         if (firstBody.categoryBitMask == shipCategory && secondBody.categoryBitMask == asteroidShieldCategory) {
             [secondBody.node removeFromParent];
             for (SKSpriteNode *asteroid in [self children]) {
@@ -1361,6 +1384,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     if (numOfPlanets < [self minNumberOfPlanetsForLevel:level]) {
         numOfPlanets = [self minNumberOfPlanetsForLevel:level];
     }
+    numOfPlanets = 3;
     BOOL forceSun = NO;
     if (level > 25) {
         if (arc4random() % 10 == 0) {
@@ -1467,6 +1491,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     for (SKSpriteNode *aPlanet in planets) {
         if ([aPlanet.userData[planetNumber] intValue] >= asteroidShield0) {
             aPlanet.userData[asteroidShieldTag] = @(shieldCount);
+            aPlanet.zPosition = 10;
             int levelToUse = level;
             if (levelToUse > 14) {
                 levelToUse = 14;
@@ -1483,6 +1508,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
                 asteroid.physicsBody.contactTestBitMask = shipCategory | asteroidShieldCategory;
                 asteroid.userData = [NSMutableDictionary new];
                 asteroid.userData[asteroidShieldTag] = @(shieldCount);
+                asteroid.zPosition = 0;
                 [asteroidsToAdd addObject:asteroid];
             }
             shieldCount++;
@@ -1598,10 +1624,11 @@ CGFloat DegreesToRadians(CGFloat degrees)
             }
         }
     }
+    planetNum = 4;
     NSString *imageName = [NSString stringWithFormat:@"Planet_%d_%d",planetNum, planetFlavor];
     BOOL isAsteroidShield = NO;
     if ((planetNum == 4 || planetNum == 3) && !sunFlavor) {
-        if (arc4random() % 2 == 0) { //50%
+        if (YES || arc4random() % 2 == 0) { //50%
             if (planetNum == 4) {
                 imageName = @"AsteroidShield_1";
             } else {
@@ -1896,7 +1923,14 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
 #pragma mark - Extra
 
-
+- (CGFloat) pointPairToBearingDegrees:(CGPoint)startingPoint secondPoint:(CGPoint) endingPoint
+{
+    CGPoint originPoint = CGPointMake(endingPoint.x - startingPoint.x, endingPoint.y - startingPoint.y); // get origin point to origin by subtracting end from start
+    float bearingRadians = atan2f(originPoint.y, originPoint.x); // get bearing in radians
+    float bearingDegrees = bearingRadians * (180.0 / M_PI); // convert to degrees
+    bearingDegrees = (bearingDegrees > 0.0 ? bearingDegrees : (360.0 + bearingDegrees)); // correct discontinuity
+    return bearingDegrees;
+}
 
 
 - (UIImage *)radialGradientImage:(CGSize)size start:(UIColor*)start end:(UIColor*)end centre:(CGPoint)centre radius:(float)radius {
