@@ -547,6 +547,27 @@ CGFloat DegreesToRadians(CGFloat degrees)
         }
         
         if (firstBody.categoryBitMask == shipCategory && secondBody.categoryBitMask == asteroidShieldCategory) {
+            NSString *imageName = @"";
+            float scale = 0;
+            float duration = 0.5;
+            if ([secondBody.node.userData[planetNumber] intValue] == asteroidShield0) {
+                imageName = @"AsteroidShield_Pop_0";
+                scale = 0.625;
+            } else {
+                imageName = @"AsteroidShield_Pop_1";
+                scale = 0.65;
+            }
+            SKSpriteNode *explosionSprite = [SKSpriteNode spriteNodeWithImageNamed:imageName];
+            explosionSprite.position = secondBody.node.position;
+            [explosionSprite setScale:scale];
+            explosionSprite.zPosition = 10;
+            [self addChild:explosionSprite];
+            SKAction *fadeAction = [SKAction fadeAlphaTo:0 duration:0.5];
+            SKAction *scaleAction = [SKAction scaleTo:1 duration:duration];
+            SKAction *groupAction = [SKAction group:@[fadeAction, scaleAction]];
+            [explosionSprite runAction:[SKAction sequence:@[groupAction, [SKAction customActionWithDuration:0 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
+                [node removeFromParent];
+            }]]]];
             [secondBody.node removeFromParent];
             for (SKSpriteNode *asteroid in [self children]) {
                 if ([asteroid.name isEqual:asteroidInShieldCategoryName] &&
@@ -1384,7 +1405,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
     if (numOfPlanets < [self minNumberOfPlanetsForLevel:level]) {
         numOfPlanets = [self minNumberOfPlanetsForLevel:level];
     }
-    numOfPlanets = 3;
     BOOL forceSun = NO;
     if (level > 25) {
         if (arc4random() % 10 == 0) {
@@ -1624,7 +1644,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
             }
         }
     }
-    planetNum = 4;
     NSString *imageName = [NSString stringWithFormat:@"Planet_%d_%d",planetNum, planetFlavor];
     BOOL isAsteroidShield = NO;
     if ((planetNum == 4 || planetNum == 3) && !sunFlavor) {
