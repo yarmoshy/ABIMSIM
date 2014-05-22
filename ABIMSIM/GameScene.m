@@ -13,6 +13,7 @@ static NSString* asteroidShieldCategoryName = @"asteroidShield";
 static NSString* goalCategoryName = @"goal";
 static NSString* levelNodeName = @"level";
 static NSString* powerUpShieldName = @"shield";
+static NSString* powerUpShieldRingName = @"shieldGlow";
 
 static NSString* shipImageSpriteName = @"shipImageSprite";
 static NSString* shipShieldSpriteName = @"shipShieldSprite";
@@ -64,12 +65,17 @@ static const uint32_t powerUpShieldCategory = 0x1 << 8;
 #define asteroidColorYella @"dbdb0b"
 #define asteroidColorPurple @"9e3dd1"
 
+//userData Keys
 #define orbitJoint @"orbitJoint"
 #define moonsArray @"moonsArray"
 #define planetNumber @"planetNumber"
 #define planetFlavorNumber @"planetFlavorNumber"
 #define asteroidShieldTag @"asteroidShieldTag"
 #define asteroidShieldPulseAnimationAction @"asteroidShieldPulseAnimationAction"
+#define powerUpShieldPulseAnimation @"powerUpShieldPulseAnimation"
+#define shipShieldOnAnimation @"shipShieldOnAnimation"
+#define shipShieldPopAnimation @"shipShieldPopAnimation"
+#define shipShieldImpactAnimation @"shipShieldImpactAnimation"
 
 #define asteroidShield0 6
 #define asteroidShield1 7
@@ -155,12 +161,22 @@ CGFloat DegreesToRadians(CGFloat degrees)
         shipImage.name = shipImageSpriteName;
         SKSpriteNode *shipShieldImage = [SKSpriteNode spriteNodeWithImageNamed:@"ShipShield"];
         shipShieldImage.name = shipShieldSpriteName;
+        shipShieldImage.alpha = 0;
         SKSpriteNode *ship = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:shipShieldImage.size];
         [ship addChild:shipImage];
         [ship addChild:shipShieldImage];
         ship.name = shipCategoryName;
         ship.position = CGPointMake(self.frame.size.width/4, ship.size.height*2);
         ship.zPosition = 1;
+        ship.userData = [NSMutableDictionary dictionary];
+        SKAction *shieldSetup = [SKAction customActionWithDuration:0 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
+            node.alpha = 1;
+            node.scale = 0.71;
+        }];
+        SKAction *growAction = [SKAction scaleTo:1.1 duration:0.3];
+        SKAction *snapBack = [SKAction scaleTo:1.0 duration:0.1];
+        SKAction *sequence = [SKAction sequence:@[shieldSetup,growAction,snapBack]];
+        ship.userData[shipShieldOnAnimation] = sequence;
         
         spritesArrays = [NSMutableArray array];
         currentSpriteArray = [NSMutableArray array];
@@ -203,7 +219,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
 //        [self addChild:warpBack2];
         [self addChild:ship];
         [self updateShipPhysics];
-
 //        [self addChild:warpFront];
 //        [self addChild:warpFront2];
 
@@ -667,6 +682,22 @@ CGFloat DegreesToRadians(CGFloat degrees)
             if (shieldHitPoints <= 0) {
                 hasShield = NO;
                 [self updateShipPhysics];
+            } else {
+                NSString *imageName = @"ShipShield_Impact";
+                SKSpriteNode *impactSprite = [SKSpriteNode spriteNodeWithImageNamed:imageName];
+                [[firstBody.node childNodeWithName:shipShieldSpriteName] addChild:impactSprite];
+                SKAction *fadeAway = [SKAction fadeAlphaTo:0 duration:0.5];
+                SKAction *remove = [SKAction customActionWithDuration:0 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
+                    [node removeFromParent];
+                }];
+                SKAction *sequence = [SKAction sequence:@[fadeAway,remove]];
+                [impactSprite runAction:sequence];
+                CGPoint p1 = firstBody.node.position;
+                CGPoint p2 = secondBody.node.position;
+                
+                CGFloat f = [self pointPairToBearingDegrees:p1 secondPoint:p2] - 90;
+                impactSprite.zRotation = DegreesToRadians(f);
+
             }
         } else {
             shipHitPoints--;
@@ -947,6 +978,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         } else if ([sprite.name isEqual:powerUpShieldName]) {
             sprite.hidden = NO;
             [self addChild:sprite];
+            [sprite runAction:sprite.userData[powerUpShieldPulseAnimation]];
         }
     }
     if (currentLevel == 1) {
@@ -1050,7 +1082,21 @@ CGFloat DegreesToRadians(CGFloat degrees)
     shieldPowerUp.name = powerUpShieldName;
     shieldPowerUp.position = CGPointMake(self.size.width/2, 100);
     shieldPowerUp.zPosition = 1;
-
+    shieldPowerUp.userData = [NSMutableDictionary dictionary];
+    SKSpriteNode *glowSprite = [SKSpriteNode spriteNodeWithImageNamed:@"ShieldPowerUp_Animated"];
+    glowSprite.name = powerUpShieldRingName;
+    [shieldPowerUp addChild:glowSprite];
+    glowSprite.alpha = 0;
+    
+    SKAction *fadeIn = [SKAction fadeAlphaTo:1 duration:0.3];
+    SKAction *fadeOut = [SKAction fadeAlphaTo:0 duration:1.0];
+    SKAction *repeat = [SKAction repeatActionForever:[SKAction sequence:@[fadeIn,fadeOut]]];
+    
+    SKAction *animationAction = [SKAction customActionWithDuration:0 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
+        [[node childNodeWithName:powerUpShieldRingName] runAction:repeat];
+    }];
+    shieldPowerUp.userData[powerUpShieldPulseAnimation] = animationAction;
+    
     return shieldPowerUp;
 }
 
@@ -1059,10 +1105,28 @@ CGFloat DegreesToRadians(CGFloat degrees)
     CGVector velocity = ship.physicsBody.velocity;
     float width = 40;
     if (hasShield) {
-        [ship childNodeWithName:shipShieldSpriteName].hidden = NO;
         width = ship.size.width;
+        if (currentLevel != 0) {
+            [[ship childNodeWithName:shipShieldSpriteName] runAction:ship.userData[shipShieldOnAnimation]];
+        } else {
+            [ship childNodeWithName:shipShieldSpriteName].alpha = 1;
+            [[ship childNodeWithName:shipShieldSpriteName] setScale:1];
+        }
     } else {
-        [ship childNodeWithName:shipShieldSpriteName].hidden = YES;
+        NSString *imageName = @"ShipShield_Pop";
+        float scale = 0.64;
+        float duration = 0.5;
+        SKSpriteNode *explosionSprite = [SKSpriteNode spriteNodeWithImageNamed:imageName];
+        [explosionSprite setScale:scale];
+        explosionSprite.zPosition = 10;
+        [ship addChild:explosionSprite];
+        SKAction *fadeAction = [SKAction fadeAlphaTo:0 duration:0.5];
+        SKAction *scaleAction = [SKAction scaleTo:1 duration:duration];
+        SKAction *groupAction = [SKAction group:@[fadeAction, scaleAction]];
+        [explosionSprite runAction:[SKAction sequence:@[groupAction, [SKAction customActionWithDuration:0 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
+            [node removeFromParent];
+        }]]]];
+        [ship childNodeWithName:shipShieldSpriteName].alpha = 0;
     }
     ship.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:width/2];
     ship.physicsBody.friction = 0.0f;
