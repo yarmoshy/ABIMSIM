@@ -23,6 +23,7 @@ static NSString* upgradeSpriteName = @"upgradeSpriteName";
 static NSString* gameCenterSpriteName = @"gameCenterSpriteName";
 static NSString* twitterSpriteName = @"twitterSpriteName";
 static NSString* facebokSpriteName = @"facebokSpriteName";
+static NSString* asteroidShieldRing1SpriteName = @"asteroidShieldRing1SpriteName";
 
 static const uint32_t borderCategory  = 0x1 << 0;  // 00000000000000000000000000000001
 static const uint32_t shipCategory  = 0x1 << 1;  // 00000000000000000000000000000001
@@ -68,6 +69,7 @@ static const uint32_t powerUpShieldCategory = 0x1 << 8;
 #define planetNumber @"planetNumber"
 #define planetFlavorNumber @"planetFlavorNumber"
 #define asteroidShieldTag @"asteroidShieldTag"
+#define asteroidShieldPulseAnimationAction @"asteroidShieldPulseAnimationAction"
 
 #define asteroidShield0 6
 #define asteroidShield1 7
@@ -806,7 +808,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
 -(void)generateInitialLevels {
     currentLevel = 1;
     ((SKLabelNode*)[self childNodeWithName:levelNodeName]).text = @"1";
-    for (int i = 1; i <= 10; i++) {
+    for (int i = 1; i <= 2; i++) {
         NSMutableArray *spriteArray = [NSMutableArray array];
         NSMutableArray *asteroids = [self asteroidsForLevel:i];
         [spriteArray addObjectsFromArray:asteroids];
@@ -846,11 +848,11 @@ CGFloat DegreesToRadians(CGFloat degrees)
         }
     }
     [currentSpriteArray removeAllObjects];
-    NSMutableArray *asteroids = [self asteroidsForLevel:currentLevel+10];
+    NSMutableArray *asteroids = [self asteroidsForLevel:currentLevel+2];
     [currentSpriteArray addObjectsFromArray:asteroids];
-    NSMutableArray *planets = [self planetsForLevel:currentLevel+10];
+    NSMutableArray *planets = [self planetsForLevel:currentLevel+2];
     [currentSpriteArray addObjectsFromArray:planets];
-    NSMutableArray *powerUps = [self powerUpsForLevel:currentLevel+10];
+    NSMutableArray *powerUps = [self powerUpsForLevel:currentLevel+2];
     [currentSpriteArray addObjectsFromArray:powerUps];
 
     currentLevel++;
@@ -892,6 +894,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
                 [self addChild:moon];
                 [self.physicsWorld addJoint:moon.userData[orbitJoint]];
                 moon.physicsBody.angularVelocity = 100;
+            }
+            if ([sprite.name isEqual:asteroidShieldCategoryName]) {
+                [sprite runAction:sprite.userData[asteroidShieldPulseAnimationAction]];
             }
         } else if ([sprite.name isEqual:goalCategoryName]) {
             [self addChild:sprite];
@@ -1448,8 +1453,12 @@ CGFloat DegreesToRadians(CGFloat degrees)
             planet.physicsBody.dynamic = NO;
             planet.physicsBody.collisionBitMask = shipCategory | asteroidCategory | asteroidInShieldCategory | planetCategory | asteroidShieldCategory;
             planet.physicsBody.allowsRotation = NO;
-            if (![self addRingPhysicsBodyIfApplicableForPlanet:planet] && ![planet.name isEqualToString:sunObjectSpriteName] && [planet.userData[planetNumber] intValue] < 5)
+            if (![self addRingPhysicsBodyIfApplicableForPlanet:planet] && ![planet.name isEqualToString:sunObjectSpriteName] && [planet.userData[planetNumber] intValue] < 5) {
                 planet.userData[moonsArray] = @[[self moonForPlanetNum:[planet.userData[planetNumber] intValue] withPlanet:planet]];
+            }
+            if ([planet.userData[planetNumber] intValue] >= asteroidShield0) {
+                [self addAsteroidShieldAnimationsToSprite:planet];
+            }
             [planets addObject:planet];
         }
     }
@@ -1495,6 +1504,37 @@ CGFloat DegreesToRadians(CGFloat degrees)
         return YES;
     }
     return NO;
+}
+
+-(void)addAsteroidShieldAnimationsToSprite:(SKSpriteNode*)sprite {
+    if (!sprite.userData) {
+        sprite.userData = [NSMutableDictionary new];
+    }
+    NSString *imageName = @"AsteroidShield_Ring_0";
+    float scale = 0.76;
+    if ([sprite.userData[planetNumber] intValue] == asteroidShield1) {
+        imageName = @"AsteroidShield_Ring_1";
+        scale = 0.77;
+    }
+    float duration = 1;
+    SKSpriteNode *ring1 = [SKSpriteNode spriteNodeWithImageNamed:imageName];
+    [sprite addChild:ring1];
+    ring1.name = asteroidShieldRing1SpriteName;
+    ring1.alpha = 0;
+    [ring1 setScale:scale];
+    SKAction *expandRingAction = [SKAction scaleTo:1 duration:duration];
+    SKAction *alphaOutRingAction = [SKAction fadeAlphaTo:0 duration:duration];
+    SKAction *groupAction = [SKAction group:@[expandRingAction,alphaOutRingAction,[SKAction waitForDuration:(duration+0.1)]]];
+    SKAction *blockAction = [SKAction customActionWithDuration:0 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
+        [node setScale:scale];
+        [node setAlpha:1];
+    }];
+    SKAction *sequenceAction = [SKAction sequence:@[blockAction, groupAction]];
+    SKAction *repeatAction = [SKAction repeatActionForever:sequenceAction];
+    SKAction *animationAction = [SKAction customActionWithDuration:0 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
+        [[node childNodeWithName:asteroidShieldRing1SpriteName] runAction:repeatAction];
+    }];
+    sprite.userData[asteroidShieldPulseAnimationAction] = animationAction;
 }
 
 -(int)maxPlanetNumForLevel:(int)level {
