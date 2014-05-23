@@ -1113,19 +1113,21 @@ CGFloat DegreesToRadians(CGFloat degrees)
             [[ship childNodeWithName:shipShieldSpriteName] setScale:1];
         }
     } else {
-        NSString *imageName = @"ShipShield_Pop";
-        float scale = 0.64;
-        float duration = 0.5;
-        SKSpriteNode *explosionSprite = [SKSpriteNode spriteNodeWithImageNamed:imageName];
-        [explosionSprite setScale:scale];
-        explosionSprite.zPosition = 10;
-        [ship addChild:explosionSprite];
-        SKAction *fadeAction = [SKAction fadeAlphaTo:0 duration:0.5];
-        SKAction *scaleAction = [SKAction scaleTo:1 duration:duration];
-        SKAction *groupAction = [SKAction group:@[fadeAction, scaleAction]];
-        [explosionSprite runAction:[SKAction sequence:@[groupAction, [SKAction customActionWithDuration:0 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
-            [node removeFromParent];
-        }]]]];
+        if (currentLevel != 0) {
+            NSString *imageName = @"ShipShield_Pop";
+            float scale = 0.64;
+            float duration = 0.5;
+            SKSpriteNode *explosionSprite = [SKSpriteNode spriteNodeWithImageNamed:imageName];
+            [explosionSprite setScale:scale];
+            explosionSprite.zPosition = 10;
+            [ship addChild:explosionSprite];
+            SKAction *fadeAction = [SKAction fadeAlphaTo:0 duration:0.5];
+            SKAction *scaleAction = [SKAction scaleTo:1 duration:duration];
+            SKAction *groupAction = [SKAction group:@[fadeAction, scaleAction]];
+            [explosionSprite runAction:[SKAction sequence:@[groupAction, [SKAction customActionWithDuration:0 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
+                [node removeFromParent];
+            }]]]];
+        }
         [ship childNodeWithName:shipShieldSpriteName].alpha = 0;
     }
     ship.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:width/2];
