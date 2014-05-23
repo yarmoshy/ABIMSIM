@@ -9,6 +9,8 @@ static NSString* shipCategoryName = @"ship";
 static NSString* asteroidCategoryName = @"asteroid";
 static NSString* asteroidInShieldCategoryName = @"asteroidInShield";
 static NSString* planetCategoryName = @"planet";
+static NSString* blackHoleCategoryName = @"blackHole";
+
 static NSString* asteroidShieldCategoryName = @"asteroidShield";
 static NSString* goalCategoryName = @"goal";
 static NSString* levelNodeName = @"level";
@@ -33,8 +35,9 @@ static const uint32_t asteroidCategory = 0x1 << 3;
 static const uint32_t asteroidInShieldCategory = 0x1 << 4;
 static const uint32_t planetCategory = 0x1 << 5;
 static const uint32_t asteroidShieldCategory = 0x1 << 6;
-static const uint32_t goalCategory = 0x1 << 7;
-static const uint32_t powerUpShieldCategory = 0x1 << 8;
+static const uint32_t blackHoleCategory = 0x1 << 7;
+static const uint32_t goalCategory = 0x1 << 8;
+static const uint32_t powerUpShieldCategory = 0x1 << 9;
 
 
 #define kExtraSpaceOffScreen 50
@@ -76,6 +79,7 @@ static const uint32_t powerUpShieldCategory = 0x1 << 8;
 #define shipShieldOnAnimation @"shipShieldOnAnimation"
 #define shipShieldPopAnimation @"shipShieldPopAnimation"
 #define shipShieldImpactAnimation @"shipShieldImpactAnimation"
+#define blackHoleAnimation @"blackHoleAnimation"
 
 #define asteroidShield0 6
 #define asteroidShield1 7
@@ -156,7 +160,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         } else {
             shieldHitPoints = 0;
         }
-        shipHitPoints = 1 + [ABIMSIMDefaults integerForKey:kHullDurabilityLevel];
+        shipHitPoints = 100000 + [ABIMSIMDefaults integerForKey:kHullDurabilityLevel];
         SKSpriteNode *shipImage = [SKSpriteNode spriteNodeWithImageNamed:@"Ship"];
         shipImage.name = shipImageSpriteName;
         SKSpriteNode *shipShieldImage = [SKSpriteNode spriteNodeWithImageNamed:@"ShipShield"];
@@ -662,6 +666,14 @@ CGFloat DegreesToRadians(CGFloat degrees)
                 [firstBody.node removeFromParent];
             }
         }
+        if ([secondBody.node.name isEqualToString:blackHoleCategoryName]) {
+            if ([firstBody.node.name isEqualToString:shipCategoryName]) {
+                [self killShipAndStartOver];
+            } else {
+                [firstBody.node removeFromParent];
+            }
+        }
+
     }
 }
 
@@ -891,7 +903,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         [spriteArray addObjectsFromArray:planets];
         NSMutableArray *powerUps = [self powerUpsForLevel:i];
         [spriteArray addObjectsFromArray:powerUps];
-        
+        [spriteArray addObject:[self blackHole]];
         CGRect goalRect;
         goalRect = CGRectMake(self.frame.origin.x, self.frame.size.height + kExtraSpaceOffScreen, self.frame.size.width, 1);
         SKNode* goal = [SKNode node];
@@ -915,7 +927,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
         }
         if ([[currentSpriteArray[i] name] isEqual:planetCategoryName] ||
             [[currentSpriteArray[i] name] isEqual:sunObjectSpriteName] ||
-            [[currentSpriteArray[i] name] isEqual:asteroidShieldCategoryName] ) {
+            [[currentSpriteArray[i] name] isEqual:asteroidShieldCategoryName] ||
+            [[currentSpriteArray[i] name] isEqual:blackHoleCategoryName]  ) {
             [currentSpriteArray[i] removeFromParent];
             for (SKSpriteNode *moon in ((SKSpriteNode*)currentSpriteArray[i]).userData[moonsArray]) {
                 [moon removeFromParent];
@@ -929,7 +942,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
     [currentSpriteArray addObjectsFromArray:planets];
     NSMutableArray *powerUps = [self powerUpsForLevel:currentLevel+2];
     [currentSpriteArray addObjectsFromArray:powerUps];
-
+    [currentSpriteArray addObject:[self blackHole]];
+    
     currentLevel++;
     [self checkLevelAchievements];
     
@@ -961,7 +975,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
             [self addChild:sprite];
         } else if ([sprite.name isEqual:planetCategoryName] ||
                    [sprite.name isEqual:sunObjectSpriteName] ||
-                   [sprite.name isEqual:asteroidShieldCategoryName]) {
+                   [sprite.name isEqual:asteroidShieldCategoryName] ||
+                   [sprite.name isEqual:blackHoleCategoryName] ) {
             sprite.hidden = NO;
             [self addChild:sprite];
             for (SKSpriteNode *moon in sprite.userData[moonsArray]) {
@@ -973,6 +988,10 @@ CGFloat DegreesToRadians(CGFloat degrees)
             if ([sprite.name isEqual:asteroidShieldCategoryName]) {
                 [sprite runAction:sprite.userData[asteroidShieldPulseAnimationAction]];
             }
+            if ([sprite.name isEqual:blackHoleCategoryName]) {
+                [sprite runAction:sprite.userData[blackHoleAnimation]];
+            }
+
         } else if ([sprite.name isEqual:goalCategoryName]) {
             [self addChild:sprite];
         } else if ([sprite.name isEqual:powerUpShieldName]) {
@@ -1057,6 +1076,29 @@ CGFloat DegreesToRadians(CGFloat degrees)
     }
     return sprite;
 }
+
+#pragma mark - Black Hole
+
+-(SKSpriteNode*)blackHole {
+    SKSpriteNode *blackHole = [SKSpriteNode spriteNodeWithColor:[UIColor blackColor] size:CGSizeMake(80, 80)];
+    blackHole.name = blackHoleCategoryName;
+    blackHole.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:blackHole.size.width/2];
+    blackHole.physicsBody.mass = 1000000000;
+    blackHole.position = CGPointMake(-blackHole.size.width/2, self.frame.size.height/2);
+    blackHole.physicsBody.categoryBitMask = blackHoleCategory;
+    blackHole.physicsBody.contactTestBitMask = shipCategory | asteroidCategory | asteroidInShieldCategory | planetCategory | asteroidShieldCategory;
+    blackHole.physicsBody.collisionBitMask = blackHoleCategory;
+
+    blackHole.userData = [NSMutableDictionary dictionary];
+    SKAction *moveRight = [SKAction moveByX:self.frame.size.width+blackHole.size.width y:0 duration:5];
+    SKAction *moveLeft = [SKAction moveByX:-(self.frame.size.width+blackHole.size.width) y:0 duration:5];
+    SKAction *both = [SKAction sequence:@[moveRight,moveLeft]];
+    SKAction *animation = [SKAction repeatActionForever:both];
+    blackHole.userData[blackHoleAnimation] = animation;
+    return blackHole;
+}
+
+
 
 #pragma mark - Power Ups
 
@@ -1471,6 +1513,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     if (numOfPlanets < [self minNumberOfPlanetsForLevel:level]) {
         numOfPlanets = [self minNumberOfPlanetsForLevel:level];
     }
+    numOfPlanets = 3;
     BOOL forceSun = NO;
     if (level > 25) {
         if (arc4random() % 10 == 0) {
@@ -1560,8 +1603,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
                     planet.physicsBody.contactTestBitMask = shipCategory | asteroidCategory;
                 }
             }
-            planet.physicsBody.dynamic = NO;
-            planet.physicsBody.collisionBitMask = shipCategory | asteroidCategory | asteroidInShieldCategory | planetCategory | asteroidShieldCategory;
+            planet.physicsBody.mass = 1000000;
+            planet.physicsBody.dynamic = YES;
+            planet.physicsBody.collisionBitMask = shipCategory | asteroidCategory | asteroidInShieldCategory | asteroidShieldCategory;
             planet.physicsBody.allowsRotation = NO;
             if (![self addRingPhysicsBodyIfApplicableForPlanet:planet] && ![planet.name isEqualToString:sunObjectSpriteName] && [planet.userData[planetNumber] intValue] < 5) {
                 planet.userData[moonsArray] = @[[self moonForPlanetNum:[planet.userData[planetNumber] intValue] withPlanet:planet]];
@@ -1610,7 +1654,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         extraBodySprite.physicsBody = [SKPhysicsBody bodyWithPolygonFromPath:[self pathForRingWithPlanetNum:[planet.userData[planetNumber] intValue] withSprite:planet]];
         extraBodySprite.physicsBody.dynamic = NO;
         extraBodySprite.physicsBody.categoryBitMask = planetCategory;
-        extraBodySprite.physicsBody.collisionBitMask = shipCategory | asteroidCategory | planetCategory;
+        extraBodySprite.physicsBody.collisionBitMask = shipCategory | asteroidCategory;
         extraBodySprite.physicsBody.allowsRotation = NO;
         [planet addChild:extraBodySprite];
         return YES;
