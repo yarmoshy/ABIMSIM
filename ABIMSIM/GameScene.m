@@ -295,7 +295,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     }
     BOOL blackHole = [self childNodeWithName:blackHoleCategoryName] != nil;
     if (blackHole) {
-        [self applyBlackHolePullToSprite:ship];
+//        [self applyBlackHolePullToSprite:ship];
         for (SKSpriteNode *sprite in self.children) {
             if ([sprite.name isEqualToString:asteroidCategoryName] ||
                 [sprite.name isEqualToString:planetCategoryName] ||
@@ -306,11 +306,17 @@ CGFloat DegreesToRadians(CGFloat degrees)
                 }
             }
         }
-        for (SKSpriteNode *star in starSprites) {
+        for (SKSpriteNode *star in starFrontLayer.children) {
             if (star.xScale != 0 && star.yScale != 0) {
                 [self applyBlackHolePullToSprite:star];
             }
         }
+        for (SKSpriteNode *star in starBackLayer.children) {
+            if (star.xScale != 0 && star.yScale != 0) {
+                [self applyBlackHolePullToSprite:star];
+            }
+        }
+
     }
 
     for (SKSpriteNode *asteroid in currentSpriteArray) {
@@ -348,9 +354,18 @@ CGFloat DegreesToRadians(CGFloat degrees)
 -(void)applyBlackHolePullToSprite:(SKSpriteNode*)sprite {
     CGPoint p1 = [self childNodeWithName:blackHoleCategoryName].position;
     CGPoint p2 = sprite.position;
+    if ([sprite.name isEqualToString:starSpriteName]) {
+        if ([sprite.parent isEqual:starFrontLayer]) {
+            p2.y += starFrontLayer.position.y;
+        } else {
+            p2.y += starBackLayer.position.y;
+        }
+    }
+
     CGFloat r = DegreesToRadians([self pointPairToBearingDegrees:p1 secondPoint:p2]);
     float x = cosf(r);
     float y = sinf(r);
+
     float distance = sqrtf(powf(p1.x - p2.x,2) + powf(p1.y - p2.y, 2));
     float magnitude = (self.frame.size.height / distance);
     if (sprite.name == planetCategoryName) {
@@ -493,8 +508,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     }
 }
 
-- (void) showGameCenter
-{
+- (void) showGameCenter {
     //    if ([GKLocalPlayer localPlayer].authenticated) {
     GKGameCenterViewController *gameCenterController = [[GKGameCenterViewController alloc] init];
     if (gameCenterController != nil)
@@ -506,8 +520,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     //    }
 }
 
-- (void)gameCenterViewControllerDidFinish:(GKGameCenterViewController *)gameCenterViewController
-{
+- (void)gameCenterViewControllerDidFinish:(GKGameCenterViewController *)gameCenterViewController {
     [self.viewController dismissViewControllerAnimated:YES completion:^{
         self.paused = NO;
     }];
@@ -773,9 +786,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
                         [node removeFromParent];
                     }
                 } else {
-                    [node removeFromParent];
-                    [node setScale:1];
                     node.name = starSpriteName;
+//                    [node removeFromParent];
                 }
             }]]];
             for (SKSpriteNode *child in firstBody.node.children) {
@@ -788,7 +800,11 @@ CGFloat DegreesToRadians(CGFloat degrees)
             } else {
                 [firstBody.node runAction:deathAction];
             }
-            firstBody.node.physicsBody = nil;
+
+            if (![firstBody.node.name isEqualToString:@"dyingStar"] &&
+                ![firstBody.node.name isEqualToString:starSpriteName]) {
+                firstBody.node.physicsBody = nil;
+            }
 
         }
 
@@ -952,6 +968,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
         }
     } else {
         int i = 0;
+        int half = 0;
+        BOOL shrinkBackHalf = currentLevel % 2 == 0;
         for (SKSpriteNode *star in starSprites) {
             float x = arc4random() % (int)self.frame.size.width * 1;
             float y;
@@ -961,7 +979,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
                 y = arc4random() % (int)(self.frame.size.height * starFrontMovement * 1);
             }
             float scale = 0;
-            if (star.yScale == 0) {
+            if ((shrinkBackHalf && half == 0) ||
+                (!shrinkBackHalf && half == 1)) {
                 [star removeFromParent];
                 if (i < 6) {
                     [starBackLayer addChild:star];
@@ -997,7 +1016,10 @@ CGFloat DegreesToRadians(CGFloat degrees)
                     default:
                         break;
                 }
-                [star runAction:[SKAction scaleTo:scale duration:0.5]];
+                [star removeAllActions];
+                [star runAction:[SKAction moveTo:CGPointMake(x, y) duration:0] completion:^{
+                    [star runAction:[SKAction scaleTo:scale duration:0.5]];
+                }];
             } else {
                 SKAction *spawnAction = [SKAction group:@[[SKAction moveByX:0 y:yVelocity * 0.125 duration:0.5],
                                                           [SKAction runBlock:^{
@@ -1012,11 +1034,13 @@ CGFloat DegreesToRadians(CGFloat degrees)
                         [oldStarBackLayer removeFromParent];
                     }];
                 }]]];
+                [star removeAllActions];
                 [star runAction:spawnAction];
             }
             i++;
             if (i > 11) {
                 i = 0;
+                half++;
             }
         }
     }
@@ -1191,7 +1215,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
 }
 
-
 -(SKSpriteNode*)randomizeSprite:(SKSpriteNode*)sprite {
     float x = arc4random() % (int)self.frame.size.width * 1;
     float maxHeight = self.frame.size.height - bufferZoneHeight - (sprite.size.height/2.0);
@@ -1206,8 +1229,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
 }
 
 #pragma mark - Black Hole
-
-
 
 -(SKSpriteNode*)blackHole {
     SKSpriteNode *blackHole = [SKSpriteNode spriteNodeWithColor:[UIColor blackColor] size:CGSizeMake(80, 80)];
@@ -1809,7 +1830,10 @@ CGFloat DegreesToRadians(CGFloat degrees)
     [planets addObjectsFromArray:asteroidsToAdd];
 //    if (!forceSun && !bigPlanet) {
 //        if (arc4random() % 8 == 0 && level > 25) {
-//            [planets addObject:[self blackHole]];
+    if (level < 10) {
+        [planets addObject:[self blackHole]];
+    }
+    
 //        }
 //    }
     return planets;
@@ -2026,7 +2050,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
     }
 }
 
-
 -(SKSpriteNode*)moonForPlanetNum:(int)planetNum withPlanet:(SKSpriteNode*)planet {
     NSString *imageName = [NSString stringWithFormat:@"Asteroid_%d",planetNum];
     SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithImageNamed:imageName];
@@ -2219,8 +2242,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
 #pragma mark - Extra
 
-- (CGFloat) pointPairToBearingDegrees:(CGPoint)startingPoint secondPoint:(CGPoint) endingPoint
-{
+- (CGFloat) pointPairToBearingDegrees:(CGPoint)startingPoint secondPoint:(CGPoint) endingPoint {
     CGPoint originPoint = CGPointMake(endingPoint.x - startingPoint.x, endingPoint.y - startingPoint.y); // get origin point to origin by subtracting end from start
     float bearingRadians = atan2f(originPoint.y, originPoint.x); // get bearing in radians
     float bearingDegrees = bearingRadians * (180.0 / M_PI); // convert to degrees
