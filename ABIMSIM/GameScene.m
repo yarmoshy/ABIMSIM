@@ -27,6 +27,7 @@ static NSString* gameCenterSpriteName = @"gameCenterSpriteName";
 static NSString* twitterSpriteName = @"twitterSpriteName";
 static NSString* facebokSpriteName = @"facebokSpriteName";
 static NSString* asteroidShieldRing1SpriteName = @"asteroidShieldRing1SpriteName";
+static NSString* starSpriteName = @"starSpriteName";
 
 static const uint32_t borderCategory  = 0x1 << 0;  // 00000000000000000000000000000001
 static const uint32_t shipCategory  = 0x1 << 1;  // 00000000000000000000000000000001
@@ -35,9 +36,10 @@ static const uint32_t asteroidCategory = 0x1 << 3;
 static const uint32_t asteroidInShieldCategory = 0x1 << 4;
 static const uint32_t planetCategory = 0x1 << 5;
 static const uint32_t asteroidShieldCategory = 0x1 << 6;
-static const uint32_t blackHoleCategory = 0x1 << 7;
-static const uint32_t goalCategory = 0x1 << 8;
-static const uint32_t powerUpShieldCategory = 0x1 << 9;
+static const uint32_t starCategory = 0x1 << 7;
+static const uint32_t blackHoleCategory = 0x1 << 8;
+static const uint32_t goalCategory = 0x1 << 9;
+static const uint32_t powerUpShieldCategory = 0x1 << 10;
 
 
 #define kExtraSpaceOffScreen 50
@@ -134,6 +136,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         
         SKSpriteNode *background = [SKSpriteNode spriteNodeWithImageNamed:@"Background"];
         background.anchorPoint = CGPointZero;
+        background.zPosition = -1;
         [self addChild:background];
         
         SKSpriteNode *secondaryBorderSprite = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:CGSizeMake(size.width, size.height+kExtraSpaceOffScreen)];
@@ -303,6 +306,11 @@ CGFloat DegreesToRadians(CGFloat degrees)
                 }
             }
         }
+        for (SKSpriteNode *star in starSprites) {
+            if (star.xScale != 0 && star.yScale != 0) {
+                [self applyBlackHolePullToSprite:star];
+            }
+        }
     }
 
     for (SKSpriteNode *asteroid in currentSpriteArray) {
@@ -346,7 +354,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     float distance = sqrtf(powf(p1.x - p2.x,2) + powf(p1.y - p2.y, 2));
     float magnitude = (self.frame.size.height / distance);
     if (sprite.name == planetCategoryName) {
-        magnitude = powf(magnitude, 7);
+        magnitude = powf(magnitude, 7.5);
         magnitude *= 10;
     } else if (sprite.name == shipCategoryName) {
         magnitude = powf(magnitude, 4.5);
@@ -354,7 +362,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         magnitude = powf(magnitude, 4);
     }
     [sprite.physicsBody applyImpulse:CGVectorMake(-x*magnitude, -y*magnitude)];
-    if ([sprite.name isEqualToString:asteroidShieldCategoryName]) {
+    if ([sprite.name isEqualToString:asteroidShieldCategoryName] || [sprite.name isEqualToString:starSpriteName]) {
         [sprite runAction:[SKAction moveBy:CGVectorMake(-x * (magnitude/100), -y*(magnitude/100)) duration:0]];
     }
 }
@@ -581,7 +589,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
         if (contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask) {
             firstBody = contact.bodyA;
             secondBody = contact.bodyB;
-        } else {
+        }
+        else {
             firstBody = contact.bodyB;
             secondBody = contact.bodyA;
         }
@@ -710,32 +719,77 @@ CGFloat DegreesToRadians(CGFloat degrees)
             }
         }
         if ([secondBody.node.name isEqualToString:blackHoleCategoryName]) {
+            CGPoint p1 = [self childNodeWithName:blackHoleCategoryName].position;
+            CGPoint p2 = firstBody.node.position;
+            if ([firstBody.node.name isEqualToString:starSpriteName]) {
+                if ([firstBody.node.parent isEqual:starFrontLayer]) {
+                    p2.y += starFrontLayer.position.y;
+                } else {
+                    p2.y += starBackLayer.position.y;
+                }
+            }
+
             if ([firstBody.node.name isEqualToString:shipCategoryName]) {
                 firstBody.node.name = @"dyingShip";
+            } else if ([firstBody.node.name isEqualToString:starSpriteName]) {
+                firstBody.node.name = @"dyingStar";
             } else {
                 firstBody.node.name = @"dying";
             }
-            CGPoint p1 = [self childNodeWithName:blackHoleCategoryName].position;
-            CGPoint p2 = firstBody.node.position;
             CGFloat r = DegreesToRadians([self pointPairToBearingDegrees:p1 secondPoint:p2]);
             float distance = sqrtf(powf(p1.x - p2.x,2) + powf(p1.y - p2.y, 2));
-            [firstBody.node removeFromParent];
-            firstBody.node.position = CGPointMake(distance*cosf(r), distance*sinf(r));
+            SKSpriteNode *shipShieldImage;
+            SKSpriteNode *shipImage;
+            if ([firstBody.node.name isEqualToString:@"dyingShip"]) {
+                shipShieldImage = (SKSpriteNode*)[[self childNodeWithName:@"dyingShip"] childNodeWithName:shipShieldSpriteName];
+                shipImage = (SKSpriteNode*)[[self childNodeWithName:@"dyingShip"] childNodeWithName:shipImageSpriteName];
+
+                shipShieldImage.name = @"dying";
+                shipImage.name = @"dyingShip";
+
+                [shipShieldImage removeFromParent];
+                [shipImage removeFromParent];
+                
+                shipShieldImage.position = CGPointMake(distance*cosf(r), distance*sinf(r));
+                shipImage.position = CGPointMake(distance*cosf(r), distance*sinf(r));
+            } else {
+                [firstBody.node removeFromParent];
+                firstBody.node.position = CGPointMake(distance*cosf(r), distance*sinf(r));
+            }
             if (firstBody.node) {
-                [secondBody.node addChild:firstBody.node];
+                if ([firstBody.node.name isEqualToString:@"dyingShip"]) {
+                    [secondBody.node addChild:shipShieldImage];
+                    [secondBody.node addChild:shipImage];
+                } else {
+                   [secondBody.node addChild:firstBody.node];
+                }
             }
             float duration = 0.25;
             SKAction *deathAction =[SKAction sequence:@[[SKAction group:@[[SKAction moveTo:CGPointZero duration:duration],[SKAction scaleTo:0 duration:duration]]], [SKAction customActionWithDuration:0 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
-                [node removeFromParent];
-                if ([node.name isEqualToString:@"dyingShip"]) {
-                    [self killShipAndStartOver];
+                if (![node.name isEqualToString:@"dyingStar"]) {
+                    if ([node.name isEqualToString:@"dyingShip"]) {
+                        [self killShipAndStartOver];
+                    } else {
+                        [node removeFromParent];
+                    }
+                } else {
+                    [node removeFromParent];
+                    [node setScale:1];
+                    node.name = starSpriteName;
                 }
             }]]];
             for (SKSpriteNode *child in firstBody.node.children) {
                 [child runAction:deathAction];
             }
-            [firstBody.node runAction:deathAction];
+            if ([firstBody.node.name isEqualToString:@"dyingShip"]) {
+                [shipShieldImage runAction:deathAction];
+                [shipImage runAction:deathAction];
+                firstBody.node.name = shipCategoryName;
+            } else {
+                [firstBody.node runAction:deathAction];
+            }
             firstBody.node.physicsBody = nil;
+
         }
 
     }
@@ -827,6 +881,12 @@ CGFloat DegreesToRadians(CGFloat degrees)
         starSprites = [NSMutableArray array];
         for (int i = 0; i < 12; i++) {
             SKSpriteNode *star = [SKSpriteNode spriteNodeWithImageNamed:@"LargeStar"];
+            star.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:1];
+            star.physicsBody.dynamic = NO;
+            star.physicsBody.categoryBitMask = starCategory;
+            star.physicsBody.collisionBitMask = 0;
+            star.physicsBody.contactTestBitMask = blackHoleCategory;
+            star.name = starSpriteName;
             [starSprites addObject:star];
             float x = arc4random() % (int)self.frame.size.width * 1;
             float y;
@@ -875,8 +935,14 @@ CGFloat DegreesToRadians(CGFloat degrees)
         }
         for (int i = 0; i < 12; i++) {
             SKSpriteNode *star = [SKSpriteNode spriteNodeWithImageNamed:@"LargeStar"];
+            star.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:1];
+            star.physicsBody.dynamic = NO;
+            star.physicsBody.categoryBitMask = starCategory;
+            star.physicsBody.collisionBitMask = 0;
+            star.physicsBody.contactTestBitMask = blackHoleCategory;
+            star.name = starSpriteName;
             [starSprites addObject:star];
-            star.xScale = star.yScale = 0;
+            [star setScale:0];
             star.colorBlendFactor = 1.0;
             if (i < 6) {
                 [starBackLayer addChild:star];
@@ -1005,7 +1071,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     [currentSpriteArray addObjectsFromArray:planets];
     NSMutableArray *powerUps = [self powerUpsForLevel:currentLevel+2];
     [currentSpriteArray addObjectsFromArray:powerUps];
-    
+
     currentLevel++;
     [self checkLevelAchievements];
     
@@ -1145,6 +1211,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
 -(SKSpriteNode*)blackHole {
     SKSpriteNode *blackHole = [SKSpriteNode spriteNodeWithColor:[UIColor blackColor] size:CGSizeMake(80, 80)];
+//    SKSpriteNode *background = [SKSpriteNode spriteNodeWithTexture:[SKTexture textureWithImage:[self blackHoleDistortionImage]] size:CGSizeMake(160, 160)];
+//    [blackHole addChild:background];
     blackHole.name = blackHoleCategoryName;
     blackHole.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:blackHole.size.width/2];
     blackHole.physicsBody.mass = 1000000000;
@@ -1165,10 +1233,30 @@ CGFloat DegreesToRadians(CGFloat degrees)
     }
     SKAction *animation = [SKAction repeatActionForever:both];
     blackHole.userData[blackHoleAnimation] = animation;
+    blackHole.zPosition = -1;
     return blackHole;
 }
 
-
+-(UIImage*)blackHoleDistortionImage {
+    NSArray *filterNames = [CIFilter filterNamesInCategory:nil];
+    CIImage *inputImage = [[CIImage alloc] initWithImage:[UIImage imageNamed:@"Background@2x.png"]];
+    CIFilter * controlsFilter = [CIFilter filterWithName:@"CIHoleDistortion"];
+    [controlsFilter setValue:inputImage forKey:kCIInputImageKey];
+//    [controlsFilter setValue:[NSNumber numberWithFloat: 2.0f] forKey:@"inputEV"];
+    NSLog(@"%@",controlsFilter.attributes);
+    CIImage *displayImage = controlsFilter.outputImage;
+    UIImage *finalImage = [UIImage imageWithCIImage:displayImage];
+    UIImage *returnImage;
+    CIContext *context = [CIContext contextWithOptions:nil];
+    if (displayImage == nil || finalImage == nil) {
+        // We did not get output image. Let's display the original image itself.
+        returnImage = [UIImage imageNamed:@"old-country-rain.jpg"];
+    }else {
+        // We got output image. Display it.
+        returnImage = [UIImage imageWithCGImage:[context createCGImage:displayImage fromRect:displayImage.extent]];
+    }
+    return returnImage;
+}
 
 #pragma mark - Power Ups
 
@@ -1583,6 +1671,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     if (numOfPlanets < [self minNumberOfPlanetsForLevel:level]) {
         numOfPlanets = [self minNumberOfPlanetsForLevel:level];
     }
+    numOfPlanets = 3;
     BOOL forceSun = NO;
     if (level > 25) {
         if (arc4random() % 8 == 0) {
@@ -1718,11 +1807,11 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
     }
     [planets addObjectsFromArray:asteroidsToAdd];
-    if (!forceSun && !bigPlanet) {
-        if (arc4random() % 8 == 0 && level > 25) {
-            [planets addObject:[self blackHole]];
-        }
-    }
+//    if (!forceSun && !bigPlanet) {
+//        if (arc4random() % 8 == 0 && level > 25) {
+//            [planets addObject:[self blackHole]];
+//        }
+//    }
     return planets;
 }
 
