@@ -268,7 +268,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
     if ([UIApplication sharedApplication].applicationState != UIApplicationStateActive) {
         [self pause];
     }
-    
+    if (self.paused) {
+        return;
+    }
     /* Called before each frame is rendered */
     SKSpriteNode* ship = (SKSpriteNode*)[self childNodeWithName:shipCategoryName];
     if (shipWarping && ship.position.y > ship.frame.size.height/2) {
@@ -295,7 +297,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     }
     BOOL blackHole = [self childNodeWithName:blackHoleCategoryName] != nil;
     if (blackHole) {
-//        [self applyBlackHolePullToSprite:ship];
+        [self applyBlackHolePullToSprite:ship];
         for (SKSpriteNode *sprite in self.children) {
             if ([sprite.name isEqualToString:asteroidCategoryName] ||
                 [sprite.name isEqualToString:planetCategoryName] ||
@@ -378,6 +380,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
     }
     [sprite.physicsBody applyImpulse:CGVectorMake(-x*magnitude, -y*magnitude)];
     if ([sprite.name isEqualToString:asteroidShieldCategoryName] || [sprite.name isEqualToString:starSpriteName]) {
+        if (magnitude > 250) {
+            magnitude = 250;
+        }
         [sprite runAction:[SKAction moveBy:CGVectorMake(-x * (magnitude/100), -y*(magnitude/100)) duration:0]];
     }
 }
@@ -1699,7 +1704,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     if (numOfPlanets < [self minNumberOfPlanetsForLevel:level]) {
         numOfPlanets = [self minNumberOfPlanetsForLevel:level];
     }
-    numOfPlanets = 3;
+//    numOfPlanets = 3;
     BOOL forceSun = NO;
     if (level > 25) {
         if (arc4random() % 8 == 0) {
@@ -1835,14 +1840,11 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
     }
     [planets addObjectsFromArray:asteroidsToAdd];
-//    if (!forceSun && !bigPlanet) {
-//        if (arc4random() % 8 == 0 && level > 25) {
-    if (level < 10) {
-        [planets addObject:[self blackHole]];
+    if (!forceSun && !bigPlanet) {
+        if (arc4random() % 8 == 0 && level > 25) {
+            [planets addObject:[self blackHole]];
+            }
     }
-    
-//        }
-//    }
     return planets;
 }
 
