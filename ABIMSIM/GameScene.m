@@ -1018,7 +1018,14 @@ CGFloat DegreesToRadians(CGFloat degrees)
                 }
                 [star removeAllActions];
                 [star runAction:[SKAction moveTo:CGPointMake(x, y) duration:0] completion:^{
-                    [star runAction:[SKAction scaleTo:scale duration:0.5]];
+                    [star runAction:[SKAction scaleTo:scale duration:0.5] completion:^{
+                        star.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:1];
+                        star.physicsBody.dynamic = NO;
+                        star.physicsBody.categoryBitMask = starCategory;
+                        star.physicsBody.collisionBitMask = 0;
+                        star.physicsBody.contactTestBitMask = blackHoleCategory;
+                        star.name = starSpriteName;
+                    }];
                 }];
             } else {
                 SKAction *spawnAction = [SKAction group:@[[SKAction moveByX:0 y:yVelocity * 0.125 duration:0.5],
