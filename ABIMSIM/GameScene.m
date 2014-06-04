@@ -349,7 +349,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
         } else {
             asteroid.physicsBody.linearDamping = 0.0f;
         }
-        
     }
 }
 
@@ -1271,7 +1270,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
 }
 
 -(UIImage*)blackHoleDistortionImage {
-    NSArray *filterNames = [CIFilter filterNamesInCategory:nil];
     CIImage *inputImage = [[CIImage alloc] initWithImage:[UIImage imageNamed:@"Background@2x.png"]];
     CIFilter * controlsFilter = [CIFilter filterWithName:@"CIHoleDistortion"];
     [controlsFilter setValue:inputImage forKey:kCIInputImageKey];

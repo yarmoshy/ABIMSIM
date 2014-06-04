@@ -82,6 +82,7 @@
 		B4D4B628191FFF4F00834942 /* Planet_4_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4D4B614191FFF4F00834942 /* Planet_4_1@2x.png */; };
 		B4D4B629191FFF4F00834942 /* Planet_4_0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4D4B615191FFF4F00834942 /* Planet_4_0@2x.png */; };
 		B4D4B62A191FFF4F00834942 /* Planet_4_3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4D4B616191FFF4F00834942 /* Planet_4_3@2x.png */; };
+		B4DAAF74193F54A200BE03C9 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4DAAF73193F54A200BE03C9 /* Crashlytics.framework */; };
 		B4E221CD192EB356003947B7 /* ShieldPowerUp_Animated@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4E221C9192EB356003947B7 /* ShieldPowerUp_Animated@2x.png */; };
 		B4E221CE192EB356003947B7 /* ShieldPowerUp@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4E221CA192EB356003947B7 /* ShieldPowerUp@2x.png */; };
 		B4E221CF192EB356003947B7 /* ShipShield_Impact@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4E221CB192EB356003947B7 /* ShipShield_Impact@2x.png */; };
@@ -183,6 +184,7 @@
 		B4D4B614191FFF4F00834942 /* Planet_4_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_4_1@2x.png"; sourceTree = "<group>"; };
 		B4D4B615191FFF4F00834942 /* Planet_4_0@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_4_0@2x.png"; sourceTree = "<group>"; };
 		B4D4B616191FFF4F00834942 /* Planet_4_3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_4_3@2x.png"; sourceTree = "<group>"; };
+		B4DAAF73193F54A200BE03C9 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		B4E221C9192EB356003947B7 /* ShieldPowerUp_Animated@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ShieldPowerUp_Animated@2x.png"; sourceTree = "<group>"; };
 		B4E221CA192EB356003947B7 /* ShieldPowerUp@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ShieldPowerUp@2x.png"; sourceTree = "<group>"; };
 		B4E221CB192EB356003947B7 /* ShipShield_Impact@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ShipShield_Impact@2x.png"; sourceTree = "<group>"; };
@@ -201,6 +203,7 @@
 				B45FF12E18CE8708001662CD /* SpriteKit.framework in Frameworks */,
 				B45FF12818CE8708001662CD /* Foundation.framework in Frameworks */,
 				B4A792A7191C2B92005317AD /* GameKit.framework in Frameworks */,
+				B4DAAF74193F54A200BE03C9 /* Crashlytics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -325,6 +328,7 @@
 		B45FF12618CE8708001662CD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B4DAAF73193F54A200BE03C9 /* Crashlytics.framework */,
 				B47BCFC61921879000C22D22 /* Social.framework */,
 				B4A792A6191C2B92005317AD /* GameKit.framework */,
 				B45FF12718CE8708001662CD /* Foundation.framework */,
@@ -409,6 +413,7 @@
 				B45FF12018CE8708001662CD /* Sources */,
 				B45FF12118CE8708001662CD /* Frameworks */,
 				B45FF12218CE8708001662CD /* Resources */,
+				B4DAAF72193F548300BE03C9 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -559,6 +564,22 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		B4DAAF72193F548300BE03C9 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = "./Crashlytics.framework/run 066787c672b57a8fd2a11bcf1e72df26be8cbed5 a660d2c57d7c77313e746ea1a4dc8f93816e89802870c8a5e0664ad0d97c6573";
+			shellScript = "";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		B45FF12018CE8708001662CD /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -700,6 +721,10 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Kevin Yarmosh (V93Q49NDVM)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Kevin Yarmosh (V93Q49NDVM)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ABIMSIM/ABIMSIM-Prefix.pch";
 				INFOPLIST_FILE = "ABIMSIM/ABIMSIM-Info.plist";
@@ -717,6 +742,10 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Kevin Yarmosh (6QXVXEAWF9)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Kevin Yarmosh (6QXVXEAWF9)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ABIMSIM/ABIMSIM-Prefix.pch";
 				INFOPLIST_FILE = "ABIMSIM/ABIMSIM-Info.plist";
