@@ -791,7 +791,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
                     }
                 } else {
                     node.name = starSpriteName;
-//                    [node removeFromParent];
                 }
             }]]];
             for (SKSpriteNode *child in firstBody.node.children) {
@@ -807,7 +806,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
             if (![firstBody.node.name isEqualToString:@"dyingStar"] &&
                 ![firstBody.node.name isEqualToString:starSpriteName]) {
-                firstBody.node.physicsBody = nil;
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    firstBody.node.name = nil;
+                });
             }
 
         }
