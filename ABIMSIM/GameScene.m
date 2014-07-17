@@ -16,6 +16,8 @@ static NSString* goalCategoryName = @"goal";
 static NSString* levelNodeName = @"level";
 static NSString* powerUpShieldName = @"shield";
 static NSString* powerUpShieldRingName = @"shieldGlow";
+static NSString* powerUpSpaceMineName = @"spaceMine";
+static NSString* powerUpSpaceMineGlowName = @"spaceMineGlow";
 
 static NSString* shipImageSpriteName = @"shipImageSprite";
 static NSString* shipShieldSpriteName = @"shipShieldSprite";
@@ -40,6 +42,7 @@ static const uint32_t starCategory = 0x1 << 7;
 static const uint32_t blackHoleCategory = 0x1 << 8;
 static const uint32_t goalCategory = 0x1 << 9;
 static const uint32_t powerUpShieldCategory = 0x1 << 10;
+static const uint32_t powerUpSpaceMineCategory = 0x1 << 11;
 
 
 #define kExtraSpaceOffScreen 50
@@ -78,6 +81,8 @@ static const uint32_t powerUpShieldCategory = 0x1 << 10;
 #define asteroidShieldTag @"asteroidShieldTag"
 #define asteroidShieldPulseAnimationAction @"asteroidShieldPulseAnimationAction"
 #define powerUpShieldPulseAnimation @"powerUpShieldPulseAnimation"
+#define powerUpSpaceMineRotationAnimation @"powerUpSpaceMineRotationAnimation"
+#define powerUpSpaceMinePulseAnimation @"powerUpSpaceMinePulseAnimation"
 #define shipShieldOnAnimation @"shipShieldOnAnimation"
 #define shipShieldPopAnimation @"shipShieldPopAnimation"
 #define shipShieldImpactAnimation @"shipShieldImpactAnimation"
@@ -114,6 +119,8 @@ static const uint32_t powerUpShieldCategory = 0x1 << 10;
     int lastLevelPanned;
     NSTimeInterval lastTimeHit;
     int timesHitWithinSecond;
+    
+    NSArray *spaceMineTextures;
 }
 
 CGFloat DegreesToRadians(CGFloat degrees)
@@ -696,6 +703,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
             shieldFireHitPoints = [ABIMSIMDefaults integerForKey:kShieldFireDurabilityLevel];
             [self updateShipPhysics];
         }
+        if (firstBody.categoryBitMask == shipCategory && secondBody.categoryBitMask == powerUpSpaceMineCategory) {
+            [secondBody.node removeFromParent];
+        }
 
         if ([firstBody.node.name isEqualToString:sunObjectSpriteName]) {
             if (secondBody.categoryBitMask == shipCategory) {
@@ -1099,6 +1109,11 @@ CGFloat DegreesToRadians(CGFloat degrees)
                 [moon removeFromParent];
             }
         }
+        if ([[currentSpriteArray[i] name] isEqual:powerUpSpaceMineName] ||
+            [[currentSpriteArray[i] name] isEqual:powerUpShieldName]) {
+            [currentSpriteArray[i] removeFromParent];
+        }
+
     }
     [currentSpriteArray removeAllObjects];
     NSMutableArray *asteroids = [self asteroidsForLevel:currentLevel+2];
@@ -1162,6 +1177,11 @@ CGFloat DegreesToRadians(CGFloat degrees)
             sprite.hidden = NO;
             [self addChild:sprite];
             [sprite runAction:sprite.userData[powerUpShieldPulseAnimation]];
+        } else if ([sprite.name isEqual:powerUpSpaceMineName]) {
+            sprite.hidden = NO;
+            [self addChild:sprite];
+            [sprite runAction:sprite.userData[powerUpSpaceMinePulseAnimation]];
+            [sprite runAction:sprite.userData[powerUpSpaceMineRotationAnimation]];
         }
     }
     if (currentLevel == 1) {
@@ -1302,12 +1322,57 @@ CGFloat DegreesToRadians(CGFloat degrees)
             }
         }
     }
+    SKSpriteNode *spaceMinePowerUp = [self spaceMinePowerUp];
+    [powerUps addObject:spaceMinePowerUp];
+
     return powerUps;
+}
+
+-(SKSpriteNode*)spaceMinePowerUp {
+    SKSpriteNode *spaceMinePowerUp = [SKSpriteNode spriteNodeWithImageNamed:@"SpaceMine_0"];
+    spaceMinePowerUp.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:29];
+    spaceMinePowerUp.physicsBody.dynamic = NO;
+    spaceMinePowerUp.physicsBody.categoryBitMask = powerUpSpaceMineCategory;
+    spaceMinePowerUp.physicsBody.contactTestBitMask = shipCategory;
+    spaceMinePowerUp.name = powerUpSpaceMineName;
+    spaceMinePowerUp.position = CGPointMake(self.size.width/2, 100);
+    spaceMinePowerUp.zPosition = 1;
+    spaceMinePowerUp.userData = [NSMutableDictionary dictionary];
+    SKSpriteNode *glowSprite = [SKSpriteNode spriteNodeWithImageNamed:@"SpaceMine_CenterGlow_0"];
+    glowSprite.name = powerUpSpaceMineGlowName;
+    [spaceMinePowerUp addChild:glowSprite];
+    glowSprite.alpha = 0;
+    
+    SKAction *fadeIn = [SKAction fadeAlphaTo:1 duration:0.5];
+    SKAction *fadeOut = [SKAction fadeAlphaTo:0 duration:0.5];
+    SKAction *repeat = [SKAction repeatActionForever:[SKAction sequence:@[fadeIn,fadeOut]]];
+    
+    SKAction *animationAction = [SKAction customActionWithDuration:0 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
+        [[node childNodeWithName:powerUpSpaceMineGlowName] runAction:repeat];
+    }];
+    spaceMinePowerUp.userData[powerUpSpaceMinePulseAnimation] = animationAction;
+    
+    if (!spaceMineTextures) {
+        NSMutableArray *textures = [NSMutableArray arrayWithCapacity:9];
+        for (int i = 0; i < 9; i++) {
+            NSString *imageName = [NSString stringWithFormat:@"SpaceMine_%d",i];
+            UIImage *image = [UIImage imageNamed:imageName];
+            SKTexture* spaceMine = [SKTexture textureWithImage:image];
+            [textures addObject:spaceMine];
+        }
+        spaceMineTextures = [NSArray arrayWithArray:textures];
+    }
+    
+    SKAction *animation = [SKAction animateWithTextures:spaceMineTextures timePerFrame:0.1 resize:NO restore:NO];
+    SKAction *repeatAnimation = [SKAction repeatActionForever:animation];
+    spaceMinePowerUp.userData[powerUpSpaceMineRotationAnimation] = repeatAnimation;
+
+    return spaceMinePowerUp;
 }
 
 -(SKSpriteNode*)shieldPowerUp {
     SKSpriteNode *shieldPowerUp = [SKSpriteNode spriteNodeWithImageNamed:@"ShieldPowerUp"];
-    shieldPowerUp.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:shieldPowerUp.size.width/2];
+    shieldPowerUp.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:29];
     shieldPowerUp.physicsBody.dynamic = NO;
     shieldPowerUp.physicsBody.categoryBitMask = powerUpShieldCategory;
     shieldPowerUp.physicsBody.contactTestBitMask = shipCategory;
@@ -1369,7 +1434,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     ship.physicsBody.allowsRotation = NO;
     ship.physicsBody.categoryBitMask = shipCategory;
     ship.physicsBody.collisionBitMask = borderCategory | secondaryBorderCategory | asteroidCategory | planetCategory;
-    ship.physicsBody.contactTestBitMask = goalCategory | asteroidCategory | planetCategory | powerUpShieldCategory | asteroidShieldCategory;
+    ship.physicsBody.contactTestBitMask = goalCategory | asteroidCategory | planetCategory | powerUpShieldCategory | powerUpSpaceMineCategory | asteroidShieldCategory;
     ship.physicsBody.mass = width;
     ship.physicsBody.velocity = velocity;
 }
