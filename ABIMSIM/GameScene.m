@@ -18,6 +18,10 @@ static NSString* powerUpShieldName = @"shield";
 static NSString* powerUpShieldRingName = @"shieldGlow";
 static NSString* powerUpSpaceMineName = @"spaceMine";
 static NSString* powerUpSpaceMineGlowName = @"spaceMineGlow";
+static NSString* powerUpSpaceMineExplodeRingName = @"powerUpSpaceMineExplodeRingName";
+static NSString* powerUpSpaceMineExplodeGlowName = @"powerUpSpaceMineExplodeGlowName";
+static NSString* explodingSpaceMine = @"explodingSpaceMine";
+static NSString* explodedSpaceMine = @"explodedSpaceMine";
 
 static NSString* shipImageSpriteName = @"shipImageSprite";
 static NSString* shipShieldSpriteName = @"shipShieldSprite";
@@ -43,6 +47,7 @@ static const uint32_t blackHoleCategory = 0x1 << 8;
 static const uint32_t goalCategory = 0x1 << 9;
 static const uint32_t powerUpShieldCategory = 0x1 << 10;
 static const uint32_t powerUpSpaceMineCategory = 0x1 << 11;
+static const uint32_t powerUpSpaceMineExplodingRingCategory = 0x1 << 12;
 
 
 #define kExtraSpaceOffScreen 50
@@ -83,6 +88,9 @@ static const uint32_t powerUpSpaceMineCategory = 0x1 << 11;
 #define powerUpShieldPulseAnimation @"powerUpShieldPulseAnimation"
 #define powerUpSpaceMineRotationAnimation @"powerUpSpaceMineRotationAnimation"
 #define powerUpSpaceMinePulseAnimation @"powerUpSpaceMinePulseAnimation"
+#define powerUpSpaceMineExplosionRingAnimation @"powerUpSpaceMineExplosionRingAnimation"
+#define powerUpSpaceMineExplosionGlowAnimation @"powerUpSpaceMineExplosionGlowAnimation"
+
 #define shipShieldOnAnimation @"shipShieldOnAnimation"
 #define shipShieldPopAnimation @"shipShieldPopAnimation"
 #define shipShieldImpactAnimation @"shipShieldImpactAnimation"
@@ -356,6 +364,27 @@ CGFloat DegreesToRadians(CGFloat degrees)
         } else {
             asteroid.physicsBody.linearDamping = 0.0f;
         }
+    }
+    SKSpriteNode *explodingMine = (SKSpriteNode*)[self childNodeWithName:explodingSpaceMine];
+    if (explodingMine) {
+        SKSpriteNode *explodingRing = (SKSpriteNode*)[explodingMine childNodeWithName:powerUpSpaceMineExplodeRingName];
+        if (explodingRing.size.width > 0) {
+            explodingRing.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:explodingRing.size.width/2];
+            explodingRing.physicsBody.dynamic = NO;
+            explodingRing.physicsBody.categoryBitMask = powerUpSpaceMineExplodingRingCategory;
+            explodingRing.physicsBody.collisionBitMask = asteroidCategory;
+        }
+    }
+    SKSpriteNode *explodedMine = (SKSpriteNode*)[self childNodeWithName:explodedSpaceMine];
+    if (explodedMine) {
+        SKSpriteNode *explodingRing = (SKSpriteNode*)[explodingMine childNodeWithName:powerUpSpaceMineExplodeRingName];
+        [explodingRing removeFromParent];
+        [explodedMine removeFromParent];
+//        if (explodingRing.size.width > 0) {
+//            explodingRing.physicsBody = nil;
+//            [explodingRing removeFromParent];
+//            [explodedMine removeFromParent];
+//        }
     }
 }
 
@@ -676,6 +705,23 @@ CGFloat DegreesToRadians(CGFloat degrees)
                 }
             }
         }
+        if (firstBody.categoryBitMask == shipCategory && secondBody.categoryBitMask == powerUpSpaceMineCategory) {
+            if ([secondBody.node.name isEqualToString:explodingSpaceMine] ||
+                [secondBody.node.name isEqualToString:explodedSpaceMine]) {
+                return;
+            }
+            secondBody.node.name = explodingSpaceMine;
+            [secondBody.node removeAllActions];
+            [[secondBody.node childNodeWithName:powerUpSpaceMineGlowName] removeFromParent];
+            [secondBody.node runAction:secondBody.node.userData[powerUpSpaceMineExplosionGlowAnimation] completion:^{
+                ;
+            }];
+
+            SKAction *sequenceAction = [SKAction sequence:@[[SKAction waitForDuration:0.5],secondBody.node.userData[powerUpSpaceMineExplosionRingAnimation],[SKAction waitForDuration:1]]];
+            [secondBody.node runAction:sequenceAction completion:^{
+                secondBody.node.name = explodedSpaceMine;
+            }];
+        }
 
         if (firstBody.categoryBitMask == shipCategory && secondBody.categoryBitMask == goalCategory) {
             if ([safeToTransition isEqualToNumber:@YES]) {
@@ -702,9 +748,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
             shieldHitPoints = 1 + [ABIMSIMDefaults integerForKey:kShieldDurabilityLevel];
             shieldFireHitPoints = [ABIMSIMDefaults integerForKey:kShieldFireDurabilityLevel];
             [self updateShipPhysics];
-        }
-        if (firstBody.categoryBitMask == shipCategory && secondBody.categoryBitMask == powerUpSpaceMineCategory) {
-            [secondBody.node removeFromParent];
         }
 
         if ([firstBody.node.name isEqualToString:sunObjectSpriteName]) {
@@ -1367,8 +1410,64 @@ CGFloat DegreesToRadians(CGFloat degrees)
     SKAction *repeatAnimation = [SKAction repeatActionForever:animation];
     spaceMinePowerUp.userData[powerUpSpaceMineRotationAnimation] = repeatAnimation;
 
+    [self addSpaceMineExplosionRingAnimationsToSprite:spaceMinePowerUp];
+    
     return spaceMinePowerUp;
 }
+
+-(void)addSpaceMineExplosionRingAnimationsToSprite:(SKSpriteNode*)sprite {
+    if (!sprite.userData) {
+        sprite.userData = [NSMutableDictionary new];
+    }
+    NSString *imageName = @"SpaceMine_ExplodingRing_0";
+    float scale = 0;
+    float duration = 1;
+    SKSpriteNode *ring1 = [SKSpriteNode spriteNodeWithImageNamed:imageName];
+    [sprite addChild:ring1];
+    ring1.name = powerUpSpaceMineExplodeRingName;
+    ring1.alpha = 0;
+    [ring1 setScale:scale];
+    SKAction *expandRingAction = [SKAction scaleTo:1.25 duration:duration];
+    SKAction *blockAction = [SKAction customActionWithDuration:0 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
+        [node setScale:scale];
+        [node setAlpha:1];
+    }];
+    SKAction *sequenceAction = [SKAction sequence:@[blockAction, expandRingAction]];
+    SKAction *animationAction = [SKAction customActionWithDuration:0 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
+        [[node childNodeWithName:powerUpSpaceMineExplodeRingName] runAction:sequenceAction completion:^{
+            [node removeFromParent];
+        }];
+    }];
+    sprite.userData[powerUpSpaceMineExplosionRingAnimation] = animationAction;
+
+    imageName = @"SpaceMine_LargeGlow_0";
+    scale = 0;
+    duration = 1;
+    SKSpriteNode *largeGlow = [SKSpriteNode spriteNodeWithImageNamed:imageName];
+    [sprite addChild:largeGlow];
+    largeGlow.name = powerUpSpaceMineExplodeGlowName;
+    largeGlow.alpha = 0;
+    [largeGlow setScale:scale];
+    SKAction *expandRingActionB = [SKAction scaleTo:1 duration:duration/2.f];
+    SKAction *alphaInRingActionB = [SKAction fadeAlphaTo:1 duration:duration/2.f];
+    SKAction *alphaOutRingActionB = [SKAction fadeAlphaTo:0 duration:duration];
+    SKAction *removeImageAction = [SKAction customActionWithDuration:0.1 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
+        [sprite setTexture:nil];
+    }];
+    SKAction *groupActionB = [SKAction group:@[expandRingActionB,alphaInRingActionB]];
+    SKAction *groupActionC = [SKAction group:@[alphaOutRingActionB,removeImageAction]];
+    SKAction *sequenceActionB = [SKAction sequence:@[groupActionB, groupActionC]];
+    SKAction *blockActionB = [SKAction customActionWithDuration:0 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
+        [node setScale:scale];
+        [node setAlpha:0];
+    }];
+    SKAction *sequenceActionC = [SKAction sequence:@[blockActionB, sequenceActionB]];
+    SKAction *animationActionB = [SKAction customActionWithDuration:0 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
+        [[node childNodeWithName:powerUpSpaceMineExplodeGlowName] runAction:sequenceActionC];
+    }];
+    sprite.userData[powerUpSpaceMineExplosionGlowAnimation] = animationActionB;
+}
+
 
 -(SKSpriteNode*)shieldPowerUp {
     SKSpriteNode *shieldPowerUp = [SKSpriteNode spriteNodeWithImageNamed:@"ShieldPowerUp"];
@@ -1543,7 +1642,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     sprite.physicsBody.linearDamping = 0.0f;
     sprite.physicsBody.dynamic = YES;
     sprite.physicsBody.categoryBitMask = asteroidCategory;
-    sprite.physicsBody.collisionBitMask = borderCategory | secondaryBorderCategory | shipCategory | asteroidCategory | asteroidInShieldCategory | planetCategory | asteroidShieldCategory;
+    sprite.physicsBody.collisionBitMask = borderCategory | secondaryBorderCategory | shipCategory | asteroidCategory | asteroidInShieldCategory | planetCategory | asteroidShieldCategory | powerUpSpaceMineExplodingRingCategory;
     sprite.physicsBody.contactTestBitMask = goalCategory | shipCategory | asteroidShieldCategory;
 
     sprite.physicsBody.mass = sprite.size.width;
