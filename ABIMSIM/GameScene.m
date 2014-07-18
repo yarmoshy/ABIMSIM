@@ -5,6 +5,8 @@
 //  Created by Kevin Yarmosh on 3/5/14.
 //  Copyright (c) 2014 Kevin Yarmosh. All rights reserved.
 //
+static NSString* removedThisSprite = @"removedThisSprite";
+
 static NSString* shipCategoryName = @"ship";
 static NSString* asteroidCategoryName = @"asteroid";
 static NSString* asteroidInShieldCategoryName = @"asteroidInShield";
@@ -286,6 +288,11 @@ CGFloat DegreesToRadians(CGFloat degrees)
     if (self.paused) {
         return;
     }
+    for (SKSpriteNode *sprite in self.children) {
+        if ([sprite.name isEqualToString:removedThisSprite]) {
+            [sprite removeFromParent];
+        }
+    }
     /* Called before each frame is rendered */
     SKSpriteNode* ship = (SKSpriteNode*)[self childNodeWithName:shipCategoryName];
     if (shipWarping && ship.position.y > ship.frame.size.height/2) {
@@ -365,8 +372,11 @@ CGFloat DegreesToRadians(CGFloat degrees)
             asteroid.physicsBody.linearDamping = 0.0f;
         }
     }
+    
     SKSpriteNode *explodingMine = (SKSpriteNode*)[self childNodeWithName:explodingSpaceMine];
+    SKSpriteNode *explodedMine = (SKSpriteNode*)[self childNodeWithName:explodedSpaceMine];
     if (explodingMine) {
+        NSLog(@"exploding found");
         SKSpriteNode *explodingRing = (SKSpriteNode*)[explodingMine childNodeWithName:powerUpSpaceMineExplodeRingName];
         if (explodingRing.size.width > 0) {
             explodingRing.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:explodingRing.size.width/2];
@@ -374,17 +384,16 @@ CGFloat DegreesToRadians(CGFloat degrees)
             explodingRing.physicsBody.categoryBitMask = powerUpSpaceMineExplodingRingCategory;
             explodingRing.physicsBody.collisionBitMask = asteroidCategory;
         }
+    } else {
+        NSLog(@"exploding not found");
     }
-    SKSpriteNode *explodedMine = (SKSpriteNode*)[self childNodeWithName:explodedSpaceMine];
     if (explodedMine) {
+        NSLog(@"exploded found");
         SKSpriteNode *explodingRing = (SKSpriteNode*)[explodingMine childNodeWithName:powerUpSpaceMineExplodeRingName];
         [explodingRing removeFromParent];
         [explodedMine removeFromParent];
-//        if (explodingRing.size.width > 0) {
-//            explodingRing.physicsBody = nil;
-//            [explodingRing removeFromParent];
-//            [explodedMine removeFromParent];
-//        }
+    } else {
+        NSLog(@"exploded not found");
     }
 }
 
@@ -659,7 +668,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
             [secondBody.node addChild:impactSprite];
             SKAction *fadeAway = [SKAction fadeAlphaTo:0 duration:0.5];
             SKAction *remove = [SKAction customActionWithDuration:0 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
-                [node removeFromParent];
+                node.name = removedThisSprite;
+//                [node removeFromParent];
             }];
             SKAction *sequence = [SKAction sequence:@[fadeAway,remove]];
             [impactSprite runAction:sequence];
@@ -690,9 +700,11 @@ CGFloat DegreesToRadians(CGFloat degrees)
             SKAction *scaleAction = [SKAction scaleTo:1 duration:duration];
             SKAction *groupAction = [SKAction group:@[fadeAction, scaleAction]];
             [explosionSprite runAction:[SKAction sequence:@[groupAction, [SKAction customActionWithDuration:0 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
-                [node removeFromParent];
+                node.name = removedThisSprite;
+//                [node removeFromParent];
             }]]]];
-            [secondBody.node removeFromParent];
+            secondBody.node.name = removedThisSprite;
+//            [secondBody.node removeFromParent];
             for (SKSpriteNode *asteroid in [self children]) {
                 if ([asteroid.name isEqual:asteroidInShieldCategoryName] &&
                     [asteroid.userData[asteroidShieldTag] intValue] == [secondBody.node.userData[asteroidShieldTag] intValue]) {
@@ -726,7 +738,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
         if (firstBody.categoryBitMask == shipCategory && secondBody.categoryBitMask == goalCategory) {
             if ([safeToTransition isEqualToNumber:@YES]) {
                 safeToTransition = @NO;
-                [secondBody.node removeFromParent];
+                secondBody.node.name = removedThisSprite;
+//                [secondBody.node removeFromParent];
                 [self transitionStars];
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self advanceToNextLevel];
@@ -740,10 +753,12 @@ CGFloat DegreesToRadians(CGFloat degrees)
             [self checkPlanetHitAchievement:planetNum];
         }
         if (firstBody.categoryBitMask == asteroidCategory && secondBody.categoryBitMask == goalCategory) {
-            [firstBody.node removeFromParent];
+//            [firstBody.node removeFromParent];
+            firstBody.node.name = removedThisSprite;
         }
         if (firstBody.categoryBitMask == shipCategory && secondBody.categoryBitMask == powerUpShieldCategory) {
-            [secondBody.node removeFromParent];
+//            [secondBody.node removeFromParent];
+            secondBody.node.name = removedThisSprite;
             hasShield = YES;
             shieldHitPoints = 1 + [ABIMSIMDefaults integerForKey:kShieldDurabilityLevel];
             shieldFireHitPoints = [ABIMSIMDefaults integerForKey:kShieldFireDurabilityLevel];
@@ -766,7 +781,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
                     [self killShipAndStartOver];
                 }
             } else {
-                [secondBody.node removeFromParent];
+//                [secondBody.node removeFromParent];
+                secondBody.node.name = removedThisSprite;
             }
         }
         if ([secondBody.node.name isEqualToString:sunObjectSpriteName]) {
@@ -785,7 +801,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
                     [self killShipAndStartOver];
                 }
             } else {
-                [firstBody.node removeFromParent];
+//                [firstBody.node removeFromParent];
+                firstBody.node.name = removedThisSprite;
             }
         }
         if ([secondBody.node.name isEqualToString:blackHoleCategoryName]) {
@@ -859,9 +876,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
             if (![firstBody.node.name isEqualToString:@"dyingStar"] &&
                 ![firstBody.node.name isEqualToString:starSpriteName]) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    firstBody.node.name = nil;
-                });
+//                dispatch_async(dispatch_get_main_queue(), ^{
+                    firstBody.node.name = removedThisSprite;
+//                });
             }
 
         }
@@ -892,7 +909,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
                 [[firstBody.node childNodeWithName:shipShieldSpriteName] addChild:impactSprite];
                 SKAction *fadeAway = [SKAction fadeAlphaTo:0 duration:0.5];
                 SKAction *remove = [SKAction customActionWithDuration:0 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
-                    [node removeFromParent];
+                    node.name = removedThisSprite;
+//                    [node removeFromParent];
                 }];
                 SKAction *sequence = [SKAction sequence:@[fadeAway,remove]];
                 [impactSprite runAction:sequence];
@@ -1435,7 +1453,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
     SKAction *sequenceAction = [SKAction sequence:@[blockAction, expandRingAction]];
     SKAction *animationAction = [SKAction customActionWithDuration:0 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
         [[node childNodeWithName:powerUpSpaceMineExplodeRingName] runAction:sequenceAction completion:^{
-            [node removeFromParent];
+//            [node removeFromParent];
+            node.name = removedThisSprite;
         }];
     }];
     sprite.userData[powerUpSpaceMineExplosionRingAnimation] = animationAction;
