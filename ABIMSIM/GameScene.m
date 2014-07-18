@@ -319,6 +319,14 @@ CGFloat DegreesToRadians(CGFloat degrees)
     }
     BOOL blackHole = [self childNodeWithName:blackHoleCategoryName] != nil;
     if (blackHole) {
+        for (SKSpriteNode *sprite in [self childNodeWithName:blackHoleCategoryName].children) {
+            if ([sprite.name isEqualToString:removedThisSprite]) {
+                if (sprite.size.width < 5) {
+                    [sprite removeFromParent];
+                }
+            }
+        }
+
         [self applyBlackHolePullToSprite:ship];
         for (SKSpriteNode *sprite in self.children) {
             if ([sprite.name isEqualToString:asteroidCategoryName] ||
