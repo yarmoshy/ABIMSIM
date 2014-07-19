@@ -1424,7 +1424,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
 }
 
 -(SKSpriteNode*)spaceMinePowerUp {
-    SKSpriteNode *spaceMinePowerUp = [SKSpriteNode spriteNodeWithImageNamed:@"SpaceMine_0"];
+    SKSpriteNode *spaceMinePowerUp = [SKSpriteNode spriteNodeWithImageNamed:@"SpaceMine_Friendly_0"];
     spaceMinePowerUp.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:29];
     spaceMinePowerUp.physicsBody.dynamic = NO;
     spaceMinePowerUp.physicsBody.categoryBitMask = powerUpSpaceMineCategory;
@@ -1450,7 +1450,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     if (!spaceMineTextures) {
         NSMutableArray *textures = [NSMutableArray arrayWithCapacity:9];
         for (int i = 0; i < 9; i++) {
-            NSString *imageName = [NSString stringWithFormat:@"SpaceMine_%d",i];
+            NSString *imageName = [NSString stringWithFormat:@"SpaceMine_Friendly_%d",i];
             UIImage *image = [UIImage imageNamed:imageName];
             SKTexture* spaceMine = [SKTexture textureWithImage:image];
             [textures addObject:spaceMine];
