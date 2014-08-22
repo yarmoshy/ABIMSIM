@@ -10,6 +10,14 @@
 		B400F40D191AFC6D00A483E2 /* UpgradesButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B400F40C191AFC6D00A483E2 /* UpgradesButton@2x.png */; };
 		B400F410191AFCA100A483E2 /* UpgradeScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B400F40F191AFCA100A483E2 /* UpgradeScene.m */; };
 		B400F412191B048D00A483E2 /* BlankButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B400F411191B048D00A483E2 /* BlankButton@2x.png */; };
+		B4242EA019A7E58900192F44 /* BlackHole0.atlas in Resources */ = {isa = PBXBuildFile; fileRef = B4242E9819A7E58900192F44 /* BlackHole0.atlas */; };
+		B4242EA119A7E58900192F44 /* BlackHole1.atlas in Resources */ = {isa = PBXBuildFile; fileRef = B4242E9919A7E58900192F44 /* BlackHole1.atlas */; };
+		B4242EA219A7E58900192F44 /* BlackHole2.atlas in Resources */ = {isa = PBXBuildFile; fileRef = B4242E9A19A7E58900192F44 /* BlackHole2.atlas */; };
+		B4242EA319A7E58900192F44 /* BlackHole3.atlas in Resources */ = {isa = PBXBuildFile; fileRef = B4242E9B19A7E58900192F44 /* BlackHole3.atlas */; };
+		B4242EA419A7E58900192F44 /* BlackHole4.atlas in Resources */ = {isa = PBXBuildFile; fileRef = B4242E9C19A7E58900192F44 /* BlackHole4.atlas */; };
+		B4242EA519A7E58900192F44 /* BlackHole5.atlas in Resources */ = {isa = PBXBuildFile; fileRef = B4242E9D19A7E58900192F44 /* BlackHole5.atlas */; };
+		B4242EA619A7E58900192F44 /* BlackHole6.atlas in Resources */ = {isa = PBXBuildFile; fileRef = B4242E9E19A7E58900192F44 /* BlackHole6.atlas */; };
+		B4242EA719A7E58900192F44 /* BlackHole7.atlas in Resources */ = {isa = PBXBuildFile; fileRef = B4242E9F19A7E58900192F44 /* BlackHole7.atlas */; };
 		B43F4D0C192ABB510000ACA4 /* AsteroidShield_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B43F4D0B192ABB510000ACA4 /* AsteroidShield_1@2x.png */; };
 		B43F4D0E192ABB560000ACA4 /* AsteroidShield_Ring_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B43F4D0D192ABB560000ACA4 /* AsteroidShield_Ring_1@2x.png */; };
 		B43F4D12192ABB6C0000ACA4 /* AsteroidShield_0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B43F4D11192ABB6C0000ACA4 /* AsteroidShield_0@2x.png */; };
@@ -117,6 +125,14 @@
 		B400F40E191AFCA100A483E2 /* UpgradeScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpgradeScene.h; sourceTree = "<group>"; };
 		B400F40F191AFCA100A483E2 /* UpgradeScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpgradeScene.m; sourceTree = "<group>"; };
 		B400F411191B048D00A483E2 /* BlankButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BlankButton@2x.png"; sourceTree = "<group>"; };
+		B4242E9819A7E58900192F44 /* BlackHole0.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = BlackHole0.atlas; sourceTree = "<group>"; };
+		B4242E9919A7E58900192F44 /* BlackHole1.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = BlackHole1.atlas; sourceTree = "<group>"; };
+		B4242E9A19A7E58900192F44 /* BlackHole2.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = BlackHole2.atlas; sourceTree = "<group>"; };
+		B4242E9B19A7E58900192F44 /* BlackHole3.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = BlackHole3.atlas; sourceTree = "<group>"; };
+		B4242E9C19A7E58900192F44 /* BlackHole4.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = BlackHole4.atlas; sourceTree = "<group>"; };
+		B4242E9D19A7E58900192F44 /* BlackHole5.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = BlackHole5.atlas; sourceTree = "<group>"; };
+		B4242E9E19A7E58900192F44 /* BlackHole6.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = BlackHole6.atlas; sourceTree = "<group>"; };
+		B4242E9F19A7E58900192F44 /* BlackHole7.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = BlackHole7.atlas; sourceTree = "<group>"; };
 		B43F4D0B192ABB510000ACA4 /* AsteroidShield_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AsteroidShield_1@2x.png"; sourceTree = "<group>"; };
 		B43F4D0D192ABB560000ACA4 /* AsteroidShield_Ring_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AsteroidShield_Ring_1@2x.png"; sourceTree = "<group>"; };
 		B43F4D11192ABB6C0000ACA4 /* AsteroidShield_0@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AsteroidShield_0@2x.png"; sourceTree = "<group>"; };
@@ -313,6 +329,14 @@
 		B45865E718DA154F005C9566 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				B4242E9819A7E58900192F44 /* BlackHole0.atlas */,
+				B4242E9919A7E58900192F44 /* BlackHole1.atlas */,
+				B4242E9A19A7E58900192F44 /* BlackHole2.atlas */,
+				B4242E9B19A7E58900192F44 /* BlackHole3.atlas */,
+				B4242E9C19A7E58900192F44 /* BlackHole4.atlas */,
+				B4242E9D19A7E58900192F44 /* BlackHole5.atlas */,
+				B4242E9E19A7E58900192F44 /* BlackHole6.atlas */,
+				B4242E9F19A7E58900192F44 /* BlackHole7.atlas */,
 				B47BCFCA19218B4A00C22D22 /* Facebook@2x.png */,
 				B47BCFC819218A5E00C22D22 /* Twitter@2x.png */,
 				B4A792A8191C5455005317AD /* game-center-hero@2x.png */,
@@ -537,6 +561,7 @@
 				B47E22D618DBA7E200F42EBB /* Asteroid_9@2x.png in Resources */,
 				B4D4B619191FFF4F00834942 /* Planet_0_2@2x.png in Resources */,
 				B46363A91979EBA2007B657C /* SpaceMine_Friendly_5@2x.png in Resources */,
+				B4242EA519A7E58900192F44 /* BlackHole5.atlas in Resources */,
 				B446717A192D906A00B4A8C7 /* AsteroidShield_Pop_1@2x.png in Resources */,
 				B43F4D16192ABB770000ACA4 /* AsteroidShield_Ring_0@2x.png in Resources */,
 				B46363A71979EBA2007B657C /* SpaceMine_Friendly_3@2x.png in Resources */,
@@ -546,17 +571,21 @@
 				B478CFBB19199C0E001A9DB6 /* Planet_5_1@2x.png in Resources */,
 				B4D4B623191FFF4F00834942 /* Planet_3_0@2x.png in Resources */,
 				B4D0732E19785F620028840D /* SpaceMine_CenterGlow_0@2x.png in Resources */,
+				B4242EA219A7E58900192F44 /* BlackHole2.atlas in Resources */,
 				B4D4B629191FFF4F00834942 /* Planet_4_0@2x.png in Resources */,
 				B4D0733019785F620028840D /* SpaceMine_LargeGlow_0@2x.png in Resources */,
 				B47BCFC51921819000C22D22 /* Planet_5_3@2x.png in Resources */,
 				B4E221CE192EB356003947B7 /* ShieldPowerUp@2x.png in Resources */,
 				B46363A51979EBA2007B657C /* SpaceMine_Friendly_1@2x.png in Resources */,
 				B400F412191B048D00A483E2 /* BlankButton@2x.png in Resources */,
+				B4242EA019A7E58900192F44 /* BlackHole0.atlas in Resources */,
 				B4D4B618191FFF4F00834942 /* Planet_0_1@2x.png in Resources */,
 				B4D4B620191FFF4F00834942 /* Planet_2_1@2x.png in Resources */,
 				B4D4B628191FFF4F00834942 /* Planet_4_1@2x.png in Resources */,
+				B4242EA319A7E58900192F44 /* BlackHole3.atlas in Resources */,
 				B4D4B61A191FFF4F00834942 /* Planet_0_3@2x.png in Resources */,
 				B4D4B624191FFF4F00834942 /* Planet_3_2@2x.png in Resources */,
+				B4242EA419A7E58900192F44 /* BlackHole4.atlas in Resources */,
 				B47E22CD18DBA7E200F42EBB /* Asteroid_0@2x.png in Resources */,
 				B46363AC1979EBA2007B657C /* SpaceMine_Friendly_8@2x.png in Resources */,
 				B47E22D818DBA7E200F42EBB /* Asteroid_11@2x.png in Resources */,
@@ -573,8 +602,10 @@
 				B45FF13D18CE8708001662CD /* Main.storyboard in Resources */,
 				B4467178192D906400B4A8C7 /* AsteroidShield_Pop_0@2x.png in Resources */,
 				B478CFBC19199C0E001A9DB6 /* Planet_5_2@2x.png in Resources */,
+				B4242EA619A7E58900192F44 /* BlackHole6.atlas in Resources */,
 				B4D4B617191FFF4F00834942 /* Planet_0_0@2x.png in Resources */,
 				B4D4B61B191FFF4F00834942 /* Planet_1_0@2x.png in Resources */,
+				B4242EA719A7E58900192F44 /* BlackHole7.atlas in Resources */,
 				B47E22D018DBA7E200F42EBB /* Asteroid_3@2x.png in Resources */,
 				B47BCFC919218A5E00C22D22 /* Twitter@2x.png in Resources */,
 				B4E221CD192EB356003947B7 /* ShieldPowerUp_Animated@2x.png in Resources */,
@@ -593,6 +624,7 @@
 				B47E22D718DBA7E200F42EBB /* Asteroid_10@2x.png in Resources */,
 				B4D4B627191FFF4F00834942 /* Planet_4_2@2x.png in Resources */,
 				B478CF8E19197C2C001A9DB6 /* Pause@2x.png in Resources */,
+				B4242EA119A7E58900192F44 /* BlackHole1.atlas in Resources */,
 				B4D4B61D191FFF4F00834942 /* Planet_1_2@2x.png in Resources */,
 				B45865E518DA153C005C9566 /* Background@2x.png in Resources */,
 				B4D4B622191FFF4F00834942 /* Planet_2_3@2x.png in Resources */,

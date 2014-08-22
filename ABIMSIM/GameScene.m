@@ -111,6 +111,8 @@ static const uint32_t powerUpSpaceMineExplodingRingCategory = 0x1 << 12;
     NSMutableArray *spritesArrays;
     NSMutableArray *starSprites;
     NSMutableArray *currentSpriteArray;
+    NSMutableArray *blackHoleTextures;
+    SKAction *blackHoleAction;
     NSNumber *safeToTransition;
     SKSpriteNode *starBackLayer;
     SKSpriteNode *starFrontLayer;
@@ -144,6 +146,27 @@ CGFloat DegreesToRadians(CGFloat degrees)
         /* Setup your scene here */
         lastTimeHit = 0;
         timesHitWithinSecond = 0;
+        blackHoleTextures = [NSMutableArray arrayWithCapacity:240];
+        
+        NSMutableArray *textureAtlases = [NSMutableArray array];
+//        for (NSString *textureName in atlas.textureNames) {
+//            NSLog(@"%@",textureName);
+//            [blackHoleTextures addObject:[atlas textureNamed:textureName]];
+//        }
+//        SKTextureAtlas preloadTextureAtlases:(NSArray *) withCompletionHandler:<#^(void)completionHandler#>
+        for (int i = 0; i < 8; i++) {
+            SKTextureAtlas *atlas = [SKTextureAtlas atlasNamed:[NSString stringWithFormat:@"BlackHole%d",i]];
+            [textureAtlases addObject:atlas];
+            for (int j = 0; j < 30; j++) {
+                NSString *textureName = [NSString stringWithFormat:@"BH_%0*d", 3, (i*30)+j];
+                NSLog(@"%@",textureName);
+                [blackHoleTextures addObject:[atlas textureNamed:textureName]];
+            }
+        }
+        [SKTextureAtlas preloadTextureAtlases:textureAtlases withCompletionHandler:^{
+            ;
+        }];
+        
         self.physicsWorld.gravity = CGVectorMake(0.0f, 0.0f);
         SKPhysicsBody* borderBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:CGRectMake(0, -kExtraSpaceOffScreen, size.width, size.height+kExtraSpaceOffScreen*2)];
         borderBody.categoryBitMask = borderCategory;
@@ -249,6 +272,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         [self generateInitialLevels];
         safeToTransition = @YES;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pause) name:UIApplicationWillResignActiveNotification object:nil];
+        [self removeOverlayChildren];
     }
     return self;
 }
@@ -327,7 +351,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
             }
         }
 
-        [self applyBlackHolePullToSprite:ship];
+//        [self applyBlackHolePullToSprite:ship];
         for (SKSpriteNode *sprite in self.children) {
             if ([sprite.name isEqualToString:asteroidCategoryName] ||
                 [sprite.name isEqualToString:planetCategoryName] ||
@@ -1364,29 +1388,34 @@ CGFloat DegreesToRadians(CGFloat degrees)
 #pragma mark - Black Hole
 
 -(SKSpriteNode*)blackHole {
-    SKSpriteNode *blackHole = [SKSpriteNode spriteNodeWithColor:[UIColor blackColor] size:CGSizeMake(80, 80)];
-//    SKSpriteNode *background = [SKSpriteNode spriteNodeWithTexture:[SKTexture textureWithImage:[self blackHoleDistortionImage]] size:CGSizeMake(160, 160)];
-//    [blackHole addChild:background];
+    SKSpriteNode *blackHole = [SKSpriteNode spriteNodeWithTexture:blackHoleTextures[0]];//[SKSpriteNode spriteNodeWithColor:[UIColor blackColor] size:CGSizeMake(80, 80)];
+
     blackHole.name = blackHoleCategoryName;
-    blackHole.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:blackHole.size.width/2];
+    blackHole.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:40];
     blackHole.physicsBody.mass = 1000000000;
     blackHole.physicsBody.categoryBitMask = blackHoleCategory;
     blackHole.physicsBody.contactTestBitMask = shipCategory | asteroidCategory | asteroidInShieldCategory | planetCategory | asteroidShieldCategory;
     blackHole.physicsBody.collisionBitMask = blackHoleCategory;
 
     blackHole.userData = [NSMutableDictionary dictionary];
-    SKAction *moveRight = [SKAction moveByX:self.frame.size.width+blackHole.size.width y:0 duration:5];
-    SKAction *moveLeft = [SKAction moveByX:-(self.frame.size.width+blackHole.size.width) y:0 duration:5];
-    SKAction *both;
-    if (arc4random() % 2 == 0) {
-        blackHole.position = CGPointMake(-blackHole.size.width/2, self.frame.size.height/2);
-        both = [SKAction sequence:@[moveRight,moveLeft]];
-    } else {
-        blackHole.position = CGPointMake(self.frame.size.width + blackHole.size.width/2, self.frame.size.height/2);
-        both = [SKAction sequence:@[moveLeft,moveRight]];
+    if (!blackHoleAction) {
+        SKAction *frameAnimation = [SKAction animateWithTextures:blackHoleTextures timePerFrame:1.f/30.f];
+        blackHoleAction = [SKAction repeatActionForever:frameAnimation];
     }
-    SKAction *animation = [SKAction repeatActionForever:both];
-    blackHole.userData[blackHoleAnimation] = animation;
+//    SKAction *moveRight = [SKAction moveByX:self.frame.size.width+blackHole.size.width y:0 duration:5];
+//    SKAction *moveLeft = [SKAction moveByX:-(self.frame.size.width+blackHole.size.width) y:0 duration:5];
+//    SKAction *both;
+    blackHole.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
+//    if (arc4random() % 2 == 0) {
+//        blackHole.position = CGPointMake(-blackHole.size.width/2, self.frame.size.height/2);
+//        both = [SKAction sequence:@[moveRight,moveLeft]];
+//    } else {
+//        blackHole.position = CGPointMake(self.frame.size.width + blackHole.size.width/2, self.frame.size.height/2);
+//        both = [SKAction sequence:@[moveLeft,moveRight]];
+//    }
+//    SKAction *repeateMovementAnimation = [SKAction repeatActionForever:both];
+//    SKAction *animation = [SKAction group:@[blackHoleAction, repeateMovementAnimation]];
+    blackHole.userData[blackHoleAnimation] = blackHoleAction;
     blackHole.zPosition = -1;
     return blackHole;
 }
@@ -2062,11 +2091,11 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
     }
     [planets addObjectsFromArray:asteroidsToAdd];
-    if (!forceSun && !bigPlanet) {
-        if (arc4random() % 8 == 0 && level > 25) {
+//    if (!forceSun && !bigPlanet) {
+//        if (arc4random() % 8 == 0 && level > 25) {
             [planets addObject:[self blackHole]];
-            }
-    }
+//            }
+//    }
     return planets;
 }
 
