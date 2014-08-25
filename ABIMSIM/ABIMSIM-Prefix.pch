@@ -19,10 +19,17 @@
 
     #define kShieldOccuranceLevel @"kShieldOccuranceLevel"
     #define kShieldDurabilityLevel @"kShieldDurabilityLevel"
-    #define kShieldFireDurabilityLevel @"kShieldFireDurabilityLevel"
     #define kShieldOnStart @"kShieldOnStart"
+
+    #define kMineOccuranceLevel @"kMineOccuranceLevel"
+    #define kMineBlastSpeedLevel @"kMineBlastSpeedLevel"
+
+// To be removed:
+    #define kShieldFireDurabilityLevel @"kShieldFireDurabilityLevel"
     #define kHullDurabilityLevel @"kHullDurabilityLevel"
     #define kSurvivabilityLevel @"kSurvivabilityLevel"
+// end
+
     #define kUserDuckets @"kUserDuckets"
 
     #define kPlanet0Hit @"kPlanet0Hit"

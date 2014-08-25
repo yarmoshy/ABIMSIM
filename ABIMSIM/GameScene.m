@@ -144,16 +144,14 @@ CGFloat DegreesToRadians(CGFloat degrees)
 -(id)initWithSize:(CGSize)size {
     if (self = [super initWithSize:size]) {
         /* Setup your scene here */
+        [ABIMSIMDefaults setInteger:10 forKey:kMineOccuranceLevel];
+        [ABIMSIMDefaults synchronize];
+        
         lastTimeHit = 0;
         timesHitWithinSecond = 0;
         blackHoleTextures = [NSMutableArray arrayWithCapacity:240];
         
         NSMutableArray *textureAtlases = [NSMutableArray array];
-//        for (NSString *textureName in atlas.textureNames) {
-//            NSLog(@"%@",textureName);
-//            [blackHoleTextures addObject:[atlas textureNamed:textureName]];
-//        }
-//        SKTextureAtlas preloadTextureAtlases:(NSArray *) withCompletionHandler:<#^(void)completionHandler#>
         for (int i = 0; i < 8; i++) {
             SKTextureAtlas *atlas = [SKTextureAtlas atlasNamed:[NSString stringWithFormat:@"BlackHole%d",i]];
             [textureAtlases addObject:atlas];
@@ -272,7 +270,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
         [self generateInitialLevels];
         safeToTransition = @YES;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pause) name:UIApplicationWillResignActiveNotification object:nil];
-        [self removeOverlayChildren];
     }
     return self;
 }
@@ -351,7 +348,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
             }
         }
 
-//        [self applyBlackHolePullToSprite:ship];
+        [self applyBlackHolePullToSprite:ship];
         for (SKSpriteNode *sprite in self.children) {
             if ([sprite.name isEqualToString:asteroidCategoryName] ||
                 [sprite.name isEqualToString:planetCategoryName] ||
@@ -1157,15 +1154,15 @@ CGFloat DegreesToRadians(CGFloat degrees)
                         break;
                 }
                 [star removeAllActions];
-                [star runAction:[SKAction moveTo:CGPointMake(x, y) duration:0] completion:^{
-                    [star runAction:[SKAction scaleTo:scale duration:0.5] completion:^{
-                        star.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:1];
-                        star.physicsBody.dynamic = NO;
-                        star.physicsBody.categoryBitMask = starCategory;
-                        star.physicsBody.collisionBitMask = 0;
-                        star.physicsBody.contactTestBitMask = blackHoleCategory;
-                        star.name = starSpriteName;
-                    }];
+                star.physicsBody = nil;
+                star.position = CGPointMake(x, y);
+                [star runAction:[SKAction scaleTo:scale duration:0.5] completion:^{
+                    star.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:1];
+                    star.physicsBody.dynamic = NO;
+                    star.physicsBody.categoryBitMask = starCategory;
+                    star.physicsBody.collisionBitMask = 0;
+                    star.physicsBody.contactTestBitMask = blackHoleCategory;
+                    star.name = starSpriteName;
                 }];
             } else {
                 SKAction *spawnAction = [SKAction group:@[[SKAction moveByX:0 y:yVelocity * 0.125 duration:0.5],
@@ -1402,20 +1399,19 @@ CGFloat DegreesToRadians(CGFloat degrees)
         SKAction *frameAnimation = [SKAction animateWithTextures:blackHoleTextures timePerFrame:1.f/30.f];
         blackHoleAction = [SKAction repeatActionForever:frameAnimation];
     }
-//    SKAction *moveRight = [SKAction moveByX:self.frame.size.width+blackHole.size.width y:0 duration:5];
-//    SKAction *moveLeft = [SKAction moveByX:-(self.frame.size.width+blackHole.size.width) y:0 duration:5];
-//    SKAction *both;
-    blackHole.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
-//    if (arc4random() % 2 == 0) {
-//        blackHole.position = CGPointMake(-blackHole.size.width/2, self.frame.size.height/2);
-//        both = [SKAction sequence:@[moveRight,moveLeft]];
-//    } else {
-//        blackHole.position = CGPointMake(self.frame.size.width + blackHole.size.width/2, self.frame.size.height/2);
-//        both = [SKAction sequence:@[moveLeft,moveRight]];
-//    }
-//    SKAction *repeateMovementAnimation = [SKAction repeatActionForever:both];
-//    SKAction *animation = [SKAction group:@[blackHoleAction, repeateMovementAnimation]];
-    blackHole.userData[blackHoleAnimation] = blackHoleAction;
+    SKAction *moveRight = [SKAction moveByX:self.frame.size.width+blackHole.size.width y:0 duration:5];
+    SKAction *moveLeft = [SKAction moveByX:-(self.frame.size.width+blackHole.size.width) y:0 duration:5];
+    SKAction *both;
+    if (arc4random() % 2 == 0) {
+        blackHole.position = CGPointMake(-blackHole.size.width/2, self.frame.size.height/2);
+        both = [SKAction sequence:@[moveRight,moveLeft]];
+    } else {
+        blackHole.position = CGPointMake(self.frame.size.width + blackHole.size.width/2, self.frame.size.height/2);
+        both = [SKAction sequence:@[moveLeft,moveRight]];
+    }
+    SKAction *repeateMovementAnimation = [SKAction repeatActionForever:both];
+    SKAction *animation = [SKAction group:@[blackHoleAction, repeateMovementAnimation]];
+    blackHole.userData[blackHoleAnimation] = animation;
     blackHole.zPosition = -1;
     return blackHole;
 }
@@ -1452,8 +1448,14 @@ CGFloat DegreesToRadians(CGFloat degrees)
             }
         }
     }
-    SKSpriteNode *spaceMinePowerUp = [self spaceMinePowerUp];
-    [powerUps addObject:spaceMinePowerUp];
+    if ([ABIMSIMDefaults integerForKey:kMineOccuranceLevel] > 0) {
+        if ((level+5) % 10 == 0) {
+            if (level == 5 || ((arc4random() % 100)+1) <= 10 * [ABIMSIMDefaults integerForKey:kMineOccuranceLevel]) {
+                SKSpriteNode *spaceMinePowerUp = [self spaceMinePowerUp];
+                [powerUps addObject:spaceMinePowerUp];
+            }
+        }
+    }
 
     return powerUps;
 }
@@ -2091,11 +2093,11 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
     }
     [planets addObjectsFromArray:asteroidsToAdd];
-//    if (!forceSun && !bigPlanet) {
-//        if (arc4random() % 8 == 0 && level > 25) {
+    if (!forceSun && !bigPlanet) {
+        if (arc4random() % 8 == 0 && level > 25) {
             [planets addObject:[self blackHole]];
-//            }
-//    }
+        }
+    }
     return planets;
 }
 
