@@ -51,7 +51,7 @@ static const uint32_t powerUpShieldCategory = 0x1 << 10;
 static const uint32_t powerUpSpaceMineCategory = 0x1 << 11;
 static const uint32_t powerUpSpaceMineExplodingRingCategory = 0x1 << 12;
 
-
+#define kNumberOfGeneratedLevels 5
 #define kExtraSpaceOffScreen 50
 
 #define MAX_VELOCITY 300
@@ -133,6 +133,8 @@ static const uint32_t powerUpSpaceMineExplodingRingCategory = 0x1 << 12;
     int timesHitWithinSecond;
     
     NSArray *spaceMineTextures;
+    
+    BOOL reset;
 }
 
 CGFloat DegreesToRadians(CGFloat degrees)
@@ -272,6 +274,55 @@ CGFloat DegreesToRadians(CGFloat degrees)
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pause) name:UIApplicationWillResignActiveNotification object:nil];
     }
     return self;
+}
+
+-(void)resetWorld {
+    reset = NO;
+    currentLevel = 0;
+    lastTimeHit = 0;
+    timesHitWithinSecond = 0;
+    safeToTransition = @YES;
+    [self transitionStars];
+    
+    hasShield = [ABIMSIMDefaults boolForKey:kShieldOnStart];
+    if (hasShield) {
+        shieldHitPoints = 1 + [ABIMSIMDefaults integerForKey:kShieldDurabilityLevel];
+        shieldFireHitPoints = [ABIMSIMDefaults integerForKey:kShieldFireDurabilityLevel];
+    } else {
+        shieldHitPoints = 0;
+    }
+    shipHitPoints = 1 + [ABIMSIMDefaults integerForKey:kHullDurabilityLevel];
+
+    SKSpriteNode *ship = (SKSpriteNode*)[self childNodeWithName:shipCategoryName];
+    ship.position = CGPointMake(self.frame.size.width/4, ship.size.height*2);
+    [ship childNodeWithName:shipShieldSpriteName].hidden = !hasShield;
+    [ship childNodeWithName:shipImageSpriteName].hidden = NO;
+    [self updateShipPhysics];
+    
+    for (int i = 0; i < currentSpriteArray.count; i++) {
+        if ([[currentSpriteArray[i] name] isEqual:asteroidCategoryName] ||
+            [[currentSpriteArray[i] name] isEqual:asteroidInShieldCategoryName]) {
+            [currentSpriteArray[i] removeFromParent];
+        }
+        if ([[currentSpriteArray[i] name] isEqual:planetCategoryName] ||
+            [[currentSpriteArray[i] name] isEqual:sunObjectSpriteName] ||
+            [[currentSpriteArray[i] name] isEqual:asteroidShieldCategoryName] ||
+            [[currentSpriteArray[i] name] isEqual:blackHoleCategoryName]  ) {
+            [currentSpriteArray[i] removeFromParent];
+            for (SKSpriteNode *moon in ((SKSpriteNode*)currentSpriteArray[i]).userData[moonsArray]) {
+                [moon removeFromParent];
+            }
+        }
+        if ([[currentSpriteArray[i] name] isEqual:powerUpSpaceMineName] ||
+            [[currentSpriteArray[i] name] isEqual:powerUpShieldName]) {
+            [currentSpriteArray[i] removeFromParent];
+        }
+    }
+    
+    spritesArrays = [NSMutableArray array];
+    currentSpriteArray = [NSMutableArray array];
+
+    [self generateInitialLevels];
 }
 
 -(void)didMoveToView:(SKView *)view {
@@ -461,6 +512,10 @@ CGFloat DegreesToRadians(CGFloat degrees)
         SKSpriteNode *explodingRing = (SKSpriteNode*)[explodingMine childNodeWithName:powerUpSpaceMineExplodeRingName];
         [explodingRing removeFromParent];
         [explodedMine removeFromParent];
+    }
+    
+    if (reset) {
+        [self resetWorld];
     }
 }
 
@@ -919,6 +974,14 @@ CGFloat DegreesToRadians(CGFloat degrees)
             SKAction *deathAction =[SKAction sequence:@[[SKAction group:@[[SKAction moveTo:CGPointZero duration:duration],[SKAction scaleTo:0 duration:duration]]], [SKAction customActionWithDuration:0 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
                 if (![node.name isEqualToString:@"dyingStar"]) {
                     if ([node.name isEqualToString:@"dyingShip"]) {
+                        node.name = shipCategoryName;
+                        SKSpriteNode *shipShieldImage;
+                        SKSpriteNode *shipImage;
+                        shipShieldImage = (SKSpriteNode*)[node childNodeWithName:@"dying"];
+                        shipImage = (SKSpriteNode*)[node childNodeWithName:@"dyingShip"];
+                        shipShieldImage.name = shipShieldSpriteName;
+                        shipImage.name = shipImageSpriteName;
+                            
                         [self killShipAndStartOver];
                     } else {
                         node.name = removedThisSprite;
@@ -1006,11 +1069,14 @@ CGFloat DegreesToRadians(CGFloat degrees)
     [[self childNodeWithName:shipCategoryName] childNodeWithName:shipImageSpriteName].hidden = YES;
     [self childNodeWithName:shipCategoryName].physicsBody = nil;
     
+    
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        GameScene * scene = [GameScene sceneWithSize:self.view.bounds.size];
-        scene.scaleMode = SKSceneScaleModeAspectFill;
-        scene.viewController = self.viewController;
-        [self.view presentScene:scene transition:[SKTransition doorsOpenHorizontalWithDuration:2]];
+//        GameScene * scene = [GameScene sceneWithSize:self.view.bounds.size];
+//        scene.scaleMode = SKSceneScaleModeAspectFill;
+//        scene.viewController = self.viewController;
+//        [self.view presentScene:scene transition:[SKTransition doorsOpenHorizontalWithDuration:2]];
+//        [self resetWorld];
+        reset = YES;
     });
 }
 
@@ -1193,7 +1259,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
 -(void)generateInitialLevels {
     currentLevel = 1;
     ((SKLabelNode*)[self childNodeWithName:levelNodeName]).text = @"1";
-    for (int i = 1; i <= 2; i++) {
+    for (int i = 1; i <= kNumberOfGeneratedLevels; i++) {
         NSMutableArray *spriteArray = [NSMutableArray array];
         NSMutableArray *asteroids = [self asteroidsForLevel:i];
         [spriteArray addObjectsFromArray:asteroids];
@@ -1238,11 +1304,11 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
     }
     [currentSpriteArray removeAllObjects];
-    NSMutableArray *asteroids = [self asteroidsForLevel:currentLevel+2];
+    NSMutableArray *asteroids = [self asteroidsForLevel:currentLevel+kNumberOfGeneratedLevels];
     [currentSpriteArray addObjectsFromArray:asteroids];
-    NSMutableArray *planets = [self planetsForLevel:currentLevel+2];
+    NSMutableArray *planets = [self planetsForLevel:currentLevel+kNumberOfGeneratedLevels];
     [currentSpriteArray addObjectsFromArray:planets];
-    NSMutableArray *powerUps = [self powerUpsForLevel:currentLevel+2];
+    NSMutableArray *powerUps = [self powerUpsForLevel:currentLevel+kNumberOfGeneratedLevels];
     [currentSpriteArray addObjectsFromArray:powerUps];
 
     currentLevel++;
@@ -2093,11 +2159,11 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
     }
     [planets addObjectsFromArray:asteroidsToAdd];
-    if (!forceSun && !bigPlanet) {
-        if (arc4random() % 8 == 0 && level > 25) {
+//    if (!forceSun && !bigPlanet) {
+//        if (arc4random() % 8 == 0 && level > 25) {
             [planets addObject:[self blackHole]];
-        }
-    }
+//        }
+//    }
     return planets;
 }
 
