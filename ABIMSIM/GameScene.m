@@ -282,7 +282,11 @@ CGFloat DegreesToRadians(CGFloat degrees)
     lastTimeHit = 0;
     timesHitWithinSecond = 0;
     safeToTransition = @YES;
-    [self transitionStars];
+    [starSprites enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        [(SKSpriteNode*)obj removeFromParent];
+    }];
+    starSprites = nil;
+    
     
     hasShield = [ABIMSIMDefaults boolForKey:kShieldOnStart];
     if (hasShield) {
@@ -323,6 +327,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     currentSpriteArray = [NSMutableArray array];
 
     [self generateInitialLevels];
+    [self transitionStars];
 }
 
 -(void)didMoveToView:(SKView *)view {
@@ -974,14 +979,14 @@ CGFloat DegreesToRadians(CGFloat degrees)
             SKAction *deathAction =[SKAction sequence:@[[SKAction group:@[[SKAction moveTo:CGPointZero duration:duration],[SKAction scaleTo:0 duration:duration]]], [SKAction customActionWithDuration:0 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
                 if (![node.name isEqualToString:@"dyingStar"]) {
                     if ([node.name isEqualToString:@"dyingShip"]) {
-                        node.name = shipCategoryName;
-                        SKSpriteNode *shipShieldImage;
-                        SKSpriteNode *shipImage;
-                        shipShieldImage = (SKSpriteNode*)[node childNodeWithName:@"dying"];
-                        shipImage = (SKSpriteNode*)[node childNodeWithName:@"dyingShip"];
-                        shipShieldImage.name = shipShieldSpriteName;
-                        shipImage.name = shipImageSpriteName;
-                            
+//                        node.name = shipCategoryName;
+//                        SKSpriteNode *shipShieldImage;
+//                        SKSpriteNode *shipImage;
+//                        shipShieldImage = (SKSpriteNode*)[secondBody.node childNodeWithName:@"dying"];
+//                        shipImage = (SKSpriteNode*)node;
+//                        shipShieldImage.name = shipShieldSpriteName;
+//                        shipImage.name = shipImageSpriteName;
+                        
                         [self killShipAndStartOver];
                     } else {
                         node.name = removedThisSprite;
