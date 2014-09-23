@@ -811,7 +811,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
             impactSprite.zRotation = DegreesToRadians(f);
         }
         
-        if (firstBody.categoryBitMask == shipCategory && secondBody.categoryBitMask == asteroidShieldCategory) {
+        if ((firstBody.categoryBitMask == shipCategory && secondBody.categoryBitMask == asteroidShieldCategory) || (firstBody.categoryBitMask == asteroidShieldCategory && secondBody.categoryBitMask == blackHoleCategory)) {
             NSString *imageName = @"";
             float scale = 0;
             float duration = 0.5;
@@ -822,8 +822,15 @@ CGFloat DegreesToRadians(CGFloat degrees)
                 imageName = @"AsteroidShield_Pop_1";
                 scale = 0.65;
             }
+            SKSpriteNode *nodeToUse;
+            if  (secondBody.categoryBitMask == asteroidShieldCategory) {
+                nodeToUse = (SKSpriteNode*)secondBody.node;
+            } else {
+                nodeToUse = (SKSpriteNode*)firstBody.node;
+            }
+
             SKSpriteNode *explosionSprite = [SKSpriteNode spriteNodeWithImageNamed:imageName];
-            explosionSprite.position = secondBody.node.position;
+            explosionSprite.position = nodeToUse.position;
             [explosionSprite setScale:scale];
             explosionSprite.zPosition = 10;
             [self addChild:explosionSprite];
@@ -833,7 +840,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
             [explosionSprite runAction:[SKAction sequence:@[groupAction, [SKAction customActionWithDuration:0 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
                 node.name = removedThisSprite;
             }]]]];
-            secondBody.node.name = removedThisSprite;
+            nodeToUse.name = removedThisSprite;
             for (SKSpriteNode *asteroid in [self children]) {
                 if ([asteroid.name isEqual:asteroidInShieldCategoryName] &&
                     [asteroid.userData[asteroidShieldTag] intValue] == [secondBody.node.userData[asteroidShieldTag] intValue]) {
@@ -845,6 +852,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
                     asteroid.physicsBody.velocity = CGVectorMake(velocity * cosf(asteroid.zRotation), velocity * -sinf(asteroid.zRotation));
                 }
             }
+            return;
         }
         if (firstBody.categoryBitMask == shipCategory && secondBody.categoryBitMask == powerUpSpaceMineCategory) {
             if ([secondBody.node.name isEqualToString:explodingSpaceMine] ||
@@ -2028,7 +2036,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     if (numOfPlanets < [self minNumberOfPlanetsForLevel:level]) {
         numOfPlanets = [self minNumberOfPlanetsForLevel:level];
     }
-//    numOfPlanets = 3;
+    numOfPlanets = 3;
     BOOL forceSun = NO;
     if (level > 25) {
         if (arc4random() % 8 == 0) {
@@ -2291,6 +2299,10 @@ CGFloat DegreesToRadians(CGFloat degrees)
             isAsteroidShield = YES;
         }
     }
+    isAsteroidShield = YES;
+    planetNum = 4;
+    imageName = @"AsteroidShield_1";
+
     SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithImageNamed:imageName];
     
     UIBezierPath *hoverPath = [UIBezierPath bezierPath];
