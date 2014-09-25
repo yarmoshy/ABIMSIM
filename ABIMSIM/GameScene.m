@@ -204,26 +204,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
             shieldHitPoints = 0;
         }
         shipHitPoints = 1 + [ABIMSIMDefaults integerForKey:kHullDurabilityLevel];
-        SKSpriteNode *shipImage = [SKSpriteNode spriteNodeWithImageNamed:@"Ship"];
-        shipImage.name = shipImageSpriteName;
-        SKSpriteNode *shipShieldImage = [SKSpriteNode spriteNodeWithImageNamed:@"ShipShield"];
-        shipShieldImage.name = shipShieldSpriteName;
-        shipShieldImage.alpha = 0;
-        SKSpriteNode *ship = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:shipShieldImage.size];
-        [ship addChild:shipImage];
-        [ship addChild:shipShieldImage];
-        ship.name = shipCategoryName;
-        ship.position = CGPointMake(self.frame.size.width/4, ship.size.height*2);
-        ship.zPosition = 1;
-        ship.userData = [NSMutableDictionary dictionary];
-        SKAction *shieldSetup = [SKAction customActionWithDuration:0 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
-            node.alpha = 1;
-            node.scale = 0.71;
-        }];
-        SKAction *growAction = [SKAction scaleTo:1.1 duration:0.3];
-        SKAction *snapBack = [SKAction scaleTo:1.0 duration:0.1];
-        SKAction *sequence = [SKAction sequence:@[shieldSetup,growAction,snapBack]];
-        ship.userData[shipShieldOnAnimation] = sequence;
+        SKSpriteNode *ship = [self createShip];
         
         spritesArrays = [NSMutableArray array];
         currentSpriteArray = [NSMutableArray array];
@@ -276,6 +257,30 @@ CGFloat DegreesToRadians(CGFloat degrees)
     return self;
 }
 
+-(SKSpriteNode*)createShip {
+    SKSpriteNode *shipImage = [SKSpriteNode spriteNodeWithImageNamed:@"Ship"];
+    shipImage.name = shipImageSpriteName;
+    SKSpriteNode *shipShieldImage = [SKSpriteNode spriteNodeWithImageNamed:@"ShipShield"];
+    shipShieldImage.name = shipShieldSpriteName;
+    shipShieldImage.alpha = 0;
+    SKSpriteNode *ship = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:shipShieldImage.size];
+    [ship addChild:shipImage];
+    [ship addChild:shipShieldImage];
+    ship.name = shipCategoryName;
+    ship.position = CGPointMake(self.frame.size.width/4, ship.size.height*2);
+    ship.zPosition = 1;
+    ship.userData = [NSMutableDictionary dictionary];
+    SKAction *shieldSetup = [SKAction customActionWithDuration:0 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
+        node.alpha = 1;
+        node.scale = 0.71;
+    }];
+    SKAction *growAction = [SKAction scaleTo:1.1 duration:0.3];
+    SKAction *snapBack = [SKAction scaleTo:1.0 duration:0.1];
+    SKAction *sequence = [SKAction sequence:@[shieldSetup,growAction,snapBack]];
+    ship.userData[shipShieldOnAnimation] = sequence;
+    return ship;
+}
+
 -(void)resetWorld {
     reset = NO;
     currentLevel = 0;
@@ -298,6 +303,10 @@ CGFloat DegreesToRadians(CGFloat degrees)
     shipHitPoints = 1 + [ABIMSIMDefaults integerForKey:kHullDurabilityLevel];
 
     SKSpriteNode *ship = (SKSpriteNode*)[self childNodeWithName:shipCategoryName];
+    if (!ship) {
+        ship = [self createShip];
+        [self addChild:ship];
+    }
     ship.position = CGPointMake(self.frame.size.width/4, ship.size.height*2);
     [ship childNodeWithName:shipShieldSpriteName].hidden = !hasShield;
     [ship childNodeWithName:shipImageSpriteName].hidden = NO;
@@ -987,14 +996,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
             SKAction *deathAction =[SKAction sequence:@[[SKAction group:@[[SKAction moveTo:CGPointZero duration:duration],[SKAction scaleTo:0 duration:duration]]], [SKAction customActionWithDuration:0 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
                 if (![node.name isEqualToString:@"dyingStar"]) {
                     if ([node.name isEqualToString:@"dyingShip"]) {
-//                        node.name = shipCategoryName;
-//                        SKSpriteNode *shipShieldImage;
-//                        SKSpriteNode *shipImage;
-//                        shipShieldImage = (SKSpriteNode*)[secondBody.node childNodeWithName:@"dying"];
-//                        shipImage = (SKSpriteNode*)node;
-//                        shipShieldImage.name = shipShieldSpriteName;
-//                        shipImage.name = shipImageSpriteName;
-                        
                         [self killShipAndStartOver];
                     } else {
                         node.name = removedThisSprite;
@@ -1084,11 +1085,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
     
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//        GameScene * scene = [GameScene sceneWithSize:self.view.bounds.size];
-//        scene.scaleMode = SKSceneScaleModeAspectFill;
-//        scene.viewController = self.viewController;
-//        [self.view presentScene:scene transition:[SKTransition doorsOpenHorizontalWithDuration:2]];
-//        [self resetWorld];
         reset = YES;
     });
 }
@@ -2036,7 +2032,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     if (numOfPlanets < [self minNumberOfPlanetsForLevel:level]) {
         numOfPlanets = [self minNumberOfPlanetsForLevel:level];
     }
-    numOfPlanets = 3;
+//    numOfPlanets = 3;
     BOOL forceSun = NO;
     if (level > 25) {
         if (arc4random() % 8 == 0) {
@@ -2172,11 +2168,11 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
     }
     [planets addObjectsFromArray:asteroidsToAdd];
-//    if (!forceSun && !bigPlanet) {
-//        if (arc4random() % 8 == 0 && level > 25) {
+    if (!forceSun && !bigPlanet) {
+        if (arc4random() % 8 == 0 && level > 25) {
             [planets addObject:[self blackHole]];
-//        }
-//    }
+        }
+    }
     return planets;
 }
 
@@ -2299,10 +2295,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
             isAsteroidShield = YES;
         }
     }
-    isAsteroidShield = YES;
-    planetNum = 4;
-    imageName = @"AsteroidShield_1";
-
     SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithImageNamed:imageName];
     
     UIBezierPath *hoverPath = [UIBezierPath bezierPath];
@@ -2585,7 +2577,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     return path;
 }
 
-#pragma mark - Extra
+#pragma mark - Helper
 
 - (CGFloat) pointPairToBearingDegrees:(CGPoint)startingPoint secondPoint:(CGPoint) endingPoint {
     CGPoint originPoint = CGPointMake(endingPoint.x - startingPoint.x, endingPoint.y - startingPoint.y); // get origin point to origin by subtracting end from start
