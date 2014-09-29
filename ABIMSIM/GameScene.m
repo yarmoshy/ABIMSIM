@@ -308,7 +308,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         [self addChild:ship];
     }
     ship.position = CGPointMake(self.frame.size.width/4, ship.size.height*2);
-    [ship childNodeWithName:shipShieldSpriteName].hidden = !hasShield;
+    [ship childNodeWithName:shipShieldSpriteName].hidden = NO;
     [ship childNodeWithName:shipImageSpriteName].hidden = NO;
     [self updateShipPhysics];
     
