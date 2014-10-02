@@ -1965,7 +1965,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
     if (numOfPlanets < [self minNumberOfPlanetsForLevel:level]) {
         numOfPlanets = [self minNumberOfPlanetsForLevel:level];
     }
-    numOfPlanets = 3;
     BOOL forceSun = NO;
     if (level > 25) {
         if (arc4random() % 8 == 0) {
@@ -2228,10 +2227,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
             isAsteroidShield = YES;
         }
     }
-    isAsteroidShield = YES;
-    planetNum = 4;
-    imageName = @"AsteroidShield_1";
-
     SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithImageNamed:imageName];
     
     UIBezierPath *hoverPath = [UIBezierPath bezierPath];
