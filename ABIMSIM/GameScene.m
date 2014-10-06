@@ -53,6 +53,7 @@ static const uint32_t powerUpSpaceMineExplodingRingCategory = 0x1 << 12;
 
 
 #define kExtraSpaceOffScreen 50
+#define kNumberOfLevelsToGenerate 10
 
 #define MAX_VELOCITY 300
 #define MIN_VELOCITY 300
@@ -120,6 +121,7 @@ static const uint32_t powerUpSpaceMineExplodingRingCategory = 0x1 << 12;
     int currentLevel;
     BOOL shipWarping;
     BOOL hasShield;
+    BOOL reset;
     
     NSInteger shieldHitPoints;
     NSInteger shieldFireHitPoints;
@@ -202,26 +204,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
             shieldHitPoints = 0;
         }
         shipHitPoints = 1 + [ABIMSIMDefaults integerForKey:kHullDurabilityLevel];
-        SKSpriteNode *shipImage = [SKSpriteNode spriteNodeWithImageNamed:@"Ship"];
-        shipImage.name = shipImageSpriteName;
-        SKSpriteNode *shipShieldImage = [SKSpriteNode spriteNodeWithImageNamed:@"ShipShield"];
-        shipShieldImage.name = shipShieldSpriteName;
-        shipShieldImage.alpha = 0;
-        SKSpriteNode *ship = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:shipShieldImage.size];
-        [ship addChild:shipImage];
-        [ship addChild:shipShieldImage];
-        ship.name = shipCategoryName;
-        ship.position = CGPointMake(self.frame.size.width/4, ship.size.height*2);
-        ship.zPosition = 1;
-        ship.userData = [NSMutableDictionary dictionary];
-        SKAction *shieldSetup = [SKAction customActionWithDuration:0 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
-            node.alpha = 1;
-            node.scale = 0.71;
-        }];
-        SKAction *growAction = [SKAction scaleTo:1.1 duration:0.3];
-        SKAction *snapBack = [SKAction scaleTo:1.0 duration:0.1];
-        SKAction *sequence = [SKAction sequence:@[shieldSetup,growAction,snapBack]];
-        ship.userData[shipShieldOnAnimation] = sequence;
+        SKSpriteNode *ship = [self createShip];
         
         spritesArrays = [NSMutableArray array];
         currentSpriteArray = [NSMutableArray array];
@@ -239,35 +222,11 @@ CGFloat DegreesToRadians(CGFloat degrees)
         [self addChild:pauseButton];
         pauseButton.position = CGPointMake(size.width - pauseButton.size.width/2, pauseButton.size.height/2);
         
-//        SKSpriteNode *warpBack = [SKSpriteNode spriteNodeWithImageNamed:@"WarpBack"];
-//        warpBack.anchorPoint = CGPointMake(0, 1);
-//        warpBack.position = CGPointMake(0, size.height);
-//        warpBack.alpha = 0.3;
-//        
-//        SKSpriteNode *warpFront = [SKSpriteNode spriteNodeWithImageNamed:@"WarpFront"];
-//        warpFront.anchorPoint = CGPointMake(0, 1);
-//        warpFront.position = CGPointMake(0, size.height);
-//
-//        SKSpriteNode *warpBack2 = [SKSpriteNode spriteNodeWithImageNamed:@"WarpBack"];
-//        warpBack2.anchorPoint = CGPointMake(0, 0);
-//        warpBack2.position = CGPointMake(size.width, warpBack2.size.height);
-//        warpBack2.alpha = 0.3;
-//        warpBack2.zRotation = M_PI;
-//
-//        SKSpriteNode *warpFront2 = [SKSpriteNode spriteNodeWithImageNamed:@"WarpFront"];
-//        warpFront2.anchorPoint = CGPointMake(0, 0);
-//        warpFront2.position = CGPointMake(size.width, warpFront2.size.height);
-//        warpFront2.zRotation = M_PI;
-        
         [self transitionStars];
-//        [self addChild:warpBack];
-//        [self addChild:warpBack2];
         [self addChild:ship];
         [self updateShipPhysics];
-//        [self addChild:warpFront];
-//        [self addChild:warpFront2];
 
-        [self generateInitialLevels];
+        [self generateInitialLevelsAndShowSprites:YES];
         safeToTransition = @YES;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pause) name:UIApplicationWillResignActiveNotification object:nil];
     }
@@ -309,6 +268,13 @@ CGFloat DegreesToRadians(CGFloat degrees)
     if (self.paused) {
         return;
     }
+    if (reset) {
+        //        dispatch_async(dispatch_get_main_queue(), ^{
+        [self resetWorld];
+        //        });
+        
+    }
+
     for (SKSpriteNode *sprite in self.children) {
         if ([sprite.name isEqualToString:removedThisSprite]) {
             [sprite removeFromParent];
@@ -1013,16 +979,75 @@ CGFloat DegreesToRadians(CGFloat degrees)
     [[self childNodeWithName:shipCategoryName] childNodeWithName:shipShieldSpriteName].hidden = YES;
     [[self childNodeWithName:shipCategoryName] childNodeWithName:shipImageSpriteName].hidden = YES;
     [self childNodeWithName:shipCategoryName].physicsBody = nil;
-    
+
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        GameScene * scene = [GameScene sceneWithSize:self.view.bounds.size];
-        scene.scaleMode = SKSceneScaleModeAspectFill;
-        scene.viewController = self.viewController;
-        [self.view presentScene:scene transition:[SKTransition doorsOpenHorizontalWithDuration:2]];
+        reset = YES;
     });
 }
 
 #pragma mark - Level generation
+
+-(SKSpriteNode*)createShip {
+    SKSpriteNode *shipImage = [SKSpriteNode spriteNodeWithImageNamed:@"Ship"];
+    shipImage.name = shipImageSpriteName;
+    SKSpriteNode *shipShieldImage = [SKSpriteNode spriteNodeWithImageNamed:@"ShipShield"];
+    shipShieldImage.name = shipShieldSpriteName;
+    shipShieldImage.alpha = 0;
+    SKSpriteNode *ship = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:shipShieldImage.size];
+    [ship addChild:shipImage];
+    [ship addChild:shipShieldImage];
+    ship.name = shipCategoryName;
+    ship.position = CGPointMake(self.frame.size.width/2, ship.size.height*2);
+    ship.zPosition = 1;
+    ship.userData = [NSMutableDictionary dictionary];
+    SKAction *shieldSetup = [SKAction customActionWithDuration:0 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
+        node.alpha = 1;
+        node.scale = 0.71;
+    }];
+    SKAction *growAction = [SKAction scaleTo:1.1 duration:0.3];
+    SKAction *snapBack = [SKAction scaleTo:1.0 duration:0.1];
+    SKAction *sequence = [SKAction sequence:@[shieldSetup,growAction,snapBack]];
+    ship.userData[shipShieldOnAnimation] = sequence;
+    return ship;
+}
+
+-(void)resetWorld {
+    [self removeOverlayChildren];
+    [self removeCurrentSprites];
+    currentLevel = 0;
+    
+    ((SKLabelNode*)[self childNodeWithName:levelNodeName]).text = [NSString stringWithFormat:@"%d",currentLevel];
+
+    safeToTransition = @YES;
+    SKSpriteNode *goal = (SKSpriteNode*)[self childNodeWithName:goalCategoryName];
+    [goal removeFromParent];
+    SKSpriteNode *ship = (SKSpriteNode*)[self childNodeWithName:shipCategoryName];
+    if (!ship) {
+        ship = [self createShip];
+        [self addChild:ship];
+    }
+    [ship childNodeWithName:shipShieldSpriteName].hidden = NO;
+    [ship childNodeWithName:shipImageSpriteName].hidden = NO;
+    [self updateShipPhysics];
+    ship.physicsBody.velocity = CGVectorMake(0, MAX_VELOCITY);
+    
+    ship.physicsBody.collisionBitMask = borderCategory | asteroidCategory | planetCategory;
+    ship.position = CGPointMake(self.frame.size.width/2, -kExtraSpaceOffScreen + ship.size.height/2);
+
+    for (NSMutableArray *sprites in spritesArrays) {
+        for (SKSpriteNode *sprite in sprites) {
+            [sprite removeFromParent];
+        }
+        [sprites removeAllObjects];
+    }
+    [spritesArrays removeAllObjects];
+    
+    [self transitionStars];
+    [self generateInitialLevelsAndShowSprites:YES];
+    shipWarping = YES;
+    reset = NO;
+
+}
 
 -(void)transitionStars {
     float yVelocity = ((SKSpriteNode*)[self childNodeWithName:shipCategoryName]).physicsBody.velocity.dy;
@@ -1198,10 +1223,10 @@ CGFloat DegreesToRadians(CGFloat degrees)
     }
 }
 
--(void)generateInitialLevels {
+-(void)generateInitialLevelsAndShowSprites:(BOOL)show {
     currentLevel = 1;
     ((SKLabelNode*)[self childNodeWithName:levelNodeName]).text = @"1";
-    for (int i = 1; i <= 2; i++) {
+    for (int i = 1; i <= kNumberOfLevelsToGenerate; i++) {
         NSMutableArray *spriteArray = [NSMutableArray array];
         NSMutableArray *asteroids = [self asteroidsForLevel:i];
         [spriteArray addObjectsFromArray:asteroids];
@@ -1220,11 +1245,12 @@ CGFloat DegreesToRadians(CGFloat degrees)
         [spritesArrays addObject:spriteArray];
     }
     currentSpriteArray = [spritesArrays firstObject];
-    [self showCurrentSprites];
+    if (show) {
+        [self showCurrentSprites];
+    }
 }
 
--(void)advanceToNextLevel {
-    [self removeOverlayChildren];
+-(void)removeCurrentSprites {
     for (int i = 0; i < currentSpriteArray.count; i++) {
         if ([[currentSpriteArray[i] name] isEqual:asteroidCategoryName] ||
             [[currentSpriteArray[i] name] isEqual:asteroidInShieldCategoryName]) {
@@ -1243,14 +1269,20 @@ CGFloat DegreesToRadians(CGFloat degrees)
             [[currentSpriteArray[i] name] isEqual:powerUpShieldName]) {
             [currentSpriteArray[i] removeFromParent];
         }
-
+        
     }
     [currentSpriteArray removeAllObjects];
-    NSMutableArray *asteroids = [self asteroidsForLevel:currentLevel+2];
+}
+
+-(void)advanceToNextLevel {
+    [self removeOverlayChildren];
+    [self removeCurrentSprites];
+    
+    NSMutableArray *asteroids = [self asteroidsForLevel:currentLevel+kNumberOfLevelsToGenerate];
     [currentSpriteArray addObjectsFromArray:asteroids];
-    NSMutableArray *planets = [self planetsForLevel:currentLevel+2];
+    NSMutableArray *planets = [self planetsForLevel:currentLevel+kNumberOfLevelsToGenerate];
     [currentSpriteArray addObjectsFromArray:planets];
-    NSMutableArray *powerUps = [self powerUpsForLevel:currentLevel+2];
+    NSMutableArray *powerUps = [self powerUpsForLevel:currentLevel+kNumberOfLevelsToGenerate];
     [currentSpriteArray addObjectsFromArray:powerUps];
 
     currentLevel++;
@@ -1314,7 +1346,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
             [sprite runAction:sprite.userData[powerUpSpaceMineRotationAnimation]];
         }
     }
-    if (currentLevel == 1) {
+    if (currentLevel == 1 && !reset) {
         SKLabelNode *direction = [SKLabelNode labelNodeWithFontNamed:@"Voltaire"];
         direction.text = @"Propel the ship by flicking any direction.";
         direction.fontSize = 16;
@@ -1965,6 +1997,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     if (numOfPlanets < [self minNumberOfPlanetsForLevel:level]) {
         numOfPlanets = [self minNumberOfPlanetsForLevel:level];
     }
+    numOfPlanets = 3;
     BOOL forceSun = NO;
     if (level > 25) {
         if (arc4random() % 8 == 0) {
@@ -2195,6 +2228,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
 -(SKSpriteNode*)randomPlanetForLevel:(int)level sunFlavor:(BOOL)sunFlavor currentPlanets:planets {
 
     int planetNum = arc4random() % [self maxPlanetNumForLevel:level];
+    planetNum = 5;
     int planetFlavor =  arc4random() % 3;
     if (sunFlavor) {
         planetFlavor = 3;
