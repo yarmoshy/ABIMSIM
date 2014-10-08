@@ -121,7 +121,6 @@ static const uint32_t powerUpSpaceMineExplodingRingCategory = 0x1 << 12;
     int currentLevel;
     BOOL shipWarping;
     BOOL hasShield;
-    BOOL reset;
     
     NSInteger shieldHitPoints;
     NSInteger shieldFireHitPoints;
@@ -266,13 +265,15 @@ CGFloat DegreesToRadians(CGFloat degrees)
         [self pause];
     }
     if (self.paused) {
+        if ((![self childNodeWithName:shipCategoryName] ||
+            [self childNodeWithName:shipCategoryName].physicsBody == nil) &&
+            self.viewController.gameOverView.alpha == 0 && !self.reset) {
+            [self.viewController showGameOverView];
+        }
         return;
     }
-    if (reset) {
-        //        dispatch_async(dispatch_get_main_queue(), ^{
+    if (self.reset) {
         [self resetWorld];
-        //        });
-        
     }
 
     for (SKSpriteNode *sprite in self.children) {
@@ -591,7 +592,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
 }
 
 - (void) showGameCenter {
-    //    if ([GKLocalPlayer localPlayer].authenticated) {
     GKGameCenterViewController *gameCenterController = [[GKGameCenterViewController alloc] init];
     if (gameCenterController != nil)
     {
@@ -599,7 +599,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
         self.paused = YES;
         [self.viewController presentViewController: gameCenterController animated: YES completion:nil];
     }
-    //    }
 }
 
 - (void)gameCenterViewControllerDidFinish:(GKGameCenterViewController *)gameCenterViewController {
@@ -981,7 +980,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     [self childNodeWithName:shipCategoryName].physicsBody = nil;
 
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        reset = YES;
+        self.paused = YES;
     });
 }
 
@@ -1045,7 +1044,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     [self transitionStars];
     [self generateInitialLevelsAndShowSprites:YES];
     shipWarping = YES;
-    reset = NO;
+    self.reset = NO;
 
 }
 
@@ -1346,7 +1345,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
             [sprite runAction:sprite.userData[powerUpSpaceMineRotationAnimation]];
         }
     }
-    if (currentLevel == 1 && !reset) {
+    if (currentLevel == 1 && !self.reset) {
         SKLabelNode *direction = [SKLabelNode labelNodeWithFontNamed:@"Voltaire"];
         direction.text = @"Propel the ship by flicking any direction.";
         direction.fontSize = 16;
@@ -1997,7 +1996,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
     if (numOfPlanets < [self minNumberOfPlanetsForLevel:level]) {
         numOfPlanets = [self minNumberOfPlanetsForLevel:level];
     }
-    numOfPlanets = 3;
     BOOL forceSun = NO;
     if (level > 25) {
         if (arc4random() % 8 == 0) {
@@ -2228,7 +2226,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
 -(SKSpriteNode*)randomPlanetForLevel:(int)level sunFlavor:(BOOL)sunFlavor currentPlanets:planets {
 
     int planetNum = arc4random() % [self maxPlanetNumForLevel:level];
-    planetNum = 5;
     int planetFlavor =  arc4random() % 3;
     if (sunFlavor) {
         planetFlavor = 3;

@@ -7,8 +7,9 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
+#import "ViewController.h"
 
 @interface UpgradeScene : SKScene
-@property (strong, nonatomic) UIViewController *viewController;
+@property (strong, nonatomic) ViewController *viewController;
 
 @end
