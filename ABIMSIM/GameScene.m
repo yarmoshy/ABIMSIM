@@ -1014,7 +1014,15 @@ CGFloat DegreesToRadians(CGFloat degrees)
     [self removeOverlayChildren];
     [self removeCurrentSprites];
     currentLevel = 0;
-    
+    hasShield = [ABIMSIMDefaults boolForKey:kShieldOnStart];
+    if (hasShield) {
+        shieldHitPoints = 1 + [ABIMSIMDefaults integerForKey:kShieldDurabilityLevel];
+        shieldFireHitPoints = [ABIMSIMDefaults integerForKey:kShieldFireDurabilityLevel];
+    } else {
+        shieldHitPoints = 0;
+    }
+    shipHitPoints = 1 + [ABIMSIMDefaults integerForKey:kHullDurabilityLevel];
+
     ((SKLabelNode*)[self childNodeWithName:levelNodeName]).text = [NSString stringWithFormat:@"%d",currentLevel];
 
     safeToTransition = @YES;

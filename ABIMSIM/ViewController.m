@@ -192,9 +192,7 @@
 @end
 
 
-@implementation ViewController {
-    GameScene *scene;
-}
+@implementation ViewController
 
 - (void)viewDidLoad
 {
@@ -206,13 +204,13 @@
     skView.showsNodeCount = NO;
     
     // Create and configure the scene.
-    scene = [GameScene sceneWithSize:skView.bounds.size];
+    self.scene = [GameScene sceneWithSize:skView.bounds.size];
     
-    scene.size = skView.bounds.size;
-    scene.scaleMode = SKSceneScaleModeAspectFill;
-    scene.viewController = self;
+    self.scene.size = skView.bounds.size;
+    self.scene.scaleMode = SKSceneScaleModeAspectFill;
+    self.scene.viewController = self;
     // Present the scene.
-    [skView presentScene:scene];
+    [skView presentScene:self.scene];
 
 }
 
@@ -271,8 +269,8 @@
 -(void)hideGameOverView {
     [UIView animateKeyframesWithDuration:0.5 delay:0 options:0 animations:^{
         self.gameOverView.alpha = 0;
-        scene.reset = YES;
-        scene.paused = NO;
+        self.scene.reset = YES;
+        self.scene.paused = NO;
     } completion:^(BOOL finished) {
         [[self.gameOverView viewWithTag:kBlurBackgroundViewTag] removeFromSuperview];
     }];

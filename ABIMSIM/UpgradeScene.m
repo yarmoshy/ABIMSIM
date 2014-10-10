@@ -7,6 +7,7 @@
 //
 #import "GameScene.h"
 #import "UpgradeScene.h"
+#import "ViewController.h"
 
 static NSString* survivabilityButtonName = @"survivabilityButtonName";
 static NSString* survivabilityNextUpgradeLabelName = @"survivabilityNextUpgradeLabelName";
@@ -163,8 +164,7 @@ static NSString* nextUpgradeDucketCostLabelName = @"nextUpgradeDucketCostLabelNa
     if ([node.name isEqualToString:survivabilityButtonName]) {
         [self upgradeSurvivability];
     } else {
-        GameScene *gameScene = [GameScene sceneWithSize:self.size];
-        gameScene.viewController = self.viewController;
+        GameScene *gameScene = self.viewController.scene;
         [self.view presentScene:gameScene transition:[SKTransition pushWithDirection:SKTransitionDirectionRight duration:1]];
     }
 }
