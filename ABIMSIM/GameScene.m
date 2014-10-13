@@ -52,7 +52,7 @@ static const uint32_t powerUpSpaceMineCategory = 0x1 << 11;
 static const uint32_t powerUpSpaceMineExplodingRingCategory = 0x1 << 12;
 
 
-#define kExtraSpaceOffScreen 50
+#define kExtraSpaceOffScreen 63
 #define kNumberOfLevelsToGenerate 10
 
 #define MAX_VELOCITY 300
@@ -173,7 +173,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         self.physicsBody.friction = 0.0f;
         self.physicsWorld.contactDelegate = self;
         
-        SKSpriteNode *background = [SKSpriteNode spriteNodeWithImageNamed:@"Background"];
+        SKSpriteNode *background = [SKSpriteNode spriteNodeWithImageNamed:@"Background_1"];
         background.anchorPoint = CGPointZero;
         background.zPosition = -1;
         [self addChild:background];
@@ -221,21 +221,33 @@ CGFloat DegreesToRadians(CGFloat degrees)
         [self addChild:pauseButton];
         pauseButton.position = CGPointMake(size.width - pauseButton.size.width/2, pauseButton.size.height/2);
         
-        [self transitionStars];
         [self addChild:ship];
         [self updateShipPhysics];
-
-        [self generateInitialLevelsAndShowSprites:YES];
+        [self childNodeWithName:shipCategoryName].physicsBody.collisionBitMask = borderCategory | asteroidCategory | planetCategory;
+        [self generateInitialLevelsAndShowSprites:NO];
         safeToTransition = @YES;
+        shipWarping = YES;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pause) name:UIApplicationWillResignActiveNotification object:nil];
     }
     return self;
+}
+
+-(void)transitionFromMainMenu {
+    [self transitionStars];
+    [self showCurrentSprites];
+    flickRecognizer.enabled = YES;
+    [[self childNodeWithName:shipCategoryName] runAction:[SKAction moveTo:CGPointMake(self.frame.size.width/2, ((SKSpriteNode*)[self childNodeWithName:shipCategoryName]).size.height*2) duration:0.5]];
+}
+
+-(void)transitionToMainMenu {
+    
 }
 
 -(void)didMoveToView:(SKView *)view {
     [super didMoveToView:view];
     flickRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGesture:)];
     [self.view addGestureRecognizer:flickRecognizer];
+    flickRecognizer.enabled = NO;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         self.paused = NO;
     });
@@ -996,7 +1008,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     [ship addChild:shipImage];
     [ship addChild:shipShieldImage];
     ship.name = shipCategoryName;
-    ship.position = CGPointMake(self.frame.size.width/2, ship.size.height*2);
+    ship.position = CGPointMake(self.frame.size.width/2, -kExtraSpaceOffScreen + ship.size.height/2);
     ship.zPosition = 1;
     ship.userData = [NSMutableDictionary dictionary];
     SKAction *shieldSetup = [SKAction customActionWithDuration:0 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
@@ -1125,6 +1137,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
             } else {
                 [starFrontLayer addChild:star];
             }
+            [star setScale:0];
+            [star runAction:[SKAction scaleTo:1 duration:0.5]];
         }
         for (int i = 0; i < 12; i++) {
             SKSpriteNode *star = [SKSpriteNode spriteNodeWithImageNamed:@"LargeStar"];

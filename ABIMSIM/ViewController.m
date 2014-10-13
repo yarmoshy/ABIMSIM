@@ -211,7 +211,6 @@
     self.scene.viewController = self;
     // Present the scene.
     [skView presentScene:self.scene];
-
 }
 
 - (BOOL)prefersStatusBarHidden {
@@ -234,6 +233,91 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
+-(void)animatePlayButtonSelect:(void(^)(void))completionBlock {
+    [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+        [self.playRing3 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1.12, 1.12)];
+    } completion:nil];
+    [UIView animateWithDuration:0.1 delay:0.025 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+        [self.playRing2 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1.07, 1.07)];
+    } completion:nil];
+    [UIView animateWithDuration:0.1 delay:0.05 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+        [self.playRing1 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1.04, 1.04)];
+    } completion:nil];
+    [UIView animateWithDuration:0.1 delay:0.075 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+        [self.playRing0 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1.04, 1.04)];
+    } completion:^(BOOL finished) {
+        if (completionBlock) {
+            completionBlock();
+        }
+    }];
+}
+
+-(void)animatePlayButtonDeselect:(void(^)(void))completionBlock {
+    [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseIn animations:^{
+        [self.playRing0 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 0.9, 0.9)];
+    } completion:^(BOOL finished) {
+        if (finished) {
+            [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseOut animations:^{
+                [self.playRing0 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1, 1)];
+            } completion:nil];
+        }
+    }];
+    [UIView animateWithDuration:0.1 delay:0.025 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseIn animations:^{
+        [self.playRing1 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 0.94, 0.95)];
+    } completion:^(BOOL finished) {
+        if (finished) {
+            [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseOut animations:^{
+                [self.playRing1 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1, 1)];
+            } completion:nil];
+        }
+    }];
+    [UIView animateWithDuration:0.1 delay:0.05 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseIn animations:^{
+        [self.playRing2 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 0.94, 0.95)];
+    } completion:^(BOOL finished) {
+        if (finished) {
+            [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseOut animations:^{
+                [self.playRing2 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1, 1)];
+            } completion:nil];
+        }
+    }];
+    [UIView animateWithDuration:0.1 delay:0.075 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseIn animations:^{
+        [self.playRing3 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 0.96, 0.96)];
+    } completion:^(BOOL finished) {
+        if (finished) {
+            [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseOut animations:^{
+                [self.playRing3 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1, 1)];
+            } completion:^(BOOL finished) {
+                if (completionBlock) {
+                    completionBlock();
+                }
+            }];
+        }
+    }];
+}
+
+- (IBAction)playSelect:(id)sender {
+    [self animatePlayButtonSelect:nil];
+}
+
+- (IBAction)playDeselect:(id)sender {
+    [self animatePlayButtonDeselect:nil];
+}
+
+- (IBAction)playTouchUpInside:(id)sender {
+    [self animatePlayButtonDeselect:^{
+//        [UIView animateKeyframesWithDuration:0.5 delay:0 options:0 animations:^{
+//            self.mainMenuView.alpha = 0;
+//        } completion:^(BOOL finished) {
+//            [self.scene transitionFromMainMenu];
+//        }];
+    }];
+}
+
+- (IBAction)highScoresTapped:(id)sender {
+}
+
+- (IBAction)upgradesTapped:(id)sender {
+}
 
 -(void)showGameOverView {
     

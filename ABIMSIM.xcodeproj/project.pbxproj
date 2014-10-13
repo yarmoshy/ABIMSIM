@@ -109,6 +109,8 @@
 		B4E221D0192EB356003947B7 /* ShipShield@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4E221CC192EB356003947B7 /* ShipShield@2x.png */; };
 		B4E221D2192EB3C6003947B7 /* ShipShield_Pop@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4E221D1192EB3C6003947B7 /* ShipShield_Pop@2x.png */; };
 		E14F49AA19E41F0A008B727A /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E14F49A919E41F0A008B727A /* Accelerate.framework */; };
+		E1E996E819EC198700B21B5D /* Hamburger.atlas in Resources */ = {isa = PBXBuildFile; fileRef = E1E996E719EC198700B21B5D /* Hamburger.atlas */; };
+		E1E996EA19EC21C500B21B5D /* Background_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E1E996E919EC21C500B21B5D /* Background_1@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -232,6 +234,8 @@
 		B4E221CC192EB356003947B7 /* ShipShield@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ShipShield@2x.png"; sourceTree = "<group>"; };
 		B4E221D1192EB3C6003947B7 /* ShipShield_Pop@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ShipShield_Pop@2x.png"; sourceTree = "<group>"; };
 		E14F49A919E41F0A008B727A /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		E1E996E719EC198700B21B5D /* Hamburger.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Hamburger.atlas; sourceTree = "<group>"; };
+		E1E996E919EC21C500B21B5D /* Background_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Background_1@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -332,6 +336,7 @@
 		B45865E718DA154F005C9566 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				E1E996E719EC198700B21B5D /* Hamburger.atlas */,
 				B4242E9819A7E58900192F44 /* BlackHole0.atlas */,
 				B4242E9919A7E58900192F44 /* BlackHole1.atlas */,
 				B4242E9A19A7E58900192F44 /* BlackHole2.atlas */,
@@ -352,6 +357,7 @@
 				B43F4D09192ABB1D0000ACA4 /* Asteroids */,
 				B43F4D0A192ABB280000ACA4 /* Planets */,
 				B45865D718DA153C005C9566 /* Background@2x.png */,
+				E1E996E919EC21C500B21B5D /* Background_1@2x.png */,
 				B4D0732819785F3C0028840D /* Space Mine */,
 				B45865ED18DA6612005C9566 /* LargeStar@2x.png */,
 			);
@@ -586,6 +592,7 @@
 				B4242EA019A7E58900192F44 /* BlackHole0.atlas in Resources */,
 				B4D4B618191FFF4F00834942 /* Planet_0_1@2x.png in Resources */,
 				B4D4B620191FFF4F00834942 /* Planet_2_1@2x.png in Resources */,
+				E1E996EA19EC21C500B21B5D /* Background_1@2x.png in Resources */,
 				B4D4B628191FFF4F00834942 /* Planet_4_1@2x.png in Resources */,
 				B4242EA319A7E58900192F44 /* BlackHole3.atlas in Resources */,
 				B4D4B61A191FFF4F00834942 /* Planet_0_3@2x.png in Resources */,
@@ -620,6 +627,7 @@
 				B43F4D0E192ABB560000ACA4 /* AsteroidShield_Ring_1@2x.png in Resources */,
 				B4D4B626191FFF4F00834942 /* Planet_3_3@2x.png in Resources */,
 				B45865E918DA15C9005C9566 /* Ship@2x.png in Resources */,
+				E1E996E819EC198700B21B5D /* Hamburger.atlas in Resources */,
 				B4D4B61F191FFF4F00834942 /* Planet_2_0@2x.png in Resources */,
 				B43F4D12192ABB6C0000ACA4 /* AsteroidShield_0@2x.png in Resources */,
 				B4D4B61C191FFF4F00834942 /* Planet_1_1@2x.png in Resources */,
