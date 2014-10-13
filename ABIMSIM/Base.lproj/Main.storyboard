@@ -62,16 +62,35 @@
                                             <action selector="playTouchUpInside:" destination="LVB-YS-i5n" eventType="touchUpInside" id="lhn-XS-D0S"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BaN-7w-xj3">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="HS_0" translatesAutoresizingMaskIntoConstraints="NO" id="aLq-N2-zQN">
+                                        <rect key="frame" x="205" y="265" width="77" height="77"/>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="HS_1" translatesAutoresizingMaskIntoConstraints="NO" id="ao8-0H-pJ0">
+                                        <rect key="frame" x="195" y="256" width="96" height="96"/>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="HS_2" translatesAutoresizingMaskIntoConstraints="NO" id="ukY-Sd-foB">
+                                        <rect key="frame" x="195" y="256" width="96" height="96"/>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HS_3" translatesAutoresizingMaskIntoConstraints="NO" id="jvH-W9-fir">
                                         <rect key="frame" x="191" y="252" width="104" height="104"/>
-                                        <color key="backgroundColor" red="0.6218608055" green="0.0081587810610000006" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BaN-7w-xj3" userLabel="HighScoresButton">
+                                        <rect key="frame" x="191" y="252" width="104" height="104"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="104" id="Ja7-va-oJJ"/>
+                                            <constraint firstAttribute="height" constant="104" id="xnM-pl-gS6"/>
+                                        </constraints>
                                         <state key="normal" image="HighScoresText_0">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <state key="selected" image="HighScoresText_1"/>
                                         <state key="highlighted" image="HighScoresText_1"/>
                                         <connections>
-                                            <action selector="highScoresTapped:" destination="LVB-YS-i5n" eventType="touchUpInside" id="dHH-JK-Eg1"/>
+                                            <action selector="highScoresDeselect:" destination="LVB-YS-i5n" eventType="touchDragExit" id="FeI-Hb-b0s"/>
+                                            <action selector="highScoresSelect:" destination="LVB-YS-i5n" eventType="touchDragEnter" id="Imq-fV-2c7"/>
+                                            <action selector="highScoresSelect:" destination="LVB-YS-i5n" eventType="touchDown" id="Rxe-Lg-iNp"/>
+                                            <action selector="highScoresTouchUpInside:" destination="LVB-YS-i5n" eventType="touchUpInside" id="wGg-DF-hT0"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hbX-uy-bmI">
@@ -112,22 +131,32 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="gpj-bM-Y3C" secondAttribute="bottom" constant="8" id="6Kf-dO-Noe"/>
+                                    <constraint firstItem="BaN-7w-xj3" firstAttribute="centerX" secondItem="ao8-0H-pJ0" secondAttribute="centerX" id="83r-jZ-5PG"/>
                                     <constraint firstItem="3dt-Wg-ZTl" firstAttribute="centerX" secondItem="vnw-Ag-UrA" secondAttribute="centerX" id="Bgx-XU-BaM"/>
                                     <constraint firstItem="3dt-Wg-ZTl" firstAttribute="centerX" secondItem="NzX-9W-FBJ" secondAttribute="centerX" id="F0k-G2-Ac0"/>
+                                    <constraint firstItem="BaN-7w-xj3" firstAttribute="centerY" secondItem="ao8-0H-pJ0" secondAttribute="centerY" id="FE3-Iv-Oyv"/>
                                     <constraint firstItem="3dt-Wg-ZTl" firstAttribute="centerY" secondItem="FOc-3T-Bom" secondAttribute="centerY" id="Fil-WB-a4F"/>
+                                    <constraint firstItem="BaN-7w-xj3" firstAttribute="centerY" secondItem="jvH-W9-fir" secondAttribute="centerY" id="HOC-Yw-YEw"/>
                                     <constraint firstItem="3dt-Wg-ZTl" firstAttribute="centerY" secondItem="vnw-Ag-UrA" secondAttribute="centerY" id="JY5-L1-7S7"/>
                                     <constraint firstItem="tQv-Cc-VFa" firstAttribute="top" secondItem="IQ4-sU-MJz" secondAttribute="bottom" constant="36" id="Lg4-0T-sDP"/>
+                                    <constraint firstItem="BaN-7w-xj3" firstAttribute="top" secondItem="IQ4-sU-MJz" secondAttribute="bottom" constant="143" id="SBv-kP-ycQ"/>
+                                    <constraint firstItem="BaN-7w-xj3" firstAttribute="leading" secondItem="tQv-Cc-VFa" secondAttribute="trailing" constant="8" id="Xqe-aa-TxY"/>
                                     <constraint firstItem="3dt-Wg-ZTl" firstAttribute="centerX" secondItem="tQv-Cc-VFa" secondAttribute="centerX" id="Zln-dQ-ray"/>
                                     <constraint firstItem="IQ4-sU-MJz" firstAttribute="leading" secondItem="r5z-2w-6J3" secondAttribute="leading" id="a6V-Rj-Zve"/>
                                     <constraint firstAttribute="bottom" secondItem="b3O-kq-oA9" secondAttribute="bottom" constant="8" id="aEV-5v-ivx"/>
                                     <constraint firstItem="b3O-kq-oA9" firstAttribute="leading" secondItem="r5z-2w-6J3" secondAttribute="leading" constant="8" id="ba4-DG-gk6"/>
+                                    <constraint firstItem="BaN-7w-xj3" firstAttribute="centerX" secondItem="ukY-Sd-foB" secondAttribute="centerX" id="fA8-Nd-KpD"/>
                                     <constraint firstItem="3dt-Wg-ZTl" firstAttribute="centerX" secondItem="FOc-3T-Bom" secondAttribute="centerX" id="hLC-vy-LR5"/>
                                     <constraint firstItem="tQv-Cc-VFa" firstAttribute="leading" secondItem="r5z-2w-6J3" secondAttribute="leading" constant="25" id="imQ-r7-ZRg"/>
+                                    <constraint firstItem="BaN-7w-xj3" firstAttribute="centerX" secondItem="jvH-W9-fir" secondAttribute="centerX" id="j99-QI-Lbz"/>
                                     <constraint firstAttribute="trailing" secondItem="gpj-bM-Y3C" secondAttribute="trailing" constant="8" id="jHj-Cu-6ut"/>
                                     <constraint firstItem="3dt-Wg-ZTl" firstAttribute="centerY" secondItem="tQv-Cc-VFa" secondAttribute="centerY" id="k1z-S9-4UA"/>
+                                    <constraint firstItem="BaN-7w-xj3" firstAttribute="centerX" secondItem="aLq-N2-zQN" secondAttribute="centerX" id="lfV-tt-Rac"/>
                                     <constraint firstItem="IQ4-sU-MJz" firstAttribute="top" secondItem="r5z-2w-6J3" secondAttribute="top" constant="64" id="syA-rj-8vQ"/>
                                     <constraint firstAttribute="trailing" secondItem="IQ4-sU-MJz" secondAttribute="trailing" id="uOG-dZ-fBt"/>
+                                    <constraint firstItem="BaN-7w-xj3" firstAttribute="centerY" secondItem="aLq-N2-zQN" secondAttribute="centerY" id="vQb-Sc-7FC"/>
                                     <constraint firstItem="3dt-Wg-ZTl" firstAttribute="centerY" secondItem="NzX-9W-FBJ" secondAttribute="centerY" id="weu-st-uLD"/>
+                                    <constraint firstItem="BaN-7w-xj3" firstAttribute="centerY" secondItem="ukY-Sd-foB" secondAttribute="centerY" id="yUR-JK-kk3"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -145,6 +174,10 @@
                     </view>
                     <connections>
                         <outlet property="gameOverView" destination="3oj-Fq-x0F" id="rPs-CQ-Pue"/>
+                        <outlet property="hsRing0" destination="aLq-N2-zQN" id="NQ6-7N-0Tm"/>
+                        <outlet property="hsRing1" destination="ao8-0H-pJ0" id="EDt-ig-cdZ"/>
+                        <outlet property="hsRing2" destination="ukY-Sd-foB" id="KzC-05-oat"/>
+                        <outlet property="hsRing3" destination="jvH-W9-fir" id="zyI-fr-1cJ"/>
                         <outlet property="mainMenuView" destination="r5z-2w-6J3" id="rxb-VL-7er"/>
                         <outlet property="playRing0" destination="NzX-9W-FBJ" id="pAq-b0-CX8"/>
                         <outlet property="playRing1" destination="vnw-Ag-UrA" id="G1z-8p-Td4"/>
@@ -159,6 +192,10 @@
     <resources>
         <image name="CreditsButton_0" width="33" height="10"/>
         <image name="CreditsButton_1" width="33" height="10"/>
+        <image name="HS_0" width="76" height="76"/>
+        <image name="HS_1" width="95" height="96"/>
+        <image name="HS_2" width="95" height="96"/>
+        <image name="HS_3" width="104" height="104"/>
         <image name="HighScoresText_0" width="54" height="38"/>
         <image name="HighScoresText_1" width="55" height="39"/>
         <image name="Logo_TitleScreen" width="287" height="45"/>

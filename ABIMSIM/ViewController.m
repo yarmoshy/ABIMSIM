@@ -233,6 +233,8 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
+#pragma mark - Play Button
+
 -(void)animatePlayButtonSelect:(void(^)(void))completionBlock {
     [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
         [self.playRing3 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1.12, 1.12)];
@@ -313,7 +315,87 @@
     }];
 }
 
-- (IBAction)highScoresTapped:(id)sender {
+#pragma mark - High Scores
+
+-(void)animateHighScoresButtonSelect:(void(^)(void))completionBlock {
+    [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+        [self.hsRing3 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1.12, 1.12)];
+    } completion:nil];
+    [UIView animateWithDuration:0.1 delay:0.025 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+        [self.hsRing2 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1.07, 1.07)];
+    } completion:nil];
+    [UIView animateWithDuration:0.1 delay:0.05 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+        [self.hsRing1 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1.04, 1.04)];
+    } completion:nil];
+    [UIView animateWithDuration:0.1 delay:0.075 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+        [self.hsRing0 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1.04, 1.04)];
+    } completion:^(BOOL finished) {
+        if (completionBlock) {
+            completionBlock();
+        }
+    }];
+}
+
+-(void)animateHighScoresButtonDeselect:(void(^)(void))completionBlock {
+    [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseIn animations:^{
+        [self.hsRing0 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 0.9, 0.9)];
+    } completion:^(BOOL finished) {
+        if (finished) {
+            [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseOut animations:^{
+                [self.hsRing0 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1, 1)];
+            } completion:nil];
+        }
+    }];
+    [UIView animateWithDuration:0.1 delay:0.025 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseIn animations:^{
+        [self.hsRing1 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 0.94, 0.95)];
+    } completion:^(BOOL finished) {
+        if (finished) {
+            [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseOut animations:^{
+                [self.hsRing1 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1, 1)];
+            } completion:nil];
+        }
+    }];
+    [UIView animateWithDuration:0.1 delay:0.05 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseIn animations:^{
+        [self.hsRing2 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 0.94, 0.95)];
+    } completion:^(BOOL finished) {
+        if (finished) {
+            [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseOut animations:^{
+                [self.hsRing2 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1, 1)];
+            } completion:nil];
+        }
+    }];
+    [UIView animateWithDuration:0.1 delay:0.075 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseIn animations:^{
+        [self.hsRing3 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 0.96, 0.96)];
+    } completion:^(BOOL finished) {
+        if (finished) {
+            [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseOut animations:^{
+                [self.hsRing3 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1, 1)];
+            } completion:^(BOOL finished) {
+                if (completionBlock) {
+                    completionBlock();
+                }
+            }];
+        }
+    }];
+}
+
+
+- (IBAction)highScoresSelect:(id)sender {
+    [self animateHighScoresButtonSelect:nil];
+}
+
+- (IBAction)highScoresDeselect:(id)sender {
+    [self animateHighScoresButtonDeselect:nil];
+}
+
+- (IBAction)highScoresTouchUpInside:(id)sender {
+    [self animateHighScoresButtonDeselect:^{
+        //        [UIView animateKeyframesWithDuration:0.5 delay:0 options:0 animations:^{
+        //            self.mainMenuView.alpha = 0;
+        //        } completion:^(BOOL finished) {
+        //            [self.scene transitionFromMainMenu];
+        //        }];
+    }];
 }
 
 - (IBAction)upgradesTapped:(id)sender {

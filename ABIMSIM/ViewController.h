@@ -17,6 +17,10 @@
 @property (weak, nonatomic) IBOutlet UIImageView *playRing2;
 @property (weak, nonatomic) IBOutlet UIImageView *playRing3;
 
+@property (weak, nonatomic) IBOutlet UIImageView *hsRing0;
+@property (weak, nonatomic) IBOutlet UIImageView *hsRing1;
+@property (weak, nonatomic) IBOutlet UIImageView *hsRing2;
+@property (weak, nonatomic) IBOutlet UIImageView *hsRing3;
 
 
 @property (weak, nonatomic) IBOutlet UIView *gameOverView;
@@ -24,11 +28,12 @@
 
 - (IBAction)playSelect:(id)sender;
 - (IBAction)playDeselect:(id)sender;
-
 - (IBAction)playTouchUpInside:(id)sender;
 
+- (IBAction)highScoresSelect:(id)sender;
+- (IBAction)highScoresDeselect:(id)sender;
+- (IBAction)highScoresTouchUpInside:(id)sender;
 
-- (IBAction)highScoresTapped:(id)sender;
 - (IBAction)upgradesTapped:(id)sender;
 
 -(void)showGameOverView;
