@@ -398,7 +398,86 @@
     }];
 }
 
-- (IBAction)upgradesTapped:(id)sender {
+#pragma mark - Upgrades
+
+-(void)animateUpgradesButtonSelect:(void(^)(void))completionBlock {
+    [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+        [self.upgradeRing3 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1.12, 1.12)];
+    } completion:nil];
+    [UIView animateWithDuration:0.1 delay:0.025 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+        [self.upgradeRing2 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1.07, 1.07)];
+    } completion:nil];
+    [UIView animateWithDuration:0.1 delay:0.05 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+        [self.upgradeRing1 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1.04, 1.04)];
+    } completion:nil];
+    [UIView animateWithDuration:0.1 delay:0.075 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+        [self.upgradeRing0 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1.04, 1.04)];
+    } completion:^(BOOL finished) {
+        if (completionBlock) {
+            completionBlock();
+        }
+    }];
+}
+
+-(void)animateUpgradesButtonDeselect:(void(^)(void))completionBlock {
+    [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseIn animations:^{
+        [self.upgradeRing0 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 0.9, 0.9)];
+    } completion:^(BOOL finished) {
+        if (finished) {
+            [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseOut animations:^{
+                [self.upgradeRing0 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1, 1)];
+            } completion:nil];
+        }
+    }];
+    [UIView animateWithDuration:0.1 delay:0.025 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseIn animations:^{
+        [self.upgradeRing1 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 0.94, 0.95)];
+    } completion:^(BOOL finished) {
+        if (finished) {
+            [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseOut animations:^{
+                [self.upgradeRing1 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1, 1)];
+            } completion:nil];
+        }
+    }];
+    [UIView animateWithDuration:0.1 delay:0.05 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseIn animations:^{
+        [self.upgradeRing2 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 0.94, 0.95)];
+    } completion:^(BOOL finished) {
+        if (finished) {
+            [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseOut animations:^{
+                [self.upgradeRing2 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1, 1)];
+            } completion:nil];
+        }
+    }];
+    [UIView animateWithDuration:0.1 delay:0.075 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseIn animations:^{
+        [self.upgradeRing3 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 0.96, 0.96)];
+    } completion:^(BOOL finished) {
+        if (finished) {
+            [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseOut animations:^{
+                [self.upgradeRing3 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1, 1)];
+            } completion:^(BOOL finished) {
+                if (completionBlock) {
+                    completionBlock();
+                }
+            }];
+        }
+    }];
+}
+
+- (IBAction)upgradesSelect:(id)sender {
+    [self animateUpgradesButtonSelect:nil];
+}
+
+- (IBAction)upgradesDeselect:(id)sender {
+    [self animateUpgradesButtonDeselect:nil];
+}
+
+- (IBAction)upgradesTouchUpInside:(id)sender {
+    [self animateUpgradesButtonDeselect:^{
+        //        [UIView animateKeyframesWithDuration:0.5 delay:0 options:0 animations:^{
+        //            self.mainMenuView.alpha = 0;
+        //        } completion:^(BOOL finished) {
+        //            [self.scene transitionFromMainMenu];
+        //        }];
+    }];
 }
 
 -(void)showGameOverView {
