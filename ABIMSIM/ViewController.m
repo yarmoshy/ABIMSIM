@@ -54,6 +54,7 @@
 }
 
 - (IBAction)pauseButtonTapped:(id)sender {
+    if (self.scene.initialPause) return;
     self.scene.paused = !self.scene.paused;
 }
 

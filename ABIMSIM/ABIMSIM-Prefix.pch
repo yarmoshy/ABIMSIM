@@ -39,6 +39,8 @@
     #define kPlanet4Hit @"kPlanet4Hit"
     #define kPlanet5Hit @"kPlanet5Hit"
 
+    #define kWalkthroughSeen @"kWalkthroughSeen"
+
     #define ABIMSIMDefaults [NSUserDefaults standardUserDefaults]
 
 #endif

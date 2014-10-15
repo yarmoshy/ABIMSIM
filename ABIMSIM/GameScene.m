@@ -29,6 +29,9 @@ static NSString* shipImageSpriteName = @"shipImageSprite";
 static NSString* shipShieldSpriteName = @"shipShieldSprite";
 static NSString* sunObjectSpriteName = @"sunObjectSpriteName";
 static NSString* directionsSpriteName = @"directionsSpriteName";
+static NSString* directionsSecondarySpriteName = @"directionsSecondarySpriteName";
+static NSString* directionsSecondaryBlinkingSpriteName = @"directionsSecondaryBlinkingSpriteName";
+
 static NSString* pauseSpriteName = @"pauseSpriteName";
 static NSString* upgradeSpriteName = @"upgradeSpriteName";
 static NSString* gameCenterSpriteName = @"gameCenterSpriteName";
@@ -121,7 +124,6 @@ static const uint32_t powerUpSpaceMineExplodingRingCategory = 0x1 << 12;
     int currentLevel;
     BOOL shipWarping;
     BOOL hasShield;
-    BOOL initialPause;
     
     NSInteger shieldHitPoints;
     NSInteger shieldFireHitPoints;
@@ -147,6 +149,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
     if (self = [super initWithSize:size]) {
         /* Setup your scene here */
         [ABIMSIMDefaults setInteger:10 forKey:kMineOccuranceLevel];
+        [ABIMSIMDefaults setBool:NO forKey:kWalkthroughSeen];
+
         [ABIMSIMDefaults synchronize];
         
         lastTimeHit = 0;
@@ -238,9 +242,26 @@ CGFloat DegreesToRadians(CGFloat degrees)
     [self childNodeWithName:levelNodeName].alpha = 0;
     flickRecognizer.enabled = YES;
     [[self childNodeWithName:shipCategoryName] runAction:[SKAction moveTo:CGPointMake(self.frame.size.width/2, ((SKSpriteNode*)[self childNodeWithName:shipCategoryName]).size.height*2) duration:0.5] completion:^{
-        self.paused = YES;
-        initialPause = YES;
+        self.paused = NO;
+        self.initialPause = YES;
     }];
+    SKAction *move = [SKAction moveTo:CGPointMake(self.frame.size.width/2, self.frame.size.height/2 + ((SKSpriteNode*)[self childNodeWithName:directionsSpriteName]).size.height) duration:0.5];
+    SKAction *alphaIn = [SKAction fadeAlphaTo:1 duration:0.5];
+    SKAction *group = [SKAction group:@[move, alphaIn]];
+    [[self childNodeWithName:directionsSpriteName] runAction:group completion:^{
+        for (SKSpriteNode *direction in [self children]) {
+            if ([direction.name isEqualToString:directionsSecondarySpriteName]) {
+                [direction runAction:[SKAction sequence:@[[SKAction waitForDuration:1],alphaIn]]];
+            } else if ([direction.name isEqualToString:directionsSecondaryBlinkingSpriteName]) {
+                SKAction *wait = [SKAction waitForDuration:1];
+                SKAction *alphaIn = [SKAction fadeAlphaTo:1 duration:1];
+                SKAction *alphaOut = [SKAction fadeAlphaTo:0 duration:1];
+                SKAction *sequence = [SKAction sequence:@[alphaIn, alphaOut, [SKAction waitForDuration:0.5]]];
+                [direction runAction:[SKAction sequence:@[wait,[SKAction repeatActionForever:sequence]]]];
+            }
+        }
+    }];
+
     [UIView animateWithDuration:0.25 delay:0 options:0 animations:^{
         self.viewController.pauseButton.alpha = 1;
         [self childNodeWithName:levelNodeName].alpha = 1;
@@ -293,6 +314,26 @@ CGFloat DegreesToRadians(CGFloat degrees)
             [self.viewController showGameOverView];
         }
         return;
+    }
+    if (![ABIMSIMDefaults boolForKey:kWalkthroughSeen]) {
+        if (currentLevel == 2) {
+            SKSpriteNode *directions = [SKSpriteNode spriteNodeWithImageNamed:@"Instructions_Screen2"];
+            directions.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2 + directions.size.height * 2);
+            [self addChild:directions];
+            directions.alpha = 0;
+            directions.zPosition = 100;
+            directions.name = directionsSpriteName;
+
+            SKAction *move = [SKAction moveTo:CGPointMake(self.frame.size.width/2, self.frame.size.height/2 + ((SKSpriteNode*)[self childNodeWithName:directionsSpriteName]).size.height/2) duration:0.5];
+            SKAction *alphaIn = [SKAction fadeAlphaTo:1 duration:0.5];
+            SKAction *group = [SKAction group:@[move, alphaIn]];
+            [[self childNodeWithName:directionsSpriteName] runAction:group completion:^{
+                self.paused = YES;
+                self.initialPause = YES;
+            }];
+            [ABIMSIMDefaults setBool:YES forKey:kWalkthroughSeen];
+            [ABIMSIMDefaults synchronize];
+        }
     }
     if (self.reset) {
         [self resetWorld];
@@ -616,13 +657,10 @@ CGFloat DegreesToRadians(CGFloat degrees)
 #pragma mark - Touch Handling
 
 -(void)handlePanGesture:(UIPanGestureRecognizer*)recognizer {
-    if (recognizer.state != UIGestureRecognizerStateEnded || (self.paused && !initialPause)) {
+    if (recognizer.state != UIGestureRecognizerStateEnded || (self.paused && !self.initialPause)) {
         return;
     }
     lastLevelPanned = currentLevel;
-    if (currentLevel == 1) {
-        [self removeOverlayChildren];
-    }
     CGPoint addVelocity = [recognizer velocityInView:recognizer.view];
     CGPoint newVelocity = addVelocity;
     float velocity = sqrtf(powf(newVelocity.x, 2) + powf(newVelocity.y, 2));
@@ -633,9 +671,10 @@ CGFloat DegreesToRadians(CGFloat degrees)
         newVelocity.x = MIN_VELOCITY * ( newVelocity.x / velocity );
         newVelocity.y = MIN_VELOCITY * ( newVelocity.y / velocity );
     }
-    if (initialPause) {
-        initialPause = NO;
+    if (self.initialPause) {
+        self.initialPause = NO;
         self.paused = NO;
+        [self removeOverlayChildren];
     }
     [self childNodeWithName:shipCategoryName].physicsBody.velocity = CGVectorMake(newVelocity.x, -newVelocity.y);
 }
@@ -1365,52 +1404,42 @@ CGFloat DegreesToRadians(CGFloat degrees)
         }
     }
     if (currentLevel == 1 && !self.reset) {
-        SKLabelNode *direction = [SKLabelNode labelNodeWithFontNamed:@"Voltaire"];
-        direction.text = @"Propel the ship by flicking any direction.";
-        direction.fontSize = 16;
-        direction.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
-        direction.zPosition = 100;
-        [self addChild:direction];
-        direction.name = directionsSpriteName;
+        SKSpriteNode *directions = [SKSpriteNode spriteNodeWithImageNamed:@"Instructions_Screen1"];
+        directions.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2 + directions.size.height * 2);
+        [self addChild:directions];
+        directions.alpha = 0;
+        directions.zPosition = 100;
+        directions.name = directionsSpriteName;
         
-        SKLabelNode *direction2 = [SKLabelNode labelNodeWithFontNamed:@"Voltaire"];
-        direction2.text = @"Avoid asteroids on your way to the worm hole!";
-        direction2.fontSize = 16;
-        direction2.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2 - 20);
-        direction2.zPosition = 100;
-        [self addChild:direction2];
-        direction2.name = directionsSpriteName;
-        
-//        SKSpriteNode *upgradeButton = [SKSpriteNode spriteNodeWithImageNamed:@"UpgradesButton"];
-//        upgradeButton.name = upgradeSpriteName;
-//        upgradeButton.zPosition = 100;
-//        [self addChild:upgradeButton];
-//        upgradeButton.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2 - 50);
-//        
-//        SKSpriteNode *gameCenterButton = [SKSpriteNode spriteNodeWithImageNamed:@"game-center-hero"];
-//        gameCenterButton.name = gameCenterSpriteName;
-//        gameCenterButton.zPosition = 100;
-//        [self addChild:gameCenterButton];
-//        gameCenterButton.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2 - 100);
-//
-//        SKSpriteNode *twitterButton = [SKSpriteNode spriteNodeWithImageNamed:@"Twitter"];
-//        twitterButton.name = twitterSpriteName;
-//        twitterButton.zPosition = 100;
-//        [self addChild:twitterButton];
-//        twitterButton.position = CGPointMake(self.frame.size.width/2 - 100, self.frame.size.height/2 - 100);
-//
-//        SKSpriteNode *facebookButton = [SKSpriteNode spriteNodeWithImageNamed:@"Facebook"];
-//        facebookButton.name = facebokSpriteName;
-//        facebookButton.zPosition = 100;
-//        [self addChild:facebookButton];
-//        facebookButton.position = CGPointMake(self.frame.size.width/2 + 100, self.frame.size.height/2 - 100);
+        SKSpriteNode *swipeToStart = [SKSpriteNode spriteNodeWithImageNamed:@"SwipeToStartText"];
+        swipeToStart.position = CGPointMake(self.frame.size.width/2, ((SKSpriteNode*)[self childNodeWithName:shipCategoryName]).size.height*3 - swipeToStart.size.height);
+        [self addChild:swipeToStart];
+        swipeToStart.alpha = 0;
+        swipeToStart.name = directionsSecondarySpriteName;
 
+        SKSpriteNode *shipDashedLine = [SKSpriteNode spriteNodeWithImageNamed:@"ShipDashedLine"];
+        shipDashedLine.position = CGPointMake(self.frame.size.width/2, ((SKSpriteNode*)[self childNodeWithName:shipCategoryName]).size.height*2);
+        [self addChild:shipDashedLine];
+        shipDashedLine.alpha = 0;
+        shipDashedLine.name = directionsSecondaryBlinkingSpriteName;
+
+        SKSpriteNode *goalDashedLine = [SKSpriteNode spriteNodeWithImageNamed:@"TopDashedLine"];
+        goalDashedLine.position = CGPointMake(self.frame.size.width/2, self.frame.size.height - goalDashedLine.size.height);
+        [self addChild:goalDashedLine];
+        goalDashedLine.alpha = 0;
+        goalDashedLine.name = directionsSecondaryBlinkingSpriteName;
     }
 }
 
 -(void)removeOverlayChildren {
     while ([self childNodeWithName:directionsSpriteName]) {
         [[self childNodeWithName:directionsSpriteName] removeFromParent];
+    }
+    while ([self childNodeWithName:directionsSecondarySpriteName]) {
+        [[self childNodeWithName:directionsSecondarySpriteName] removeFromParent];
+    }
+    while ([self childNodeWithName:directionsSecondaryBlinkingSpriteName]) {
+        [[self childNodeWithName:directionsSecondaryBlinkingSpriteName] removeFromParent];
     }
     while ([self childNodeWithName:upgradeSpriteName]) {
         [[self childNodeWithName:upgradeSpriteName] removeFromParent];
@@ -1424,7 +1453,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
     while ([self childNodeWithName:twitterSpriteName]) {
         [[self childNodeWithName:twitterSpriteName] removeFromParent];
     }
-
 }
 
 -(SKSpriteNode*)randomizeSprite:(SKSpriteNode*)sprite {
@@ -1697,6 +1725,10 @@ CGFloat DegreesToRadians(CGFloat degrees)
     for (int j = 0; j < numOfAsteroids; j++) {
         SKSpriteNode *asteroid = [self randomAsteroidForLevel:level];
         [self randomizeSprite:asteroid];
+        if (level == 1) {
+            asteroid.position = CGPointMake(asteroid.position.x, self.frame.size.height/4 * 3);
+            asteroid.physicsBody.velocity = CGVectorMake(0, 0);
+        }
         asteroid.hidden = YES;
         [asteroids addObject:asteroid];
     }

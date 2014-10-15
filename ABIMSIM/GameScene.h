@@ -13,6 +13,7 @@
 @interface GameScene : SKScene <SKPhysicsContactDelegate>
 @property (strong, nonatomic) ViewController *viewController;
 @property (assign, nonatomic) BOOL reset;
+@property (assign, nonatomic) BOOL initialPause;
 
 -(void)transitionFromMainMenu;
 
