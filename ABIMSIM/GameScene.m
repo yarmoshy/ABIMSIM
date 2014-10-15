@@ -121,6 +121,7 @@ static const uint32_t powerUpSpaceMineExplodingRingCategory = 0x1 << 12;
     int currentLevel;
     BOOL shipWarping;
     BOOL hasShield;
+    BOOL initialPause;
     
     NSInteger shieldHitPoints;
     NSInteger shieldFireHitPoints;
@@ -211,16 +212,12 @@ CGFloat DegreesToRadians(CGFloat degrees)
         SKLabelNode *level = [[SKLabelNode alloc] initWithFontNamed:@"ariel"];
         level.text = [NSString stringWithFormat:@"%d",currentLevel];
         level.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeLeft;
+        level.position = CGPointMake(15, 15);
         level.zPosition = 100;
         level.name = levelNodeName;
+        level.hidden = YES;
         [self addChild:level];
-        
-        SKSpriteNode *pauseButton = [SKSpriteNode spriteNodeWithImageNamed:@"Pause"];
-        pauseButton.name = pauseSpriteName;
-        pauseButton.zPosition = 100;
-        [self addChild:pauseButton];
-        pauseButton.position = CGPointMake(size.width - pauseButton.size.width/2, pauseButton.size.height/2);
-        
+                
         [self addChild:ship];
         [self updateShipPhysics];
         [self childNodeWithName:shipCategoryName].physicsBody.collisionBitMask = borderCategory | asteroidCategory | planetCategory;
@@ -235,8 +232,21 @@ CGFloat DegreesToRadians(CGFloat degrees)
 -(void)transitionFromMainMenu {
     [self transitionStars];
     [self showCurrentSprites];
+    self.viewController.pauseButton.hidden = NO;
+    self.viewController.pauseButton.alpha = 0;
+    [self childNodeWithName:levelNodeName].hidden = NO;
+    [self childNodeWithName:levelNodeName].alpha = 0;
     flickRecognizer.enabled = YES;
-    [[self childNodeWithName:shipCategoryName] runAction:[SKAction moveTo:CGPointMake(self.frame.size.width/2, ((SKSpriteNode*)[self childNodeWithName:shipCategoryName]).size.height*2) duration:0.5]];
+    [[self childNodeWithName:shipCategoryName] runAction:[SKAction moveTo:CGPointMake(self.frame.size.width/2, ((SKSpriteNode*)[self childNodeWithName:shipCategoryName]).size.height*2) duration:0.5] completion:^{
+        self.paused = YES;
+        initialPause = YES;
+    }];
+    [UIView animateWithDuration:0.25 delay:0 options:0 animations:^{
+        self.viewController.pauseButton.alpha = 1;
+        [self childNodeWithName:levelNodeName].alpha = 1;
+    } completion:^(BOOL finished) {
+        ;
+    }];
 }
 
 -(void)transitionToMainMenu {
@@ -603,27 +613,10 @@ CGFloat DegreesToRadians(CGFloat degrees)
     }
 }
 
-- (void) showGameCenter {
-    GKGameCenterViewController *gameCenterController = [[GKGameCenterViewController alloc] init];
-    if (gameCenterController != nil)
-    {
-        gameCenterController.gameCenterDelegate = self;
-        self.paused = YES;
-        [self.viewController presentViewController: gameCenterController animated: YES completion:nil];
-    }
-}
-
-- (void)gameCenterViewControllerDidFinish:(GKGameCenterViewController *)gameCenterViewController {
-    [self.viewController dismissViewControllerAnimated:YES completion:^{
-        self.paused = NO;
-    }];
-}
-
-
 #pragma mark - Touch Handling
 
 -(void)handlePanGesture:(UIPanGestureRecognizer*)recognizer {
-    if (recognizer.state != UIGestureRecognizerStateEnded || self.paused) {
+    if (recognizer.state != UIGestureRecognizerStateEnded || (self.paused && !initialPause)) {
         return;
     }
     lastLevelPanned = currentLevel;
@@ -640,46 +633,50 @@ CGFloat DegreesToRadians(CGFloat degrees)
         newVelocity.x = MIN_VELOCITY * ( newVelocity.x / velocity );
         newVelocity.y = MIN_VELOCITY * ( newVelocity.y / velocity );
     }
+    if (initialPause) {
+        initialPause = NO;
+        self.paused = NO;
+    }
     [self childNodeWithName:shipCategoryName].physicsBody.velocity = CGVectorMake(newVelocity.x, -newVelocity.y);
 }
 
 
--(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    /* Called when a touch begins */
-}
-
--(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-    UITouch *touch = [touches anyObject];
-    CGPoint location = [touch locationInNode:self];
-    SKNode *node = [self nodeAtPoint:location];
-    if ([node.name isEqualToString:pauseSpriteName]) {
-        [self pauseTapped:nil];
-    }
-    if ([node.name isEqualToString:upgradeSpriteName]) {
-        [self upgradeTapped:nil];
-    }
-    if ([node.name isEqualToString:gameCenterSpriteName]) {
-        [self showGameCenter];
-    }
-    if ([node.name isEqualToString:twitterSpriteName]) {
-        if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter])
-        {
-            SLComposeViewController *tweetSheetOBJ = [SLComposeViewController
-                                                      composeViewControllerForServiceType:SLServiceTypeTwitter];
-            [tweetSheetOBJ setInitialText:[NSString stringWithFormat:@"I'm playing ABIMSIM! Check it out! %@",appStoreLink]];
-            [self.viewController presentViewController:tweetSheetOBJ animated:YES completion:nil];
-        }
-    }
-    if ([node.name isEqualToString:facebokSpriteName]) {
-        if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook])
-        {
-            SLComposeViewController *facebookSheetOBJ = [SLComposeViewController
-                                                      composeViewControllerForServiceType:SLServiceTypeFacebook];
-            [facebookSheetOBJ setInitialText:[NSString stringWithFormat:@"I'm playing ABIMSIM! Check it out! %@",appStoreLink]];
-            [self.viewController presentViewController:facebookSheetOBJ animated:YES completion:nil];
-        }
-    }
-}
+//-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+//    /* Called when a touch begins */
+//}
+//
+//-(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+//    UITouch *touch = [touches anyObject];
+//    CGPoint location = [touch locationInNode:self];
+//    SKNode *node = [self nodeAtPoint:location];
+//    if ([node.name isEqualToString:pauseSpriteName]) {
+//        [self pauseTapped:nil];
+//    }
+//    if ([node.name isEqualToString:upgradeSpriteName]) {
+//        [self upgradeTapped:nil];
+//    }
+//    if ([node.name isEqualToString:gameCenterSpriteName]) {
+//        [self showGameCenter];
+//    }
+//    if ([node.name isEqualToString:twitterSpriteName]) {
+//        if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter])
+//        {
+//            SLComposeViewController *tweetSheetOBJ = [SLComposeViewController
+//                                                      composeViewControllerForServiceType:SLServiceTypeTwitter];
+//            [tweetSheetOBJ setInitialText:[NSString stringWithFormat:@"I'm playing ABIMSIM! Check it out! %@",appStoreLink]];
+//            [self.viewController presentViewController:tweetSheetOBJ animated:YES completion:nil];
+//        }
+//    }
+//    if ([node.name isEqualToString:facebokSpriteName]) {
+//        if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook])
+//        {
+//            SLComposeViewController *facebookSheetOBJ = [SLComposeViewController
+//                                                      composeViewControllerForServiceType:SLServiceTypeFacebook];
+//            [facebookSheetOBJ setInitialText:[NSString stringWithFormat:@"I'm playing ABIMSIM! Check it out! %@",appStoreLink]];
+//            [self.viewController presentViewController:facebookSheetOBJ animated:YES completion:nil];
+//        }
+//    }
+//}
 
 
 
@@ -1384,29 +1381,29 @@ CGFloat DegreesToRadians(CGFloat degrees)
         [self addChild:direction2];
         direction2.name = directionsSpriteName;
         
-        SKSpriteNode *upgradeButton = [SKSpriteNode spriteNodeWithImageNamed:@"UpgradesButton"];
-        upgradeButton.name = upgradeSpriteName;
-        upgradeButton.zPosition = 100;
-        [self addChild:upgradeButton];
-        upgradeButton.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2 - 50);
-        
-        SKSpriteNode *gameCenterButton = [SKSpriteNode spriteNodeWithImageNamed:@"game-center-hero"];
-        gameCenterButton.name = gameCenterSpriteName;
-        gameCenterButton.zPosition = 100;
-        [self addChild:gameCenterButton];
-        gameCenterButton.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2 - 100);
-
-        SKSpriteNode *twitterButton = [SKSpriteNode spriteNodeWithImageNamed:@"Twitter"];
-        twitterButton.name = twitterSpriteName;
-        twitterButton.zPosition = 100;
-        [self addChild:twitterButton];
-        twitterButton.position = CGPointMake(self.frame.size.width/2 - 100, self.frame.size.height/2 - 100);
-
-        SKSpriteNode *facebookButton = [SKSpriteNode spriteNodeWithImageNamed:@"Facebook"];
-        facebookButton.name = facebokSpriteName;
-        facebookButton.zPosition = 100;
-        [self addChild:facebookButton];
-        facebookButton.position = CGPointMake(self.frame.size.width/2 + 100, self.frame.size.height/2 - 100);
+//        SKSpriteNode *upgradeButton = [SKSpriteNode spriteNodeWithImageNamed:@"UpgradesButton"];
+//        upgradeButton.name = upgradeSpriteName;
+//        upgradeButton.zPosition = 100;
+//        [self addChild:upgradeButton];
+//        upgradeButton.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2 - 50);
+//        
+//        SKSpriteNode *gameCenterButton = [SKSpriteNode spriteNodeWithImageNamed:@"game-center-hero"];
+//        gameCenterButton.name = gameCenterSpriteName;
+//        gameCenterButton.zPosition = 100;
+//        [self addChild:gameCenterButton];
+//        gameCenterButton.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2 - 100);
+//
+//        SKSpriteNode *twitterButton = [SKSpriteNode spriteNodeWithImageNamed:@"Twitter"];
+//        twitterButton.name = twitterSpriteName;
+//        twitterButton.zPosition = 100;
+//        [self addChild:twitterButton];
+//        twitterButton.position = CGPointMake(self.frame.size.width/2 - 100, self.frame.size.height/2 - 100);
+//
+//        SKSpriteNode *facebookButton = [SKSpriteNode spriteNodeWithImageNamed:@"Facebook"];
+//        facebookButton.name = facebokSpriteName;
+//        facebookButton.zPosition = 100;
+//        [self addChild:facebookButton];
+//        facebookButton.position = CGPointMake(self.frame.size.width/2 + 100, self.frame.size.height/2 - 100);
 
     }
 }

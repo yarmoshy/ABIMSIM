@@ -10,7 +10,7 @@
 #import <Social/Social.h>
 #import "ViewController.h"
 
-@interface GameScene : SKScene <SKPhysicsContactDelegate, GKGameCenterControllerDelegate>
+@interface GameScene : SKScene <SKPhysicsContactDelegate>
 @property (strong, nonatomic) ViewController *viewController;
 @property (assign, nonatomic) BOOL reset;
 

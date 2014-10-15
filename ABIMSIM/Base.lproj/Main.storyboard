@@ -17,6 +17,19 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
+                            <button hidden="YES" opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rns-WM-qew" userLabel="PauseButton">
+                                <rect key="frame" x="275" y="523" width="45" height="45"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="ldb-md-CQQ"/>
+                                    <constraint firstAttribute="width" constant="45" id="tV2-HD-0v0"/>
+                                </constraints>
+                                <state key="normal" image="PauseButton">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="pauseButtonTapped:" destination="LVB-YS-i5n" eventType="touchUpInside" id="9MS-x3-jRa"/>
+                                </connections>
+                            </button>
                             <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3oj-Fq-x0F">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -201,6 +214,8 @@
                             <constraint firstAttribute="trailing" secondItem="3oj-Fq-x0F" secondAttribute="trailing" id="p0U-vf-Ryu"/>
                             <constraint firstItem="37M-MY-ajt" firstAttribute="top" secondItem="3oj-Fq-x0F" secondAttribute="bottom" id="pyo-Lz-bxJ"/>
                             <constraint firstItem="r5z-2w-6J3" firstAttribute="leading" secondItem="bdc-N1-crn" secondAttribute="leading" id="vBf-aO-Bge"/>
+                            <constraint firstAttribute="trailing" secondItem="Rns-WM-qew" secondAttribute="trailing" id="wnS-Uj-Fkw"/>
+                            <constraint firstItem="37M-MY-ajt" firstAttribute="top" secondItem="Rns-WM-qew" secondAttribute="bottom" id="xdP-NQ-DcT"/>
                         </constraints>
                     </view>
                     <connections>
@@ -210,6 +225,7 @@
                         <outlet property="hsRing2" destination="ukY-Sd-foB" id="KzC-05-oat"/>
                         <outlet property="hsRing3" destination="jvH-W9-fir" id="zyI-fr-1cJ"/>
                         <outlet property="mainMenuView" destination="r5z-2w-6J3" id="rxb-VL-7er"/>
+                        <outlet property="pauseButton" destination="Rns-WM-qew" id="OaB-M0-QEw"/>
                         <outlet property="playRing0" destination="NzX-9W-FBJ" id="pAq-b0-CX8"/>
                         <outlet property="playRing1" destination="vnw-Ag-UrA" id="G1z-8p-Td4"/>
                         <outlet property="playRing2" destination="3dt-Wg-ZTl" id="Zop-QV-fA4"/>
@@ -235,6 +251,7 @@
         <image name="HighScoresText_0" width="54" height="38"/>
         <image name="HighScoresText_1" width="55" height="39"/>
         <image name="Logo_TitleScreen" width="287" height="45"/>
+        <image name="PauseButton" width="26" height="26"/>
         <image name="PlayText_0" width="69" height="39"/>
         <image name="PlayText_1" width="72" height="42"/>
         <image name="Play_0" width="129" height="129"/>
