@@ -16,21 +16,28 @@
 @property (weak, nonatomic) IBOutlet UIImageView *playRing1;
 @property (weak, nonatomic) IBOutlet UIImageView *playRing2;
 @property (weak, nonatomic) IBOutlet UIImageView *playRing3;
+@property (weak, nonatomic) IBOutlet UIButton *playButton;
 
 @property (weak, nonatomic) IBOutlet UIImageView *hsRing0;
 @property (weak, nonatomic) IBOutlet UIImageView *hsRing1;
 @property (weak, nonatomic) IBOutlet UIImageView *hsRing2;
 @property (weak, nonatomic) IBOutlet UIImageView *hsRing3;
+@property (weak, nonatomic) IBOutlet UIButton *highScoreButton;
 
 @property (weak, nonatomic) IBOutlet UIImageView *upgradeRing0;
 @property (weak, nonatomic) IBOutlet UIImageView *upgradeRing1;
 @property (weak, nonatomic) IBOutlet UIImageView *upgradeRing2;
 @property (weak, nonatomic) IBOutlet UIImageView *upgradeRing3;
+@property (weak, nonatomic) IBOutlet UIButton *upgradeButton;
 
 @property (weak, nonatomic) IBOutlet UIButton *hamburgerButton;
+@property (weak, nonatomic) IBOutlet UIButton *creditsButton;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *hamburgerLeadingConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *hamburgerBottomConstraint;
 @property (weak, nonatomic) IBOutlet UIView *gameOverView;
 @property (strong, nonatomic) GameScene *scene;
 @property (weak, nonatomic) IBOutlet UIButton *pauseButton;
+@property (weak, nonatomic) IBOutlet UIView *buttonContainerView;
 
 - (IBAction)pauseButtonTapped:(id)sender;
 

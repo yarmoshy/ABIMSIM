@@ -21,7 +21,8 @@
 {
     [super viewDidLoad];
     hamburgerFrame = 0;
-
+    self.playButton.exclusiveTouch = self.upgradeButton.exclusiveTouch = self.highScoreButton.exclusiveTouch = self.creditsButton.exclusiveTouch = self.hamburgerButton.exclusiveTouch = YES;
+    
     // Configure the view.
     SKView * skView = (SKView *)self.view;
     skView.showsFPS = NO;
@@ -218,6 +219,7 @@
 }
 
 - (IBAction)highScoresTouchUpInside:(id)sender {
+    [self configureButtonsEnabled:NO];
     [self animateHighScoresButtonDeselect:^{
         [self showGameCenter];
     }];
@@ -230,12 +232,15 @@
         gameCenterController.gameCenterDelegate = self;
         self.scene.paused = YES;
         [self presentViewController: gameCenterController animated: YES completion:nil];
+    } else {
+        [self configureButtonsEnabled:YES];
     }
 }
 
 - (void)gameCenterViewControllerDidFinish:(GKGameCenterViewController *)gameCenterViewController {
     [self dismissViewControllerAnimated:YES completion:^{
         self.scene.paused = NO;
+        [self configureButtonsEnabled:YES];
     }];
 }
 
@@ -322,14 +327,17 @@
     }];
 }
 
-#pragma mark - Hamburger
+#pragma mark - Settings
 
 - (IBAction)hamburgerTapped:(id)sender {
+    [self configureButtonsEnabled:NO];
     if (!hamburgerLink) {
         if (hamburgerFrame) {
             hamburgerLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(animateHamburgerToOriginal)];
+            [self hideSettings];
         } else {
             hamburgerLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(animateHamburgerToX)];
+            [self showSettings];
         }
         [hamburgerLink setFrameInterval:2];
         [hamburgerLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
@@ -356,6 +364,42 @@
         hamburgerLink = nil;
         hamburgerFrame = 0;
     }
+}
+
+-(void)showSettings {
+    [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionAllowAnimatedContent animations:^{
+        self.buttonContainerView.alpha = 0;
+    } completion:^(BOOL finished) {
+        ;
+    }];
+
+    [UIView animateWithDuration:1 delay:0 options:UIViewAnimationOptionAllowAnimatedContent animations:^{
+        self.hamburgerBottomConstraint.constant = self.view.frame.size.height - self.buttonContainerView.frame.origin.y - 62;
+        self.hamburgerLeadingConstraint.constant = self.buttonContainerView.frame.origin.x + self.buttonContainerView.frame.size.width - 62;
+        [self.view layoutIfNeeded];
+    } completion:^(BOOL finished) {
+        if (finished) {
+            [self configureButtonsEnabled:YES];
+        }
+    }];
+}
+
+-(void)hideSettings {
+    [UIView animateWithDuration:0.5 delay:0.5 options:UIViewAnimationOptionAllowAnimatedContent animations:^{
+        self.buttonContainerView.alpha = 1;
+    } completion:^(BOOL finished) {
+        ;
+    }];
+
+    [UIView animateWithDuration:1 delay:0 options:UIViewAnimationOptionAllowAnimatedContent animations:^{
+        self.hamburgerBottomConstraint.constant = 10;
+        self.hamburgerLeadingConstraint.constant = 10;
+        [self.view layoutIfNeeded];
+    } completion:^(BOOL finished) {
+        if (finished) {
+            [self configureButtonsEnabled:YES];
+        }
+    }];
 }
 
 
@@ -407,5 +451,11 @@
     if (recognizer.state == UIGestureRecognizerStateRecognized) {
         [self hideGameOverView];
     }
+}
+
+#pragma mark - UI Helpers
+
+-(void)configureButtonsEnabled:(BOOL)enabled {
+    self.playButton.userInteractionEnabled = self.upgradeButton.userInteractionEnabled = self.highScoreButton.userInteractionEnabled = self.creditsButton.userInteractionEnabled = self.hamburgerButton.userInteractionEnabled = enabled;
 }
 @end
