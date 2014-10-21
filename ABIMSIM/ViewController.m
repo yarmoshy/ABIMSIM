@@ -12,11 +12,15 @@
 #define kBlurBackgroundViewTag 777
 
 
-@implementation ViewController
+@implementation ViewController {
+    CADisplayLink *hamburgerLink;
+    int hamburgerFrame;
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    hamburgerFrame = 0;
 
     // Configure the view.
     SKView * skView = (SKView *)self.view;
@@ -317,6 +321,45 @@
         //        }];
     }];
 }
+
+#pragma mark - Hamburger
+
+- (IBAction)hamburgerTapped:(id)sender {
+    if (!hamburgerLink) {
+        if (hamburgerFrame) {
+            hamburgerLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(animateHamburgerToOriginal)];
+        } else {
+            hamburgerLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(animateHamburgerToX)];
+        }
+        [hamburgerLink setFrameInterval:2];
+        [hamburgerLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+    }
+}
+
+-(void)animateHamburgerToX {
+    NSString *imageName = [NSString stringWithFormat:@"HamburgerToClose_%0*d", 3, hamburgerFrame];
+    [self.hamburgerButton setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
+    hamburgerFrame++;
+    if (hamburgerFrame > 17) {
+        [hamburgerLink removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+        hamburgerLink = nil;
+        hamburgerFrame = 17;
+    }
+}
+
+-(void)animateHamburgerToOriginal {
+    NSString *imageName = [NSString stringWithFormat:@"HamburgerToClose_%0*d", 3, hamburgerFrame];
+    [self.hamburgerButton setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
+    hamburgerFrame--;
+    if (hamburgerFrame < 0) {
+        [hamburgerLink removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+        hamburgerLink = nil;
+        hamburgerFrame = 0;
+    }
+}
+
+
+#pragma mark - Show Other Views
 
 -(void)showGameOverView {
     

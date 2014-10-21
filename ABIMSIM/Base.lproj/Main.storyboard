@@ -137,16 +137,18 @@
                                             <action selector="upgradesTouchUpInside:" destination="LVB-YS-i5n" eventType="touchUpInside" id="cQd-id-aaN"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b3O-kq-oA9">
+                                    <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b3O-kq-oA9">
                                         <rect key="frame" x="10" y="496" width="62" height="62"/>
-                                        <color key="backgroundColor" red="1" green="0.39733492943548387" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="62" id="11B-4t-1rC"/>
                                             <constraint firstAttribute="height" constant="62" id="zcv-oO-XRm"/>
                                         </constraints>
-                                        <state key="normal" title="More">
+                                        <state key="normal" image="HamburgerToClose_000.png">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="hamburgerTapped:" destination="LVB-YS-i5n" eventType="touchUpInside" id="rPg-ZT-w6f"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="bottom" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gpj-bM-Y3C">
                                         <rect key="frame" x="270" y="536" width="50" height="32"/>
@@ -220,6 +222,7 @@
                     </view>
                     <connections>
                         <outlet property="gameOverView" destination="3oj-Fq-x0F" id="rPs-CQ-Pue"/>
+                        <outlet property="hamburgerButton" destination="b3O-kq-oA9" id="u06-7M-sMJ"/>
                         <outlet property="hsRing0" destination="aLq-N2-zQN" id="NQ6-7N-0Tm"/>
                         <outlet property="hsRing1" destination="ao8-0H-pJ0" id="EDt-ig-cdZ"/>
                         <outlet property="hsRing2" destination="ukY-Sd-foB" id="KzC-05-oat"/>
@@ -248,6 +251,7 @@
         <image name="HS_1" width="95" height="96"/>
         <image name="HS_2" width="95" height="96"/>
         <image name="HS_3" width="104" height="104"/>
+        <image name="HamburgerToClose_000.png" width="62" height="62"/>
         <image name="HighScoresText_0" width="54" height="38"/>
         <image name="HighScoresText_1" width="55" height="39"/>
         <image name="Logo_TitleScreen" width="287" height="45"/>

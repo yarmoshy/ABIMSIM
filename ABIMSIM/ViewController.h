@@ -27,9 +27,11 @@
 @property (weak, nonatomic) IBOutlet UIImageView *upgradeRing2;
 @property (weak, nonatomic) IBOutlet UIImageView *upgradeRing3;
 
+@property (weak, nonatomic) IBOutlet UIButton *hamburgerButton;
 @property (weak, nonatomic) IBOutlet UIView *gameOverView;
 @property (strong, nonatomic) GameScene *scene;
 @property (weak, nonatomic) IBOutlet UIButton *pauseButton;
+
 - (IBAction)pauseButtonTapped:(id)sender;
 
 - (IBAction)playSelect:(id)sender;
@@ -43,6 +45,9 @@
 - (IBAction)upgradesSelect:(id)sender;
 - (IBAction)upgradesDeselect:(id)sender;
 - (IBAction)upgradesTouchUpInside:(id)sender;
+
+- (IBAction)hamburgerTapped:(id)sender;
+
 -(void)showGameOverView;
 @end
 
