@@ -8,19 +8,29 @@
 
 #import "ViewController.h"
 #import "GameScene.h"
+#import <objc/runtime.h>
 
 #define kBlurBackgroundViewTag 777
 
 
 @implementation ViewController {
-    CADisplayLink *hamburgerLink;
-    int hamburgerFrame;
+    NSMutableArray *hamburgerToXImages;
+    NSMutableArray *hamburgerToOriginalImages;
+    BOOL showingSettings;
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    hamburgerFrame = 0;
+    showingSettings = NO;
+    hamburgerToXImages = [NSMutableArray array];
+    hamburgerToOriginalImages = [NSMutableArray array];
+    for (int i = 0; i <= 17; i++) {
+        [hamburgerToXImages addObject:[UIImage imageNamed:[NSString stringWithFormat:@"HamburgerToClose_%0*d", 3, i]]];
+    }
+    [hamburgerToXImages enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        [hamburgerToOriginalImages addObject:obj];
+    }];
     self.playButton.exclusiveTouch = self.upgradeButton.exclusiveTouch = self.highScoreButton.exclusiveTouch = self.creditsButton.exclusiveTouch = self.hamburgerButton.exclusiveTouch = YES;
     
     // Configure the view.
@@ -319,11 +329,7 @@
 
 - (IBAction)upgradesTouchUpInside:(id)sender {
     [self animateUpgradesButtonDeselect:^{
-        //        [UIView animateKeyframesWithDuration:0.5 delay:0 options:0 animations:^{
-        //            self.mainMenuView.alpha = 0;
-        //        } completion:^(BOOL finished) {
-        //            [self.scene transitionFromMainMenu];
-        //        }];
+        
     }];
 }
 
@@ -331,39 +337,19 @@
 
 - (IBAction)hamburgerTapped:(id)sender {
     [self configureButtonsEnabled:NO];
-    if (!hamburgerLink) {
-        if (hamburgerFrame) {
-            hamburgerLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(animateHamburgerToOriginal)];
-            [self hideSettings];
-        } else {
-            hamburgerLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(animateHamburgerToX)];
-            [self showSettings];
-        }
-        [hamburgerLink setFrameInterval:2];
-        [hamburgerLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+    if (showingSettings) {
+        [self hideSettings];
+        [self.hamburgerButton.imageView setAnimationImages:hamburgerToOriginalImages];
+        [self.hamburgerButton setImage:hamburgerToOriginalImages.lastObject forState:UIControlStateNormal];
+    } else {
+        [self showSettings];
+        [self.hamburgerButton.imageView setAnimationImages:hamburgerToXImages];
+        [self.hamburgerButton setImage:hamburgerToXImages.lastObject forState:UIControlStateNormal];
     }
-}
-
--(void)animateHamburgerToX {
-    NSString *imageName = [NSString stringWithFormat:@"HamburgerToClose_%0*d", 3, hamburgerFrame];
-    [self.hamburgerButton setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
-    hamburgerFrame++;
-    if (hamburgerFrame > 17) {
-        [hamburgerLink removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
-        hamburgerLink = nil;
-        hamburgerFrame = 17;
-    }
-}
-
--(void)animateHamburgerToOriginal {
-    NSString *imageName = [NSString stringWithFormat:@"HamburgerToClose_%0*d", 3, hamburgerFrame];
-    [self.hamburgerButton setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
-    hamburgerFrame--;
-    if (hamburgerFrame < 0) {
-        [hamburgerLink removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
-        hamburgerLink = nil;
-        hamburgerFrame = 0;
-    }
+    [self.hamburgerButton setHighlighted:NO];
+    [self.hamburgerButton.imageView setAnimationDuration:1];
+    [self.hamburgerButton.imageView setAnimationRepeatCount:1];
+    [self.hamburgerButton.imageView startAnimating];
 }
 
 -(void)showSettings {
@@ -378,9 +364,8 @@
         self.hamburgerLeadingConstraint.constant = self.buttonContainerView.frame.origin.x + self.buttonContainerView.frame.size.width - 62;
         [self.view layoutIfNeeded];
     } completion:^(BOOL finished) {
-        if (finished) {
-            [self configureButtonsEnabled:YES];
-        }
+        showingSettings = YES;
+        [self configureButtonsEnabled:YES];
     }];
 }
 
@@ -396,9 +381,8 @@
         self.hamburgerLeadingConstraint.constant = 10;
         [self.view layoutIfNeeded];
     } completion:^(BOOL finished) {
-        if (finished) {
-            [self configureButtonsEnabled:YES];
-        }
+        showingSettings = NO;
+        [self configureButtonsEnabled:YES];
     }];
 }
 
