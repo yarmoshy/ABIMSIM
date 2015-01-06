@@ -312,6 +312,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
             [self childNodeWithName:shipCategoryName].physicsBody == nil) &&
             self.viewController.gameOverView.alpha == 0 && !self.reset) {
             [self.viewController showGameOverView];
+        } else if (self.viewController.pausedView.alpha == 0 && !self.reset && [self childNodeWithName:shipCategoryName] &&
+                   [self childNodeWithName:shipCategoryName].physicsBody && !self.resuming && !self.initialPause) {
+            [self.viewController showPausedView];
         }
         return;
     }
@@ -657,7 +660,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
 #pragma mark - Touch Handling
 
 -(void)handlePanGesture:(UIPanGestureRecognizer*)recognizer {
-    if (recognizer.state != UIGestureRecognizerStateEnded || (self.paused && !self.initialPause)) {
+    if (recognizer.state != UIGestureRecognizerStateEnded || (self.paused && !self.initialPause )) {
         return;
     }
     lastLevelPanned = currentLevel;

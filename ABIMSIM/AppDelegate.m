@@ -16,6 +16,8 @@
     // Override point for customization after application launch.
     [Crashlytics startWithAPIKey:@"066787c672b57a8fd2a11bcf1e72df26be8cbed5"];
     
+    [ABIMSIMDefaults registerDefaults:@{kMusicSetting:@(YES),kSFXSetting:@(YES)}];
+    
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationNone];
     GKLocalPlayer *localPlayer = [GKLocalPlayer localPlayer];
     

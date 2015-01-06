@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <SpriteKit/SpriteKit.h>
 @class GameScene;
+@class DCRoundSwitch;
 
 @interface ViewController : UIViewController <GKGameCenterControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIView *mainMenuView;
@@ -39,6 +40,22 @@
 @property (weak, nonatomic) IBOutlet UIButton *pauseButton;
 @property (weak, nonatomic) IBOutlet UIView *buttonContainerView;
 
+@property (weak, nonatomic) IBOutlet UIView *pausedView;
+@property (weak, nonatomic) IBOutlet UIImageView *playPausedRing0;
+@property (weak, nonatomic) IBOutlet UIImageView *playPausedRing1;
+@property (weak, nonatomic) IBOutlet UIImageView *playPausedRing2;
+@property (weak, nonatomic) IBOutlet UIImageView *playPausedRing3;
+@property (weak, nonatomic) IBOutlet UIButton *playPausedButton;
+
+@property (weak, nonatomic) IBOutlet UIImageView *mmRing0;
+@property (weak, nonatomic) IBOutlet UIImageView *mmRing1;
+@property (weak, nonatomic) IBOutlet UIImageView *mmRing2;
+@property (weak, nonatomic) IBOutlet UIImageView *mmRing3;
+@property (weak, nonatomic) IBOutlet UIButton *mainMenuButton;
+
+@property (weak, nonatomic) IBOutlet DCRoundSwitch *musicPausedSwitch;
+@property (weak, nonatomic) IBOutlet DCRoundSwitch *sfxPausedSwitch;
+
 - (IBAction)pauseButtonTapped:(id)sender;
 
 - (IBAction)playSelect:(id)sender;
@@ -55,7 +72,16 @@
 
 - (IBAction)hamburgerTapped:(id)sender;
 
+- (IBAction)playPausedSelect:(id)sender;
+- (IBAction)playPausedDeselect:(id)sender;
+- (IBAction)playPausedTouchUpInside:(id)sender;
+
+- (IBAction)mainMenuSelect:(id)sender;
+- (IBAction)mainMenuDeselect:(id)sender;
+- (IBAction)mainMenuTouchUpInside:(id)sender;
+
 -(void)showGameOverView;
+-(void)showPausedView;
 @end
 
 @import Accelerate;

@@ -14,6 +14,7 @@
 @property (strong, nonatomic) ViewController *viewController;
 @property (assign, nonatomic) BOOL reset;
 @property (assign, nonatomic) BOOL initialPause;
+@property (assign, nonatomic) BOOL resuming;
 
 -(void)transitionFromMainMenu;
 

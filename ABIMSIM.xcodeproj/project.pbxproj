@@ -102,6 +102,10 @@
 		B4E221D0192EB356003947B7 /* ShipShield@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4E221CC192EB356003947B7 /* ShipShield@2x.png */; };
 		B4E221D2192EB3C6003947B7 /* ShipShield_Pop@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4E221D1192EB3C6003947B7 /* ShipShield_Pop@2x.png */; };
 		E14F49AA19E41F0A008B727A /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E14F49A919E41F0A008B727A /* Accelerate.framework */; };
+		E1D4EDF51A5B5E5900676C17 /* DCRoundSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = E1D4EDEE1A5B5E5900676C17 /* DCRoundSwitch.m */; };
+		E1D4EDF61A5B5E5900676C17 /* DCRoundSwitchKnobLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E1D4EDF01A5B5E5900676C17 /* DCRoundSwitchKnobLayer.m */; };
+		E1D4EDF71A5B5E5900676C17 /* DCRoundSwitchOutlineLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E1D4EDF21A5B5E5900676C17 /* DCRoundSwitchOutlineLayer.m */; };
+		E1D4EDF81A5B5E5900676C17 /* DCRoundSwitchToggleLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E1D4EDF41A5B5E5900676C17 /* DCRoundSwitchToggleLayer.m */; };
 		E1E996EA19EC21C500B21B5D /* Background_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E1E996E919EC21C500B21B5D /* Background_1@2x.png */; };
 /* End PBXBuildFile section */
 
@@ -219,6 +223,14 @@
 		B4E221CC192EB356003947B7 /* ShipShield@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ShipShield@2x.png"; sourceTree = "<group>"; };
 		B4E221D1192EB3C6003947B7 /* ShipShield_Pop@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ShipShield_Pop@2x.png"; sourceTree = "<group>"; };
 		E14F49A919E41F0A008B727A /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		E1D4EDED1A5B5E5900676C17 /* DCRoundSwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCRoundSwitch.h; sourceTree = "<group>"; };
+		E1D4EDEE1A5B5E5900676C17 /* DCRoundSwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCRoundSwitch.m; sourceTree = "<group>"; };
+		E1D4EDEF1A5B5E5900676C17 /* DCRoundSwitchKnobLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCRoundSwitchKnobLayer.h; sourceTree = "<group>"; };
+		E1D4EDF01A5B5E5900676C17 /* DCRoundSwitchKnobLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCRoundSwitchKnobLayer.m; sourceTree = "<group>"; };
+		E1D4EDF11A5B5E5900676C17 /* DCRoundSwitchOutlineLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCRoundSwitchOutlineLayer.h; sourceTree = "<group>"; };
+		E1D4EDF21A5B5E5900676C17 /* DCRoundSwitchOutlineLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCRoundSwitchOutlineLayer.m; sourceTree = "<group>"; };
+		E1D4EDF31A5B5E5900676C17 /* DCRoundSwitchToggleLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCRoundSwitchToggleLayer.h; sourceTree = "<group>"; };
+		E1D4EDF41A5B5E5900676C17 /* DCRoundSwitchToggleLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCRoundSwitchToggleLayer.m; sourceTree = "<group>"; };
 		E1E996E919EC21C500B21B5D /* Background_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Background_1@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -378,6 +390,7 @@
 		B45FF12F18CE8708001662CD /* ABIMSIM */ = {
 			isa = PBXGroup;
 			children = (
+				E1D4EDEC1A5B5E5900676C17 /* DCRoundSwitch */,
 				B45865EA18DA3ACA005C9566 /* HexColor.h */,
 				B45865EB18DA3ACA005C9566 /* HexColor.m */,
 				B45FF13818CE8708001662CD /* AppDelegate.h */,
@@ -455,6 +468,21 @@
 				B45865E818DA15C9005C9566 /* Ship@2x.png */,
 			);
 			name = Ship;
+			sourceTree = "<group>";
+		};
+		E1D4EDEC1A5B5E5900676C17 /* DCRoundSwitch */ = {
+			isa = PBXGroup;
+			children = (
+				E1D4EDED1A5B5E5900676C17 /* DCRoundSwitch.h */,
+				E1D4EDEE1A5B5E5900676C17 /* DCRoundSwitch.m */,
+				E1D4EDEF1A5B5E5900676C17 /* DCRoundSwitchKnobLayer.h */,
+				E1D4EDF01A5B5E5900676C17 /* DCRoundSwitchKnobLayer.m */,
+				E1D4EDF11A5B5E5900676C17 /* DCRoundSwitchOutlineLayer.h */,
+				E1D4EDF21A5B5E5900676C17 /* DCRoundSwitchOutlineLayer.m */,
+				E1D4EDF31A5B5E5900676C17 /* DCRoundSwitchToggleLayer.h */,
+				E1D4EDF41A5B5E5900676C17 /* DCRoundSwitchToggleLayer.m */,
+			);
+			path = DCRoundSwitch;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -657,9 +685,13 @@
 				B45865EC18DA3ACA005C9566 /* HexColor.m in Sources */,
 				B45FF14318CE8708001662CD /* GameScene.m in Sources */,
 				B45FF14018CE8708001662CD /* ViewController.m in Sources */,
+				E1D4EDF61A5B5E5900676C17 /* DCRoundSwitchKnobLayer.m in Sources */,
+				E1D4EDF51A5B5E5900676C17 /* DCRoundSwitch.m in Sources */,
 				B400F410191AFCA100A483E2 /* UpgradeScene.m in Sources */,
+				E1D4EDF71A5B5E5900676C17 /* DCRoundSwitchOutlineLayer.m in Sources */,
 				B45FF13A18CE8708001662CD /* AppDelegate.m in Sources */,
 				B45FF13618CE8708001662CD /* main.m in Sources */,
+				E1D4EDF81A5B5E5900676C17 /* DCRoundSwitchToggleLayer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

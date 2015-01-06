@@ -41,6 +41,10 @@
 
     #define kWalkthroughSeen @"kWalkthroughSeen"
 
+    #define kMusicSetting @"kMusicSetting"
+    #define kSFXSetting @"kSFXSetting"
+
+
     #define ABIMSIMDefaults [NSUserDefaults standardUserDefaults]
 
 #endif
