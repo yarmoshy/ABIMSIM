@@ -213,7 +213,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         spritesArrays = [NSMutableArray array];
         currentSpriteArray = [NSMutableArray array];
         
-        SKLabelNode *level = [[SKLabelNode alloc] initWithFontNamed:@"ariel"];
+        SKLabelNode *level = [[SKLabelNode alloc] initWithFontNamed:@"Voltaire"];
         level.text = [NSString stringWithFormat:@"%d",currentLevel];
         level.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeLeft;
         level.position = CGPointMake(15, 15);
@@ -268,10 +268,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
     } completion:^(BOOL finished) {
         ;
     }];
-}
-
--(void)transitionToMainMenu {
-    
 }
 
 -(void)didMoveToView:(SKView *)view {
@@ -494,6 +490,11 @@ CGFloat DegreesToRadians(CGFloat degrees)
         SKSpriteNode *explodingRing = (SKSpriteNode*)[explodingMine childNodeWithName:powerUpSpaceMineExplodeRingName];
         [explodingRing removeFromParent];
         [explodedMine removeFromParent];
+    }
+    if (self.transitioningToMenu) {
+        self.transitioningToMenu = NO;
+        self.paused = YES;
+        self.initialPause = YES;
     }
 }
 
@@ -1100,8 +1101,10 @@ CGFloat DegreesToRadians(CGFloat degrees)
     }
     [spritesArrays removeAllObjects];
     
-    [self transitionStars];
-    [self generateInitialLevelsAndShowSprites:YES];
+    if (!self.transitioningToMenu) {
+        [self transitionStars];
+        [self generateInitialLevelsAndShowSprites:YES];
+    }
     shipWarping = YES;
     self.reset = NO;
 

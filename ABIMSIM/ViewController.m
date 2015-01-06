@@ -599,10 +599,17 @@
 
 - (IBAction)mainMenuTouchUpInside:(id)sender {
     [self animateMainMenuButtonDeselect:^{
+        self.scene = [GameScene sceneWithSize:self.view.bounds.size];
+        
+        self.scene.size = self.view.bounds.size;
+        self.scene.scaleMode = SKSceneScaleModeAspectFill;
+        self.scene.viewController = self;
+        // Present the scene.
+        [(SKView*)self.view presentScene:self.scene];
+        self.pauseButton.alpha = 0;
+
         [UIView animateKeyframesWithDuration:0.5 delay:0 options:0 animations:^{
             self.pausedView.alpha = 0;
-            self.scene.reset = YES;
-            self.scene.paused = YES;
         } completion:^(BOOL finished) {
             [[self.pausedView viewWithTag:kBlurBackgroundViewTag] removeFromSuperview];
             [UIView animateKeyframesWithDuration:0.5 delay:0 options:0 animations:^{
