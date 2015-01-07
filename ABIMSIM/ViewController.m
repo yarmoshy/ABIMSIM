@@ -32,7 +32,7 @@
     [hamburgerToXImages enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         [hamburgerToOriginalImages addObject:obj];
     }];
-    self.playButton.exclusiveTouch = self.upgradeButton.exclusiveTouch = self.highScoreButton.exclusiveTouch = self.creditsButton.exclusiveTouch = self.hamburgerButton.exclusiveTouch = YES;
+    self.playButton.exclusiveTouch = self.upgradeButton.exclusiveTouch = self.highScoreButton.exclusiveTouch = self.creditsButton.exclusiveTouch = self.hamburgerButton.exclusiveTouch = self.playPausedButton.exclusiveTouch = self.mainMenuButton.exclusiveTouch = YES;
     self.musicPausedSwitch.on = [ABIMSIMDefaults boolForKey:kMusicSetting];
     if (!self.musicPausedSwitch.on) {
         self.musicPausedSwitch.alpha = kToggleOffAlpha;
@@ -81,7 +81,7 @@
 }
 
 - (IBAction)pauseButtonTapped:(id)sender {
-    if (self.scene.initialPause) return;
+    if (self.scene.initialPause || self.scene.resuming) return;
     self.scene.paused = !self.scene.paused;
 }
 
@@ -102,9 +102,6 @@
     float blurRadius = 5;
     
     blurredBackgroundImageView.image = [screenShot applyBlurWithRadius:blurRadius tintColor:blurTintColor saturationDeltaFactor:blurSaturationDeltaFactor maskImage:nil];
-    
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
-    [self.pausedView addGestureRecognizer:tap];
     
     [self.pausedView insertSubview:blurredBackgroundImageView atIndex:0];
     self.pausedView.backgroundColor = [UIColor clearColor];
@@ -282,7 +279,6 @@
     if (gameCenterController != nil)
     {
         gameCenterController.gameCenterDelegate = self;
-        self.scene.paused = YES;
         [self presentViewController: gameCenterController animated: YES completion:nil];
     } else {
         [self configureButtonsEnabled:YES];
@@ -291,7 +287,6 @@
 
 - (void)gameCenterViewControllerDidFinish:(GKGameCenterViewController *)gameCenterViewController {
     [self dismissViewControllerAnimated:YES completion:^{
-        self.scene.paused = NO;
         [self configureButtonsEnabled:YES];
     }];
 }
@@ -515,13 +510,57 @@
 - (IBAction)playPausedTouchUpInside:(id)sender {
     [self animatePlayPausedButtonDeselect:^{
         self.scene.resuming = YES;
+        [self.view insertSubview:[self.pausedView viewWithTag:kBlurBackgroundViewTag] atIndex:1];
+
         [UIView animateKeyframesWithDuration:0.5 delay:0 options:0 animations:^{
             self.pausedView.alpha = 0;
         } completion:^(BOOL finished) {
-            [[self.pausedView viewWithTag:kBlurBackgroundViewTag] removeFromSuperview];
-            self.scene.resuming = NO;
-            self.scene.paused = NO;
+            ;
         }];
+        UIImageView *ring3 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Play_3"]];
+        UIImageView *ring2 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Play_2"]];
+        UIImageView *ring1 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Play_1"]];
+        UIImageView *ring0 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Play_0"]];
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Countdown_0"]];
+        UIView *resumeView = [[UIView alloc] initWithFrame:ring3.frame];
+        imageView.frame = resumeView.bounds;
+        imageView.contentMode = UIViewContentModeCenter;
+        [resumeView addSubview:ring3];
+        [resumeView addSubview:ring2];
+        [resumeView addSubview:ring1];
+        [resumeView addSubview:ring0];
+        [resumeView addSubview:imageView];
+        ring3.center = ring2.center = ring1.center = ring0.center = imageView.center = CGPointMake(resumeView.frame.size.width/2.f, resumeView.frame.size.height/2.f);
+        resumeView.alpha = 0;
+        resumeView.center = self.view.center;
+        resumeView.userInteractionEnabled = NO;
+        [self.view addSubview:resumeView];
+        [UIView animateWithDuration:0.25 delay:0.25 options:0 animations:^{
+            resumeView.alpha = 1;
+        } completion:^(BOOL finished) {
+            if (finished) {
+                [imageView setImage:[UIImage imageNamed:@"Countdown_3"]];
+                [imageView setAnimationDuration:2.5];
+                [imageView setAnimationRepeatCount:1];
+                [imageView setAnimationImages:@[[UIImage imageNamed:@"Countdown_0"],[UIImage imageNamed:@"Countdown_1"],[UIImage imageNamed:@"Countdown_2"],[UIImage imageNamed:@"Countdown_3"]]];
+                [imageView startAnimating];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [UIView animateWithDuration:0.25 animations:^{
+                        resumeView.alpha = 0;
+                        [[self.view viewWithTag:kBlurBackgroundViewTag] setAlpha:0];
+                    } completion:^(BOOL finished) {
+                        if (finished) {
+                            [[self.view viewWithTag:kBlurBackgroundViewTag] removeFromSuperview];
+                            [resumeView removeFromSuperview];
+                        }
+                    }];
+                });
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    self.scene.resuming = self.scene.paused = NO;
+                });
+            }
+        }];
+
     }];
 }
 

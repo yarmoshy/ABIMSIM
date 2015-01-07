@@ -661,7 +661,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
 #pragma mark - Touch Handling
 
 -(void)handlePanGesture:(UIPanGestureRecognizer*)recognizer {
-    if (recognizer.state != UIGestureRecognizerStateEnded || (self.paused && !self.initialPause )) {
+    if (recognizer.state != UIGestureRecognizerStateEnded || (self.paused && !self.initialPause && !self.resuming)) {
         return;
     }
     lastLevelPanned = currentLevel;
