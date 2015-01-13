@@ -12,7 +12,6 @@
 #import <objc/runtime.h>
 
 #define kBlurBackgroundViewTag 777
-#define kToggleOffAlpha 0.5
 
 @implementation ViewController {
     NSMutableArray *hamburgerToXImages;
@@ -34,14 +33,8 @@
     }];
     self.playButton.exclusiveTouch = self.upgradeButton.exclusiveTouch = self.highScoreButton.exclusiveTouch = self.creditsButton.exclusiveTouch = self.hamburgerButton.exclusiveTouch = self.playPausedButton.exclusiveTouch = self.mainMenuButton.exclusiveTouch = YES;
     self.musicPausedSwitch.on = [ABIMSIMDefaults boolForKey:kMusicSetting];
-    if (!self.musicPausedSwitch.on) {
-        self.musicPausedSwitch.alpha = kToggleOffAlpha;
-    }
     [self.musicPausedSwitch addTarget:self action:@selector(musicSwitchToggled:) forControlEvents:UIControlEventValueChanged];
     self.sfxPausedSwitch.on = [ABIMSIMDefaults boolForKey:kSFXSetting];
-    if (!self.sfxPausedSwitch.on) {
-        self.sfxPausedSwitch.alpha = kToggleOffAlpha;
-    }
 
     [self.sfxPausedSwitch addTarget:self action:@selector(sfxSwitchToggled:) forControlEvents:UIControlEventValueChanged];
 
@@ -426,13 +419,11 @@
 -(void)musicSwitchToggled:(DCRoundSwitch*)toggle {
     [ABIMSIMDefaults setBool:toggle.on forKey:kMusicSetting];
     [ABIMSIMDefaults synchronize];
-    toggle.alpha = toggle.on ?: kToggleOffAlpha;
 }
 
 -(void)sfxSwitchToggled:(DCRoundSwitch*)toggle {
     [ABIMSIMDefaults setBool:toggle.on forKey:kSFXSetting];
     [ABIMSIMDefaults synchronize];
-    toggle.alpha = toggle.on ?: kToggleOffAlpha;
 }
 
 #pragma mark - Paused Play Button

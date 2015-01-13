@@ -14,5 +14,6 @@
 @interface DCRoundSwitchKnobLayer : CALayer
 
 @property (nonatomic) BOOL gripped;
+@property (nonatomic) BOOL off;
 
 @end

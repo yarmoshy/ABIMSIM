@@ -330,6 +330,9 @@
 {
 	BOOL previousOn = self.on;
 	on = newOn;
+    self.knobLayer.off = !on;
+    self.outlineLayer.off = !on;
+    self.toggleLayer.off = !on;
 	self.ignoreTap = YES;
 
 	[CATransaction setAnimationDuration:0.014];
@@ -383,7 +386,7 @@
 			if (previousOn != on && !ignoreControlEvents)
 				[self sendActionsForControlEvents:UIControlEventValueChanged];
 		}];
-
+        [self.outlineLayer setNeedsDisplay];
 		[CATransaction commit];
 	}];
 }

@@ -242,10 +242,10 @@ CGFloat DegreesToRadians(CGFloat degrees)
     self.viewController.pauseButton.alpha = 0;
     [self childNodeWithName:levelNodeName].hidden = NO;
     [self childNodeWithName:levelNodeName].alpha = 0;
-    flickRecognizer.enabled = YES;
     [[self childNodeWithName:shipCategoryName] runAction:[SKAction moveTo:CGPointMake(self.frame.size.width/2, ((SKSpriteNode*)[self childNodeWithName:shipCategoryName]).size.height*2) duration:0.5] completion:^{
         self.paused = NO;
         self.initialPause = YES;
+        flickRecognizer.enabled = YES;
     }];
     SKAction *move = [SKAction moveTo:CGPointMake(self.frame.size.width/2, self.frame.size.height/2 + ((SKSpriteNode*)[self childNodeWithName:directionsSpriteName]).size.height) duration:0.5];
     SKAction *alphaIn = [SKAction fadeAlphaTo:1 duration:0.5];
@@ -310,15 +310,14 @@ CGFloat DegreesToRadians(CGFloat degrees)
             [self childNodeWithName:shipCategoryName].physicsBody == nil) &&
             self.viewController.gameOverView.alpha == 0 && !self.reset) {
             [self.viewController showGameOverView];
-        } else if (self.viewController.pausedView.alpha == 0 && !self.reset && [self childNodeWithName:shipCategoryName] &&
-                   [self childNodeWithName:shipCategoryName].physicsBody && !self.resuming && !self.initialPause) {
+        } else if (self.viewController.pausedView.alpha == 0 && !self.reset && [self childNodeWithName:shipCategoryName] && [self childNodeWithName:shipCategoryName].physicsBody && !self.resuming && !self.initialPause) {
             [self.viewController showPausedView];
             flickRecognizer.enabled = NO;
+        } else if (!flickRecognizer.enabled && self.resuming) {
+            flickRecognizer.enabled = YES;
         }
+
         return;
-    }
-    if (!flickRecognizer.enabled) {
-        flickRecognizer.enabled = YES;
     }
     if (![ABIMSIMDefaults boolForKey:kWalkthroughSeen]) {
         if (currentLevel == 2) {

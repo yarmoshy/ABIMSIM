@@ -12,5 +12,6 @@
 #import <QuartzCore/QuartzCore.h>
 
 @interface DCRoundSwitchOutlineLayer : CALayer
+@property (nonatomic) BOOL off;
 
 @end
