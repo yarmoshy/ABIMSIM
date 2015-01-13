@@ -12,6 +12,9 @@
 @class DCRoundSwitch;
 
 @interface ViewController : UIViewController <GKGameCenterControllerDelegate>
+
+#pragma mark - Main Menu
+
 @property (weak, nonatomic) IBOutlet UIView *mainMenuView;
 @property (weak, nonatomic) IBOutlet UIImageView *playRing0;
 @property (weak, nonatomic) IBOutlet UIImageView *playRing1;
@@ -40,6 +43,28 @@
 @property (weak, nonatomic) IBOutlet UIButton *pauseButton;
 @property (weak, nonatomic) IBOutlet UIView *buttonContainerView;
 
+- (IBAction)playSelect:(id)sender;
+- (IBAction)playDeselect:(id)sender;
+- (IBAction)playTouchUpInside:(id)sender;
+
+- (IBAction)highScoresSelect:(id)sender;
+- (IBAction)highScoresDeselect:(id)sender;
+- (IBAction)highScoresTouchUpInside:(id)sender;
+
+- (IBAction)upgradesSelect:(id)sender;
+- (IBAction)upgradesDeselect:(id)sender;
+- (IBAction)upgradesTouchUpInside:(id)sender;
+
+- (IBAction)hamburgerTapped:(id)sender;
+
+
+#pragma mark - Settings
+@property (weak, nonatomic) IBOutlet UIView *settingsContainerView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *settingsContainerTopAlignmentConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *settingsContainerTrailingConstraint;
+
+
+#pragma mark - Paused
 @property (weak, nonatomic) IBOutlet UIView *pausedView;
 @property (weak, nonatomic) IBOutlet UIImageView *playPausedRing0;
 @property (weak, nonatomic) IBOutlet UIImageView *playPausedRing1;
@@ -56,22 +81,6 @@
 @property (weak, nonatomic) IBOutlet DCRoundSwitch *musicPausedSwitch;
 @property (weak, nonatomic) IBOutlet DCRoundSwitch *sfxPausedSwitch;
 
-- (IBAction)pauseButtonTapped:(id)sender;
-
-- (IBAction)playSelect:(id)sender;
-- (IBAction)playDeselect:(id)sender;
-- (IBAction)playTouchUpInside:(id)sender;
-
-- (IBAction)highScoresSelect:(id)sender;
-- (IBAction)highScoresDeselect:(id)sender;
-- (IBAction)highScoresTouchUpInside:(id)sender;
-
-- (IBAction)upgradesSelect:(id)sender;
-- (IBAction)upgradesDeselect:(id)sender;
-- (IBAction)upgradesTouchUpInside:(id)sender;
-
-- (IBAction)hamburgerTapped:(id)sender;
-
 - (IBAction)playPausedSelect:(id)sender;
 - (IBAction)playPausedDeselect:(id)sender;
 - (IBAction)playPausedTouchUpInside:(id)sender;
@@ -79,6 +88,9 @@
 - (IBAction)mainMenuSelect:(id)sender;
 - (IBAction)mainMenuDeselect:(id)sender;
 - (IBAction)mainMenuTouchUpInside:(id)sender;
+
+#pragma mark - Game Play
+- (IBAction)pauseButtonTapped:(id)sender;
 
 -(void)showGameOverView;
 -(void)showPausedView;
@@ -230,7 +242,7 @@
     
     if ([self respondsToSelector:@selector(drawViewHierarchyInRect:afterScreenUpdates:)]) {
         if (self.bounds.size.height != 0 && self.bounds.size.width != 0) {
-            [self drawViewHierarchyInRect:self.bounds afterScreenUpdates:YES];
+            [self drawViewHierarchyInRect:self.bounds afterScreenUpdates:NO];
         } else {
             NSLog(@"BOUNDS ARE ZERO %@", self);
         }

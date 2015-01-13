@@ -229,13 +229,14 @@ CGFloat DegreesToRadians(CGFloat degrees)
         safeToTransition = @YES;
         shipWarping = YES;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pause) name:UIApplicationWillResignActiveNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pause) name:UIApplicationDidBecomeActiveNotification object:nil];
 
     }
     return self;
 }
 
 -(void)transitionFromMainMenu {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pause) name:UIApplicationDidBecomeActiveNotification object:nil];
+
     [self transitionStars];
     [self showCurrentSprites];
     self.viewController.pauseButton.hidden = NO;

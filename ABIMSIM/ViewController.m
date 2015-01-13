@@ -22,6 +22,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.settingsContainerTopAlignmentConstraint.constant = -1* (self.view.frame.size.height - self.buttonContainerView.frame.origin.y);
+    self.settingsContainerTrailingConstraint.constant = self.view.frame.size.width;
     showingSettings = NO;
     hamburgerToXImages = [NSMutableArray array];
     hamburgerToOriginalImages = [NSMutableArray array];
@@ -79,9 +81,12 @@
 }
 
 -(void)showPausedView {
+    if (self.mainMenuView.alpha != 0) {
+        return;
+    }
     UIImageView *blurredBackgroundImageView = ({
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
-        imageView.contentMode = UIViewContentModeBottom;
+        imageView.contentMode = UIViewContentModeScaleAspectFit;
         imageView.clipsToBounds = YES;
         imageView.backgroundColor = [UIColor clearColor];
         imageView;
@@ -390,8 +395,10 @@
     }];
 
     [UIView animateWithDuration:1 delay:0 options:UIViewAnimationOptionAllowAnimatedContent animations:^{
-        self.hamburgerBottomConstraint.constant = self.view.frame.size.height - self.buttonContainerView.frame.origin.y - 62;
-        self.hamburgerLeadingConstraint.constant = self.buttonContainerView.frame.origin.x + self.buttonContainerView.frame.size.width - 62;
+        self.hamburgerBottomConstraint.constant = self.view.frame.size.height - self.buttonContainerView.frame.origin.y - 100;
+        self.hamburgerLeadingConstraint.constant = self.buttonContainerView.frame.origin.x + self.buttonContainerView.frame.size.width - 100;
+        self.settingsContainerTopAlignmentConstraint.constant = 0;
+        self.settingsContainerTrailingConstraint.constant = 0;
         [self.view layoutIfNeeded];
     } completion:^(BOOL finished) {
         showingSettings = YES;
@@ -409,6 +416,8 @@
     [UIView animateWithDuration:1 delay:0 options:UIViewAnimationOptionAllowAnimatedContent animations:^{
         self.hamburgerBottomConstraint.constant = 10;
         self.hamburgerLeadingConstraint.constant = 10;
+        self.settingsContainerTopAlignmentConstraint.constant = -1* (self.view.frame.size.height - self.buttonContainerView.frame.origin.y);
+        self.settingsContainerTrailingConstraint.constant = self.view.frame.size.width;
         [self.view layoutIfNeeded];
     } completion:^(BOOL finished) {
         showingSettings = NO;
