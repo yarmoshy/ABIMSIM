@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="LVB-YS-i5n">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="LVB-YS-i5n">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="Voltaire-Regular.ttf">
@@ -257,9 +257,9 @@
                                                 <state key="selected" image="PlayText_1"/>
                                                 <state key="highlighted" image="PlayText_1"/>
                                                 <connections>
-                                                    <action selector="mainMenuSelect:" destination="LVB-YS-i5n" eventType="touchDragEnter" id="wqj-Wm-BLT"/>
                                                     <action selector="playPausedDeselect:" destination="LVB-YS-i5n" eventType="touchDragExit" id="PGs-bH-bxq"/>
                                                     <action selector="playPausedSelect:" destination="LVB-YS-i5n" eventType="touchDown" id="U5h-Aq-w3J"/>
+                                                    <action selector="playPausedSelect:" destination="LVB-YS-i5n" eventType="touchDragEnter" id="gbZ-XB-dYx"/>
                                                     <action selector="playPausedTouchUpInside:" destination="LVB-YS-i5n" eventType="touchUpInside" id="0xD-RA-iU6"/>
                                                 </connections>
                                             </button>

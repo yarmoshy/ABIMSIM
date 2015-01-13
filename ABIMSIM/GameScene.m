@@ -229,6 +229,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
         safeToTransition = @YES;
         shipWarping = YES;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pause) name:UIApplicationWillResignActiveNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pause) name:UIApplicationDidBecomeActiveNotification object:nil];
+
     }
     return self;
 }
@@ -311,8 +313,12 @@ CGFloat DegreesToRadians(CGFloat degrees)
         } else if (self.viewController.pausedView.alpha == 0 && !self.reset && [self childNodeWithName:shipCategoryName] &&
                    [self childNodeWithName:shipCategoryName].physicsBody && !self.resuming && !self.initialPause) {
             [self.viewController showPausedView];
+            flickRecognizer.enabled = NO;
         }
         return;
+    }
+    if (!flickRecognizer.enabled) {
+        flickRecognizer.enabled = YES;
     }
     if (![ABIMSIMDefaults boolForKey:kWalkthroughSeen]) {
         if (currentLevel == 2) {
