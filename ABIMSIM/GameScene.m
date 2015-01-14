@@ -120,7 +120,7 @@ static const uint32_t powerUpSpaceMineExplodingRingCategory = 0x1 << 12;
     NSNumber *safeToTransition;
     SKSpriteNode *starBackLayer;
     SKSpriteNode *starFrontLayer;
-    
+    SKSpriteNode *background;
     int currentLevel;
     BOOL shipWarping;
     BOOL hasShield;
@@ -178,7 +178,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         self.physicsBody.friction = 0.0f;
         self.physicsWorld.contactDelegate = self;
         
-        SKSpriteNode *background = [SKSpriteNode spriteNodeWithImageNamed:@"Background_1"];
+        background = [SKSpriteNode spriteNodeWithImageNamed:@"Background_1"];
         background.anchorPoint = CGPointZero;
         background.zPosition = -1;
         [self addChild:background];
@@ -207,7 +207,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         } else {
             shieldHitPoints = 0;
         }
-        shipHitPoints = 1;// + [ABIMSIMDefaults integerForKey:kHullDurabilityLevel];
+        shipHitPoints = 1000;// + [ABIMSIMDefaults integerForKey:kHullDurabilityLevel];
         SKSpriteNode *ship = [self createShip];
         
         spritesArrays = [NSMutableArray array];
@@ -1068,6 +1068,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
 }
 
 -(void)resetWorld {
+    [background setTexture:[SKTexture textureWithImageNamed:@"Background_1"]];
+
     [self removeOverlayChildren];
     [self removeCurrentSprites];
     currentLevel = 0;
@@ -1078,7 +1080,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     } else {
         shieldHitPoints = 0;
     }
-    shipHitPoints = 1;// + [ABIMSIMDefaults integerForKey:kHullDurabilityLevel];
+    shipHitPoints = 1000;// + [ABIMSIMDefaults integerForKey:kHullDurabilityLevel];
 
     ((SKLabelNode*)[self childNodeWithName:levelNodeName]).text = [NSString stringWithFormat:@"%d",currentLevel];
 
@@ -1355,6 +1357,12 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
     currentLevel++;
     [self checkLevelAchievements];
+    if (currentLevel % 10 == 0) {
+        int backgroundNumber = currentLevel / 10;
+        backgroundNumber++;
+        if (backgroundNumber > 7) backgroundNumber = 7;
+        [background setTexture:[SKTexture textureWithImageNamed:[NSString stringWithFormat:@"Background_%d",backgroundNumber]]];
+    }
     
     ((SKLabelNode*)[self childNodeWithName:levelNodeName]).text = [NSString stringWithFormat:@"%d",currentLevel];
     CGRect goalRect;

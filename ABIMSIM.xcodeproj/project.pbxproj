@@ -24,7 +24,6 @@
 		B4467176192D8CC500B4A8C7 /* AsteroidShield_Impact_0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4467175192D8CC500B4A8C7 /* AsteroidShield_Impact_0@2x.png */; };
 		B4467178192D906400B4A8C7 /* AsteroidShield_Pop_0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4467177192D906400B4A8C7 /* AsteroidShield_Pop_0@2x.png */; };
 		B446717A192D906A00B4A8C7 /* AsteroidShield_Pop_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4467179192D906A00B4A8C7 /* AsteroidShield_Pop_1@2x.png */; };
-		B45865E518DA153C005C9566 /* Background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B45865D718DA153C005C9566 /* Background@2x.png */; };
 		B45865E918DA15C9005C9566 /* Ship@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B45865E818DA15C9005C9566 /* Ship@2x.png */; };
 		B45865EC18DA3ACA005C9566 /* HexColor.m in Sources */ = {isa = PBXBuildFile; fileRef = B45865EB18DA3ACA005C9566 /* HexColor.m */; };
 		B45FF12818CE8708001662CD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B45FF12718CE8708001662CD /* Foundation.framework */; };
@@ -106,7 +105,6 @@
 		E1D4EDF61A5B5E5900676C17 /* DCRoundSwitchKnobLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E1D4EDF01A5B5E5900676C17 /* DCRoundSwitchKnobLayer.m */; };
 		E1D4EDF71A5B5E5900676C17 /* DCRoundSwitchOutlineLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E1D4EDF21A5B5E5900676C17 /* DCRoundSwitchOutlineLayer.m */; };
 		E1D4EDF81A5B5E5900676C17 /* DCRoundSwitchToggleLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E1D4EDF41A5B5E5900676C17 /* DCRoundSwitchToggleLayer.m */; };
-		E1E996EA19EC21C500B21B5D /* Background_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E1E996E919EC21C500B21B5D /* Background_1@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -138,7 +136,6 @@
 		B4467175192D8CC500B4A8C7 /* AsteroidShield_Impact_0@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AsteroidShield_Impact_0@2x.png"; sourceTree = "<group>"; };
 		B4467177192D906400B4A8C7 /* AsteroidShield_Pop_0@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AsteroidShield_Pop_0@2x.png"; sourceTree = "<group>"; };
 		B4467179192D906A00B4A8C7 /* AsteroidShield_Pop_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AsteroidShield_Pop_1@2x.png"; sourceTree = "<group>"; };
-		B45865D718DA153C005C9566 /* Background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Background@2x.png"; sourceTree = "<group>"; };
 		B45865E818DA15C9005C9566 /* Ship@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Ship@2x.png"; sourceTree = "<group>"; };
 		B45865EA18DA3ACA005C9566 /* HexColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HexColor.h; sourceTree = "<group>"; };
 		B45865EB18DA3ACA005C9566 /* HexColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HexColor.m; sourceTree = "<group>"; };
@@ -231,7 +228,6 @@
 		E1D4EDF21A5B5E5900676C17 /* DCRoundSwitchOutlineLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCRoundSwitchOutlineLayer.m; sourceTree = "<group>"; };
 		E1D4EDF31A5B5E5900676C17 /* DCRoundSwitchToggleLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCRoundSwitchToggleLayer.h; sourceTree = "<group>"; };
 		E1D4EDF41A5B5E5900676C17 /* DCRoundSwitchToggleLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCRoundSwitchToggleLayer.m; sourceTree = "<group>"; };
-		E1E996E919EC21C500B21B5D /* Background_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Background_1@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -345,8 +341,6 @@
 				B4467172192D8AAA00B4A8C7 /* Asteroid Shield */,
 				B43F4D09192ABB1D0000ACA4 /* Asteroids */,
 				B43F4D0A192ABB280000ACA4 /* Planets */,
-				B45865D718DA153C005C9566 /* Background@2x.png */,
-				E1E996E919EC21C500B21B5D /* Background_1@2x.png */,
 				B4D0732819785F3C0028840D /* Space Mine */,
 			);
 			name = Assets;
@@ -595,7 +589,6 @@
 				B4242EA019A7E58900192F44 /* BlackHole0.atlas in Resources */,
 				B4D4B618191FFF4F00834942 /* Planet_0_1@2x.png in Resources */,
 				B4D4B620191FFF4F00834942 /* Planet_2_1@2x.png in Resources */,
-				E1E996EA19EC21C500B21B5D /* Background_1@2x.png in Resources */,
 				B4D4B628191FFF4F00834942 /* Planet_4_1@2x.png in Resources */,
 				B4242EA319A7E58900192F44 /* BlackHole3.atlas in Resources */,
 				B4D4B61A191FFF4F00834942 /* Planet_0_3@2x.png in Resources */,
@@ -636,7 +629,6 @@
 				B4D4B627191FFF4F00834942 /* Planet_4_2@2x.png in Resources */,
 				B4242EA119A7E58900192F44 /* BlackHole1.atlas in Resources */,
 				B4D4B61D191FFF4F00834942 /* Planet_1_2@2x.png in Resources */,
-				B45865E518DA153C005C9566 /* Background@2x.png in Resources */,
 				B4D4B622191FFF4F00834942 /* Planet_2_3@2x.png in Resources */,
 				B4D4B62A191FFF4F00834942 /* Planet_4_3@2x.png in Resources */,
 				B478CFC019199FA5001A9DB6 /* Planet_5_S@2x.png in Resources */,
