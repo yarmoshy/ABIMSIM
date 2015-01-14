@@ -11,7 +11,7 @@
 @class GameScene;
 @class DCRoundSwitch;
 
-@interface ViewController : UIViewController <GKGameCenterControllerDelegate>
+@interface ViewController : UIViewController <GKGameCenterControllerDelegate, UIAlertViewDelegate>
 
 #pragma mark - Main Menu
 
@@ -62,7 +62,14 @@
 @property (weak, nonatomic) IBOutlet UIView *settingsContainerView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *settingsContainerTopAlignmentConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *settingsContainerTrailingConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *settingsLeadngConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *settingsTopConstraint;
+@property (weak, nonatomic) IBOutlet DCRoundSwitch *musicSettingsToggle;
+@property (weak, nonatomic) IBOutlet DCRoundSwitch *sfxSettingsToggle;
 
+- (IBAction)twitterTapped:(id)sender;
+- (IBAction)facebookTapped:(id)sender;
+- (IBAction)resetTapped:(id)sender;
 
 #pragma mark - Paused
 @property (weak, nonatomic) IBOutlet UIView *pausedView;

@@ -126,7 +126,7 @@ static const uint32_t powerUpSpaceMineExplodingRingCategory = 0x1 << 12;
     BOOL hasShield;
     
     NSInteger shieldHitPoints;
-    NSInteger shieldFireHitPoints;
+//    NSInteger shieldFireHitPoints;
     NSInteger shipHitPoints;
     
     UIPanGestureRecognizer *flickRecognizer;
@@ -203,11 +203,11 @@ CGFloat DegreesToRadians(CGFloat degrees)
         hasShield = [ABIMSIMDefaults boolForKey:kShieldOnStart];
         if (hasShield) {
             shieldHitPoints = 1 + [ABIMSIMDefaults integerForKey:kShieldDurabilityLevel];
-            shieldFireHitPoints = [ABIMSIMDefaults integerForKey:kShieldFireDurabilityLevel];
+//            shieldFireHitPoints = [ABIMSIMDefaults integerForKey:kShieldFireDurabilityLevel];
         } else {
             shieldHitPoints = 0;
         }
-        shipHitPoints = 1 + [ABIMSIMDefaults integerForKey:kHullDurabilityLevel];
+        shipHitPoints = 1;// + [ABIMSIMDefaults integerForKey:kHullDurabilityLevel];
         SKSpriteNode *ship = [self createShip];
         
         spritesArrays = [NSMutableArray array];
@@ -858,7 +858,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
             secondBody.node.name = removedThisSprite;
             hasShield = YES;
             shieldHitPoints = 1 + [ABIMSIMDefaults integerForKey:kShieldDurabilityLevel];
-            shieldFireHitPoints = [ABIMSIMDefaults integerForKey:kShieldFireDurabilityLevel];
+//            shieldFireHitPoints = [ABIMSIMDefaults integerForKey:kShieldFireDurabilityLevel];
             [self updateShipPhysics];
         }
 
@@ -866,13 +866,16 @@ CGFloat DegreesToRadians(CGFloat degrees)
             if (secondBody.categoryBitMask == shipCategory) {
                 [self checkHitAchievement];
                 if (hasShield) {
-                    if (shieldFireHitPoints > 0) {
-                        shieldFireHitPoints--;
-                    } else {
-                        shieldHitPoints = 0;
-                        hasShield = NO;
-                        [self updateShipPhysics];
-                    }
+//                    if (shieldFireHitPoints > 0) {
+//                        shieldFireHitPoints--;
+//                    } else {
+//                        shieldHitPoints = 0;
+//                        hasShield = NO;
+//                        [self updateShipPhysics];
+//                    }
+                    shieldHitPoints--;
+                    hasShield = shieldHitPoints > 0;
+                    [self updateShipPhysics];
                 } else {
                     [self sendAchievementWithIdentifier:@"setTheControlsForTheHeartOfTheSun"];
                     [self killShipAndStartOver];
@@ -885,13 +888,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
             if (firstBody.categoryBitMask == shipCategory) {
                 [self checkHitAchievement];
                 if (hasShield) {
-                    if (shieldFireHitPoints > 0) {
-                        shieldFireHitPoints--;
-                    } else {
-                        shieldHitPoints = 0;
-                        hasShield = NO;
-                        [self updateShipPhysics];
-                    }
+                    shieldHitPoints--;
+                    hasShield = shieldHitPoints > 0;
+                    [self updateShipPhysics];
                 } else {
                     [self sendAchievementWithIdentifier:@"setTheControlsForTheHeartOfTheSun"];
                     [self killShipAndStartOver];
@@ -1075,11 +1074,11 @@ CGFloat DegreesToRadians(CGFloat degrees)
     hasShield = [ABIMSIMDefaults boolForKey:kShieldOnStart];
     if (hasShield) {
         shieldHitPoints = 1 + [ABIMSIMDefaults integerForKey:kShieldDurabilityLevel];
-        shieldFireHitPoints = [ABIMSIMDefaults integerForKey:kShieldFireDurabilityLevel];
+//        shieldFireHitPoints = [ABIMSIMDefaults integerForKey:kShieldFireDurabilityLevel];
     } else {
         shieldHitPoints = 0;
     }
-    shipHitPoints = 1 + [ABIMSIMDefaults integerForKey:kHullDurabilityLevel];
+    shipHitPoints = 1;// + [ABIMSIMDefaults integerForKey:kHullDurabilityLevel];
 
     ((SKLabelNode*)[self childNodeWithName:levelNodeName]).text = [NSString stringWithFormat:@"%d",currentLevel];
 

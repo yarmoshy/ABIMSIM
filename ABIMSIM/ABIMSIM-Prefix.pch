@@ -25,9 +25,9 @@
     #define kMineBlastSpeedLevel @"kMineBlastSpeedLevel"
 
 // To be removed:
-    #define kShieldFireDurabilityLevel @"kShieldFireDurabilityLevel"
-    #define kHullDurabilityLevel @"kHullDurabilityLevel"
-    #define kSurvivabilityLevel @"kSurvivabilityLevel"
+//    #define kShieldFireDurabilityLevel @"kShieldFireDurabilityLevel"
+//    #define kHullDurabilityLevel @"kHullDurabilityLevel"
+//    #define kSurvivabilityLevel @"kSurvivabilityLevel"
 // end
 
     #define kUserDuckets @"kUserDuckets"
