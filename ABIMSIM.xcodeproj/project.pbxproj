@@ -100,6 +100,8 @@
 		B4E221CF192EB356003947B7 /* ShipShield_Impact@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4E221CB192EB356003947B7 /* ShipShield_Impact@2x.png */; };
 		B4E221D0192EB356003947B7 /* ShipShield@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4E221CC192EB356003947B7 /* ShipShield@2x.png */; };
 		B4E221D2192EB3C6003947B7 /* ShipShield_Pop@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4E221D1192EB3C6003947B7 /* ShipShield_Pop@2x.png */; };
+		E128D1F81A6DDB9600856772 /* Background0.atlas in Resources */ = {isa = PBXBuildFile; fileRef = E128D1F61A6DDB9600856772 /* Background0.atlas */; };
+		E128D1F91A6DDB9600856772 /* Background1.atlas in Resources */ = {isa = PBXBuildFile; fileRef = E128D1F71A6DDB9600856772 /* Background1.atlas */; };
 		E14F49AA19E41F0A008B727A /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E14F49A919E41F0A008B727A /* Accelerate.framework */; };
 		E1D4EDF51A5B5E5900676C17 /* DCRoundSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = E1D4EDEE1A5B5E5900676C17 /* DCRoundSwitch.m */; };
 		E1D4EDF61A5B5E5900676C17 /* DCRoundSwitchKnobLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E1D4EDF01A5B5E5900676C17 /* DCRoundSwitchKnobLayer.m */; };
@@ -219,6 +221,8 @@
 		B4E221CB192EB356003947B7 /* ShipShield_Impact@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ShipShield_Impact@2x.png"; sourceTree = "<group>"; };
 		B4E221CC192EB356003947B7 /* ShipShield@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ShipShield@2x.png"; sourceTree = "<group>"; };
 		B4E221D1192EB3C6003947B7 /* ShipShield_Pop@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ShipShield_Pop@2x.png"; sourceTree = "<group>"; };
+		E128D1F61A6DDB9600856772 /* Background0.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Background0.atlas; sourceTree = "<group>"; };
+		E128D1F71A6DDB9600856772 /* Background1.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Background1.atlas; sourceTree = "<group>"; };
 		E14F49A919E41F0A008B727A /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		E1D4EDED1A5B5E5900676C17 /* DCRoundSwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCRoundSwitch.h; sourceTree = "<group>"; };
 		E1D4EDEE1A5B5E5900676C17 /* DCRoundSwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCRoundSwitch.m; sourceTree = "<group>"; };
@@ -328,6 +332,8 @@
 		B45865E718DA154F005C9566 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				E128D1F61A6DDB9600856772 /* Background0.atlas */,
+				E128D1F71A6DDB9600856772 /* Background1.atlas */,
 				B4242E9819A7E58900192F44 /* BlackHole0.atlas */,
 				B4242E9919A7E58900192F44 /* BlackHole1.atlas */,
 				B4242E9A19A7E58900192F44 /* BlackHole2.atlas */,
@@ -598,6 +604,7 @@
 				B46363AC1979EBA2007B657C /* SpaceMine_Friendly_8@2x.png in Resources */,
 				B47E22D818DBA7E200F42EBB /* Asteroid_11@2x.png in Resources */,
 				B45FF14718CE8708001662CD /* Images.xcassets in Resources */,
+				E128D1F91A6DDB9600856772 /* Background1.atlas in Resources */,
 				B47E22D518DBA7E200F42EBB /* Asteroid_8@2x.png in Resources */,
 				B47E22D218DBA7E200F42EBB /* Asteroid_5@2x.png in Resources */,
 				B43F4D0C192ABB510000ACA4 /* AsteroidShield_1@2x.png in Resources */,
@@ -634,6 +641,7 @@
 				B478CFC019199FA5001A9DB6 /* Planet_5_S@2x.png in Resources */,
 				B4467176192D8CC500B4A8C7 /* AsteroidShield_Impact_0@2x.png in Resources */,
 				B47E22D318DBA7E200F42EBB /* Asteroid_6@2x.png in Resources */,
+				E128D1F81A6DDB9600856772 /* Background0.atlas in Resources */,
 				B4D4B61E191FFF4F00834942 /* Planet_1_3@2x.png in Resources */,
 				B4E221D2192EB3C6003947B7 /* ShipShield_Pop@2x.png in Resources */,
 				B46363AA1979EBA2007B657C /* SpaceMine_Friendly_6@2x.png in Resources */,

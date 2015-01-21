@@ -48,7 +48,7 @@
 
     // Configure the view.
     SKView * skView = (SKView *)self.view;
-    skView.showsFPS = NO;
+    skView.showsFPS = YES;
     skView.showsNodeCount = NO;
     
     // Create and configure the scene.
@@ -87,9 +87,9 @@
 }
 
 -(void)showPausedView {
-    if (self.mainMenuView.alpha != 0) {
-        return;
-    }
+//    if (self.mainMenuView.alpha != 0) {
+//        return;
+//    }
     UIImageView *blurredBackgroundImageView = ({
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
         imageView.contentMode = UIViewContentModeScaleAspectFit;
@@ -189,11 +189,13 @@
 }
 
 - (IBAction)playTouchUpInside:(id)sender {
+    [self configureButtonsEnabled:NO];
     [self animatePlayButtonDeselect:^{
         [UIView animateKeyframesWithDuration:0.5 delay:0 options:0 animations:^{
             self.mainMenuView.alpha = 0;
         } completion:^(BOOL finished) {
             [self.scene transitionFromMainMenu];
+            [self configureButtonsEnabled:YES];
         }];
     }];
 }
@@ -590,6 +592,7 @@
 }
 
 - (IBAction)playPausedTouchUpInside:(id)sender {
+    [self configureButtonsEnabled:NO];
     [self animatePlayPausedButtonDeselect:^{
         self.scene.resuming = YES;
         [self.view insertSubview:[self.pausedView viewWithTag:kBlurBackgroundViewTag] atIndex:1];
@@ -638,6 +641,7 @@
                     }];
                 });
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [self configureButtonsEnabled:YES];
                     self.scene.resuming = self.scene.paused = NO;
                 });
             }
@@ -719,6 +723,7 @@
 }
 
 - (IBAction)mainMenuTouchUpInside:(id)sender {
+    [self configureButtonsEnabled:NO];
     [self animateMainMenuButtonDeselect:^{
         self.scene = [GameScene sceneWithSize:self.view.bounds.size];
         
@@ -736,7 +741,7 @@
             [UIView animateKeyframesWithDuration:0.5 delay:0 options:0 animations:^{
                 self.mainMenuView.alpha = 1;
             } completion:^(BOOL finished) {
-                ;
+                [self configureButtonsEnabled:YES];
             }];
         }];
     }];
@@ -797,7 +802,7 @@
 #pragma mark - UI Helpers
 
 -(void)configureButtonsEnabled:(BOOL)enabled {
-    self.playButton.userInteractionEnabled = self.upgradeButton.userInteractionEnabled = self.highScoreButton.userInteractionEnabled = self.creditsButton.userInteractionEnabled = self.hamburgerButton.userInteractionEnabled = enabled;
+    self.playButton.userInteractionEnabled = self.upgradeButton.userInteractionEnabled = self.highScoreButton.userInteractionEnabled = self.creditsButton.userInteractionEnabled = self.hamburgerButton.userInteractionEnabled =  self.playPausedButton.userInteractionEnabled = self.mainMenuButton.userInteractionEnabled = enabled;
 }
 
 @end

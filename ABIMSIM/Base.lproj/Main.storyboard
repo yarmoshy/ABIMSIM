@@ -194,7 +194,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo_TitleScreen" translatesAutoresizingMaskIntoConstraints="NO" id="IQ4-sU-MJz">
-                                        <rect key="frame" x="0.0" y="64" width="320" height="45"/>
+                                        <rect key="frame" x="0.0" y="32" width="320" height="45"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="45" id="RJO-M7-Aa4"/>
                                             <constraint firstAttribute="width" constant="320" id="av2-z9-jV8"/>
@@ -504,7 +504,7 @@
                                     <constraint firstAttribute="centerX" secondItem="P4L-lk-xJF" secondAttribute="centerX" constant="-6.5" id="qds-ya-8tC"/>
                                     <constraint firstAttribute="bottom" secondItem="5yi-b5-7i1" secondAttribute="bottom" id="rMC-NX-shC"/>
                                     <constraint firstItem="P4L-lk-xJF" firstAttribute="top" secondItem="5yi-b5-7i1" secondAttribute="top" id="s99-p8-CfU"/>
-                                    <constraint firstItem="IQ4-sU-MJz" firstAttribute="top" secondItem="r5z-2w-6J3" secondAttribute="top" constant="64" id="syA-rj-8vQ"/>
+                                    <constraint firstItem="IQ4-sU-MJz" firstAttribute="top" secondItem="r5z-2w-6J3" secondAttribute="top" constant="32" id="syA-rj-8vQ"/>
                                     <constraint firstAttribute="trailing" secondItem="IQ4-sU-MJz" secondAttribute="trailing" id="uOG-dZ-fBt"/>
                                 </constraints>
                             </view>

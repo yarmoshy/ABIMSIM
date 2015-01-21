@@ -116,11 +116,13 @@ static const uint32_t powerUpSpaceMineExplodingRingCategory = 0x1 << 12;
     NSMutableArray *starSprites;
     NSMutableArray *currentSpriteArray;
     NSMutableArray *blackHoleTextures;
+    NSMutableArray *backgroundTextures;
     SKAction *blackHoleAction;
     NSNumber *safeToTransition;
     SKSpriteNode *starBackLayer;
     SKSpriteNode *starFrontLayer;
-    SKSpriteNode *background;
+    SKSpriteNode *background, *background2;
+    SKSpriteNode *shipSprite;
     int currentLevel;
     BOOL shipWarping;
     BOOL hasShield;
@@ -156,7 +158,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
         lastTimeHit = 0;
         timesHitWithinSecond = 0;
         blackHoleTextures = [NSMutableArray arrayWithCapacity:240];
-        
+        backgroundTextures = [NSMutableArray arrayWithCapacity:7];
+        NSMutableArray *blackholeSprites = [NSMutableArray arrayWithCapacity:8];
         NSMutableArray *textureAtlases = [NSMutableArray array];
         for (int i = 0; i < 8; i++) {
             SKTextureAtlas *atlas = [SKTextureAtlas atlasNamed:[NSString stringWithFormat:@"BlackHole%d",i]];
@@ -164,12 +167,45 @@ CGFloat DegreesToRadians(CGFloat degrees)
             for (int j = 0; j < 30; j++) {
                 NSString *textureName = [NSString stringWithFormat:@"BH_%0*d", 3, (i*30)+j];
                 NSLog(@"%@",textureName);
+                if (j == 0) {
+                    SKSpriteNode *blackHoleSprite = [SKSpriteNode spriteNodeWithTexture:[atlas textureNamed:textureName]];
+                    [blackholeSprites addObject:blackHoleSprite];
+                }
                 [blackHoleTextures addObject:[atlas textureNamed:textureName]];
             }
         }
         [SKTextureAtlas preloadTextureAtlases:textureAtlases withCompletionHandler:^{
             ;
         }];
+        [SKTexture preloadTextures:blackHoleTextures withCompletionHandler:^{
+            ;
+        }];
+        for (SKSpriteNode *sprite in blackholeSprites) {
+            [self addChild:sprite];
+            sprite.position = CGPointMake(size.width * 1.5, size.height * 1.5);
+            sprite.name = removedThisSprite;
+        }
+        
+        NSMutableArray *backgroundTextureAtlases = [NSMutableArray array];
+        for (int i = 0; i < 2; i++) {
+            SKTextureAtlas *atlas = [SKTextureAtlas atlasNamed:[NSString stringWithFormat:@"Background%d",i]];
+            [backgroundTextureAtlases addObject:atlas];
+            for (int j = 0; j < 4; j++) {
+                NSString *textureName = [NSString stringWithFormat:@"Background_%d", (i*4)+j];
+                if ((i*4)+j > 6) {
+                    break;
+                }
+                NSLog(@"%@",textureName);
+                [backgroundTextures addObject:[atlas textureNamed:textureName]];
+            }
+        }
+        [SKTextureAtlas preloadTextureAtlases:backgroundTextureAtlases withCompletionHandler:^{
+            ;
+        }];
+        [SKTexture preloadTextures:backgroundTextures withCompletionHandler:^{
+            ;
+        }];
+
         
         self.physicsWorld.gravity = CGVectorMake(0.0f, 0.0f);
         SKPhysicsBody* borderBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:CGRectMake(0, -kExtraSpaceOffScreen, size.width, size.height+kExtraSpaceOffScreen*2)];
@@ -178,7 +214,14 @@ CGFloat DegreesToRadians(CGFloat degrees)
         self.physicsBody.friction = 0.0f;
         self.physicsWorld.contactDelegate = self;
         
-        background = [SKSpriteNode spriteNodeWithImageNamed:@"Background_1"];
+        background2 = [SKSpriteNode spriteNodeWithTexture:backgroundTextures[1]];
+        background2.anchorPoint = CGPointZero;
+        background2.zPosition = -1;
+        background2.alpha = 0;
+        [self addChild:background2];
+
+        
+        background = [SKSpriteNode spriteNodeWithTexture:backgroundTextures[0]];
         background.anchorPoint = CGPointZero;
         background.zPosition = -1;
         [self addChild:background];
@@ -207,8 +250,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
         } else {
             shieldHitPoints = 0;
         }
-        shipHitPoints = 1000;// + [ABIMSIMDefaults integerForKey:kHullDurabilityLevel];
-        SKSpriteNode *ship = [self createShip];
+        shipHitPoints = 1;// + [ABIMSIMDefaults integerForKey:kHullDurabilityLevel];
+        shipSprite = [self createShip];
         
         spritesArrays = [NSMutableArray array];
         currentSpriteArray = [NSMutableArray array];
@@ -222,7 +265,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         level.hidden = YES;
         [self addChild:level];
                 
-        [self addChild:ship];
+        [self addChild:shipSprite];
         [self updateShipPhysics];
         [self childNodeWithName:shipCategoryName].physicsBody.collisionBitMask = borderCategory | asteroidCategory | planetCategory;
         [self generateInitialLevelsAndShowSprites:NO];
@@ -340,31 +383,34 @@ CGFloat DegreesToRadians(CGFloat degrees)
             [ABIMSIMDefaults synchronize];
         }
     }
-    if (self.reset) {
-        [self resetWorld];
-    }
 
     for (SKSpriteNode *sprite in self.children) {
         if ([sprite.name isEqualToString:removedThisSprite]) {
             [sprite removeFromParent];
         }
     }
+    
+    if (self.reset) {
+        [self resetWorld];
+    }
+
     /* Called before each frame is rendered */
     SKSpriteNode* ship = (SKSpriteNode*)[self childNodeWithName:shipCategoryName];
     if (shipWarping && ship.position.y > ship.frame.size.height/2) {
         shipWarping = NO;
         ship.physicsBody.collisionBitMask = borderCategory | secondaryBorderCategory | asteroidCategory | planetCategory;
     }
-    
-    float yPercentageFromCenter = (ship.position.y - (self.view.frame.size.height/2.0))  / (self.view.frame.size.height / 2.0);
-    float frontMaxY = ((self.view.frame.size.height * starFrontMovement) - self.view.frame.size.height)/2.0;
-    float backMaxY = ((self.view.frame.size.height * starBackMovement) - self.view.frame.size.height)/2.0;
-    float frontY = (yPercentageFromCenter * frontMaxY);
-    frontY = frontY + (frontMaxY);
-    float backY = (yPercentageFromCenter * backMaxY);
-    backY = backY + (backMaxY);
-    starFrontLayer.position = CGPointMake(starFrontLayer.position.x, -frontY);
-    starBackLayer.position = CGPointMake(starBackLayer.position.x, -backY);
+    if (ship) {
+        float yPercentageFromCenter = (ship.position.y - (self.view.frame.size.height/2.0))  / (self.view.frame.size.height / 2.0);
+        float frontMaxY = ((self.view.frame.size.height * starFrontMovement) - self.view.frame.size.height)/2.0;
+        float backMaxY = ((self.view.frame.size.height * starBackMovement) - self.view.frame.size.height)/2.0;
+        float frontY = (yPercentageFromCenter * frontMaxY);
+        frontY = frontY + (frontMaxY);
+        float backY = (yPercentageFromCenter * backMaxY);
+        backY = backY + (backMaxY);
+        starFrontLayer.position = CGPointMake(starFrontLayer.position.x, -frontY);
+        starBackLayer.position = CGPointMake(starBackLayer.position.x, -backY);
+    }
     
     static int maxSpeed = MAX_VELOCITY;
     float speed = sqrt(ship.physicsBody.velocity.dx*ship.physicsBody.velocity.dx + ship.physicsBody.velocity.dy * ship.physicsBody.velocity.dy);
@@ -1068,7 +1114,10 @@ CGFloat DegreesToRadians(CGFloat degrees)
 }
 
 -(void)resetWorld {
-    [background setTexture:[SKTexture textureWithImageNamed:@"Background_1"]];
+    [background setTexture:backgroundTextures[0]];
+    background.alpha = 1;
+    [background2 setTexture:backgroundTextures[1]];
+    background2.alpha = 0;
 
     [self removeOverlayChildren];
     [self removeCurrentSprites];
@@ -1080,7 +1129,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     } else {
         shieldHitPoints = 0;
     }
-    shipHitPoints = 1000;// + [ABIMSIMDefaults integerForKey:kHullDurabilityLevel];
+    shipHitPoints = 1;// + [ABIMSIMDefaults integerForKey:kHullDurabilityLevel];
 
     ((SKLabelNode*)[self childNodeWithName:levelNodeName]).text = [NSString stringWithFormat:@"%d",currentLevel];
 
@@ -1281,7 +1330,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
                         [oldStarBackLayer removeFromParent];
                     }];
                 }]]];
-                [star removeAllActions];
                 [star runAction:spawnAction];
             }
             i++;
@@ -1360,8 +1408,18 @@ CGFloat DegreesToRadians(CGFloat degrees)
     if (currentLevel % 10 == 0) {
         int backgroundNumber = currentLevel / 10;
         backgroundNumber++;
-        if (backgroundNumber > 7) backgroundNumber = 7;
-        [background setTexture:[SKTexture textureWithImageNamed:[NSString stringWithFormat:@"Background_%d",backgroundNumber]]];
+        if (backgroundNumber > 6) backgroundNumber = 6;
+        if (background.alpha == 0) {
+            [background runAction:[SKAction fadeAlphaTo:1 duration:0.5]];
+            [background2 runAction:[SKAction fadeAlphaTo:0 duration:0.5] completion:^{
+                [background2 setTexture:backgroundTextures[backgroundNumber]];
+            }];
+        } else {
+            [background runAction:[SKAction fadeAlphaTo:0 duration:0.5] completion:^{
+                [background setTexture:backgroundTextures[backgroundNumber]];
+            }];
+            [background2 runAction:[SKAction fadeAlphaTo:1 duration:0.5]];
+        }
     }
     
     ((SKLabelNode*)[self childNodeWithName:levelNodeName]).text = [NSString stringWithFormat:@"%d",currentLevel];
