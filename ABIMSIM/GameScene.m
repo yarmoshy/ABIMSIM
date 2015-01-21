@@ -122,7 +122,7 @@ static const uint32_t powerUpSpaceMineExplodingRingCategory = 0x1 << 12;
     SKSpriteNode *starBackLayer;
     SKSpriteNode *starFrontLayer;
     SKSpriteNode *background, *background2;
-    SKSpriteNode *shipSprite;
+    SKSpriteNode *shipSprite, *currentBlackHole, *explodingMine, *explodedMine;
     int currentLevel;
     BOOL shipWarping;
     BOOL hasShield;
@@ -205,6 +205,29 @@ CGFloat DegreesToRadians(CGFloat degrees)
         [SKTexture preloadTextures:backgroundTextures withCompletionHandler:^{
             ;
         }];
+
+        NSMutableArray *planetTextures = [NSMutableArray array];
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 4; j++) {
+                NSString *textureName = [NSString stringWithFormat:@"Planet_%d_%d", i, j];
+                NSLog(@"%@",textureName);
+                [planetTextures addObject:[SKTexture textureWithImageNamed:textureName]];
+            }
+        }
+        [SKTexture preloadTextures:planetTextures withCompletionHandler:^{
+            ;
+        }];
+        
+        NSMutableArray *asteroidTextures = [NSMutableArray array];
+        for (int i = 0; i < 12; i++) {
+            NSString *textureName = [NSString stringWithFormat:@"Asteroid_%d", i];
+            NSLog(@"%@",textureName);
+            [asteroidTextures addObject:[SKTexture textureWithImageNamed:textureName]];
+        }
+        [SKTexture preloadTextures:asteroidTextures withCompletionHandler:^{
+            ;
+        }];
+
 
         
         self.physicsWorld.gravity = CGVectorMake(0.0f, 0.0f);
@@ -395,13 +418,12 @@ CGFloat DegreesToRadians(CGFloat degrees)
     }
 
     /* Called before each frame is rendered */
-    SKSpriteNode* ship = (SKSpriteNode*)[self childNodeWithName:shipCategoryName];
-    if (shipWarping && ship.position.y > ship.frame.size.height/2) {
+    if (shipWarping && shipSprite.position.y > shipSprite.frame.size.height/2) {
         shipWarping = NO;
-        ship.physicsBody.collisionBitMask = borderCategory | secondaryBorderCategory | asteroidCategory | planetCategory;
+        shipSprite.physicsBody.collisionBitMask = borderCategory | secondaryBorderCategory | asteroidCategory | planetCategory;
     }
-    if (ship) {
-        float yPercentageFromCenter = (ship.position.y - (self.view.frame.size.height/2.0))  / (self.view.frame.size.height / 2.0);
+    if (shipSprite) {
+        float yPercentageFromCenter = (shipSprite.position.y - (self.view.frame.size.height/2.0))  / (self.view.frame.size.height / 2.0);
         float frontMaxY = ((self.view.frame.size.height * starFrontMovement) - self.view.frame.size.height)/2.0;
         float backMaxY = ((self.view.frame.size.height * starBackMovement) - self.view.frame.size.height)/2.0;
         float frontY = (yPercentageFromCenter * frontMaxY);
@@ -413,15 +435,14 @@ CGFloat DegreesToRadians(CGFloat degrees)
     }
     
     static int maxSpeed = MAX_VELOCITY;
-    float speed = sqrt(ship.physicsBody.velocity.dx*ship.physicsBody.velocity.dx + ship.physicsBody.velocity.dy * ship.physicsBody.velocity.dy);
+    float speed = sqrt(shipSprite.physicsBody.velocity.dx*shipSprite.physicsBody.velocity.dx + shipSprite.physicsBody.velocity.dy * shipSprite.physicsBody.velocity.dy);
     if (speed > maxSpeed) {
-        ship.physicsBody.linearDamping = 0.4f;
+        shipSprite.physicsBody.linearDamping = 0.4f;
     } else {
-        ship.physicsBody.linearDamping = 0.0f;
+        shipSprite.physicsBody.linearDamping = 0.0f;
     }
-    BOOL blackHole = [self childNodeWithName:blackHoleCategoryName] != nil;
-    if (blackHole) {
-        for (SKSpriteNode *sprite in [self childNodeWithName:blackHoleCategoryName].children) {
+    if (currentBlackHole) {
+        for (SKSpriteNode *sprite in currentBlackHole.children) {
             if ([sprite.name isEqualToString:removedThisSprite]) {
                 if (sprite.size.width < 5) {
                     [sprite removeFromParent];
@@ -429,7 +450,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
             }
         }
 
-        [self applyBlackHolePullToSprite:ship];
+        [self applyBlackHolePullToSprite:shipSprite];
         for (SKSpriteNode *sprite in self.children) {
             if ([sprite.name isEqualToString:asteroidCategoryName] ||
                 [sprite.name isEqualToString:planetCategoryName] ||
@@ -483,8 +504,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
         }
     }
     
-    SKSpriteNode *explodingMine = (SKSpriteNode*)[self childNodeWithName:explodingSpaceMine];
-    SKSpriteNode *explodedMine = (SKSpriteNode*)[self childNodeWithName:explodedSpaceMine];
+//    SKSpriteNode *explodingMine = (SKSpriteNode*)[self childNodeWithName:explodingSpaceMine];
+//    SKSpriteNode *explodedMine = (SKSpriteNode*)[self childNodeWithName:explodedSpaceMine];
     if (explodingMine) {
         SKSpriteNode *explodingRing = (SKSpriteNode*)[explodingMine childNodeWithName:powerUpSpaceMineExplodeRingName];
         if (explodingRing.size.width > 0) {
@@ -869,6 +890,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
                 return;
             }
             secondBody.node.name = explodingSpaceMine;
+            explodingMine = (SKSpriteNode*)secondBody.node;
             [secondBody.node removeAllActions];
             [[secondBody.node childNodeWithName:powerUpSpaceMineGlowName] removeFromParent];
             [secondBody.node runAction:secondBody.node.userData[powerUpSpaceMineExplosionGlowAnimation] completion:^{
@@ -878,6 +900,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
             SKAction *sequenceAction = [SKAction sequence:@[[SKAction waitForDuration:0.5],secondBody.node.userData[powerUpSpaceMineExplosionRingAnimation],[SKAction waitForDuration:1]]];
             [secondBody.node runAction:sequenceAction completion:^{
                 secondBody.node.name = explodedSpaceMine;
+                explodedMine = (SKSpriteNode*)secondBody.node;
             }];
         }
 
@@ -958,6 +981,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
             if ([firstBody.node.name isEqualToString:shipCategoryName]) {
                 firstBody.node.name = @"dyingShip";
+                shipSprite = nil;
             } else if ([firstBody.node.name isEqualToString:starSpriteName]) {
                 firstBody.node.name = @"dyingStar";
             } else {
@@ -1136,18 +1160,17 @@ CGFloat DegreesToRadians(CGFloat degrees)
     safeToTransition = @YES;
     SKSpriteNode *goal = (SKSpriteNode*)[self childNodeWithName:goalCategoryName];
     [goal removeFromParent];
-    SKSpriteNode *ship = (SKSpriteNode*)[self childNodeWithName:shipCategoryName];
-    if (!ship) {
-        ship = [self createShip];
-        [self addChild:ship];
+    if (!shipSprite) {
+        shipSprite = [self createShip];
+        [self addChild:shipSprite];
     }
-    [ship childNodeWithName:shipShieldSpriteName].hidden = NO;
-    [ship childNodeWithName:shipImageSpriteName].hidden = NO;
+    [shipSprite childNodeWithName:shipShieldSpriteName].hidden = NO;
+    [shipSprite childNodeWithName:shipImageSpriteName].hidden = NO;
     [self updateShipPhysics];
-    ship.physicsBody.velocity = CGVectorMake(0, MAX_VELOCITY);
+    shipSprite.physicsBody.velocity = CGVectorMake(0, MAX_VELOCITY);
     
-    ship.physicsBody.collisionBitMask = borderCategory | asteroidCategory | planetCategory;
-    ship.position = CGPointMake(self.frame.size.width/2, -kExtraSpaceOffScreen + ship.size.height/2);
+    shipSprite.physicsBody.collisionBitMask = borderCategory | asteroidCategory | planetCategory;
+    shipSprite.position = CGPointMake(self.frame.size.width/2, -kExtraSpaceOffScreen + shipSprite.size.height/2);
 
     for (NSMutableArray *sprites in spritesArrays) {
         for (SKSpriteNode *sprite in sprites) {
@@ -1443,6 +1466,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
 }
 
 -(void)showCurrentSprites {
+    currentBlackHole = nil;
+    explodedMine = nil;
+    explodingMine = nil;
     for (SKSpriteNode *sprite in currentSpriteArray) {
         if ([sprite.name isEqual:asteroidCategoryName] ||
             [sprite.name isEqual:asteroidInShieldCategoryName]) {
@@ -1452,6 +1478,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
                    [sprite.name isEqual:sunObjectSpriteName] ||
                    [sprite.name isEqual:asteroidShieldCategoryName] ||
                    [sprite.name isEqual:blackHoleCategoryName] ) {
+            if ([sprite.name isEqual:blackHoleCategoryName]) {
+                currentBlackHole = sprite;
+            }
             sprite.hidden = NO;
             [self addChild:sprite];
             for (SKSpriteNode *moon in sprite.userData[moonsArray]) {
@@ -1892,7 +1921,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
 -(SKSpriteNode*)randomAsteroidForLevel:(int)level {
     int asteroidNum = arc4random() % [self maxAsteroidNumForLevel:level];
     NSString *imageName = [NSString stringWithFormat:@"Asteroid_%d",asteroidNum];
-    SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithImageNamed:imageName];
+    SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithTexture:[SKTexture textureWithImageNamed:imageName]];
     sprite.physicsBody = [SKPhysicsBody bodyWithPolygonFromPath:[self pathForAsteroidNum:asteroidNum withSprite:sprite]];
     sprite.physicsBody.friction = 0.0f;
     sprite.physicsBody.restitution = 1.0f;
@@ -2386,7 +2415,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
             isAsteroidShield = YES;
         }
     }
-    SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithImageNamed:imageName];
+    SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithTexture:[SKTexture textureWithImageNamed:imageName]];
     
     UIBezierPath *hoverPath = [UIBezierPath bezierPath];
 	[hoverPath moveToPoint:sprite.position];
@@ -2480,7 +2509,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
 -(SKSpriteNode*)moonForPlanetNum:(int)planetNum withPlanet:(SKSpriteNode*)planet {
     NSString *imageName = [NSString stringWithFormat:@"Asteroid_%d",planetNum];
-    SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithImageNamed:imageName];
+    SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithTexture:[SKTexture textureWithImageNamed:imageName]];
     float distance = planet.size.width/2 + sprite.size.width/2;
     float angle = arc4random() % 360;
     sprite.position = CGPointMake(planet.position.x + (cosf(DegreesToRadians(angle)) * distance), planet.position.y + (sinf(DegreesToRadians(angle)) * distance)) ;
