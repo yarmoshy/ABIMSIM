@@ -133,7 +133,7 @@ static const uint32_t powerUpSpaceMineExplodingRingCategory = 0x1 << 12;
     
     UIPanGestureRecognizer *flickRecognizer;
     
-    BOOL showGameCenter;
+    BOOL showGameCenter, walkthroughSeen;
     int lastLevelPanned;
     NSTimeInterval lastTimeHit;
     int timesHitWithinSecond;
@@ -152,7 +152,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         /* Setup your scene here */
         [ABIMSIMDefaults setInteger:10 forKey:kMineOccuranceLevel];
         [ABIMSIMDefaults setBool:NO forKey:kWalkthroughSeen];
-
+        walkthroughSeen = [ABIMSIMDefaults boolForKey:kWalkthroughSeen];
         [ABIMSIMDefaults synchronize];
         
         lastTimeHit = 0;
@@ -386,7 +386,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
         return;
     }
-    if (![ABIMSIMDefaults boolForKey:kWalkthroughSeen]) {
+    if (!walkthroughSeen) {
         if (currentLevel == 2) {
             SKSpriteNode *directions = [SKSpriteNode spriteNodeWithImageNamed:@"Instructions_Screen2"];
             directions.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2 + directions.size.height * 2);
@@ -402,6 +402,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
                 self.paused = YES;
                 self.initialPause = YES;
             }];
+            walkthroughSeen = YES;
             [ABIMSIMDefaults setBool:YES forKey:kWalkthroughSeen];
             [ABIMSIMDefaults synchronize];
         }
@@ -753,7 +754,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         self.paused = NO;
         [self removeOverlayChildren];
     }
-    [self childNodeWithName:shipCategoryName].physicsBody.velocity = CGVectorMake(newVelocity.x, -newVelocity.y);
+    shipSprite.physicsBody.velocity = CGVectorMake(newVelocity.x, -newVelocity.y);
 }
 
 
