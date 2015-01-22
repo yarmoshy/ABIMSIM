@@ -16,6 +16,6 @@
 @property (assign, nonatomic) BOOL initialPause;
 @property (assign, nonatomic) BOOL resuming;
 @property (assign, nonatomic) BOOL transitioningToMenu;
-
+@property (assign, nonatomic) int currentLevel;
 -(void)transitionFromMainMenu;
 @end

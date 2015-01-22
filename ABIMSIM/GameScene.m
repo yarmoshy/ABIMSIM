@@ -123,7 +123,6 @@ static const uint32_t powerUpSpaceMineExplodingRingCategory = 0x1 << 12;
     SKSpriteNode *starFrontLayer;
     SKSpriteNode *background, *background2;
     SKSpriteNode *shipSprite, *currentBlackHole, *explodingMine, *explodedMine;
-    int currentLevel;
     BOOL shipWarping;
     BOOL hasShield;
     
@@ -280,7 +279,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         currentSpriteArray = [NSMutableArray array];
         
         SKLabelNode *level = [[SKLabelNode alloc] initWithFontNamed:@"Voltaire"];
-        level.text = [NSString stringWithFormat:@"%d",currentLevel];
+        level.text = [NSString stringWithFormat:@"%d",self.currentLevel];
         level.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeLeft;
         level.position = CGPointMake(15, 15);
         level.zPosition = 100;
@@ -387,7 +386,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         return;
     }
     if (!walkthroughSeen) {
-        if (currentLevel == 2) {
+        if (self.currentLevel == 2) {
             SKSpriteNode *directions = [SKSpriteNode spriteNodeWithImageNamed:@"Instructions_Screen2"];
             directions.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2 + directions.size.height * 2);
             [self addChild:directions];
@@ -656,7 +655,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
 -(void)checkLevelAchievements {
     NSString *identifier = @"";
-    switch (currentLevel) {
+    switch (self.currentLevel) {
         case 2:
             if (lastLevelPanned == 0) {
                 identifier = @"iGuessThatWorks";
@@ -699,7 +698,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     if (![identifier isEqualToString:@""]) {
         [self sendAchievementWithIdentifier:identifier];
     }
-    if (currentLevel - lastLevelPanned >= 5) {
+    if (self.currentLevel - lastLevelPanned >= 5) {
         identifier = @"Autopilot";
         [self sendAchievementWithIdentifier:identifier];
     }
@@ -738,7 +737,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     if (recognizer.state != UIGestureRecognizerStateEnded || (self.paused && !self.initialPause && !self.resuming)) {
         return;
     }
-    lastLevelPanned = currentLevel;
+    lastLevelPanned = self.currentLevel;
     CGPoint addVelocity = [recognizer velocityInView:recognizer.view];
     CGPoint newVelocity = addVelocity;
     float velocity = sqrtf(powf(newVelocity.x, 2) + powf(newVelocity.y, 2));
@@ -1094,10 +1093,10 @@ CGFloat DegreesToRadians(CGFloat degrees)
 }
 
 -(void)killShipAndStartOver {
-    [ABIMSIMDefaults setInteger:[ABIMSIMDefaults integerForKey:kUserDuckets]+currentLevel forKey:kUserDuckets];
+    [ABIMSIMDefaults setInteger:[ABIMSIMDefaults integerForKey:kUserDuckets]+self.currentLevel forKey:kUserDuckets];
     [ABIMSIMDefaults synchronize];
     GKScore *newScore = [[GKScore alloc] initWithLeaderboardIdentifier:@"distance"];
-    newScore.value = currentLevel;
+    newScore.value = self.currentLevel;
     [GKScore reportScores:@[newScore] withCompletionHandler:^(NSError *error) {
         if (error) {
             NSLog(@"Score Submit Error: %@", error);
@@ -1146,7 +1145,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
     [self removeOverlayChildren];
     [self removeCurrentSprites];
-    currentLevel = 0;
+    self.currentLevel = 0;
     hasShield = [ABIMSIMDefaults boolForKey:kShieldOnStart];
     if (hasShield) {
         shieldHitPoints = 1 + [ABIMSIMDefaults integerForKey:kShieldDurabilityLevel];
@@ -1156,7 +1155,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     }
     shipHitPoints = 1;// + [ABIMSIMDefaults integerForKey:kHullDurabilityLevel];
 
-    ((SKLabelNode*)[self childNodeWithName:levelNodeName]).text = [NSString stringWithFormat:@"%d",currentLevel];
+    ((SKLabelNode*)[self childNodeWithName:levelNodeName]).text = [NSString stringWithFormat:@"%d",self.currentLevel];
 
     safeToTransition = @YES;
     SKSpriteNode *goal = (SKSpriteNode*)[self childNodeWithName:goalCategoryName];
@@ -1282,7 +1281,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     } else {
         int i = 0;
         int half = 0;
-        BOOL shrinkBackHalf = currentLevel % 2 == 0;
+        BOOL shrinkBackHalf = self.currentLevel % 2 == 0;
         for (SKSpriteNode *star in starSprites) {
             float x = arc4random() % (int)self.frame.size.width * 1;
             float y;
@@ -1366,7 +1365,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
 }
 
 -(void)generateInitialLevelsAndShowSprites:(BOOL)show {
-    currentLevel = 1;
+    self.currentLevel = 1;
     ((SKLabelNode*)[self childNodeWithName:levelNodeName]).text = @"1";
     for (int i = 1; i <= kNumberOfLevelsToGenerate; i++) {
         NSMutableArray *spriteArray = [NSMutableArray array];
@@ -1420,17 +1419,17 @@ CGFloat DegreesToRadians(CGFloat degrees)
     [self removeOverlayChildren];
     [self removeCurrentSprites];
     
-    NSMutableArray *asteroids = [self asteroidsForLevel:currentLevel+kNumberOfLevelsToGenerate];
+    NSMutableArray *asteroids = [self asteroidsForLevel:self.currentLevel+kNumberOfLevelsToGenerate];
     [currentSpriteArray addObjectsFromArray:asteroids];
-    NSMutableArray *planets = [self planetsForLevel:currentLevel+kNumberOfLevelsToGenerate];
+    NSMutableArray *planets = [self planetsForLevel:self.currentLevel+kNumberOfLevelsToGenerate];
     [currentSpriteArray addObjectsFromArray:planets];
-    NSMutableArray *powerUps = [self powerUpsForLevel:currentLevel+kNumberOfLevelsToGenerate];
+    NSMutableArray *powerUps = [self powerUpsForLevel:self.currentLevel+kNumberOfLevelsToGenerate];
     [currentSpriteArray addObjectsFromArray:powerUps];
 
-    currentLevel++;
+    self.currentLevel++;
     [self checkLevelAchievements];
-    if (currentLevel % 10 == 0) {
-        int backgroundNumber = currentLevel / 10;
+    if (self.currentLevel % 10 == 0) {
+        int backgroundNumber = self.currentLevel / 10;
         backgroundNumber++;
         if (backgroundNumber > 6) backgroundNumber = 6;
         if (background.alpha == 0) {
@@ -1446,7 +1445,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         }
     }
     
-    ((SKLabelNode*)[self childNodeWithName:levelNodeName]).text = [NSString stringWithFormat:@"%d",currentLevel];
+    ((SKLabelNode*)[self childNodeWithName:levelNodeName]).text = [NSString stringWithFormat:@"%d",self.currentLevel];
     CGRect goalRect;
     goalRect = CGRectMake(self.frame.origin.x, self.frame.size.height + kExtraSpaceOffScreen, self.frame.size.width, 1);
     SKNode* goal = [SKNode node];
@@ -1510,7 +1509,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
             [sprite runAction:sprite.userData[powerUpSpaceMineRotationAnimation]];
         }
     }
-    if (currentLevel == 1 && !self.reset) {
+    if (self.currentLevel == 1 && !self.reset) {
         SKSpriteNode *directions = [SKSpriteNode spriteNodeWithImageNamed:@"Instructions_Screen1"];
         directions.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2 + directions.size.height * 2);
         [self addChild:directions];
@@ -1785,14 +1784,14 @@ CGFloat DegreesToRadians(CGFloat degrees)
     float width = 40;
     if (hasShield) {
         width = ship.size.width;
-        if (currentLevel != 0) {
+        if (self.currentLevel != 0) {
             [[ship childNodeWithName:shipShieldSpriteName] runAction:ship.userData[shipShieldOnAnimation]];
         } else {
             [ship childNodeWithName:shipShieldSpriteName].alpha = 1;
             [[ship childNodeWithName:shipShieldSpriteName] setScale:1];
         }
     } else {
-        if (currentLevel != 0) {
+        if (self.currentLevel != 0) {
             NSString *imageName = @"ShipShield_Pop";
             float scale = 0.64;
             float duration = 0.5;
