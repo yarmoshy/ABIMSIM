@@ -110,6 +110,7 @@ static const uint32_t powerUpSpaceMineExplodingRingCategory = 0x1 << 12;
 #import "GameScene.h"
 #import "HexColor.h"
 #import "UpgradeScene.h"
+#import "AudioController.h"
 
 @implementation GameScene  {
     NSMutableArray *spritesArrays;
@@ -300,6 +301,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
 }
 
 -(void)transitionFromMainMenu {
+    [[AudioController sharedController] gameplay];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pause) name:UIApplicationDidBecomeActiveNotification object:nil];
 
     [self transitionStars];
@@ -1106,6 +1109,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
     [[self childNodeWithName:shipCategoryName] childNodeWithName:shipImageSpriteName].hidden = YES;
     [self childNodeWithName:shipCategoryName].physicsBody = nil;
 
+    [[AudioController sharedController] playerDeath];
+    
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         self.paused = YES;
     });

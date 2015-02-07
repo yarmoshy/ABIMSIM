@@ -8,12 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import <SpriteKit/SpriteKit.h>
-#import <AVFoundation/AVFoundation.h>
 
 @class GameScene;
 @class DCRoundSwitch;
 
-@interface ViewController : UIViewController <GKGameCenterControllerDelegate, UIAlertViewDelegate, AVAudioPlayerDelegate>
+@interface ViewController : UIViewController <GKGameCenterControllerDelegate, UIAlertViewDelegate>
 
 #pragma mark - Main Menu
 

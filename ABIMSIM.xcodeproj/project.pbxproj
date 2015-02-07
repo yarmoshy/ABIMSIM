@@ -24,23 +24,6 @@
 		B4467176192D8CC500B4A8C7 /* AsteroidShield_Impact_0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4467175192D8CC500B4A8C7 /* AsteroidShield_Impact_0@2x.png */; };
 		B4467178192D906400B4A8C7 /* AsteroidShield_Pop_0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4467177192D906400B4A8C7 /* AsteroidShield_Pop_0@2x.png */; };
 		B446717A192D906A00B4A8C7 /* AsteroidShield_Pop_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4467179192D906A00B4A8C7 /* AsteroidShield_Pop_1@2x.png */; };
-		B447301A1A714E850063B5EA /* Level1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B44730091A714E850063B5EA /* Level1.mp3 */; };
-		B447301B1A714E850063B5EA /* Level2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B447300A1A714E850063B5EA /* Level2.mp3 */; };
-		B447301C1A714E850063B5EA /* Level3.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B447300B1A714E850063B5EA /* Level3.mp3 */; };
-		B447301D1A714E850063B5EA /* Level4.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B447300C1A714E850063B5EA /* Level4.mp3 */; };
-		B447301E1A714E850063B5EA /* Level5.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B447300D1A714E850063B5EA /* Level5.mp3 */; };
-		B447301F1A714E850063B5EA /* Level6.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B447300E1A714E850063B5EA /* Level6.mp3 */; };
-		B44730201A714E850063B5EA /* Level7.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B447300F1A714E850063B5EA /* Level7.mp3 */; };
-		B44730211A714E850063B5EA /* Level8.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B44730101A714E850063B5EA /* Level8.mp3 */; };
-		B44730221A714E850063B5EA /* Level9.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B44730111A714E850063B5EA /* Level9.mp3 */; };
-		B44730231A714E850063B5EA /* Level10.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B44730121A714E850063B5EA /* Level10.mp3 */; };
-		B44730241A714E850063B5EA /* Level11.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B44730131A714E850063B5EA /* Level11.mp3 */; };
-		B44730251A714E850063B5EA /* Level12.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B44730141A714E850063B5EA /* Level12.mp3 */; };
-		B44730261A714E850063B5EA /* Level13.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B44730151A714E850063B5EA /* Level13.mp3 */; };
-		B44730271A714E850063B5EA /* Level14.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B44730161A714E850063B5EA /* Level14.mp3 */; };
-		B44730281A714E850063B5EA /* Level15.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B44730171A714E850063B5EA /* Level15.mp3 */; };
-		B44730291A714E850063B5EA /* Level16.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B44730181A714E850063B5EA /* Level16.mp3 */; };
-		B447302A1A714E850063B5EA /* Level17.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B44730191A714E850063B5EA /* Level17.mp3 */; };
 		B45865E918DA15C9005C9566 /* Ship@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B45865E818DA15C9005C9566 /* Ship@2x.png */; };
 		B45865EC18DA3ACA005C9566 /* HexColor.m in Sources */ = {isa = PBXBuildFile; fileRef = B45865EB18DA3ACA005C9566 /* HexColor.m */; };
 		B45FF12818CE8708001662CD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B45FF12718CE8708001662CD /* Foundation.framework */; };
@@ -87,6 +70,20 @@
 		B47E22D618DBA7E200F42EBB /* Asteroid_9@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B47E22CA18DBA7E200F42EBB /* Asteroid_9@2x.png */; };
 		B47E22D718DBA7E200F42EBB /* Asteroid_10@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B47E22CB18DBA7E200F42EBB /* Asteroid_10@2x.png */; };
 		B47E22D818DBA7E200F42EBB /* Asteroid_11@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B47E22CC18DBA7E200F42EBB /* Asteroid_11@2x.png */; };
+		B497926A1A844756005174C1 /* AudioController.m in Sources */ = {isa = PBXBuildFile; fileRef = B49792691A844756005174C1 /* AudioController.m */; };
+		B49792D11A86C999005174C1 /* NSMutableArray+STKAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B49792BF1A86C999005174C1 /* NSMutableArray+STKAudioPlayer.m */; };
+		B49792D21A86C999005174C1 /* STKAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B49792C11A86C999005174C1 /* STKAudioPlayer.m */; };
+		B49792D31A86C999005174C1 /* STKAutoRecoveringHTTPDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = B49792C31A86C999005174C1 /* STKAutoRecoveringHTTPDataSource.m */; };
+		B49792D41A86C999005174C1 /* STKCoreFoundationDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = B49792C51A86C999005174C1 /* STKCoreFoundationDataSource.m */; };
+		B49792D51A86C999005174C1 /* STKDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = B49792C71A86C999005174C1 /* STKDataSource.m */; };
+		B49792D61A86C999005174C1 /* STKDataSourceWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = B49792C91A86C999005174C1 /* STKDataSourceWrapper.m */; };
+		B49792D71A86C999005174C1 /* STKHTTPDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = B49792CB1A86C999005174C1 /* STKHTTPDataSource.m */; };
+		B49792D81A86C999005174C1 /* STKLocalFileDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = B49792CD1A86C999005174C1 /* STKLocalFileDataSource.m */; };
+		B49792D91A86C999005174C1 /* STKQueueEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = B49792CF1A86C999005174C1 /* STKQueueEntry.m */; };
+		B49792DB1A86CA19005174C1 /* parsecsGameplayMusic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B49792DA1A86CA19005174C1 /* parsecsGameplayMusic.mp3 */; };
+		B49792DD1A86CA24005174C1 /* Level1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B49792DC1A86CA24005174C1 /* Level1.mp3 */; };
+		B49792E01A86CA5F005174C1 /* SampleQueueId.m in Sources */ = {isa = PBXBuildFile; fileRef = B49792DF1A86CA5F005174C1 /* SampleQueueId.m */; };
+		B49792E21A86CD0C005174C1 /* cheapExplosion.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B49792E11A86CD0C005174C1 /* cheapExplosion.mp3 */; };
 		B4A792A7191C2B92005317AD /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4A792A6191C2B92005317AD /* GameKit.framework */; };
 		B4D0732E19785F620028840D /* SpaceMine_CenterGlow_0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4D0732A19785F620028840D /* SpaceMine_CenterGlow_0@2x.png */; };
 		B4D0732F19785F620028840D /* SpaceMine_ExplodingRing_0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4D0732B19785F620028840D /* SpaceMine_ExplodingRing_0@2x.png */; };
@@ -155,23 +152,6 @@
 		B4467175192D8CC500B4A8C7 /* AsteroidShield_Impact_0@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AsteroidShield_Impact_0@2x.png"; sourceTree = "<group>"; };
 		B4467177192D906400B4A8C7 /* AsteroidShield_Pop_0@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AsteroidShield_Pop_0@2x.png"; sourceTree = "<group>"; };
 		B4467179192D906A00B4A8C7 /* AsteroidShield_Pop_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AsteroidShield_Pop_1@2x.png"; sourceTree = "<group>"; };
-		B44730091A714E850063B5EA /* Level1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Level1.mp3; sourceTree = "<group>"; };
-		B447300A1A714E850063B5EA /* Level2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Level2.mp3; sourceTree = "<group>"; };
-		B447300B1A714E850063B5EA /* Level3.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Level3.mp3; sourceTree = "<group>"; };
-		B447300C1A714E850063B5EA /* Level4.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Level4.mp3; sourceTree = "<group>"; };
-		B447300D1A714E850063B5EA /* Level5.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Level5.mp3; sourceTree = "<group>"; };
-		B447300E1A714E850063B5EA /* Level6.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Level6.mp3; sourceTree = "<group>"; };
-		B447300F1A714E850063B5EA /* Level7.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Level7.mp3; sourceTree = "<group>"; };
-		B44730101A714E850063B5EA /* Level8.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Level8.mp3; sourceTree = "<group>"; };
-		B44730111A714E850063B5EA /* Level9.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Level9.mp3; sourceTree = "<group>"; };
-		B44730121A714E850063B5EA /* Level10.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Level10.mp3; sourceTree = "<group>"; };
-		B44730131A714E850063B5EA /* Level11.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Level11.mp3; sourceTree = "<group>"; };
-		B44730141A714E850063B5EA /* Level12.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Level12.mp3; sourceTree = "<group>"; };
-		B44730151A714E850063B5EA /* Level13.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Level13.mp3; sourceTree = "<group>"; };
-		B44730161A714E850063B5EA /* Level14.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Level14.mp3; sourceTree = "<group>"; };
-		B44730171A714E850063B5EA /* Level15.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Level15.mp3; sourceTree = "<group>"; };
-		B44730181A714E850063B5EA /* Level16.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Level16.mp3; sourceTree = "<group>"; };
-		B44730191A714E850063B5EA /* Level17.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Level17.mp3; sourceTree = "<group>"; };
 		B45865E818DA15C9005C9566 /* Ship@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Ship@2x.png"; sourceTree = "<group>"; };
 		B45865EA18DA3ACA005C9566 /* HexColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HexColor.h; sourceTree = "<group>"; };
 		B45865EB18DA3ACA005C9566 /* HexColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HexColor.m; sourceTree = "<group>"; };
@@ -225,6 +205,32 @@
 		B47E22CA18DBA7E200F42EBB /* Asteroid_9@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Asteroid_9@2x.png"; sourceTree = "<group>"; };
 		B47E22CB18DBA7E200F42EBB /* Asteroid_10@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Asteroid_10@2x.png"; sourceTree = "<group>"; };
 		B47E22CC18DBA7E200F42EBB /* Asteroid_11@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Asteroid_11@2x.png"; sourceTree = "<group>"; };
+		B49792681A844756005174C1 /* AudioController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioController.h; sourceTree = "<group>"; };
+		B49792691A844756005174C1 /* AudioController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioController.m; sourceTree = "<group>"; };
+		B49792BE1A86C999005174C1 /* NSMutableArray+STKAudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+STKAudioPlayer.h"; sourceTree = "<group>"; };
+		B49792BF1A86C999005174C1 /* NSMutableArray+STKAudioPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+STKAudioPlayer.m"; sourceTree = "<group>"; };
+		B49792C01A86C999005174C1 /* STKAudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STKAudioPlayer.h; sourceTree = "<group>"; };
+		B49792C11A86C999005174C1 /* STKAudioPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STKAudioPlayer.m; sourceTree = "<group>"; };
+		B49792C21A86C999005174C1 /* STKAutoRecoveringHTTPDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STKAutoRecoveringHTTPDataSource.h; sourceTree = "<group>"; };
+		B49792C31A86C999005174C1 /* STKAutoRecoveringHTTPDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STKAutoRecoveringHTTPDataSource.m; sourceTree = "<group>"; };
+		B49792C41A86C999005174C1 /* STKCoreFoundationDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STKCoreFoundationDataSource.h; sourceTree = "<group>"; };
+		B49792C51A86C999005174C1 /* STKCoreFoundationDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STKCoreFoundationDataSource.m; sourceTree = "<group>"; };
+		B49792C61A86C999005174C1 /* STKDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STKDataSource.h; sourceTree = "<group>"; };
+		B49792C71A86C999005174C1 /* STKDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STKDataSource.m; sourceTree = "<group>"; };
+		B49792C81A86C999005174C1 /* STKDataSourceWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STKDataSourceWrapper.h; sourceTree = "<group>"; };
+		B49792C91A86C999005174C1 /* STKDataSourceWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STKDataSourceWrapper.m; sourceTree = "<group>"; };
+		B49792CA1A86C999005174C1 /* STKHTTPDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STKHTTPDataSource.h; sourceTree = "<group>"; };
+		B49792CB1A86C999005174C1 /* STKHTTPDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STKHTTPDataSource.m; sourceTree = "<group>"; };
+		B49792CC1A86C999005174C1 /* STKLocalFileDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STKLocalFileDataSource.h; sourceTree = "<group>"; };
+		B49792CD1A86C999005174C1 /* STKLocalFileDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STKLocalFileDataSource.m; sourceTree = "<group>"; };
+		B49792CE1A86C999005174C1 /* STKQueueEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STKQueueEntry.h; sourceTree = "<group>"; };
+		B49792CF1A86C999005174C1 /* STKQueueEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STKQueueEntry.m; sourceTree = "<group>"; };
+		B49792D01A86C999005174C1 /* StreamingKit-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "StreamingKit-Prefix.pch"; sourceTree = "<group>"; };
+		B49792DA1A86CA19005174C1 /* parsecsGameplayMusic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = parsecsGameplayMusic.mp3; sourceTree = "<group>"; };
+		B49792DC1A86CA24005174C1 /* Level1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Level1.mp3; sourceTree = "<group>"; };
+		B49792DE1A86CA5F005174C1 /* SampleQueueId.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleQueueId.h; sourceTree = "<group>"; };
+		B49792DF1A86CA5F005174C1 /* SampleQueueId.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleQueueId.m; sourceTree = "<group>"; };
+		B49792E11A86CD0C005174C1 /* cheapExplosion.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = cheapExplosion.mp3; sourceTree = "<group>"; };
 		B4A792A6191C2B92005317AD /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		B4D0732A19785F620028840D /* SpaceMine_CenterGlow_0@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SpaceMine_CenterGlow_0@2x.png"; sourceTree = "<group>"; };
 		B4D0732B19785F620028840D /* SpaceMine_ExplodingRing_0@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SpaceMine_ExplodingRing_0@2x.png"; sourceTree = "<group>"; };
@@ -366,23 +372,9 @@
 		B44730081A714E7C0063B5EA /* Music */ = {
 			isa = PBXGroup;
 			children = (
-				B44730091A714E850063B5EA /* Level1.mp3 */,
-				B447300A1A714E850063B5EA /* Level2.mp3 */,
-				B447300B1A714E850063B5EA /* Level3.mp3 */,
-				B447300C1A714E850063B5EA /* Level4.mp3 */,
-				B447300D1A714E850063B5EA /* Level5.mp3 */,
-				B447300E1A714E850063B5EA /* Level6.mp3 */,
-				B447300F1A714E850063B5EA /* Level7.mp3 */,
-				B44730101A714E850063B5EA /* Level8.mp3 */,
-				B44730111A714E850063B5EA /* Level9.mp3 */,
-				B44730121A714E850063B5EA /* Level10.mp3 */,
-				B44730131A714E850063B5EA /* Level11.mp3 */,
-				B44730141A714E850063B5EA /* Level12.mp3 */,
-				B44730151A714E850063B5EA /* Level13.mp3 */,
-				B44730161A714E850063B5EA /* Level14.mp3 */,
-				B44730171A714E850063B5EA /* Level15.mp3 */,
-				B44730181A714E850063B5EA /* Level16.mp3 */,
-				B44730191A714E850063B5EA /* Level17.mp3 */,
+				B49792E11A86CD0C005174C1 /* cheapExplosion.mp3 */,
+				B49792DA1A86CA19005174C1 /* parsecsGameplayMusic.mp3 */,
+				B49792DC1A86CA24005174C1 /* Level1.mp3 */,
 			);
 			name = Music;
 			sourceTree = "<group>";
@@ -414,6 +406,7 @@
 		B45FF11B18CE8708001662CD = {
 			isa = PBXGroup;
 			children = (
+				B49792BD1A86C999005174C1 /* StreamingKit */,
 				B45FF12F18CE8708001662CD /* ABIMSIM */,
 				B45FF15318CE8708001662CD /* ABIMSIMTests */,
 				B45FF12618CE8708001662CD /* Frameworks */,
@@ -456,6 +449,8 @@
 				B45FF13B18CE8708001662CD /* Main.storyboard */,
 				B45FF13E18CE8708001662CD /* ViewController.h */,
 				B45FF13F18CE8708001662CD /* ViewController.m */,
+				B49792681A844756005174C1 /* AudioController.h */,
+				B49792691A844756005174C1 /* AudioController.m */,
 				B45FF14118CE8708001662CD /* GameScene.h */,
 				B45FF14218CE8708001662CD /* GameScene.m */,
 				B400F40E191AFCA100A483E2 /* UpgradeScene.h */,
@@ -495,6 +490,34 @@
 				B45FF15618CE8708001662CD /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B49792BD1A86C999005174C1 /* StreamingKit */ = {
+			isa = PBXGroup;
+			children = (
+				B49792DE1A86CA5F005174C1 /* SampleQueueId.h */,
+				B49792DF1A86CA5F005174C1 /* SampleQueueId.m */,
+				B49792BE1A86C999005174C1 /* NSMutableArray+STKAudioPlayer.h */,
+				B49792BF1A86C999005174C1 /* NSMutableArray+STKAudioPlayer.m */,
+				B49792C01A86C999005174C1 /* STKAudioPlayer.h */,
+				B49792C11A86C999005174C1 /* STKAudioPlayer.m */,
+				B49792C21A86C999005174C1 /* STKAutoRecoveringHTTPDataSource.h */,
+				B49792C31A86C999005174C1 /* STKAutoRecoveringHTTPDataSource.m */,
+				B49792C41A86C999005174C1 /* STKCoreFoundationDataSource.h */,
+				B49792C51A86C999005174C1 /* STKCoreFoundationDataSource.m */,
+				B49792C61A86C999005174C1 /* STKDataSource.h */,
+				B49792C71A86C999005174C1 /* STKDataSource.m */,
+				B49792C81A86C999005174C1 /* STKDataSourceWrapper.h */,
+				B49792C91A86C999005174C1 /* STKDataSourceWrapper.m */,
+				B49792CA1A86C999005174C1 /* STKHTTPDataSource.h */,
+				B49792CB1A86C999005174C1 /* STKHTTPDataSource.m */,
+				B49792CC1A86C999005174C1 /* STKLocalFileDataSource.h */,
+				B49792CD1A86C999005174C1 /* STKLocalFileDataSource.m */,
+				B49792CE1A86C999005174C1 /* STKQueueEntry.h */,
+				B49792CF1A86C999005174C1 /* STKQueueEntry.m */,
+				B49792D01A86C999005174C1 /* StreamingKit-Prefix.pch */,
+			);
+			path = StreamingKit;
 			sourceTree = "<group>";
 		};
 		B4D0732819785F3C0028840D /* Space Mine */ = {
@@ -595,6 +618,9 @@
 					B45FF12318CE8708001662CD = {
 						DevelopmentTeam = 6QXVXEAWF9;
 						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 0;
+							};
 							com.apple.GameCenter = {
 								enabled = 1;
 							};
@@ -632,6 +658,7 @@
 			files = (
 				B4D4B621191FFF4F00834942 /* Planet_2_2@2x.png in Resources */,
 				B45FF13418CE8708001662CD /* InfoPlist.strings in Resources */,
+				B49792E21A86CD0C005174C1 /* cheapExplosion.mp3 in Resources */,
 				B47E22D618DBA7E200F42EBB /* Asteroid_9@2x.png in Resources */,
 				B4D4B619191FFF4F00834942 /* Planet_0_2@2x.png in Resources */,
 				B46363A91979EBA2007B657C /* SpaceMine_Friendly_5@2x.png in Resources */,
@@ -639,38 +666,30 @@
 				B446717A192D906A00B4A8C7 /* AsteroidShield_Pop_1@2x.png in Resources */,
 				B43F4D16192ABB770000ACA4 /* AsteroidShield_Ring_0@2x.png in Resources */,
 				B46363A71979EBA2007B657C /* SpaceMine_Friendly_3@2x.png in Resources */,
-				B44730261A714E850063B5EA /* Level13.mp3 in Resources */,
-				B44730211A714E850063B5EA /* Level8.mp3 in Resources */,
 				B47E22CE18DBA7E200F42EBB /* Asteroid_1@2x.png in Resources */,
 				B47E22D118DBA7E200F42EBB /* Asteroid_4@2x.png in Resources */,
 				B4E221CF192EB356003947B7 /* ShipShield_Impact@2x.png in Resources */,
 				B478CFBB19199C0E001A9DB6 /* Planet_5_1@2x.png in Resources */,
 				B4D4B623191FFF4F00834942 /* Planet_3_0@2x.png in Resources */,
 				B4D0732E19785F620028840D /* SpaceMine_CenterGlow_0@2x.png in Resources */,
-				B447301E1A714E850063B5EA /* Level5.mp3 in Resources */,
+				B49792DB1A86CA19005174C1 /* parsecsGameplayMusic.mp3 in Resources */,
 				B4242EA219A7E58900192F44 /* BlackHole2.atlas in Resources */,
 				B4D4B629191FFF4F00834942 /* Planet_4_0@2x.png in Resources */,
 				B4D0733019785F620028840D /* SpaceMine_LargeGlow_0@2x.png in Resources */,
 				B47BCFC51921819000C22D22 /* Planet_5_3@2x.png in Resources */,
-				B447301C1A714E850063B5EA /* Level3.mp3 in Resources */,
 				B4E221CE192EB356003947B7 /* ShieldPowerUp@2x.png in Resources */,
-				B44730291A714E850063B5EA /* Level16.mp3 in Resources */,
 				B46363A51979EBA2007B657C /* SpaceMine_Friendly_1@2x.png in Resources */,
 				B4242EA019A7E58900192F44 /* BlackHole0.atlas in Resources */,
 				B4D4B618191FFF4F00834942 /* Planet_0_1@2x.png in Resources */,
 				B4D4B620191FFF4F00834942 /* Planet_2_1@2x.png in Resources */,
-				B44730231A714E850063B5EA /* Level10.mp3 in Resources */,
 				B4D4B628191FFF4F00834942 /* Planet_4_1@2x.png in Resources */,
 				B4242EA319A7E58900192F44 /* BlackHole3.atlas in Resources */,
 				B4D4B61A191FFF4F00834942 /* Planet_0_3@2x.png in Resources */,
 				B4D4B624191FFF4F00834942 /* Planet_3_2@2x.png in Resources */,
 				B4242EA419A7E58900192F44 /* BlackHole4.atlas in Resources */,
-				B44730251A714E850063B5EA /* Level12.mp3 in Resources */,
-				B447301A1A714E850063B5EA /* Level1.mp3 in Resources */,
 				B47E22CD18DBA7E200F42EBB /* Asteroid_0@2x.png in Resources */,
 				B46363AC1979EBA2007B657C /* SpaceMine_Friendly_8@2x.png in Resources */,
 				B47E22D818DBA7E200F42EBB /* Asteroid_11@2x.png in Resources */,
-				B44730201A714E850063B5EA /* Level7.mp3 in Resources */,
 				B45FF14718CE8708001662CD /* Images.xcassets in Resources */,
 				E128D1F91A6DDB9600856772 /* Background1.atlas in Resources */,
 				B47E22D518DBA7E200F42EBB /* Asteroid_8@2x.png in Resources */,
@@ -686,13 +705,10 @@
 				B4242EA619A7E58900192F44 /* BlackHole6.atlas in Resources */,
 				B4D4B617191FFF4F00834942 /* Planet_0_0@2x.png in Resources */,
 				B4D4B61B191FFF4F00834942 /* Planet_1_0@2x.png in Resources */,
+				B49792DD1A86CA24005174C1 /* Level1.mp3 in Resources */,
 				B4242EA719A7E58900192F44 /* BlackHole7.atlas in Resources */,
 				B47E22D018DBA7E200F42EBB /* Asteroid_3@2x.png in Resources */,
-				B447301B1A714E850063B5EA /* Level2.mp3 in Resources */,
 				B4E221CD192EB356003947B7 /* ShieldPowerUp_Animated@2x.png in Resources */,
-				B447301D1A714E850063B5EA /* Level4.mp3 in Resources */,
-				B447301F1A714E850063B5EA /* Level6.mp3 in Resources */,
-				B44730241A714E850063B5EA /* Level11.mp3 in Resources */,
 				B478CFBA19199C0E001A9DB6 /* Planet_5_0@2x.png in Resources */,
 				B46363AB1979EBA2007B657C /* SpaceMine_Friendly_7@2x.png in Resources */,
 				B43F4D0E192ABB560000ACA4 /* AsteroidShield_Ring_1@2x.png in Resources */,
@@ -703,7 +719,6 @@
 				B4D4B61C191FFF4F00834942 /* Planet_1_1@2x.png in Resources */,
 				B47923DC19157805002B8467 /* Voltaire-Regular.ttf in Resources */,
 				B46363A81979EBA2007B657C /* SpaceMine_Friendly_4@2x.png in Resources */,
-				B447302A1A714E850063B5EA /* Level17.mp3 in Resources */,
 				B4D0732F19785F620028840D /* SpaceMine_ExplodingRing_0@2x.png in Resources */,
 				B47E22D718DBA7E200F42EBB /* Asteroid_10@2x.png in Resources */,
 				B4D4B627191FFF4F00834942 /* Planet_4_2@2x.png in Resources */,
@@ -711,8 +726,6 @@
 				B4D4B61D191FFF4F00834942 /* Planet_1_2@2x.png in Resources */,
 				B4D4B622191FFF4F00834942 /* Planet_2_3@2x.png in Resources */,
 				B4D4B62A191FFF4F00834942 /* Planet_4_3@2x.png in Resources */,
-				B44730281A714E850063B5EA /* Level15.mp3 in Resources */,
-				B44730221A714E850063B5EA /* Level9.mp3 in Resources */,
 				B478CFC019199FA5001A9DB6 /* Planet_5_S@2x.png in Resources */,
 				B4467176192D8CC500B4A8C7 /* AsteroidShield_Impact_0@2x.png in Resources */,
 				B47E22D318DBA7E200F42EBB /* Asteroid_6@2x.png in Resources */,
@@ -720,7 +733,6 @@
 				B4D4B61E191FFF4F00834942 /* Planet_1_3@2x.png in Resources */,
 				B4E221D2192EB3C6003947B7 /* ShipShield_Pop@2x.png in Resources */,
 				B46363AA1979EBA2007B657C /* SpaceMine_Friendly_6@2x.png in Resources */,
-				B44730271A714E850063B5EA /* Level14.mp3 in Resources */,
 				B47E22CF18DBA7E200F42EBB /* Asteroid_2@2x.png in Resources */,
 				B47E22D418DBA7E200F42EBB /* Asteroid_7@2x.png in Resources */,
 				B4E221D0192EB356003947B7 /* ShipShield@2x.png in Resources */,
@@ -758,16 +770,27 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B49792D61A86C999005174C1 /* STKDataSourceWrapper.m in Sources */,
 				B45865EC18DA3ACA005C9566 /* HexColor.m in Sources */,
 				B45FF14318CE8708001662CD /* GameScene.m in Sources */,
+				B49792D71A86C999005174C1 /* STKHTTPDataSource.m in Sources */,
+				B49792D41A86C999005174C1 /* STKCoreFoundationDataSource.m in Sources */,
+				B49792D81A86C999005174C1 /* STKLocalFileDataSource.m in Sources */,
 				B45FF14018CE8708001662CD /* ViewController.m in Sources */,
+				B49792E01A86CA5F005174C1 /* SampleQueueId.m in Sources */,
 				E1D4EDF61A5B5E5900676C17 /* DCRoundSwitchKnobLayer.m in Sources */,
+				B49792D11A86C999005174C1 /* NSMutableArray+STKAudioPlayer.m in Sources */,
 				E1D4EDF51A5B5E5900676C17 /* DCRoundSwitch.m in Sources */,
+				B49792D51A86C999005174C1 /* STKDataSource.m in Sources */,
+				B49792D21A86C999005174C1 /* STKAudioPlayer.m in Sources */,
 				B400F410191AFCA100A483E2 /* UpgradeScene.m in Sources */,
 				E1D4EDF71A5B5E5900676C17 /* DCRoundSwitchOutlineLayer.m in Sources */,
 				B45FF13A18CE8708001662CD /* AppDelegate.m in Sources */,
+				B497926A1A844756005174C1 /* AudioController.m in Sources */,
 				B45FF13618CE8708001662CD /* main.m in Sources */,
+				B49792D31A86C999005174C1 /* STKAutoRecoveringHTTPDataSource.m in Sources */,
 				E1D4EDF81A5B5E5900676C17 /* DCRoundSwitchToggleLayer.m in Sources */,
+				B49792D91A86C999005174C1 /* STKQueueEntry.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -906,7 +929,7 @@
 				GCC_PREFIX_HEADER = "ABIMSIM/ABIMSIM-Prefix.pch";
 				INFOPLIST_FILE = "ABIMSIM/ABIMSIM-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "63c3ca5c-37ea-4616-ae0b-78cd447ef9c1";
+				PROVISIONING_PROFILE = "8c4318cc-01f2-4039-8deb-3077297f0fdb";
 				SPRITEKIT_TEXTURE_ATLAS_OUTPUT = YES;
 				WRAPPER_EXTENSION = app;
 			};
@@ -927,7 +950,7 @@
 				GCC_PREFIX_HEADER = "ABIMSIM/ABIMSIM-Prefix.pch";
 				INFOPLIST_FILE = "ABIMSIM/ABIMSIM-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "63c3ca5c-37ea-4616-ae0b-78cd447ef9c1";
+				PROVISIONING_PROFILE = "8c4318cc-01f2-4039-8deb-3077297f0fdb";
 				SPRITEKIT_TEXTURE_ATLAS_OUTPUT = YES;
 				WRAPPER_EXTENSION = app;
 			};

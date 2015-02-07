@@ -10,6 +10,7 @@
 #import "GameScene.h"
 #import "DCRoundSwitch.h"
 #import <objc/runtime.h>
+#import "AudioController.h"
 
 #define kBlurBackgroundViewTag 777
 
@@ -17,27 +18,14 @@
     NSMutableArray *hamburgerToXImages;
     NSMutableArray *hamburgerToOriginalImages;
     BOOL showingSettings;
-    NSMutableArray *audioPlayers;
-    int currentPlayer;
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
-    audioPlayers = [NSMutableArray arrayWithCapacity:17];
-    for (int i = 1; i < 12; i++) {
-        __autoreleasing NSError *error = nil;
-        NSString *filePath = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:[NSString stringWithFormat:@"Level%d.mp3",i]];
-        AVAudioPlayer *player = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:filePath] fileTypeHint:@"mp3" error:&error];
-        player.delegate = self;
-        [player prepareToPlay];
-        [audioPlayers addObject:player];
-    }
-    currentPlayer = 0;
-    AVAudioPlayer *player = audioPlayers[0];
-    [player play];
+    [AudioController sharedController];
+    
     self.settingsContainerTopAlignmentConstraint.constant = -1* (self.view.frame.size.height - self.buttonContainerView.frame.origin.y);
     self.settingsContainerTrailingConstraint.constant = self.view.frame.size.width;
     self.settingsLeadngConstraint.constant = -1 * self.view.frame.size.height;
@@ -75,41 +63,7 @@
     self.scene.viewController = self;
     // Present the scene.
     [skView presentScene:self.scene];
-}
-
--(void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)aPlayer successfully:(BOOL)flag {
-    int levelsPerTrack = 3;
-    AVAudioPlayer *player;
-    if (self.mainMenuView.alpha != 0) {
-        currentPlayer--;
-    } else {
-        if (currentPlayer == 0) {
-            currentPlayer = 1;
-        } else {
-            if (self.scene.currentLevel > levelsPerTrack * currentPlayer) {
-                currentPlayer++;
-            } else if (self.scene.currentLevel < levelsPerTrack * (currentPlayer-1)) {
-                currentPlayer--;
-            }
-        }
-    }
-    if (currentPlayer < 0) {
-        currentPlayer = 0;
-    } else if (currentPlayer > 11) {
-        currentPlayer = 11;
-    }
-
-    player = audioPlayers[currentPlayer];
-    [player play];
-    if (currentPlayer < 11) {
-        AVAudioPlayer *nextPossiblePlayer = audioPlayers[currentPlayer+1];
-        [nextPossiblePlayer prepareToPlay];
-    }
-    if (currentPlayer > 0) {
-        AVAudioPlayer *previousPossiblePlayer = audioPlayers[currentPlayer-1];
-        [previousPossiblePlayer prepareToPlay];
-
-    }
+    
 }
 
 - (BOOL)prefersStatusBarHidden {
@@ -643,6 +597,8 @@
 }
 
 - (IBAction)playPausedTouchUpInside:(id)sender {
+    [[AudioController sharedController] gameplay];
+    
     [self configureButtonsEnabled:NO];
     [self animatePlayPausedButtonDeselect:^{
         self.scene.resuming = YES;
@@ -774,6 +730,7 @@
 }
 
 - (IBAction)mainMenuTouchUpInside:(id)sender {
+    [[AudioController sharedController] playerDeath];
     [self configureButtonsEnabled:NO];
     [self animateMainMenuButtonDeselect:^{
         self.scene = [GameScene sceneWithSize:self.view.bounds.size];
@@ -846,6 +803,7 @@
 
 -(void)handleTap:(UITapGestureRecognizer*)recognizer {
     if (recognizer.state == UIGestureRecognizerStateRecognized) {
+        [[AudioController sharedController] gameplay];
         [self hideGameOverView];
     }
 }
