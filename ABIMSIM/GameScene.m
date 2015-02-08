@@ -905,6 +905,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
                 secondBody.node.name = explodedSpaceMine;
                 explodedMine = (SKSpriteNode*)secondBody.node;
             }];
+            [[AudioController sharedController] mine];
         }
 
         if (firstBody.categoryBitMask == shipCategory && secondBody.categoryBitMask == goalCategory) {

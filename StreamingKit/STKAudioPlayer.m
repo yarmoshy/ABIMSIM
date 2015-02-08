@@ -684,7 +684,7 @@ static void AudioFileStreamPacketsProc(void* clientData, UInt32 numberBytes, UIn
         }
         else
         {
-            [bufferingQueue removeAllObjects];
+//            [bufferingQueue removeAllObjects];
             [upcomingQueue removeAllObjects];
         }
     }

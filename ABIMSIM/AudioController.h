@@ -11,8 +11,9 @@
 #import "STKAudioPlayer.h"
 #import "SampleQueueId.h"
 
-@interface AudioController : NSObject  <STKAudioPlayerDelegate>
+@interface AudioController : NSObject  <STKAudioPlayerDelegate, AVAudioPlayerDelegate>
 +(AudioController*)sharedController;
 -(void)playerDeath;
 -(void)gameplay;
+-(void)mine;
 @end

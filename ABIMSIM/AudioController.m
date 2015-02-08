@@ -16,9 +16,7 @@ typedef enum {
 } MusicMode;
 
 @implementation AudioController  {
-    AVAudioPlayer *deathPlayer;
-    AVAudioPlayer *gamePlayer;
-    AVAudioPlayer *introPlayer;
+    AVAudioPlayer *minePlayer;
     STKAudioPlayer* audioPlayer;
     MusicMode musicMode;
     NSTimer *currentTimeTimer;
@@ -53,6 +51,13 @@ typedef enum {
         STKDataSource* dataSource = [STKAudioPlayer dataSourceFromURL:url];
         [audioPlayer queueDataSource:dataSource withQueueItemId:[[SampleQueueId alloc] initWithUrl:url andCount:0]];
         
+        NSError __autoreleasing *errorMine;
+        NSString *filePath = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"explosionMineTrimmed.caf"];
+        minePlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:filePath] fileTypeHint:@"caf" error:&errorMine];
+        minePlayer.numberOfLoops = 0;
+        minePlayer.delegate = self;
+        [minePlayer prepareToPlay];
+
     }
     return self;
 }
@@ -60,7 +65,7 @@ typedef enum {
 -(void)playerDeath {
     musicMode = MusicModeIntro;
     
-    NSString* path = [[NSBundle mainBundle] pathForResource:@"cheapExplosion" ofType:@"mp3"];
+    NSString* path = [[NSBundle mainBundle] pathForResource:@"explosionTrimmed" ofType:@"caf"];
     NSURL* url = [NSURL fileURLWithPath:path];
     
     STKDataSource* dataSource = [STKAudioPlayer dataSourceFromURL:url];
@@ -76,6 +81,10 @@ typedef enum {
     
     STKDataSource* dataSource = [STKAudioPlayer dataSourceFromURL:url];
     [audioPlayer queueDataSource:dataSource withQueueItemId:[[SampleQueueId alloc] initWithUrl:url andCount:0]];
+}
+
+-(void)mine {
+    [minePlayer play];
 }
 
 #pragma mark - STKAudioPlayerDelegate
@@ -116,4 +125,11 @@ typedef enum {
 -(void) audioPlayer:(STKAudioPlayer*)audioPlayer unexpectedError:(STKAudioPlayerErrorCode)errorCode{
     
 }
+
+#pragma mark - AVAudioPlayerDelegate
+
+-(void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
+    [minePlayer prepareToPlay];
+}
+
 @end
