@@ -17,6 +17,9 @@ typedef enum {
 
 @implementation AudioController  {
     AVAudioPlayer *minePlayer;
+    AVAudioPlayer *shieldUpPlayer;
+    AVAudioPlayer *shieldDownPlayer;
+
     STKAudioPlayer* audioPlayer;
     MusicMode musicMode;
     NSTimer *currentTimeTimer;
@@ -57,7 +60,18 @@ typedef enum {
         minePlayer.numberOfLoops = 0;
         minePlayer.delegate = self;
         [minePlayer prepareToPlay];
+        
+        filePath = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"activateShieldTrimmed.caf"];
+        shieldUpPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:filePath] fileTypeHint:@"caf" error:&errorMine];
+        shieldUpPlayer.numberOfLoops = 0;
+        shieldUpPlayer.delegate = self;
+        [shieldUpPlayer prepareToPlay];
 
+        filePath = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"deactivateShieldTrimmed.caf"];
+        shieldDownPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:filePath] fileTypeHint:@"caf" error:&errorMine];
+        shieldDownPlayer.numberOfLoops = 0;
+        shieldDownPlayer.delegate = self;
+        [shieldDownPlayer prepareToPlay];
     }
     return self;
 }
@@ -85,6 +99,14 @@ typedef enum {
 
 -(void)mine {
     [minePlayer play];
+}
+
+-(void)shieldUp {
+    [shieldUpPlayer play];
+}
+
+-(void)shieldDown {
+    [shieldDownPlayer play];
 }
 
 #pragma mark - STKAudioPlayerDelegate
@@ -129,7 +151,13 @@ typedef enum {
 #pragma mark - AVAudioPlayerDelegate
 
 -(void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
-    [minePlayer prepareToPlay];
+    if ([player isEqual:minePlayer]) {
+        [minePlayer prepareToPlay];
+    } else if ([player isEqual:shieldUpPlayer]) {
+        [shieldUpPlayer prepareToPlay];
+    } else if ([player isEqual:shieldDownPlayer]) {
+        [shieldDownPlayer prepareToPlay];
+    }
 }
 
 @end

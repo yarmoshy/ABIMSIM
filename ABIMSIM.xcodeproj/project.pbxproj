@@ -85,6 +85,8 @@
 		B49792E01A86CA5F005174C1 /* SampleQueueId.m in Sources */ = {isa = PBXBuildFile; fileRef = B49792DF1A86CA5F005174C1 /* SampleQueueId.m */; };
 		B49792EE1A86E3AC005174C1 /* explosionTrimmed.caf in Resources */ = {isa = PBXBuildFile; fileRef = B49792ED1A86E3AC005174C1 /* explosionTrimmed.caf */; };
 		B49792F21A86E617005174C1 /* explosionMineTrimmed.caf in Resources */ = {isa = PBXBuildFile; fileRef = B49792F11A86E617005174C1 /* explosionMineTrimmed.caf */; };
+		B49792F81A86F632005174C1 /* activateShieldTrimmed.caf in Resources */ = {isa = PBXBuildFile; fileRef = B49792F71A86F632005174C1 /* activateShieldTrimmed.caf */; };
+		B49792FA1A86F638005174C1 /* deactivateShieldTrimmed.caf in Resources */ = {isa = PBXBuildFile; fileRef = B49792F91A86F638005174C1 /* deactivateShieldTrimmed.caf */; };
 		B4A792A7191C2B92005317AD /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4A792A6191C2B92005317AD /* GameKit.framework */; };
 		B4D0732E19785F620028840D /* SpaceMine_CenterGlow_0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4D0732A19785F620028840D /* SpaceMine_CenterGlow_0@2x.png */; };
 		B4D0732F19785F620028840D /* SpaceMine_ExplodingRing_0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4D0732B19785F620028840D /* SpaceMine_ExplodingRing_0@2x.png */; };
@@ -233,6 +235,8 @@
 		B49792DF1A86CA5F005174C1 /* SampleQueueId.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleQueueId.m; sourceTree = "<group>"; };
 		B49792ED1A86E3AC005174C1 /* explosionTrimmed.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = explosionTrimmed.caf; sourceTree = "<group>"; };
 		B49792F11A86E617005174C1 /* explosionMineTrimmed.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = explosionMineTrimmed.caf; sourceTree = "<group>"; };
+		B49792F71A86F632005174C1 /* activateShieldTrimmed.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = activateShieldTrimmed.caf; sourceTree = "<group>"; };
+		B49792F91A86F638005174C1 /* deactivateShieldTrimmed.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = deactivateShieldTrimmed.caf; sourceTree = "<group>"; };
 		B4A792A6191C2B92005317AD /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		B4D0732A19785F620028840D /* SpaceMine_CenterGlow_0@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SpaceMine_CenterGlow_0@2x.png"; sourceTree = "<group>"; };
 		B4D0732B19785F620028840D /* SpaceMine_ExplodingRing_0@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SpaceMine_ExplodingRing_0@2x.png"; sourceTree = "<group>"; };
@@ -374,6 +378,8 @@
 		B44730081A714E7C0063B5EA /* Music */ = {
 			isa = PBXGroup;
 			children = (
+				B49792F71A86F632005174C1 /* activateShieldTrimmed.caf */,
+				B49792F91A86F638005174C1 /* deactivateShieldTrimmed.caf */,
 				B49792F11A86E617005174C1 /* explosionMineTrimmed.caf */,
 				B49792ED1A86E3AC005174C1 /* explosionTrimmed.caf */,
 				B49792DA1A86CA19005174C1 /* parsecsGameplayMusic.mp3 */,
@@ -690,6 +696,7 @@
 				B4242EA319A7E58900192F44 /* BlackHole3.atlas in Resources */,
 				B4D4B61A191FFF4F00834942 /* Planet_0_3@2x.png in Resources */,
 				B4D4B624191FFF4F00834942 /* Planet_3_2@2x.png in Resources */,
+				B49792F81A86F632005174C1 /* activateShieldTrimmed.caf in Resources */,
 				B4242EA419A7E58900192F44 /* BlackHole4.atlas in Resources */,
 				B47E22CD18DBA7E200F42EBB /* Asteroid_0@2x.png in Resources */,
 				B46363AC1979EBA2007B657C /* SpaceMine_Friendly_8@2x.png in Resources */,
@@ -725,6 +732,7 @@
 				B46363A81979EBA2007B657C /* SpaceMine_Friendly_4@2x.png in Resources */,
 				B4D0732F19785F620028840D /* SpaceMine_ExplodingRing_0@2x.png in Resources */,
 				B47E22D718DBA7E200F42EBB /* Asteroid_10@2x.png in Resources */,
+				B49792FA1A86F638005174C1 /* deactivateShieldTrimmed.caf in Resources */,
 				B4D4B627191FFF4F00834942 /* Planet_4_2@2x.png in Resources */,
 				B4242EA119A7E58900192F44 /* BlackHole1.atlas in Resources */,
 				B4D4B61D191FFF4F00834942 /* Planet_1_2@2x.png in Resources */,

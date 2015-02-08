@@ -16,4 +16,6 @@
 -(void)playerDeath;
 -(void)gameplay;
 -(void)mine;
+-(void)shieldUp;
+-(void)shieldDown;
 @end

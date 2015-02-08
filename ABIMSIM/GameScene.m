@@ -139,6 +139,10 @@ static const uint32_t powerUpSpaceMineExplodingRingCategory = 0x1 << 12;
     int timesHitWithinSecond;
     
     NSArray *spaceMineTextures;
+    
+    SKAction *shieldUpSoundAction;
+    SKAction *shieldDownSoundAction;
+    SKAction *spaceMineSoundAction;
 }
 
 CGFloat DegreesToRadians(CGFloat degrees)
@@ -151,9 +155,14 @@ CGFloat DegreesToRadians(CGFloat degrees)
     if (self = [super initWithSize:size]) {
         /* Setup your scene here */
         [ABIMSIMDefaults setInteger:10 forKey:kMineOccuranceLevel];
+        [ABIMSIMDefaults setInteger:10 forKey:kShieldOccuranceLevel];
         [ABIMSIMDefaults setBool:NO forKey:kWalkthroughSeen];
         walkthroughSeen = [ABIMSIMDefaults boolForKey:kWalkthroughSeen];
         [ABIMSIMDefaults synchronize];
+        
+        shieldUpSoundAction = [SKAction playSoundFileNamed:@"activateShieldTrimmed.caf" waitForCompletion:NO];
+        shieldDownSoundAction = [SKAction playSoundFileNamed:@"deactivateShieldTrimmed.caf" waitForCompletion:NO];
+        spaceMineSoundAction = [SKAction playSoundFileNamed:@"explosionMineTrimmed.caf" waitForCompletion:NO];
         
         lastTimeHit = 0;
         timesHitWithinSecond = 0;
@@ -905,9 +914,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
                 secondBody.node.name = explodedSpaceMine;
                 explodedMine = (SKSpriteNode*)secondBody.node;
             }];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [[AudioController sharedController] mine];
-            });
+            [self runAction:spaceMineSoundAction];
         }
 
         if (firstBody.categoryBitMask == shipCategory && secondBody.categoryBitMask == goalCategory) {
@@ -1793,6 +1800,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     if (hasShield) {
         width = ship.size.width;
         if (self.currentLevel != 0) {
+            [self runAction:shieldUpSoundAction];
             [[ship childNodeWithName:shipShieldSpriteName] runAction:ship.userData[shipShieldOnAnimation]];
         } else {
             [ship childNodeWithName:shipShieldSpriteName].alpha = 1;
@@ -1800,6 +1808,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         }
     } else {
         if (self.currentLevel != 0) {
+            [self runAction:shieldDownSoundAction];
             NSString *imageName = @"ShipShield_Pop";
             float scale = 0.64;
             float duration = 0.5;
