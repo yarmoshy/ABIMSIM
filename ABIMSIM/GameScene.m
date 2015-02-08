@@ -905,7 +905,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
                 secondBody.node.name = explodedSpaceMine;
                 explodedMine = (SKSpriteNode*)secondBody.node;
             }];
-            [[AudioController sharedController] mine];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [[AudioController sharedController] mine];
+            });
         }
 
         if (firstBody.categoryBitMask == shipCategory && secondBody.categoryBitMask == goalCategory) {
@@ -1213,7 +1215,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         starSprites = [NSMutableArray array];
         for (int i = 0; i < 12; i++) {
             SKSpriteNode *star = [SKSpriteNode spriteNodeWithImageNamed:@"LargeStar"];
-            star.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:1];
+            star.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:15];
             star.physicsBody.dynamic = NO;
             star.physicsBody.categoryBitMask = starCategory;
             star.physicsBody.collisionBitMask = 0;
@@ -1269,7 +1271,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         }
         for (int i = 0; i < 12; i++) {
             SKSpriteNode *star = [SKSpriteNode spriteNodeWithImageNamed:@"LargeStar"];
-            star.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:1];
+            star.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:15];
             star.physicsBody.dynamic = NO;
             star.physicsBody.categoryBitMask = starCategory;
             star.physicsBody.collisionBitMask = 0;
@@ -1338,7 +1340,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
                 star.physicsBody = nil;
                 star.position = CGPointMake(x, y);
                 [star runAction:[SKAction scaleTo:scale duration:0.5] completion:^{
-                    star.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:1];
+                    star.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:15];
                     star.physicsBody.dynamic = NO;
                     star.physicsBody.categoryBitMask = starCategory;
                     star.physicsBody.collisionBitMask = 0;
@@ -1382,7 +1384,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         NSMutableArray *powerUps = [self powerUpsForLevel:i];
         [spriteArray addObjectsFromArray:powerUps];
         CGRect goalRect;
-        goalRect = CGRectMake(self.frame.origin.x, self.frame.size.height + kExtraSpaceOffScreen, self.frame.size.width, 1);
+        goalRect = CGRectMake(self.frame.origin.x, self.frame.size.height + kExtraSpaceOffScreen, self.frame.size.width, 15);
         SKNode* goal = [SKNode node];
         goal.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:goalRect];
         goal.name = goalCategoryName;
