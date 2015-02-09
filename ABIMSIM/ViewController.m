@@ -757,7 +757,262 @@
 
 
 
-#pragma mark - Show Other Views
+#pragma mark - Game Over Play Button
+
+-(void)animateGGPlayButtonSelect:(void(^)(void))completionBlock {
+    [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+        [self.ggPlayRing3 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1.12, 1.12)];
+    } completion:nil];
+    [UIView animateWithDuration:0.1 delay:0.025 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+        [self.ggPlayRing2 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1.07, 1.07)];
+    } completion:nil];
+    [UIView animateWithDuration:0.1 delay:0.05 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+        [self.ggPlayRing1 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1.04, 1.04)];
+    } completion:nil];
+    [UIView animateWithDuration:0.1 delay:0.075 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+        [self.ggPlayRing0 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1.04, 1.04)];
+    } completion:^(BOOL finished) {
+        if (completionBlock) {
+            completionBlock();
+        }
+    }];
+}
+
+-(void)animateGGPlayButtonDeselect:(void(^)(void))completionBlock {
+    [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseIn animations:^{
+        [self.ggPlayRing0 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 0.9, 0.9)];
+    } completion:^(BOOL finished) {
+        if (finished) {
+            [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseOut animations:^{
+                [self.ggPlayRing0 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1, 1)];
+            } completion:nil];
+        }
+    }];
+    [UIView animateWithDuration:0.1 delay:0.025 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseIn animations:^{
+        [self.ggPlayRing1 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 0.94, 0.95)];
+    } completion:^(BOOL finished) {
+        if (finished) {
+            [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseOut animations:^{
+                [self.ggPlayRing1 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1, 1)];
+            } completion:nil];
+        }
+    }];
+    [UIView animateWithDuration:0.1 delay:0.05 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseIn animations:^{
+        [self.ggPlayRing2 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 0.94, 0.95)];
+    } completion:^(BOOL finished) {
+        if (finished) {
+            [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseOut animations:^{
+                [self.ggPlayRing2 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1, 1)];
+            } completion:nil];
+        }
+    }];
+    [UIView animateWithDuration:0.1 delay:0.075 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseIn animations:^{
+        [self.ggPlayRing3 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 0.96, 0.96)];
+    } completion:^(BOOL finished) {
+        if (finished) {
+            [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseOut animations:^{
+                [self.ggPlayRing3 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1, 1)];
+            } completion:^(BOOL finished) {
+                if (completionBlock) {
+                    completionBlock();
+                }
+            }];
+        }
+    }];
+}
+
+- (IBAction)ggPlaySelect:(id)sender {
+    [self animateGGPlayButtonSelect:nil];
+}
+
+- (IBAction)ggPlayDeselect:(id)sender {
+    [self animateGGPlayButtonDeselect:nil];
+}
+
+- (IBAction)ggPlayTouchUpInside:(id)sender {
+    [self configureButtonsEnabled:NO];
+    [self animateMainMenuButtonDeselect:^{
+        [[AudioController sharedController] gameplay];
+        [self hideGameOverView];
+    }];
+}
+
+#pragma mark - Game Over Main Menu Button
+
+-(void)animateGGMainMenuButtonSelect:(void(^)(void))completionBlock {
+    [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+        [self.ggMMRing3 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1.12, 1.12)];
+    } completion:nil];
+    [UIView animateWithDuration:0.1 delay:0.025 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+        [self.ggMMRing2 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1.07, 1.07)];
+    } completion:nil];
+    [UIView animateWithDuration:0.1 delay:0.05 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+        [self.ggMMRing1 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1.04, 1.04)];
+    } completion:nil];
+    [UIView animateWithDuration:0.1 delay:0.075 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+        [self.ggMMRing0 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1.04, 1.04)];
+    } completion:^(BOOL finished) {
+        if (completionBlock) {
+            completionBlock();
+        }
+    }];
+}
+
+-(void)animateGGMainMenuButtonDeselect:(void(^)(void))completionBlock {
+    [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseIn animations:^{
+        [self.ggMMRing0 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 0.9, 0.9)];
+    } completion:^(BOOL finished) {
+        if (finished) {
+            [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseOut animations:^{
+                [self.ggMMRing0 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1, 1)];
+            } completion:nil];
+        }
+    }];
+    [UIView animateWithDuration:0.1 delay:0.025 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseIn animations:^{
+        [self.ggMMRing1 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 0.94, 0.95)];
+    } completion:^(BOOL finished) {
+        if (finished) {
+            [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseOut animations:^{
+                [self.ggMMRing1 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1, 1)];
+            } completion:nil];
+        }
+    }];
+    [UIView animateWithDuration:0.1 delay:0.05 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseIn animations:^{
+        [self.ggMMRing2 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 0.94, 0.95)];
+    } completion:^(BOOL finished) {
+        if (finished) {
+            [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseOut animations:^{
+                [self.ggMMRing2 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1, 1)];
+            } completion:nil];
+        }
+    }];
+    [UIView animateWithDuration:0.1 delay:0.075 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseIn animations:^{
+        [self.ggMMRing3 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 0.96, 0.96)];
+    } completion:^(BOOL finished) {
+        if (finished) {
+            [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseOut animations:^{
+                [self.ggMMRing3 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1, 1)];
+            } completion:^(BOOL finished) {
+                if (completionBlock) {
+                    completionBlock();
+                }
+            }];
+        }
+    }];
+}
+
+- (IBAction)ggMainMenuSelect:(id)sender {
+    [self animateGGMainMenuButtonSelect:nil];
+}
+
+- (IBAction)ggMainMenuDeselect:(id)sender {
+    [self animateGGMainMenuButtonDeselect:nil];
+}
+
+- (IBAction)ggMainMenuTouchUpInside:(id)sender {
+    [self configureButtonsEnabled:NO];
+    [self animateGGMainMenuButtonDeselect:^{
+        self.scene = [GameScene sceneWithSize:self.view.bounds.size];
+        
+        self.scene.size = self.view.bounds.size;
+        self.scene.scaleMode = SKSceneScaleModeAspectFill;
+        self.scene.viewController = self;
+        // Present the scene.
+        [(SKView*)self.view presentScene:self.scene];
+        self.pauseButton.alpha = 0;
+        
+        [UIView animateKeyframesWithDuration:0.5 delay:0 options:0 animations:^{
+            self.gameOverView.alpha = 0;
+        } completion:^(BOOL finished) {
+            [[self.gameOverView viewWithTag:kBlurBackgroundViewTag] removeFromSuperview];
+            [UIView animateKeyframesWithDuration:0.5 delay:0 options:0 animations:^{
+                self.mainMenuView.alpha = 1;
+            } completion:^(BOOL finished) {
+                [self configureButtonsEnabled:YES];
+            }];
+        }];
+    }];
+}
+
+#pragma mark - Game Over Upgrade Button
+
+-(void)animateGGUpgradesButtonSelect:(void(^)(void))completionBlock {
+    [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+        [self.ggUpgradeRing3 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1.12, 1.12)];
+    } completion:nil];
+    [UIView animateWithDuration:0.1 delay:0.025 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+        [self.ggUpgradeRing2 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1.07, 1.07)];
+    } completion:nil];
+    [UIView animateWithDuration:0.1 delay:0.05 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+        [self.ggUpgradeRing1 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1.04, 1.04)];
+    } completion:nil];
+    [UIView animateWithDuration:0.1 delay:0.075 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+        [self.ggUpgradeRing0 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1.04, 1.04)];
+    } completion:^(BOOL finished) {
+        if (completionBlock) {
+            completionBlock();
+        }
+    }];
+}
+
+-(void)animateGGUpgradesButtonDeselect:(void(^)(void))completionBlock {
+    [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseIn animations:^{
+        [self.ggUpgradeRing0 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 0.9, 0.9)];
+    } completion:^(BOOL finished) {
+        if (finished) {
+            [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseOut animations:^{
+                [self.ggUpgradeRing0 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1, 1)];
+            } completion:nil];
+        }
+    }];
+    [UIView animateWithDuration:0.1 delay:0.025 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseIn animations:^{
+        [self.ggUpgradeRing1 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 0.94, 0.95)];
+    } completion:^(BOOL finished) {
+        if (finished) {
+            [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseOut animations:^{
+                [self.ggUpgradeRing1 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1, 1)];
+            } completion:nil];
+        }
+    }];
+    [UIView animateWithDuration:0.1 delay:0.05 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseIn animations:^{
+        [self.ggUpgradeRing2 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 0.94, 0.95)];
+    } completion:^(BOOL finished) {
+        if (finished) {
+            [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseOut animations:^{
+                [self.ggUpgradeRing2 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1, 1)];
+            } completion:nil];
+        }
+    }];
+    [UIView animateWithDuration:0.1 delay:0.075 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseIn animations:^{
+        [self.ggUpgradeRing3 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 0.96, 0.96)];
+    } completion:^(BOOL finished) {
+        if (finished) {
+            [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseOut animations:^{
+                [self.ggUpgradeRing3 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1, 1)];
+            } completion:^(BOOL finished) {
+                if (completionBlock) {
+                    completionBlock();
+                }
+            }];
+        }
+    }];
+}
+
+- (IBAction)ggUpgradeSelect:(id)sender {
+    [self animateGGUpgradesButtonSelect:nil];
+}
+
+- (IBAction)ggUpgradeDeselect:(id)sender {
+    [self animateGGUpgradesButtonDeselect:nil];
+}
+
+- (IBAction)ggUpgradeTouchUpInside:(id)sender {
+    [self animateGGUpgradesButtonDeselect:^{
+        
+    }];
+}
+
+#pragma mark - Game Over
 
 -(void)showGameOverView {
     
@@ -797,21 +1052,22 @@
         self.scene.paused = NO;
     } completion:^(BOOL finished) {
         [[self.gameOverView viewWithTag:kBlurBackgroundViewTag] removeFromSuperview];
+        [self configureButtonsEnabled:YES];
     }];
-
 }
 
 -(void)handleTap:(UITapGestureRecognizer*)recognizer {
     if (recognizer.state == UIGestureRecognizerStateRecognized) {
-        [[AudioController sharedController] gameplay];
-        [self hideGameOverView];
+//        [[AudioController sharedController] gameplay];
+//        [self hideGameOverView];
     }
 }
 
 #pragma mark - UI Helpers
 
 -(void)configureButtonsEnabled:(BOOL)enabled {
-    self.playButton.userInteractionEnabled = self.upgradeButton.userInteractionEnabled = self.highScoreButton.userInteractionEnabled = self.creditsButton.userInteractionEnabled = self.hamburgerButton.userInteractionEnabled =  self.playPausedButton.userInteractionEnabled = self.mainMenuButton.userInteractionEnabled = enabled;
+    self.playButton.userInteractionEnabled = self.upgradeButton.userInteractionEnabled = self.highScoreButton.userInteractionEnabled = self.creditsButton.userInteractionEnabled = self.hamburgerButton.userInteractionEnabled =  self.playPausedButton.userInteractionEnabled = self.mainMenuButton.userInteractionEnabled = self.ggPlayButton.userInteractionEnabled = self.ggMainMenuButton.userInteractionEnabled = self.ggUpgradeButton.userInteractionEnabled = enabled;
 }
+
 
 @end
