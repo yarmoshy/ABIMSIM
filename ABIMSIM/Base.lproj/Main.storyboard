@@ -256,7 +256,7 @@
                                         </constraints>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="cFy-t2-FU0" firstAttribute="centerX" secondItem="sau-qM-NKD" secondAttribute="centerX" constant="75" id="0io-gU-uAs"/>
                                     <constraint firstItem="oVP-Pk-6AP" firstAttribute="centerX" secondItem="sau-qM-NKD" secondAttribute="centerX" constant="-75" id="1Dr-V1-8KD"/>
@@ -861,7 +861,9 @@
                         <outlet property="settingsTopConstraint" destination="oxn-n6-tB7" id="HH5-aH-QWJ"/>
                         <outlet property="sfxPausedSwitch" destination="27y-dQ-ftX" id="TV6-h2-E1K"/>
                         <outlet property="sfxSettingsToggle" destination="O4d-V8-0tY" id="mpQ-AA-Z2y"/>
+                        <outlet property="smallParsecsImage" destination="Vvu-w9-nei" id="u5h-yL-fHB"/>
                         <outlet property="smallParsecsLabel" destination="oVP-Pk-6AP" id="dw5-W6-sV8"/>
+                        <outlet property="smallXPImage" destination="EVi-ma-QQW" id="gah-ZQ-LOw"/>
                         <outlet property="smallXPLabel" destination="cFy-t2-FU0" id="Faz-9m-Ypx"/>
                         <outlet property="upgradeButton" destination="hbX-uy-bmI" id="eMu-FG-bST"/>
                         <outlet property="upgradeRing0" destination="mfI-jp-YIN" id="q8A-2Q-2oY"/>

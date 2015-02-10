@@ -17,5 +17,9 @@
 @property (assign, nonatomic) BOOL resuming;
 @property (assign, nonatomic) BOOL transitioningToMenu;
 @property (assign, nonatomic) int currentLevel;
+@property (assign, nonatomic) int bubblesPopped;
+@property (assign, nonatomic) int sunsSurvived;
+@property (assign, nonatomic) int blackHolesSurvived;
+
 -(void)transitionFromMainMenu;
 @end

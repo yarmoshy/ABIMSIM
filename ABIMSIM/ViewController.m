@@ -17,7 +17,9 @@
 @implementation ViewController {
     NSMutableArray *hamburgerToXImages;
     NSMutableArray *hamburgerToOriginalImages;
-    BOOL showingSettings;
+    BOOL showingSettings, killAnimations;
+    UILabel *incrementingLabel;
+    int totalPointDifferential, currentIncrementingLabelPoints, targetPoints, currentPoints;
 }
 
 - (void)viewDidLoad
@@ -831,7 +833,7 @@
 
 - (IBAction)ggPlayTouchUpInside:(id)sender {
     [self configureButtonsEnabled:NO];
-    [self animateMainMenuButtonDeselect:^{
+    [self animateGGPlayButtonDeselect:^{
         [[AudioController sharedController] gameplay];
         [self hideGameOverView];
     }];
@@ -1015,7 +1017,14 @@
 #pragma mark - Game Over
 
 -(void)showGameOverView {
-    
+    killAnimations = NO;
+    self.rectangleImage.alpha = 0;
+    self.smallParsecsLabel.alpha = 0;
+    self.smallParsecsImage.alpha = 0;
+    self.smallXPLabel.alpha = 0;
+    self.smallXPImage.alpha = 0;
+    self.gameOverButtonContainer.alpha = 0;
+
     UIImageView *blurredBackgroundImageView = ({
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
         imageView.contentMode = UIViewContentModeBottom;
@@ -1033,16 +1042,301 @@
     
     blurredBackgroundImageView.image = [screenShot applyBlurWithRadius:blurRadius tintColor:blurTintColor saturationDeltaFactor:blurSaturationDeltaFactor maskImage:nil];
     
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
-    [self.gameOverView addGestureRecognizer:tap];
+    if (self.gameOverView.gestureRecognizers.count == 0) {
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
+        [self.gameOverView addGestureRecognizer:tap];
+    }
     
     [self.gameOverView insertSubview:blurredBackgroundImageView atIndex:0];
     self.gameOverView.backgroundColor = [UIColor clearColor];
-    [UIView animateKeyframesWithDuration:0.5 delay:0 options:0 animations:^{
+    self.largeParsecsLabelYAlignmentConstraint.constant = -30;
+    self.largeParsecsLabel.text = @"0";
+    [self.largeParsecsLabel sizeToFit];
+    
+    self.largeXPLabel.text = [NSString stringWithFormat:@"%d",self.scene.currentLevel];
+    self.largeXPLabelYAlignmentConstraint.constant = 40;
+    currentPoints = 0;
+    [UIView animateWithDuration:0.5 delay:0 options:0 animations:^{
         self.gameOverView.alpha = 1;
     } completion:^(BOOL finished) {
-        ;
+        if (finished) {
+            [UIView animateWithDuration:0.5 delay:0 options:0 animations:^{
+                self.largeParsecsImage.alpha = 1;
+                self.largeParsecsLabel.alpha = 1;
+                self.largeParsecsLabelYAlignmentConstraint.constant = 30;
+                [self.gameOverView layoutIfNeeded];
+            } completion:^(BOOL finished) {
+                if (finished) {
+                    [self animatePointDifference:self.scene.currentLevel withIncrementingLabel:self.largeParsecsLabel andCompletionBlock:^{
+                        [UIView animateWithDuration:0.5 delay:0.5 options:0 animations:^{
+                            self.largeParsecsImage.alpha = 0;
+                            self.largeParsecsLabel.alpha = 0;
+                            self.largeParsecsLabelYAlignmentConstraint.constant = -30;
+                            [self.gameOverView layoutIfNeeded];
+                        } completion:^(BOOL finished) {
+                            if (finished) {
+                                [self animateBonuses];
+                            }
+                        }];
+                    }];
+                }
+            }];
+        }
     }];
+}
+
+-(void)animateBonuses {
+    NSMutableArray *bonusStrings = [NSMutableArray array];
+    NSMutableArray *bonusAmounts = [NSMutableArray array];
+    UIFont *boldFont = [UIFont fontWithName:@"Futura-CondensedExtraBold" size:18];
+    UIFont *regularFont = [UIFont fontWithName:@"Futura-CondensedMedium" size:18];
+    if (self.scene.currentLevel / 10 > 0) {
+        [bonusAmounts addObject:@(self.scene.currentLevel / 10)];
+        NSMutableAttributedString *bonusString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"+%d - %d PARSECS TRAVELLED", self.scene.currentLevel / 10, self.scene.currentLevel]];
+        NSRange rangeToDash;
+        rangeToDash.location = 0;
+        rangeToDash.length = [bonusString.string rangeOfString:@"-"].location;
+        NSRange remainingRange;
+        remainingRange.location = rangeToDash.length;
+        remainingRange.length = bonusString.string.length - rangeToDash.length;
+
+        [bonusString addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:rangeToDash];
+        [bonusString addAttribute:NSFontAttributeName value:boldFont range:rangeToDash];
+        [bonusString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:211.f/255.f green:12.f/255.f blue:95.f/255.f alpha:1] range:remainingRange];
+        [bonusString addAttribute:NSFontAttributeName value:regularFont range:remainingRange];
+
+        [bonusStrings addObject:bonusString];
+    }
+    if (self.scene.bubblesPopped > 0) {
+        [bonusAmounts addObject:@(self.scene.bubblesPopped * 5)];
+        NSMutableAttributedString *bonusString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"+%d - %d ASTEROID BUBBLE POPS SURVIVED", self.scene.bubblesPopped * 5, self.scene.bubblesPopped]];
+        NSRange rangeToDash;
+        rangeToDash.location = 0;
+        rangeToDash.length = [bonusString.string rangeOfString:@"-"].location;
+        NSRange remainingRange;
+        remainingRange.location = rangeToDash.length;
+        remainingRange.length = bonusString.string.length - rangeToDash.length;
+        
+        [bonusString addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:rangeToDash];
+        [bonusString addAttribute:NSFontAttributeName value:boldFont range:rangeToDash];
+        [bonusString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:211.f/255.f green:12.f/255.f blue:95.f/255.f alpha:1] range:remainingRange];
+        [bonusString addAttribute:NSFontAttributeName value:regularFont range:remainingRange];
+        
+        [bonusStrings addObject:bonusString];
+    }
+    if (self.scene.blackHolesSurvived > 0) {
+        [bonusAmounts addObject:@(self.scene.blackHolesSurvived * 4)];
+        NSMutableAttributedString *bonusString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"+%d - %d BLACK HOLES SURVIVED", self.scene.blackHolesSurvived * 4, self.scene.blackHolesSurvived]];
+        NSRange rangeToDash;
+        rangeToDash.location = 0;
+        rangeToDash.length = [bonusString.string rangeOfString:@"-"].location;
+        NSRange remainingRange;
+        remainingRange.location = rangeToDash.length;
+        remainingRange.length = bonusString.string.length - rangeToDash.length;
+        
+        [bonusString addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:rangeToDash];
+        [bonusString addAttribute:NSFontAttributeName value:boldFont range:rangeToDash];
+        [bonusString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:211.f/255.f green:12.f/255.f blue:95.f/255.f alpha:1] range:remainingRange];
+        [bonusString addAttribute:NSFontAttributeName value:regularFont range:remainingRange];
+        
+        [bonusStrings addObject:bonusString];
+    }
+    if (self.scene.sunsSurvived > 0) {
+        [bonusAmounts addObject:@(self.scene.sunsSurvived * 3)];
+        NSMutableAttributedString *bonusString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"+%d - %d SUNS SURVIVED", self.scene.sunsSurvived * 3, self.scene.sunsSurvived]];
+        NSRange rangeToDash;
+        rangeToDash.location = 0;
+        rangeToDash.length = [bonusString.string rangeOfString:@"-"].location;
+        NSRange remainingRange;
+        remainingRange.location = rangeToDash.length;
+        remainingRange.length = bonusString.string.length - rangeToDash.length;
+        
+        [bonusString addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:rangeToDash];
+        [bonusString addAttribute:NSFontAttributeName value:boldFont range:rangeToDash];
+        [bonusString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:211.f/255.f green:12.f/255.f blue:95.f/255.f alpha:1] range:remainingRange];
+        [bonusString addAttribute:NSFontAttributeName value:regularFont range:remainingRange];
+        
+        [bonusStrings addObject:bonusString];
+    }
+
+    if (bonusAmounts.count) {
+        self.bonusBubbleOneTopConstraint.constant = 40;
+        if (bonusAmounts.count > 1) {
+            self.bonusBubbleTwoTopConstraint.constant = 35;
+            if (bonusAmounts.count > 2) {
+                self.bonusBubbleThreeTopConstraint.constant = 35;
+                if (bonusAmounts.count > 3) {
+                    self.bonusBubbleFourTopConstraint.constant = 35;
+                }
+            }
+        }
+    }
+    if (bonusAmounts.count) {
+        [UIView animateWithDuration:0.5 delay:0 options:0 animations:^{
+            self.largeXPImage.alpha = 1;
+            self.largeXPLabel.alpha = 1;
+            self.largeXPLabelYAlignmentConstraint.constant = 100;
+            [self.gameOverView layoutIfNeeded];
+        } completion:^(BOOL finished) {
+            if (finished && !killAnimations) {
+                [UIView animateWithDuration:0.5 animations:^{
+                    self.bonusImage.alpha = 1;
+                } completion:^(BOOL finished) {
+                    if (finished && !killAnimations) {
+                        self.bonusLabelOne.attributedText = bonusStrings[0];
+                        [self.bonusLabelOne sizeToFit];
+                        [self.view layoutIfNeeded];
+                        
+                        [UIView animateWithDuration:0.5 animations:^{
+                            self.bonusLabelOne.alpha = 1;
+                            self.bonusBubbleOne.alpha = 1;
+                            self.bonusBubbleOneTopConstraint.constant = 10;
+                            [self.view layoutIfNeeded];
+                            [self animatePointDifference:[bonusAmounts[0] intValue] withIncrementingLabel:self.largeXPLabel andCompletionBlock:^{
+                                if (bonusAmounts.count > 1 && !killAnimations) {
+                                    self.bonusLabelTwo.attributedText = bonusStrings[1];
+                                    [self.bonusLabelTwo sizeToFit];
+                                    [self.view layoutIfNeeded];
+                                    
+                                    [UIView animateWithDuration:0.5 animations:^{
+                                        self.bonusLabelTwo.alpha = 1;
+                                        self.bonusBubbleTwo.alpha = 1;
+                                        self.bonusBubbleTwoTopConstraint.constant = 5;
+                                        [self.view layoutIfNeeded];
+                                        [self animatePointDifference:[bonusAmounts[1] intValue] withIncrementingLabel:self.largeXPLabel andCompletionBlock:^{
+                                            if (bonusAmounts.count > 2 && !killAnimations) {
+                                                self.bonusLabelThree.attributedText = bonusStrings[2];
+                                                [self.bonusLabelThree sizeToFit];
+                                                [self.view layoutIfNeeded];
+                                                
+                                                [UIView animateWithDuration:0.5 animations:^{
+                                                    self.bonusLabelThree.alpha = 1;
+                                                    self.bonusBubbleThree.alpha = 1;
+                                                    self.bonusBubbleThreeTopConstraint.constant = 5;
+                                                    [self.view layoutIfNeeded];
+                                                    [self animatePointDifference:[bonusAmounts[2] intValue] withIncrementingLabel:self.largeXPLabel andCompletionBlock:^{
+                                                        if (bonusAmounts.count > 3 && !killAnimations) {
+                                                            self.bonusLabelFour.attributedText = bonusStrings[3];
+                                                            [self.bonusLabelFour sizeToFit];
+                                                            [self.view layoutIfNeeded];
+                                                            
+                                                            [UIView animateWithDuration:0.5 animations:^{
+                                                                self.bonusLabelFour.alpha = 1;
+                                                                self.bonusBubbleFour.alpha = 1;
+                                                                self.bonusBubbleFourTopConstraint.constant = 5;
+                                                                [self.view layoutIfNeeded];
+                                                                [self animatePointDifference:[bonusAmounts[3] intValue] withIncrementingLabel:self.largeXPLabel andCompletionBlock:^{
+                                                                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                                                                        [self showGameOverButtons];
+                                                                    });
+                                                                }];
+                                                            }];
+                                                        } else {
+                                                            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                                                                [self showGameOverButtons];
+                                                            });
+                                                        }
+                                                    }];
+                                                }];
+                                            } else {
+                                                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                                                    [self showGameOverButtons];
+                                                });
+                                            }
+                                        }];
+                                    }];
+                                } else {
+                                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                                        [self showGameOverButtons];
+                                    });
+                                }
+                            }];
+                        }];
+                    }
+                }];
+            }
+        }];
+    } else {
+        [self showGameOverButtons];
+    }
+}
+
+-(void)showGameOverButtons {
+    int pointsEarned = self.scene.currentLevel;
+    pointsEarned += self.scene.currentLevel / 10;
+    pointsEarned += self.scene.bubblesPopped * 5;
+    pointsEarned += self.scene.blackHolesSurvived * 4;
+    pointsEarned += self.scene.sunsSurvived * 3;
+
+    self.smallXPLabel.text = [NSString stringWithFormat:@"%d",pointsEarned];
+    [self.smallXPLabel sizeToFit];
+    self.smallParsecsLabel.text = [NSString stringWithFormat:@"%d",self.scene.currentLevel];
+    [self.smallParsecsLabel sizeToFit];
+    [UIView animateWithDuration:0.5 animations:^{
+        self.largeParsecsLabelYAlignmentConstraint.constant = -30;
+        self.largeXPLabelYAlignmentConstraint.constant = 40;
+        self.largeParsecsImage.alpha = 0;
+        self.largeParsecsLabel.alpha = 0;
+        self.largeXPImage.alpha = 0;
+        self.largeXPLabel.alpha = 0;
+        self.bonusImage.alpha = 0;
+        self.bonusBubbleOne.alpha = 0;
+        self.bonusBubbleTwo.alpha = 0;
+        self.bonusBubbleThree.alpha = 0;
+        self.bonusBubbleFour.alpha = 0;
+        self.bonusLabelOne.alpha = 0;
+        self.bonusLabelTwo.alpha = 0;
+        self.bonusLabelThree.alpha = 0;
+        self.bonusLabelFour.alpha = 0;
+        [self.view layoutIfNeeded];
+    } completion:^(BOOL finished) {
+        if (finished) {
+            [UIView animateWithDuration:0.5 animations:^{
+                self.rectangleImage.alpha = 1;
+                self.smallParsecsLabel.alpha = 1;
+                self.smallParsecsImage.alpha = 1;
+                self.smallXPLabel.alpha = 1;
+                self.smallXPImage.alpha = 1;
+                self.gameOverButtonContainer.alpha = 1;
+            } completion:^(BOOL finished) {
+                ;
+            }];
+        }
+    }];
+}
+
+- (void)animatePointDifference:(int)pointDifference withIncrementingLabel:(UILabel*)label andCompletionBlock:(void (^)(void))completionBlock {
+    incrementingLabel = label;
+    totalPointDifferential = pointDifference/10.f/3.f;
+    if (totalPointDifferential < 1) {
+        totalPointDifferential = 1;
+    }
+    targetPoints = currentPoints + pointDifference;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self animatePointChangeWithCompletionBlock:completionBlock];
+    });
+    
+}
+
+- (void)animatePointChangeWithCompletionBlock:(void (^)(void))completionBlock {
+    if (killAnimations) {
+        return;
+    }
+    currentPoints+=totalPointDifferential;
+    if (currentPoints > targetPoints) {
+        currentPoints = targetPoints;
+        currentIncrementingLabelPoints = 0;
+    }
+    incrementingLabel.text = [NSString stringWithFormat:@"%d",currentPoints];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        if (targetPoints != currentPoints) {
+            [self animatePointChangeWithCompletionBlock:completionBlock];
+        } else {
+            if (completionBlock && !killAnimations) {
+                completionBlock();
+            }
+        }
+    });
 }
 
 -(void)hideGameOverView {
@@ -1058,6 +1352,9 @@
 
 -(void)handleTap:(UITapGestureRecognizer*)recognizer {
     if (recognizer.state == UIGestureRecognizerStateRecognized) {
+        killAnimations = YES;
+        [self.view.layer removeAllAnimations];
+        [self showGameOverButtons];
 //        [[AudioController sharedController] gameplay];
 //        [self hideGameOverView];
     }

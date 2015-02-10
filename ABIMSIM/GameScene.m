@@ -126,6 +126,8 @@ static const uint32_t powerUpSpaceMineExplodingRingCategory = 0x1 << 12;
     SKSpriteNode *shipSprite, *currentBlackHole, *explodingMine, *explodedMine;
     BOOL shipWarping;
     BOOL hasShield;
+    BOOL showingSun;
+    int possibleBubblesPopped;
     
     NSInteger shieldHitPoints;
 //    NSInteger shieldFireHitPoints;
@@ -348,6 +350,10 @@ CGFloat DegreesToRadians(CGFloat degrees)
     } completion:^(BOOL finished) {
         ;
     }];
+//    self.currentLevel = 100;
+//    self.bubblesPopped = 10;
+//    self.sunsSurvived = 10;
+//    self.blackHolesSurvived = 10;
 }
 
 -(void)didMoveToView:(SKView *)view {
@@ -388,6 +394,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
             [self childNodeWithName:shipCategoryName].physicsBody == nil) &&
             self.viewController.gameOverView.alpha == 0 && !self.reset) {
             [self.viewController showGameOverView];
+            flickRecognizer.enabled = NO;
         } else if (self.viewController.pausedView.alpha == 0 && !self.reset && [self childNodeWithName:shipCategoryName] && [self childNodeWithName:shipCategoryName].physicsBody && !self.resuming && !self.initialPause) {
             [self.viewController showPausedView];
             flickRecognizer.enabled = NO;
@@ -533,6 +540,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
                     CGPoint astShPos = node.position;
                     float distance = sqrtf(powf(ringPos.x-astShPos.x, 2)+powf(ringPos.y-astShPos.y, 2));
                     if (distance < (explodingRing.size.width/2.f) + (node.size.width/2.f)) {
+                        possibleBubblesPopped++;
                         NSString *imageName = @"";
                         float scale = 0;
                         float duration = 0.5;
@@ -854,6 +862,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         }
         
         if ((firstBody.categoryBitMask == shipCategory && secondBody.categoryBitMask == asteroidShieldCategory) || (firstBody.categoryBitMask == asteroidShieldCategory && secondBody.categoryBitMask == blackHoleCategory)) {
+            possibleBubblesPopped++;
             NSString *imageName = @"";
             float scale = 0;
             float duration = 0.5;
@@ -1106,7 +1115,12 @@ CGFloat DegreesToRadians(CGFloat degrees)
 }
 
 -(void)killShipAndStartOver {
-    [ABIMSIMDefaults setInteger:[ABIMSIMDefaults integerForKey:kUserDuckets]+self.currentLevel forKey:kUserDuckets];
+    int pointsEarned = self.currentLevel;
+    pointsEarned += self.currentLevel / 10;
+    pointsEarned += self.bubblesPopped * 5;
+    pointsEarned += self.blackHolesSurvived * 4;
+    pointsEarned += self.sunsSurvived * 3;
+    [ABIMSIMDefaults setInteger:[ABIMSIMDefaults integerForKey:kUserDuckets]+pointsEarned forKey:kUserDuckets];
     [ABIMSIMDefaults synchronize];
     GKScore *newScore = [[GKScore alloc] initWithLeaderboardIdentifier:@"distance"];
     newScore.value = self.currentLevel;
@@ -1161,6 +1175,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
     [self removeOverlayChildren];
     [self removeCurrentSprites];
     self.currentLevel = 0;
+    self.bubblesPopped = 0;
+    self.sunsSurvived = 0;
+    self.blackHolesSurvived = 0;
     hasShield = [ABIMSIMDefaults boolForKey:kShieldOnStart];
     if (hasShield) {
         shieldHitPoints = 1 + [ABIMSIMDefaults integerForKey:kShieldDurabilityLevel];
@@ -1201,7 +1218,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     }
     shipWarping = YES;
     self.reset = NO;
-
+    flickRecognizer.enabled = YES;
 }
 
 -(void)transitionStars {
@@ -1431,6 +1448,13 @@ CGFloat DegreesToRadians(CGFloat degrees)
 }
 
 -(void)advanceToNextLevel {
+    if (showingSun) {
+        self.sunsSurvived++;
+    }
+    if (currentBlackHole) {
+        self.blackHolesSurvived++;
+    }
+    self.bubblesPopped += possibleBubblesPopped;
     [self removeOverlayChildren];
     [self removeCurrentSprites];
     
@@ -1484,6 +1508,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
     currentBlackHole = nil;
     explodedMine = nil;
     explodingMine = nil;
+    showingSun = NO;
+    possibleBubblesPopped = 0;
     for (SKSpriteNode *sprite in currentSpriteArray) {
         if ([sprite.name isEqual:asteroidCategoryName] ||
             [sprite.name isEqual:asteroidInShieldCategoryName]) {
@@ -1495,6 +1521,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
                    [sprite.name isEqual:blackHoleCategoryName] ) {
             if ([sprite.name isEqual:blackHoleCategoryName]) {
                 currentBlackHole = sprite;
+            }
+            if ([sprite.name isEqual:sunObjectSpriteName]) {
+                showingSun = YES;
             }
             sprite.hidden = NO;
             [self addChild:sprite];

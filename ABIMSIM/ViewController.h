@@ -126,7 +126,9 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bonusBubbleFourTopConstraint;
 
 @property (weak, nonatomic) IBOutlet UIImageView *rectangleImage;
+@property (weak, nonatomic) IBOutlet UIImageView *smallParsecsImage;
 @property (weak, nonatomic) IBOutlet UILabel *smallParsecsLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *smallXPImage;
 @property (weak, nonatomic) IBOutlet UILabel *smallXPLabel;
 
 @property (weak, nonatomic) IBOutlet UIView *gameOverButtonContainer;
