@@ -9,13 +9,14 @@
 #import <UIKit/UIKit.h>
 #import <SpriteKit/SpriteKit.h>
 #import "GameOverView.h"
+#import "PausedView.h"
 #import "UIView+Screenshot.h"
 #import "UIImage+Effects.h"
 
 @class GameScene;
 @class DCRoundSwitch;
 
-@interface ViewController : UIViewController <GKGameCenterControllerDelegate, UIAlertViewDelegate, GameOverViewDelegate>
+@interface ViewController : UIViewController <GKGameCenterControllerDelegate, UIAlertViewDelegate, GameOverViewDelegate, PausedViewDelegate>
 
 #pragma mark - Main Menu
 
@@ -75,29 +76,7 @@
 - (IBAction)resetTapped:(id)sender;
 
 #pragma mark - Paused
-@property (weak, nonatomic) IBOutlet UIView *pausedView;
-@property (weak, nonatomic) IBOutlet UIImageView *playPausedRing0;
-@property (weak, nonatomic) IBOutlet UIImageView *playPausedRing1;
-@property (weak, nonatomic) IBOutlet UIImageView *playPausedRing2;
-@property (weak, nonatomic) IBOutlet UIImageView *playPausedRing3;
-@property (weak, nonatomic) IBOutlet UIButton *playPausedButton;
-
-@property (weak, nonatomic) IBOutlet UIImageView *mmRing0;
-@property (weak, nonatomic) IBOutlet UIImageView *mmRing1;
-@property (weak, nonatomic) IBOutlet UIImageView *mmRing2;
-@property (weak, nonatomic) IBOutlet UIImageView *mmRing3;
-@property (weak, nonatomic) IBOutlet UIButton *mainMenuButton;
-
-@property (weak, nonatomic) IBOutlet DCRoundSwitch *musicPausedSwitch;
-@property (weak, nonatomic) IBOutlet DCRoundSwitch *sfxPausedSwitch;
-
-- (IBAction)playPausedSelect:(id)sender;
-- (IBAction)playPausedDeselect:(id)sender;
-- (IBAction)playPausedTouchUpInside:(id)sender;
-
-- (IBAction)mainMenuSelect:(id)sender;
-- (IBAction)mainMenuDeselect:(id)sender;
-- (IBAction)mainMenuTouchUpInside:(id)sender;
+@property (weak, nonatomic) IBOutlet PausedView *pausedView;
 
 #pragma mark - Game Over
 @property (weak, nonatomic) IBOutlet GameOverView *gameOverView;
@@ -108,24 +87,3 @@
 -(void)showGameOverView;
 -(void)showPausedView;
 @end
-
-
-@implementation SKScene (Unarchive)
-
-+ (instancetype)unarchiveFromFile:(NSString *)file {
-    /* Retrieve scene file path from the application bundle */
-    NSString *nodePath = [[NSBundle mainBundle] pathForResource:file ofType:@"sks"];
-    /* Unarchive the file to an SKScene object */
-    NSData *data = [NSData dataWithContentsOfFile:nodePath
-                                          options:NSDataReadingMappedIfSafe
-                                            error:nil];
-    NSKeyedUnarchiver *arch = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
-    [arch setClass:self forClassName:@"SKScene"];
-    SKScene *scene = [arch decodeObjectForKey:NSKeyedArchiveRootObjectKey];
-    [arch finishDecoding];
-    
-    return scene;
-}
-
-@end
-

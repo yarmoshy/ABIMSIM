@@ -49,4 +49,7 @@
 
     #define kBlurBackgroundViewTag 777
 
+#define kMusicToggleChanged @"kMusicToggleChanged"
+#define kSFXToggleChanged @"kSFXToggleChanged"
+
 #endif

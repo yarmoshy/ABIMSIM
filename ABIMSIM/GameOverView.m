@@ -16,6 +16,15 @@
     int totalPointDifferential, currentIncrementingLabelPoints, targetPoints, currentPoints;
 }
 
+-(id)initWithCoder:(NSCoder *)aDecoder {
+    if (self = [super initWithCoder:aDecoder]) {
+    }
+    return self;
+}
+
+-(void)didMoveToSuperview {
+    self.ggPlayButton.exclusiveTouch = self.ggUpgradeButton.exclusiveTouch = self.ggMainMenuButton.exclusiveTouch = YES;
+}
 #pragma mark - Game Over Play Button
 
 -(void)animateGGPlayButtonSelect:(void(^)(void))completionBlock {

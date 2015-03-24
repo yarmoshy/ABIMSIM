@@ -38,21 +38,23 @@
     [hamburgerToXImages enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         [hamburgerToOriginalImages addObject:obj];
     }];
-    self.playButton.exclusiveTouch = self.upgradeButton.exclusiveTouch = self.highScoreButton.exclusiveTouch = self.creditsButton.exclusiveTouch = self.hamburgerButton.exclusiveTouch = self.playPausedButton.exclusiveTouch = self.mainMenuButton.exclusiveTouch = YES;
-    self.musicPausedSwitch.on = [ABIMSIMDefaults boolForKey:kMusicSetting];
-    [self.musicPausedSwitch addTarget:self action:@selector(musicSwitchToggled:) forControlEvents:UIControlEventValueChanged];
-    self.sfxPausedSwitch.on = [ABIMSIMDefaults boolForKey:kSFXSetting];
-    [self.sfxPausedSwitch addTarget:self action:@selector(sfxSwitchToggled:) forControlEvents:UIControlEventValueChanged];
+    self.playButton.exclusiveTouch = self.upgradeButton.exclusiveTouch = self.highScoreButton.exclusiveTouch = self.creditsButton.exclusiveTouch = self.hamburgerButton.exclusiveTouch = YES;
     
-    self.musicSettingsToggle.on = [ABIMSIMDefaults boolForKey:kMusicSetting];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setupMusicToggle) name:kMusicToggleChanged object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setupSFXToggle) name:kSFXToggleChanged object:nil];
+    [self setupToggles];
     [self.musicSettingsToggle addTarget:self action:@selector(musicSwitchToggled:) forControlEvents:UIControlEventValueChanged];
-    self.sfxSettingsToggle.on = [ABIMSIMDefaults boolForKey:kSFXSetting];
     [self.sfxSettingsToggle addTarget:self action:@selector(sfxSwitchToggled:) forControlEvents:UIControlEventValueChanged];
     
-    UINib * gameViewnib = [UINib nibWithNibName:@"GameOverView" bundle:nil];
-    self.gameOverView = [gameViewnib instantiateWithOwner:self options:nil][0];
+    UINib * gameOverViewNib = [UINib nibWithNibName:@"GameOverView" bundle:nil];
+    self.gameOverView = [gameOverViewNib instantiateWithOwner:self options:nil][0];
     self.gameOverView.delegate = self;
     [self.view insertSubview:self.gameOverView atIndex:1];
+
+    UINib * pausedViewNib = [UINib nibWithNibName:@"PausedView" bundle:nil];
+    self.pausedView = [pausedViewNib instantiateWithOwner:self options:nil][0];
+    self.pausedView.delegate = self;
+    [self.view insertSubview:self.pausedView atIndex:2];
 
     // Configure the view.
     SKView * skView = (SKView *)self.view;
@@ -90,41 +92,6 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
-- (IBAction)pauseButtonTapped:(id)sender {
-    if (self.scene.initialPause || self.scene.resuming) return;
-    self.scene.paused = !self.scene.paused;
-}
-
--(void)showPausedView {
-//    if (self.mainMenuView.alpha != 0) {
-//        return;
-//    }
-    UIImageView *blurredBackgroundImageView = ({
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
-        imageView.contentMode = UIViewContentModeScaleAspectFit;
-        imageView.clipsToBounds = YES;
-        imageView.backgroundColor = [UIColor clearColor];
-        imageView;
-    });
-    blurredBackgroundImageView.tag = kBlurBackgroundViewTag;
-    blurredBackgroundImageView.frame = CGRectMake(blurredBackgroundImageView.frame.origin.x, 0, blurredBackgroundImageView.frame.size.width, blurredBackgroundImageView.frame.size.height);
-    UIImage *screenShot = [self.view imageFromScreenShot];
-    
-    UIColor *blurTintColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:.3];
-    float blurSaturationDeltaFactor = 0.6;
-    float blurRadius = 5;
-    
-    blurredBackgroundImageView.image = [screenShot applyBlurWithRadius:blurRadius tintColor:blurTintColor saturationDeltaFactor:blurSaturationDeltaFactor maskImage:nil];
-    
-    [self.pausedView insertSubview:blurredBackgroundImageView atIndex:0];
-    self.pausedView.backgroundColor = [UIColor clearColor];
-    [UIView animateKeyframesWithDuration:0.5 delay:0 options:0 animations:^{
-        self.pausedView.alpha = 1;
-    } completion:^(BOOL finished) {
-        ;
-    }];
-
-}
 #pragma mark - Play Button
 
 -(void)animatePlayButtonSelect:(void(^)(void))completionBlock {
@@ -386,6 +353,18 @@
 }
 
 #pragma mark - Settings
+-(void)setupToggles {
+    [self setupMusicToggle];
+    [self setupSFXToggle];
+}
+
+-(void)setupMusicToggle {
+    self.musicSettingsToggle.on = [ABIMSIMDefaults boolForKey:kMusicSetting];
+}
+
+-(void)setupSFXToggle {
+    self.sfxSettingsToggle.on = [ABIMSIMDefaults boolForKey:kSFXSetting];
+}
 
 - (IBAction)hamburgerTapped:(id)sender {
     [self configureButtonsEnabled:NO];
@@ -450,13 +429,15 @@
 -(void)musicSwitchToggled:(DCRoundSwitch*)toggle {
     [ABIMSIMDefaults setBool:toggle.on forKey:kMusicSetting];
     [ABIMSIMDefaults synchronize];
-    self.musicPausedSwitch.on = self.musicSettingsToggle.on = toggle.on;
+    self.musicSettingsToggle.on = toggle.on;
+    [[NSNotificationCenter defaultCenter] postNotificationName:kMusicToggleChanged object:nil];
 }
 
 -(void)sfxSwitchToggled:(DCRoundSwitch*)toggle {
     [ABIMSIMDefaults setBool:toggle.on forKey:kSFXSetting];
     [ABIMSIMDefaults synchronize];
-    self.sfxPausedSwitch.on = self.sfxSettingsToggle.on = toggle.on;
+    self.sfxSettingsToggle.on = toggle.on;
+    [[NSNotificationCenter defaultCenter] postNotificationName:kSFXToggleChanged object:nil];
 }
 
 - (IBAction)twitterTapped:(id)sender {
@@ -528,86 +509,33 @@
     }
 }
 
-#pragma mark - Paused Play Button
+#pragma mark - Paused View
 
--(void)animatePlayPausedButtonSelect:(void(^)(void))completionBlock {
-    [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
-        [self.playPausedRing3 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1.12, 1.12)];
-    } completion:nil];
-    [UIView animateWithDuration:0.1 delay:0.025 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
-        [self.playPausedRing2 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1.07, 1.07)];
-    } completion:nil];
-    [UIView animateWithDuration:0.1 delay:0.05 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
-        [self.playPausedRing1 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1.04, 1.04)];
-    } completion:nil];
-    [UIView animateWithDuration:0.1 delay:0.075 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
-        [self.playPausedRing0 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1.04, 1.04)];
-    } completion:^(BOOL finished) {
-        if (completionBlock) {
-            completionBlock();
-        }
-    }];
-}
-
--(void)animatePlayPausedButtonDeselect:(void(^)(void))completionBlock {
-    [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseIn animations:^{
-        [self.playPausedRing0 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 0.9, 0.9)];
-    } completion:^(BOOL finished) {
-        if (finished) {
-            [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseOut animations:^{
-                [self.playPausedRing0 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1, 1)];
-            } completion:nil];
-        }
-    }];
-    [UIView animateWithDuration:0.1 delay:0.025 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseIn animations:^{
-        [self.playPausedRing1 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 0.94, 0.95)];
-    } completion:^(BOOL finished) {
-        if (finished) {
-            [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseOut animations:^{
-                [self.playPausedRing1 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1, 1)];
-            } completion:nil];
-        }
-    }];
-    [UIView animateWithDuration:0.1 delay:0.05 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseIn animations:^{
-        [self.playPausedRing2 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 0.94, 0.95)];
-    } completion:^(BOOL finished) {
-        if (finished) {
-            [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseOut animations:^{
-                [self.playPausedRing2 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1, 1)];
-            } completion:nil];
-        }
-    }];
-    [UIView animateWithDuration:0.1 delay:0.075 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseIn animations:^{
-        [self.playPausedRing3 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 0.96, 0.96)];
-    } completion:^(BOOL finished) {
-        if (finished) {
-            [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseOut animations:^{
-                [self.playPausedRing3 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1, 1)];
+-(void)pausedViewViewDidSelectButtonType:(PausedViewViewButtonType)type {
+    if (type == PausedViewViewButtonTypeMainMenu) {
+        self.scene = [GameScene sceneWithSize:self.view.bounds.size];
+        
+        self.scene.size = self.view.bounds.size;
+        self.scene.scaleMode = SKSceneScaleModeAspectFill;
+        self.scene.viewController = self;
+        // Present the scene.
+        [(SKView*)self.view presentScene:self.scene];
+        self.pauseButton.alpha = 0;
+        
+        [UIView animateKeyframesWithDuration:0.5 delay:0 options:0 animations:^{
+            self.pausedView.alpha = 0;
+        } completion:^(BOOL finished) {
+            [[self.pausedView viewWithTag:kBlurBackgroundViewTag] removeFromSuperview];
+            [UIView animateKeyframesWithDuration:0.5 delay:0 options:0 animations:^{
+                self.mainMenuView.alpha = 1;
             } completion:^(BOOL finished) {
-                if (completionBlock) {
-                    completionBlock();
-                }
+                [self configureButtonsEnabled:YES];
             }];
-        }
-    }];
-}
-
-- (IBAction)playPausedSelect:(id)sender {
-    [self animatePlayPausedButtonSelect:nil];
-}
-
-- (IBAction)playPausedDeselect:(id)sender {
-    [self animatePlayPausedButtonDeselect:nil];
-}
-
-- (IBAction)playPausedTouchUpInside:(id)sender {
-    [[AudioController sharedController] gameplay];
-    
-    [self configureButtonsEnabled:NO];
-    [self animatePlayPausedButtonDeselect:^{
+        }];
+    } else if (type == PausedViewViewButtonTypePlay) {
         self.scene.resuming = YES;
         [self.view insertSubview:[self.pausedView viewWithTag:kBlurBackgroundViewTag] atIndex:1];
-
+        
         [UIView animateKeyframesWithDuration:0.5 delay:0 options:0 animations:^{
             self.pausedView.alpha = 0;
         } completion:^(BOOL finished) {
@@ -657,109 +585,43 @@
                 });
             }
         }];
-
-    }];
+    }
 }
 
-#pragma mark - Main Menu Button
+- (IBAction)pauseButtonTapped:(id)sender {
+    if (self.scene.initialPause || self.scene.resuming) return;
+    self.scene.paused = !self.scene.paused;
+}
 
--(void)animateMainMenuButtonSelect:(void(^)(void))completionBlock {
-    [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
-        [self.mmRing3 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1.12, 1.12)];
-    } completion:nil];
-    [UIView animateWithDuration:0.1 delay:0.025 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
-        [self.mmRing2 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1.07, 1.07)];
-    } completion:nil];
-    [UIView animateWithDuration:0.1 delay:0.05 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
-        [self.mmRing1 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1.04, 1.04)];
-    } completion:nil];
-    [UIView animateWithDuration:0.1 delay:0.075 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
-        [self.mmRing0 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1.04, 1.04)];
+-(void)showPausedView {
+    UIImageView *blurredBackgroundImageView = ({
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
+        imageView.contentMode = UIViewContentModeScaleAspectFit;
+        imageView.clipsToBounds = YES;
+        imageView.backgroundColor = [UIColor clearColor];
+        imageView;
+    });
+    blurredBackgroundImageView.tag = kBlurBackgroundViewTag;
+    blurredBackgroundImageView.frame = CGRectMake(blurredBackgroundImageView.frame.origin.x, 0, blurredBackgroundImageView.frame.size.width, blurredBackgroundImageView.frame.size.height);
+    UIImage *screenShot = [self.view imageFromScreenShot];
+    
+    UIColor *blurTintColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:.3];
+    float blurSaturationDeltaFactor = 0.6;
+    float blurRadius = 5;
+    
+    blurredBackgroundImageView.image = [screenShot applyBlurWithRadius:blurRadius tintColor:blurTintColor saturationDeltaFactor:blurSaturationDeltaFactor maskImage:nil];
+    
+    [self.pausedView insertSubview:blurredBackgroundImageView atIndex:0];
+    self.pausedView.backgroundColor = [UIColor clearColor];
+    [UIView animateKeyframesWithDuration:0.5 delay:0 options:0 animations:^{
+        self.pausedView.alpha = 1;
     } completion:^(BOOL finished) {
-        if (completionBlock) {
-            completionBlock();
-        }
+        ;
     }];
 }
 
--(void)animateMainMenuButtonDeselect:(void(^)(void))completionBlock {
-    [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseIn animations:^{
-        [self.mmRing0 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 0.9, 0.9)];
-    } completion:^(BOOL finished) {
-        if (finished) {
-            [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseOut animations:^{
-                [self.mmRing0 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1, 1)];
-            } completion:nil];
-        }
-    }];
-    [UIView animateWithDuration:0.1 delay:0.025 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseIn animations:^{
-        [self.mmRing1 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 0.94, 0.95)];
-    } completion:^(BOOL finished) {
-        if (finished) {
-            [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseOut animations:^{
-                [self.mmRing1 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1, 1)];
-            } completion:nil];
-        }
-    }];
-    [UIView animateWithDuration:0.1 delay:0.05 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseIn animations:^{
-        [self.mmRing2 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 0.94, 0.95)];
-    } completion:^(BOOL finished) {
-        if (finished) {
-            [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseOut animations:^{
-                [self.mmRing2 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1, 1)];
-            } completion:nil];
-        }
-    }];
-    [UIView animateWithDuration:0.1 delay:0.075 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseIn animations:^{
-        [self.mmRing3 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 0.96, 0.96)];
-    } completion:^(BOOL finished) {
-        if (finished) {
-            [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseOut animations:^{
-                [self.mmRing3 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1, 1)];
-            } completion:^(BOOL finished) {
-                if (completionBlock) {
-                    completionBlock();
-                }
-            }];
-        }
-    }];
-}
 
-- (IBAction)mainMenuSelect:(id)sender {
-    [self animateMainMenuButtonSelect:nil];
-}
-
-- (IBAction)mainMenuDeselect:(id)sender {
-    [self animateMainMenuButtonDeselect:nil];
-}
-
-- (IBAction)mainMenuTouchUpInside:(id)sender {
-    [[AudioController sharedController] playerDeath];
-    [self configureButtonsEnabled:NO];
-    [self animateMainMenuButtonDeselect:^{
-        self.scene = [GameScene sceneWithSize:self.view.bounds.size];
-        
-        self.scene.size = self.view.bounds.size;
-        self.scene.scaleMode = SKSceneScaleModeAspectFill;
-        self.scene.viewController = self;
-        // Present the scene.
-        [(SKView*)self.view presentScene:self.scene];
-        self.pauseButton.alpha = 0;
-
-        [UIView animateKeyframesWithDuration:0.5 delay:0 options:0 animations:^{
-            self.pausedView.alpha = 0;
-        } completion:^(BOOL finished) {
-            [[self.pausedView viewWithTag:kBlurBackgroundViewTag] removeFromSuperview];
-            [UIView animateKeyframesWithDuration:0.5 delay:0 options:0 animations:^{
-                self.mainMenuView.alpha = 1;
-            } completion:^(BOOL finished) {
-                [self configureButtonsEnabled:YES];
-            }];
-        }];
-    }];
-}
-
-#pragma mark - Game Over
+#pragma mark - Game Over View
 
 -(void)gameOverViewDidSelectButtonType:(GameOverViewButtonType)type {
 
@@ -800,8 +662,9 @@
 #pragma mark - UI Helpers
 
 -(void)configureButtonsEnabled:(BOOL)enabled {
-    self.playButton.userInteractionEnabled = self.upgradeButton.userInteractionEnabled = self.highScoreButton.userInteractionEnabled = self.creditsButton.userInteractionEnabled = self.hamburgerButton.userInteractionEnabled =  self.playPausedButton.userInteractionEnabled = self.mainMenuButton.userInteractionEnabled = enabled;
+    self.playButton.userInteractionEnabled = self.upgradeButton.userInteractionEnabled = self.highScoreButton.userInteractionEnabled = self.creditsButton.userInteractionEnabled = self.hamburgerButton.userInteractionEnabled = enabled;
     [self.gameOverView configureButtonsEnabled:enabled];
+    [self.pausedView configureButtonsEnabled:enabled];
 }
 
 

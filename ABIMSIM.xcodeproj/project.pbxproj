@@ -30,6 +30,8 @@
 		B4557ECC1AC0DDF1004E097E /* UIImage+Effects.m in Sources */ = {isa = PBXBuildFile; fileRef = B4557ECB1AC0DDF1004E097E /* UIImage+Effects.m */; };
 		B4557ECF1AC0DE55004E097E /* SKScene+Unarchive.m in Sources */ = {isa = PBXBuildFile; fileRef = B4557ECE1AC0DE55004E097E /* SKScene+Unarchive.m */; };
 		B4557ED21AC0E8A3004E097E /* UIView+Fancy.m in Sources */ = {isa = PBXBuildFile; fileRef = B4557ED11AC0E8A3004E097E /* UIView+Fancy.m */; };
+		B4557ED51AC0EF47004E097E /* PausedView.m in Sources */ = {isa = PBXBuildFile; fileRef = B4557ED41AC0EF47004E097E /* PausedView.m */; };
+		B4557ED71AC0EF57004E097E /* PausedView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B4557ED61AC0EF57004E097E /* PausedView.xib */; };
 		B45865E918DA15C9005C9566 /* Ship@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B45865E818DA15C9005C9566 /* Ship@2x.png */; };
 		B45865EC18DA3ACA005C9566 /* HexColor.m in Sources */ = {isa = PBXBuildFile; fileRef = B45865EB18DA3ACA005C9566 /* HexColor.m */; };
 		B45FF12818CE8708001662CD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B45FF12718CE8708001662CD /* Foundation.framework */; };
@@ -172,6 +174,9 @@
 		B4557ECE1AC0DE55004E097E /* SKScene+Unarchive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKScene+Unarchive.m"; sourceTree = "<group>"; };
 		B4557ED01AC0E8A3004E097E /* UIView+Fancy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Fancy.h"; sourceTree = "<group>"; };
 		B4557ED11AC0E8A3004E097E /* UIView+Fancy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Fancy.m"; sourceTree = "<group>"; };
+		B4557ED31AC0EF47004E097E /* PausedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PausedView.h; sourceTree = "<group>"; };
+		B4557ED41AC0EF47004E097E /* PausedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PausedView.m; sourceTree = "<group>"; };
+		B4557ED61AC0EF57004E097E /* PausedView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PausedView.xib; sourceTree = "<group>"; };
 		B45865E818DA15C9005C9566 /* Ship@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Ship@2x.png"; sourceTree = "<group>"; };
 		B45865EA18DA3ACA005C9566 /* HexColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HexColor.h; sourceTree = "<group>"; };
 		B45865EB18DA3ACA005C9566 /* HexColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HexColor.m; sourceTree = "<group>"; };
@@ -411,6 +416,9 @@
 				B4557EC11AC0D4C8004E097E /* GameOverView.h */,
 				B4557EC21AC0D4C8004E097E /* GameOverView.m */,
 				B4557EC41AC0D4DD004E097E /* GameOverView.xib */,
+				B4557ED31AC0EF47004E097E /* PausedView.h */,
+				B4557ED41AC0EF47004E097E /* PausedView.m */,
+				B4557ED61AC0EF57004E097E /* PausedView.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -727,6 +735,7 @@
 				B4D0732E19785F620028840D /* SpaceMine_CenterGlow_0@2x.png in Resources */,
 				B49792DB1A86CA19005174C1 /* parsecsGameplayMusic.mp3 in Resources */,
 				B49792F21A86E617005174C1 /* explosionMineTrimmed.caf in Resources */,
+				B4557ED71AC0EF57004E097E /* PausedView.xib in Resources */,
 				B4242EA219A7E58900192F44 /* BlackHole2.atlas in Resources */,
 				B4D4B629191FFF4F00834942 /* Planet_4_0@2x.png in Resources */,
 				B4D0733019785F620028840D /* SpaceMine_LargeGlow_0@2x.png in Resources */,
@@ -838,6 +847,7 @@
 				B45FF14018CE8708001662CD /* ViewController.m in Sources */,
 				B4557ED21AC0E8A3004E097E /* UIView+Fancy.m in Sources */,
 				B4557ECF1AC0DE55004E097E /* SKScene+Unarchive.m in Sources */,
+				B4557ED51AC0EF47004E097E /* PausedView.m in Sources */,
 				B49792E01A86CA5F005174C1 /* SampleQueueId.m in Sources */,
 				E1D4EDF61A5B5E5900676C17 /* DCRoundSwitchKnobLayer.m in Sources */,
 				B49792D11A86C999005174C1 /* NSMutableArray+STKAudioPlayer.m in Sources */,
