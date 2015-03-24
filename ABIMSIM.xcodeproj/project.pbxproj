@@ -24,6 +24,12 @@
 		B4467176192D8CC500B4A8C7 /* AsteroidShield_Impact_0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4467175192D8CC500B4A8C7 /* AsteroidShield_Impact_0@2x.png */; };
 		B4467178192D906400B4A8C7 /* AsteroidShield_Pop_0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4467177192D906400B4A8C7 /* AsteroidShield_Pop_0@2x.png */; };
 		B446717A192D906A00B4A8C7 /* AsteroidShield_Pop_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4467179192D906A00B4A8C7 /* AsteroidShield_Pop_1@2x.png */; };
+		B4557EC31AC0D4C8004E097E /* GameOverView.m in Sources */ = {isa = PBXBuildFile; fileRef = B4557EC21AC0D4C8004E097E /* GameOverView.m */; };
+		B4557EC51AC0D4DD004E097E /* GameOverView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B4557EC41AC0D4DD004E097E /* GameOverView.xib */; };
+		B4557EC81AC0DD95004E097E /* UIView+Screenshot.m in Sources */ = {isa = PBXBuildFile; fileRef = B4557EC71AC0DD95004E097E /* UIView+Screenshot.m */; };
+		B4557ECC1AC0DDF1004E097E /* UIImage+Effects.m in Sources */ = {isa = PBXBuildFile; fileRef = B4557ECB1AC0DDF1004E097E /* UIImage+Effects.m */; };
+		B4557ECF1AC0DE55004E097E /* SKScene+Unarchive.m in Sources */ = {isa = PBXBuildFile; fileRef = B4557ECE1AC0DE55004E097E /* SKScene+Unarchive.m */; };
+		B4557ED21AC0E8A3004E097E /* UIView+Fancy.m in Sources */ = {isa = PBXBuildFile; fileRef = B4557ED11AC0E8A3004E097E /* UIView+Fancy.m */; };
 		B45865E918DA15C9005C9566 /* Ship@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B45865E818DA15C9005C9566 /* Ship@2x.png */; };
 		B45865EC18DA3ACA005C9566 /* HexColor.m in Sources */ = {isa = PBXBuildFile; fileRef = B45865EB18DA3ACA005C9566 /* HexColor.m */; };
 		B45FF12818CE8708001662CD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B45FF12718CE8708001662CD /* Foundation.framework */; };
@@ -155,6 +161,17 @@
 		B4467175192D8CC500B4A8C7 /* AsteroidShield_Impact_0@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AsteroidShield_Impact_0@2x.png"; sourceTree = "<group>"; };
 		B4467177192D906400B4A8C7 /* AsteroidShield_Pop_0@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AsteroidShield_Pop_0@2x.png"; sourceTree = "<group>"; };
 		B4467179192D906A00B4A8C7 /* AsteroidShield_Pop_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AsteroidShield_Pop_1@2x.png"; sourceTree = "<group>"; };
+		B4557EC11AC0D4C8004E097E /* GameOverView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameOverView.h; sourceTree = "<group>"; };
+		B4557EC21AC0D4C8004E097E /* GameOverView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameOverView.m; sourceTree = "<group>"; };
+		B4557EC41AC0D4DD004E097E /* GameOverView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GameOverView.xib; sourceTree = "<group>"; };
+		B4557EC61AC0DD95004E097E /* UIView+Screenshot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Screenshot.h"; sourceTree = "<group>"; };
+		B4557EC71AC0DD95004E097E /* UIView+Screenshot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Screenshot.m"; sourceTree = "<group>"; };
+		B4557ECA1AC0DDF1004E097E /* UIImage+Effects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Effects.h"; sourceTree = "<group>"; };
+		B4557ECB1AC0DDF1004E097E /* UIImage+Effects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Effects.m"; sourceTree = "<group>"; };
+		B4557ECD1AC0DE55004E097E /* SKScene+Unarchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SKScene+Unarchive.h"; sourceTree = "<group>"; };
+		B4557ECE1AC0DE55004E097E /* SKScene+Unarchive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKScene+Unarchive.m"; sourceTree = "<group>"; };
+		B4557ED01AC0E8A3004E097E /* UIView+Fancy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Fancy.h"; sourceTree = "<group>"; };
+		B4557ED11AC0E8A3004E097E /* UIView+Fancy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Fancy.m"; sourceTree = "<group>"; };
 		B45865E818DA15C9005C9566 /* Ship@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Ship@2x.png"; sourceTree = "<group>"; };
 		B45865EA18DA3ACA005C9566 /* HexColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HexColor.h; sourceTree = "<group>"; };
 		B45865EB18DA3ACA005C9566 /* HexColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HexColor.m; sourceTree = "<group>"; };
@@ -388,6 +405,31 @@
 			name = Music;
 			sourceTree = "<group>";
 		};
+		B4557EC01AC0D489004E097E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				B4557EC11AC0D4C8004E097E /* GameOverView.h */,
+				B4557EC21AC0D4C8004E097E /* GameOverView.m */,
+				B4557EC41AC0D4DD004E097E /* GameOverView.xib */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		B4557EC91AC0DDD5004E097E /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				B4557EC61AC0DD95004E097E /* UIView+Screenshot.h */,
+				B4557EC71AC0DD95004E097E /* UIView+Screenshot.m */,
+				B4557ECA1AC0DDF1004E097E /* UIImage+Effects.h */,
+				B4557ECB1AC0DDF1004E097E /* UIImage+Effects.m */,
+				B4557ECD1AC0DE55004E097E /* SKScene+Unarchive.h */,
+				B4557ECE1AC0DE55004E097E /* SKScene+Unarchive.m */,
+				B4557ED01AC0E8A3004E097E /* UIView+Fancy.h */,
+				B4557ED11AC0E8A3004E097E /* UIView+Fancy.m */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
 		B45865E718DA154F005C9566 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
@@ -451,6 +493,7 @@
 		B45FF12F18CE8708001662CD /* ABIMSIM */ = {
 			isa = PBXGroup;
 			children = (
+				B4557EC91AC0DDD5004E097E /* Categories */,
 				B45865EA18DA3ACA005C9566 /* HexColor.h */,
 				B45865EB18DA3ACA005C9566 /* HexColor.m */,
 				B45FF13818CE8708001662CD /* AppDelegate.h */,
@@ -458,6 +501,7 @@
 				B45FF13B18CE8708001662CD /* Main.storyboard */,
 				B45FF13E18CE8708001662CD /* ViewController.h */,
 				B45FF13F18CE8708001662CD /* ViewController.m */,
+				B4557EC01AC0D489004E097E /* Views */,
 				B49792681A844756005174C1 /* AudioController.h */,
 				B49792691A844756005174C1 /* AudioController.m */,
 				B45FF14118CE8708001662CD /* GameScene.h */,
@@ -707,6 +751,7 @@
 				B47E22D218DBA7E200F42EBB /* Asteroid_5@2x.png in Resources */,
 				B43F4D0C192ABB510000ACA4 /* AsteroidShield_1@2x.png in Resources */,
 				B46363A61979EBA2007B657C /* SpaceMine_Friendly_2@2x.png in Resources */,
+				B4557EC51AC0D4DD004E097E /* GameOverView.xib in Resources */,
 				B4D4B625191FFF4F00834942 /* Planet_3_1@2x.png in Resources */,
 				B4467174192D8C7700B4A8C7 /* AsteroidShield_Impact_1@2x.png in Resources */,
 				B46363A41979EBA2007B657C /* SpaceMine_Friendly_0@2x.png in Resources */,
@@ -782,16 +827,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B4557ECC1AC0DDF1004E097E /* UIImage+Effects.m in Sources */,
 				B49792D61A86C999005174C1 /* STKDataSourceWrapper.m in Sources */,
 				B45865EC18DA3ACA005C9566 /* HexColor.m in Sources */,
 				B45FF14318CE8708001662CD /* GameScene.m in Sources */,
+				B4557EC81AC0DD95004E097E /* UIView+Screenshot.m in Sources */,
 				B49792D71A86C999005174C1 /* STKHTTPDataSource.m in Sources */,
 				B49792D41A86C999005174C1 /* STKCoreFoundationDataSource.m in Sources */,
 				B49792D81A86C999005174C1 /* STKLocalFileDataSource.m in Sources */,
 				B45FF14018CE8708001662CD /* ViewController.m in Sources */,
+				B4557ED21AC0E8A3004E097E /* UIView+Fancy.m in Sources */,
+				B4557ECF1AC0DE55004E097E /* SKScene+Unarchive.m in Sources */,
 				B49792E01A86CA5F005174C1 /* SampleQueueId.m in Sources */,
 				E1D4EDF61A5B5E5900676C17 /* DCRoundSwitchKnobLayer.m in Sources */,
 				B49792D11A86C999005174C1 /* NSMutableArray+STKAudioPlayer.m in Sources */,
+				B4557EC31AC0D4C8004E097E /* GameOverView.m in Sources */,
 				E1D4EDF51A5B5E5900676C17 /* DCRoundSwitch.m in Sources */,
 				B49792D51A86C999005174C1 /* STKDataSource.m in Sources */,
 				B49792D21A86C999005174C1 /* STKAudioPlayer.m in Sources */,
