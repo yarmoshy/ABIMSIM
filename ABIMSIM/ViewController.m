@@ -25,9 +25,6 @@
     
     [AudioController sharedController];
     
-    self.settingsContainerTopAlignmentConstraint.constant = -1* (self.view.frame.size.height - self.buttonContainerView.frame.origin.y);
-    self.settingsContainerTrailingConstraint.constant = self.view.frame.size.width;
-    self.settingsLeadngConstraint.constant = -1 * self.view.frame.size.height;
 
     showingSettings = NO;
     hamburgerToXImages = [NSMutableArray array];
@@ -40,12 +37,6 @@
     }];
     self.playButton.exclusiveTouch = self.upgradeButton.exclusiveTouch = self.highScoreButton.exclusiveTouch = self.creditsButton.exclusiveTouch = self.hamburgerButton.exclusiveTouch = YES;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setupMusicToggle) name:kMusicToggleChanged object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setupSFXToggle) name:kSFXToggleChanged object:nil];
-    [self setupToggles];
-    [self.musicSettingsToggle addTarget:self action:@selector(musicSwitchToggled:) forControlEvents:UIControlEventValueChanged];
-    [self.sfxSettingsToggle addTarget:self action:@selector(sfxSwitchToggled:) forControlEvents:UIControlEventValueChanged];
-    
     UINib * gameOverViewNib = [UINib nibWithNibName:@"GameOverView" bundle:nil];
     self.gameOverView = [gameOverViewNib instantiateWithOwner:self options:nil][0];
     self.gameOverView.delegate = self;
@@ -55,6 +46,13 @@
     self.pausedView = [pausedViewNib instantiateWithOwner:self options:nil][0];
     self.pausedView.delegate = self;
     [self.view insertSubview:self.pausedView atIndex:2];
+
+    UINib * settingsViewNib = [UINib nibWithNibName:@"SettingsView" bundle:nil];
+    self.settingsView = [settingsViewNib instantiateWithOwner:self options:nil][0];
+    self.settingsView.delegate = self;
+    [self.settingsContainerView addSubview:self.settingsView];
+    self.settingsContainerTopAlignmentConstraint.constant = -1* (self.view.frame.size.height - self.buttonContainerView.frame.origin.y);
+    self.settingsContainerTrailingConstraint.constant = self.view.frame.size.width;
 
     // Configure the view.
     SKView * skView = (SKView *)self.view;
@@ -353,19 +351,6 @@
 }
 
 #pragma mark - Settings
--(void)setupToggles {
-    [self setupMusicToggle];
-    [self setupSFXToggle];
-}
-
--(void)setupMusicToggle {
-    self.musicSettingsToggle.on = [ABIMSIMDefaults boolForKey:kMusicSetting];
-}
-
--(void)setupSFXToggle {
-    self.sfxSettingsToggle.on = [ABIMSIMDefaults boolForKey:kSFXSetting];
-}
-
 - (IBAction)hamburgerTapped:(id)sender {
     [self configureButtonsEnabled:NO];
     if (showingSettings) {
@@ -384,6 +369,7 @@
 }
 
 -(void)showSettings {
+    [self.settingsView showSettings];
     [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionAllowAnimatedContent animations:^{
         self.buttonContainerView.alpha = 0;
     } completion:^(BOOL finished) {
@@ -391,12 +377,10 @@
     }];
 
     [UIView animateWithDuration:1 delay:0 options:UIViewAnimationOptionAllowAnimatedContent animations:^{
-        self.hamburgerBottomConstraint.constant = self.view.frame.size.height - self.buttonContainerView.frame.origin.y - 100;
-        self.hamburgerLeadingConstraint.constant = self.buttonContainerView.frame.origin.x + self.buttonContainerView.frame.size.width - 100;
         self.settingsContainerTopAlignmentConstraint.constant = 0;
         self.settingsContainerTrailingConstraint.constant = 0;
-        self.settingsTopConstraint.constant = 50;
-        self.settingsLeadngConstraint.constant = 15;
+        self.hamburgerBottomConstraint.constant = self.view.frame.size.height - self.buttonContainerView.frame.origin.y - 100;
+        self.hamburgerLeadingConstraint.constant = self.buttonContainerView.frame.origin.x + self.buttonContainerView.frame.size.width - 100;
         [self.view layoutIfNeeded];
     } completion:^(BOOL finished) {
         showingSettings = YES;
@@ -405,6 +389,7 @@
 }
 
 -(void)hideSettings {
+    [self.settingsView hideSettings];
     [UIView animateWithDuration:0.5 delay:0.5 options:UIViewAnimationOptionAllowAnimatedContent animations:^{
         self.buttonContainerView.alpha = 1;
     } completion:^(BOOL finished) {
@@ -412,13 +397,10 @@
     }];
 
     [UIView animateWithDuration:1 delay:0 options:UIViewAnimationOptionAllowAnimatedContent animations:^{
+        self.settingsContainerTrailingConstraint.constant = self.view.frame.size.width;
         self.hamburgerBottomConstraint.constant = 10;
         self.hamburgerLeadingConstraint.constant = 10;
         self.settingsContainerTopAlignmentConstraint.constant = -1* (self.view.frame.size.height - self.buttonContainerView.frame.origin.y);
-        self.settingsContainerTrailingConstraint.constant = self.view.frame.size.width;
-        self.settingsLeadngConstraint.constant = -1 * self.view.frame.size.height;
-        self.settingsTopConstraint.constant = 200;
-
         [self.view layoutIfNeeded];
     } completion:^(BOOL finished) {
         showingSettings = NO;
@@ -426,88 +408,6 @@
     }];
 }
 
--(void)musicSwitchToggled:(DCRoundSwitch*)toggle {
-    [ABIMSIMDefaults setBool:toggle.on forKey:kMusicSetting];
-    [ABIMSIMDefaults synchronize];
-    self.musicSettingsToggle.on = toggle.on;
-    [[NSNotificationCenter defaultCenter] postNotificationName:kMusicToggleChanged object:nil];
-}
-
--(void)sfxSwitchToggled:(DCRoundSwitch*)toggle {
-    [ABIMSIMDefaults setBool:toggle.on forKey:kSFXSetting];
-    [ABIMSIMDefaults synchronize];
-    self.sfxSettingsToggle.on = toggle.on;
-    [[NSNotificationCenter defaultCenter] postNotificationName:kSFXToggleChanged object:nil];
-}
-
-- (IBAction)twitterTapped:(id)sender {
-    if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]) {
-        SLComposeViewController *composeController = [SLComposeViewController
-                                                      composeViewControllerForServiceType:SLServiceTypeTwitter];
-        
-        [composeController setInitialText:@"I'm exploring the farthest reaches of space playing Parsecs! Check it out: http://bit.ly/parsecs"];
-        [composeController addURL: [NSURL URLWithString:
-                                    @"http://bit.ly/parsecs"]];
-        
-        [self presentViewController:composeController
-                           animated:YES completion:nil];
-    } else {
-        UIAlertView *alert;
-        if ([UIDevice currentDevice].systemVersion.integerValue >= 8) {
-            alert = [[UIAlertView alloc] initWithTitle:@"Twitter Unavailable" message:@"There are no Twitter accounts configured. You can add or create a Twitter account in Settings." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Settings", nil];
-
-        } else {
-            alert = [[UIAlertView alloc] initWithTitle:@"Twitter Unavailable" message:@"There are no Twitter accounts configured. You can add or create a Twitter account in Settings." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles: nil];
-        }
-        [alert show];
-    }
-}
-
-- (IBAction)facebookTapped:(id)sender {
-    if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
-        SLComposeViewController *composeController = [SLComposeViewController
-                                                      composeViewControllerForServiceType:SLServiceTypeFacebook];
-        
-        [composeController setInitialText:@"I'm exploring the farthest reaches of space playing Parsecs! Check it out: http://bit.ly/parsecs"];
-        [composeController addURL: [NSURL URLWithString:
-                                    @"http://bit.ly/parsecs"]];
-        
-        [self presentViewController:composeController
-                           animated:YES completion:nil];
-    } else {
-        UIAlertView *alert;
-        if ([UIDevice currentDevice].systemVersion.integerValue >= 8) {
-            alert = [[UIAlertView alloc] initWithTitle:@"Facebook Unavailable" message:@"There are no Facebook accounts configured. You can add or create a Facebook account in Settings." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Settings", nil];
-            
-        } else {
-            alert = [[UIAlertView alloc] initWithTitle:@"Twitter Unavailable" message:@"There are no Facebook accounts configured. You can add or create a Facebook account in Settings." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles: nil];
-        }
-        [alert show];
-    }
-}
-
-- (IBAction)resetTapped:(id)sender {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"WARNING" message:@"Are you sure you want to reset all game data? This includes all upgrades and space duckets earned. This cannot be undone." delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
-    alert.tag = 777;
-    [alert show];
-}
-
--(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 0) { //do nothing
-        ;
-    } else {
-        if (alertView.tag == 777) {//reset
-            [ABIMSIMDefaults setInteger:0 forKey:kShieldOccuranceLevel];
-            [ABIMSIMDefaults setInteger:0 forKey:kShieldDurabilityLevel];
-            [ABIMSIMDefaults setBool:NO forKey:kShieldOnStart];
-            [ABIMSIMDefaults setInteger:0 forKey:kMineOccuranceLevel];
-            [ABIMSIMDefaults setInteger:0 forKey:kMineBlastSpeedLevel];
-            [ABIMSIMDefaults setInteger:0 forKey:kUserDuckets];
-        } else {
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
-        }
-    }
-}
 
 #pragma mark - Paused View
 

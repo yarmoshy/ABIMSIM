@@ -32,6 +32,8 @@
 		B4557ED21AC0E8A3004E097E /* UIView+Fancy.m in Sources */ = {isa = PBXBuildFile; fileRef = B4557ED11AC0E8A3004E097E /* UIView+Fancy.m */; };
 		B4557ED51AC0EF47004E097E /* PausedView.m in Sources */ = {isa = PBXBuildFile; fileRef = B4557ED41AC0EF47004E097E /* PausedView.m */; };
 		B4557ED71AC0EF57004E097E /* PausedView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B4557ED61AC0EF57004E097E /* PausedView.xib */; };
+		B4557EDB1AC37B8A004E097E /* SettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B4557EDA1AC37B8A004E097E /* SettingsView.xib */; };
+		B4557EDE1AC37C5A004E097E /* SettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = B4557EDD1AC37C5A004E097E /* SettingsView.m */; };
 		B45865E918DA15C9005C9566 /* Ship@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B45865E818DA15C9005C9566 /* Ship@2x.png */; };
 		B45865EC18DA3ACA005C9566 /* HexColor.m in Sources */ = {isa = PBXBuildFile; fileRef = B45865EB18DA3ACA005C9566 /* HexColor.m */; };
 		B45FF12818CE8708001662CD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B45FF12718CE8708001662CD /* Foundation.framework */; };
@@ -177,6 +179,9 @@
 		B4557ED31AC0EF47004E097E /* PausedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PausedView.h; sourceTree = "<group>"; };
 		B4557ED41AC0EF47004E097E /* PausedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PausedView.m; sourceTree = "<group>"; };
 		B4557ED61AC0EF57004E097E /* PausedView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PausedView.xib; sourceTree = "<group>"; };
+		B4557EDA1AC37B8A004E097E /* SettingsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsView.xib; sourceTree = "<group>"; };
+		B4557EDC1AC37C5A004E097E /* SettingsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsView.h; sourceTree = "<group>"; };
+		B4557EDD1AC37C5A004E097E /* SettingsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsView.m; sourceTree = "<group>"; };
 		B45865E818DA15C9005C9566 /* Ship@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Ship@2x.png"; sourceTree = "<group>"; };
 		B45865EA18DA3ACA005C9566 /* HexColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HexColor.h; sourceTree = "<group>"; };
 		B45865EB18DA3ACA005C9566 /* HexColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HexColor.m; sourceTree = "<group>"; };
@@ -419,6 +424,9 @@
 				B4557ED31AC0EF47004E097E /* PausedView.h */,
 				B4557ED41AC0EF47004E097E /* PausedView.m */,
 				B4557ED61AC0EF57004E097E /* PausedView.xib */,
+				B4557EDC1AC37C5A004E097E /* SettingsView.h */,
+				B4557EDD1AC37C5A004E097E /* SettingsView.m */,
+				B4557EDA1AC37B8A004E097E /* SettingsView.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -426,6 +434,8 @@
 		B4557EC91AC0DDD5004E097E /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				B45865EA18DA3ACA005C9566 /* HexColor.h */,
+				B45865EB18DA3ACA005C9566 /* HexColor.m */,
 				B4557EC61AC0DD95004E097E /* UIView+Screenshot.h */,
 				B4557EC71AC0DD95004E097E /* UIView+Screenshot.m */,
 				B4557ECA1AC0DDF1004E097E /* UIImage+Effects.h */,
@@ -436,6 +446,28 @@
 				B4557ED11AC0E8A3004E097E /* UIView+Fancy.m */,
 			);
 			name = Categories;
+			sourceTree = "<group>";
+		};
+		B4557ED81AC0FEC6004E097E /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				B45FF13E18CE8708001662CD /* ViewController.h */,
+				B45FF13F18CE8708001662CD /* ViewController.m */,
+				B49792681A844756005174C1 /* AudioController.h */,
+				B49792691A844756005174C1 /* AudioController.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		B4557ED91AC0FEF8004E097E /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				B45FF14118CE8708001662CD /* GameScene.h */,
+				B45FF14218CE8708001662CD /* GameScene.m */,
+				B400F40E191AFCA100A483E2 /* UpgradeScene.h */,
+				B400F40F191AFCA100A483E2 /* UpgradeScene.m */,
+			);
+			name = Scenes;
 			sourceTree = "<group>";
 		};
 		B45865E718DA154F005C9566 /* Assets */ = {
@@ -501,21 +533,13 @@
 		B45FF12F18CE8708001662CD /* ABIMSIM */ = {
 			isa = PBXGroup;
 			children = (
-				B4557EC91AC0DDD5004E097E /* Categories */,
-				B45865EA18DA3ACA005C9566 /* HexColor.h */,
-				B45865EB18DA3ACA005C9566 /* HexColor.m */,
 				B45FF13818CE8708001662CD /* AppDelegate.h */,
 				B45FF13918CE8708001662CD /* AppDelegate.m */,
 				B45FF13B18CE8708001662CD /* Main.storyboard */,
-				B45FF13E18CE8708001662CD /* ViewController.h */,
-				B45FF13F18CE8708001662CD /* ViewController.m */,
+				B4557ED81AC0FEC6004E097E /* Controllers */,
 				B4557EC01AC0D489004E097E /* Views */,
-				B49792681A844756005174C1 /* AudioController.h */,
-				B49792691A844756005174C1 /* AudioController.m */,
-				B45FF14118CE8708001662CD /* GameScene.h */,
-				B45FF14218CE8708001662CD /* GameScene.m */,
-				B400F40E191AFCA100A483E2 /* UpgradeScene.h */,
-				B400F40F191AFCA100A483E2 /* UpgradeScene.m */,
+				B4557ED91AC0FEF8004E097E /* Scenes */,
+				B4557EC91AC0DDD5004E097E /* Categories */,
 				B45865E718DA154F005C9566 /* Assets */,
 				E1D4EDEC1A5B5E5900676C17 /* DCRoundSwitch */,
 				B45FF14618CE8708001662CD /* Images.xcassets */,
@@ -746,6 +770,7 @@
 				B4D4B618191FFF4F00834942 /* Planet_0_1@2x.png in Resources */,
 				B4D4B620191FFF4F00834942 /* Planet_2_1@2x.png in Resources */,
 				B4D4B628191FFF4F00834942 /* Planet_4_1@2x.png in Resources */,
+				B4557EDB1AC37B8A004E097E /* SettingsView.xib in Resources */,
 				B4242EA319A7E58900192F44 /* BlackHole3.atlas in Resources */,
 				B4D4B61A191FFF4F00834942 /* Planet_0_3@2x.png in Resources */,
 				B4D4B624191FFF4F00834942 /* Planet_3_2@2x.png in Resources */,
@@ -849,6 +874,7 @@
 				B4557ECF1AC0DE55004E097E /* SKScene+Unarchive.m in Sources */,
 				B4557ED51AC0EF47004E097E /* PausedView.m in Sources */,
 				B49792E01A86CA5F005174C1 /* SampleQueueId.m in Sources */,
+				B4557EDE1AC37C5A004E097E /* SettingsView.m in Sources */,
 				E1D4EDF61A5B5E5900676C17 /* DCRoundSwitchKnobLayer.m in Sources */,
 				B49792D11A86C999005174C1 /* NSMutableArray+STKAudioPlayer.m in Sources */,
 				B4557EC31AC0D4C8004E097E /* GameOverView.m in Sources */,

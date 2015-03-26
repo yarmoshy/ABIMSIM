@@ -19,8 +19,6 @@ typedef enum {
 @property (strong, nonatomic) GameScene *scene;
 
 -(void)pausedViewViewDidSelectButtonType:(PausedViewViewButtonType)type;
--(void)musicSwitchToggled:(DCRoundSwitch*)toggle;
--(void)sfxSwitchToggled:(DCRoundSwitch*)toggle;
 
 @end
 
