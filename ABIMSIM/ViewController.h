@@ -11,64 +11,24 @@
 #import "GameOverView.h"
 #import "PausedView.h"
 #import "SettingsView.h"
+#import "MainMenuView.h"
 #import "UIView+Screenshot.h"
 #import "UIImage+Effects.h"
 
 @class GameScene;
 @class DCRoundSwitch;
 
-@interface ViewController : UIViewController <GKGameCenterControllerDelegate, UIAlertViewDelegate, GameOverViewDelegate, PausedViewDelegate, SettingsViewDelegate>
+@interface ViewController : UIViewController <GKGameCenterControllerDelegate, UIAlertViewDelegate, GameOverViewDelegate, PausedViewDelegate, SettingsViewDelegate, MainMenuViewDelegate>
+
+@property (strong, nonatomic) GameScene *scene;
+@property (weak, nonatomic) IBOutlet UIButton *pauseButton;
 
 #pragma mark - Main Menu
 
-@property (weak, nonatomic) IBOutlet UIView *mainMenuView;
-@property (weak, nonatomic) IBOutlet UIImageView *playRing0;
-@property (weak, nonatomic) IBOutlet UIImageView *playRing1;
-@property (weak, nonatomic) IBOutlet UIImageView *playRing2;
-@property (weak, nonatomic) IBOutlet UIImageView *playRing3;
-@property (weak, nonatomic) IBOutlet UIButton *playButton;
-
-@property (weak, nonatomic) IBOutlet UIImageView *hsRing0;
-@property (weak, nonatomic) IBOutlet UIImageView *hsRing1;
-@property (weak, nonatomic) IBOutlet UIImageView *hsRing2;
-@property (weak, nonatomic) IBOutlet UIImageView *hsRing3;
-@property (weak, nonatomic) IBOutlet UIButton *highScoreButton;
-
-@property (weak, nonatomic) IBOutlet UIImageView *upgradeRing0;
-@property (weak, nonatomic) IBOutlet UIImageView *upgradeRing1;
-@property (weak, nonatomic) IBOutlet UIImageView *upgradeRing2;
-@property (weak, nonatomic) IBOutlet UIImageView *upgradeRing3;
-@property (weak, nonatomic) IBOutlet UIButton *upgradeButton;
-
-@property (weak, nonatomic) IBOutlet UIButton *hamburgerButton;
-@property (weak, nonatomic) IBOutlet UIButton *creditsButton;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *hamburgerLeadingConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *hamburgerBottomConstraint;
-@property (strong, nonatomic) GameScene *scene;
-@property (weak, nonatomic) IBOutlet UIButton *pauseButton;
-@property (weak, nonatomic) IBOutlet UIView *buttonContainerView;
-
-- (IBAction)playSelect:(id)sender;
-- (IBAction)playDeselect:(id)sender;
-- (IBAction)playTouchUpInside:(id)sender;
-
-- (IBAction)highScoresSelect:(id)sender;
-- (IBAction)highScoresDeselect:(id)sender;
-- (IBAction)highScoresTouchUpInside:(id)sender;
-
-- (IBAction)upgradesSelect:(id)sender;
-- (IBAction)upgradesDeselect:(id)sender;
-- (IBAction)upgradesTouchUpInside:(id)sender;
-
-- (IBAction)hamburgerTapped:(id)sender;
-
+@property (weak, nonatomic) IBOutlet MainMenuView *mainMenuView;
 
 #pragma mark - Settings
 @property (weak, nonatomic) IBOutlet SettingsView *settingsView;
-@property (weak, nonatomic) IBOutlet UIView *settingsContainerView;
-
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *settingsContainerTopAlignmentConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *settingsContainerTrailingConstraint;
 
 #pragma mark - Paused
 @property (weak, nonatomic) IBOutlet PausedView *pausedView;

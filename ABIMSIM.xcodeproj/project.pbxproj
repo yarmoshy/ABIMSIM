@@ -34,6 +34,8 @@
 		B4557ED71AC0EF57004E097E /* PausedView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B4557ED61AC0EF57004E097E /* PausedView.xib */; };
 		B4557EDB1AC37B8A004E097E /* SettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B4557EDA1AC37B8A004E097E /* SettingsView.xib */; };
 		B4557EDE1AC37C5A004E097E /* SettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = B4557EDD1AC37C5A004E097E /* SettingsView.m */; };
+		B4557EE01AC3B24D004E097E /* MainMenuView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B4557EDF1AC3B24D004E097E /* MainMenuView.xib */; };
+		B4557EE31AC3B26B004E097E /* MainMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = B4557EE21AC3B26B004E097E /* MainMenuView.m */; };
 		B45865E918DA15C9005C9566 /* Ship@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B45865E818DA15C9005C9566 /* Ship@2x.png */; };
 		B45865EC18DA3ACA005C9566 /* HexColor.m in Sources */ = {isa = PBXBuildFile; fileRef = B45865EB18DA3ACA005C9566 /* HexColor.m */; };
 		B45FF12818CE8708001662CD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B45FF12718CE8708001662CD /* Foundation.framework */; };
@@ -182,6 +184,9 @@
 		B4557EDA1AC37B8A004E097E /* SettingsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsView.xib; sourceTree = "<group>"; };
 		B4557EDC1AC37C5A004E097E /* SettingsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsView.h; sourceTree = "<group>"; };
 		B4557EDD1AC37C5A004E097E /* SettingsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsView.m; sourceTree = "<group>"; };
+		B4557EDF1AC3B24D004E097E /* MainMenuView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenuView.xib; sourceTree = "<group>"; };
+		B4557EE11AC3B26B004E097E /* MainMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainMenuView.h; sourceTree = "<group>"; };
+		B4557EE21AC3B26B004E097E /* MainMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainMenuView.m; sourceTree = "<group>"; };
 		B45865E818DA15C9005C9566 /* Ship@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Ship@2x.png"; sourceTree = "<group>"; };
 		B45865EA18DA3ACA005C9566 /* HexColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HexColor.h; sourceTree = "<group>"; };
 		B45865EB18DA3ACA005C9566 /* HexColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HexColor.m; sourceTree = "<group>"; };
@@ -427,6 +432,9 @@
 				B4557EDC1AC37C5A004E097E /* SettingsView.h */,
 				B4557EDD1AC37C5A004E097E /* SettingsView.m */,
 				B4557EDA1AC37B8A004E097E /* SettingsView.xib */,
+				B4557EE11AC3B26B004E097E /* MainMenuView.h */,
+				B4557EE21AC3B26B004E097E /* MainMenuView.m */,
+				B4557EDF1AC3B24D004E097E /* MainMenuView.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -816,6 +824,7 @@
 				B4242EA119A7E58900192F44 /* BlackHole1.atlas in Resources */,
 				B4D4B61D191FFF4F00834942 /* Planet_1_2@2x.png in Resources */,
 				B4D4B622191FFF4F00834942 /* Planet_2_3@2x.png in Resources */,
+				B4557EE01AC3B24D004E097E /* MainMenuView.xib in Resources */,
 				B4D4B62A191FFF4F00834942 /* Planet_4_3@2x.png in Resources */,
 				B478CFC019199FA5001A9DB6 /* Planet_5_S@2x.png in Resources */,
 				B4467176192D8CC500B4A8C7 /* AsteroidShield_Impact_0@2x.png in Resources */,
@@ -886,6 +895,7 @@
 				B45FF13A18CE8708001662CD /* AppDelegate.m in Sources */,
 				B497926A1A844756005174C1 /* AudioController.m in Sources */,
 				B45FF13618CE8708001662CD /* main.m in Sources */,
+				B4557EE31AC3B26B004E097E /* MainMenuView.m in Sources */,
 				B49792D31A86C999005174C1 /* STKAutoRecoveringHTTPDataSource.m in Sources */,
 				E1D4EDF81A5B5E5900676C17 /* DCRoundSwitchToggleLayer.m in Sources */,
 				B49792D91A86C999005174C1 /* STKQueueEntry.m in Sources */,
