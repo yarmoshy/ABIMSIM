@@ -1637,13 +1637,14 @@ CGFloat DegreesToRadians(CGFloat degrees)
     }
     SKAction *moveRight = [SKAction moveByX:self.frame.size.width+blackHole.size.width y:0 duration:5];
     SKAction *moveLeft = [SKAction moveByX:-(self.frame.size.width+blackHole.size.width) y:0 duration:5];
+    SKAction *wait = [SKAction waitForDuration:3];
     SKAction *both;
     if (arc4random() % 2 == 0) {
         blackHole.position = CGPointMake(-blackHole.size.width/2, self.frame.size.height/2);
-        both = [SKAction sequence:@[moveRight,moveLeft]];
+        both = [SKAction sequence:@[wait,moveRight,wait,moveLeft]];
     } else {
         blackHole.position = CGPointMake(self.frame.size.width + blackHole.size.width/2, self.frame.size.height/2);
-        both = [SKAction sequence:@[moveLeft,moveRight]];
+        both = [SKAction sequence:@[wait,moveLeft,wait,moveRight]];
     }
     SKAction *repeateMovementAnimation = [SKAction repeatActionForever:both];
     SKAction *animation = [SKAction group:@[blackHoleAction, repeateMovementAnimation]];
@@ -1869,6 +1870,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
 #pragma mark - Asteroids
 
 -(NSMutableArray*)asteroidsForLevel:(int)level {
+    level += 25;
     NSMutableArray *asteroids = [NSMutableArray array];
     int numOfAsteroids = arc4random() % ([self maxNumberOfAsteroidsForLevel:level]+1);
     if (numOfAsteroids < [self minNumberOfAsteroidsForLevel:level]) {
@@ -1974,7 +1976,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     sprite.physicsBody.linearDamping = 0.0f;
     sprite.physicsBody.dynamic = YES;
     sprite.physicsBody.categoryBitMask = asteroidCategory;
-    sprite.physicsBody.collisionBitMask = borderCategory | secondaryBorderCategory | shipCategory | asteroidCategory | asteroidInShieldCategory | planetCategory | asteroidShieldCategory | powerUpSpaceMineExplodingRingCategory;
+    sprite.physicsBody.collisionBitMask = /*borderCategory | secondaryBorderCategory |*/ shipCategory | asteroidCategory | asteroidInShieldCategory | planetCategory | asteroidShieldCategory | powerUpSpaceMineExplodingRingCategory;
     sprite.physicsBody.contactTestBitMask = goalCategory | shipCategory | asteroidShieldCategory;
 
     sprite.physicsBody.mass = sprite.size.width;
@@ -2194,17 +2196,18 @@ CGFloat DegreesToRadians(CGFloat degrees)
 #pragma mark - Planets
 
 -(NSMutableArray*)planetsForLevel:(int)level {
+    level += 25;
     NSMutableArray *planets = [NSMutableArray array];
     int numOfPlanets = arc4random() % ([self maxNumberOfPlanetsForLevel:level] + 1);
     if (numOfPlanets < [self minNumberOfPlanetsForLevel:level]) {
         numOfPlanets = [self minNumberOfPlanetsForLevel:level];
     }
     BOOL forceSun = NO;
-    if (level > 25) {
-        if (arc4random() % 8 == 0) {
-            forceSun = YES;
-        }
-    }
+//    if (level > 25) {
+//        if (arc4random() % 8 == 0) {
+//            forceSun = YES;
+//        }
+//    }
     for (int j = 0; j < numOfPlanets; j++) {
         SKSpriteNode *planet;
         if (j == 0 && forceSun) {
@@ -2334,11 +2337,11 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
     }
     [planets addObjectsFromArray:asteroidsToAdd];
-    if (!forceSun && !bigPlanet) {
-        if (arc4random() % 8 == 0 && level > 25) {
+//    if (!forceSun && !bigPlanet) {
+//        if (arc4random() % 8 == 0 && level > 25) {
             [planets addObject:[self blackHole]];
-        }
-    }
+//        }
+//    }
     return planets;
 }
 
