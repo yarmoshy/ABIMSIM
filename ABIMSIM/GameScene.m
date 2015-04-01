@@ -5,58 +5,9 @@
 //  Created by Kevin Yarmosh on 3/5/14.
 //  Copyright (c) 2014 Kevin Yarmosh. All rights reserved.
 //
-static NSString* removedThisSprite = @"removedThisSprite";
-
-static NSString* shipCategoryName = @"ship";
-static NSString* asteroidCategoryName = @"asteroid";
-static NSString* asteroidInShieldCategoryName = @"asteroidInShield";
-static NSString* planetCategoryName = @"planet";
-static NSString* blackHoleCategoryName = @"blackHole";
-
-static NSString* asteroidShieldCategoryName = @"asteroidShield";
-static NSString* goalCategoryName = @"goal";
-static NSString* levelNodeName = @"level";
-static NSString* powerUpShieldName = @"shield";
-static NSString* powerUpShieldRingName = @"shieldGlow";
-static NSString* powerUpSpaceMineName = @"spaceMine";
-static NSString* powerUpSpaceMineGlowName = @"spaceMineGlow";
-static NSString* powerUpSpaceMineExplodeRingName = @"powerUpSpaceMineExplodeRingName";
-static NSString* powerUpSpaceMineExplodeGlowName = @"powerUpSpaceMineExplodeGlowName";
-static NSString* explodingSpaceMine = @"explodingSpaceMine";
-static NSString* explodedSpaceMine = @"explodedSpaceMine";
-
-static NSString* shipImageSpriteName = @"shipImageSprite";
-static NSString* shipShieldSpriteName = @"shipShieldSprite";
-static NSString* sunObjectSpriteName = @"sunObjectSpriteName";
-static NSString* directionsSpriteName = @"directionsSpriteName";
-static NSString* directionsSecondarySpriteName = @"directionsSecondarySpriteName";
-static NSString* directionsSecondaryBlinkingSpriteName = @"directionsSecondaryBlinkingSpriteName";
-
-static NSString* pauseSpriteName = @"pauseSpriteName";
-static NSString* upgradeSpriteName = @"upgradeSpriteName";
-static NSString* gameCenterSpriteName = @"gameCenterSpriteName";
-static NSString* twitterSpriteName = @"twitterSpriteName";
-static NSString* facebokSpriteName = @"facebokSpriteName";
-static NSString* asteroidShieldRing1SpriteName = @"asteroidShieldRing1SpriteName";
-static NSString* starSpriteName = @"starSpriteName";
-
-static const uint32_t borderCategory  = 0x1 << 0;  // 00000000000000000000000000000001
-static const uint32_t shipCategory  = 0x1 << 1;  // 00000000000000000000000000000001
-static const uint32_t secondaryBorderCategory  = 0x1 << 2;  // 00000000000000000000000000000100
-static const uint32_t asteroidCategory = 0x1 << 3;
-static const uint32_t asteroidInShieldCategory = 0x1 << 4;
-static const uint32_t planetCategory = 0x1 << 5;
-static const uint32_t asteroidShieldCategory = 0x1 << 6;
-static const uint32_t starCategory = 0x1 << 7;
-static const uint32_t blackHoleCategory = 0x1 << 8;
-static const uint32_t goalCategory = 0x1 << 9;
-static const uint32_t powerUpShieldCategory = 0x1 << 10;
-static const uint32_t powerUpSpaceMineCategory = 0x1 << 11;
-static const uint32_t powerUpSpaceMineExplodingRingCategory = 0x1 << 12;
-
 
 #define kExtraSpaceOffScreen 63
-#define kNumberOfLevelsToGenerate 10
+#define kNumberOfLevelsToGenerate 2
 
 #define MAX_VELOCITY 300
 #define MIN_VELOCITY 300
@@ -84,23 +35,7 @@ static const uint32_t powerUpSpaceMineExplodingRingCategory = 0x1 << 12;
 #define asteroidColorYella @"dbdb0b"
 #define asteroidColorPurple @"9e3dd1"
 
-//userData Keys
-#define orbitJoint @"orbitJoint"
-#define moonsArray @"moonsArray"
-#define planetNumber @"planetNumber"
-#define planetFlavorNumber @"planetFlavorNumber"
-#define asteroidShieldTag @"asteroidShieldTag"
-#define asteroidShieldPulseAnimationAction @"asteroidShieldPulseAnimationAction"
-#define powerUpShieldPulseAnimation @"powerUpShieldPulseAnimation"
-#define powerUpSpaceMineRotationAnimation @"powerUpSpaceMineRotationAnimation"
-#define powerUpSpaceMinePulseAnimation @"powerUpSpaceMinePulseAnimation"
-#define powerUpSpaceMineExplosionRingAnimation @"powerUpSpaceMineExplosionRingAnimation"
-#define powerUpSpaceMineExplosionGlowAnimation @"powerUpSpaceMineExplosionGlowAnimation"
 
-#define shipShieldOnAnimation @"shipShieldOnAnimation"
-#define shipShieldPopAnimation @"shipShieldPopAnimation"
-#define shipShieldImpactAnimation @"shipShieldImpactAnimation"
-#define blackHoleAnimation @"blackHoleAnimation"
 
 #define asteroidShield0 6
 #define asteroidShield1 7
@@ -111,14 +46,15 @@ static const uint32_t powerUpSpaceMineExplodingRingCategory = 0x1 << 12;
 #import "HexColor.h"
 #import "UpgradeScene.h"
 #import "AudioController.h"
+#import "PhysicsContstants.h"
+#import "SpriteUserDataConstants.h"
+#import "BlackHole.h"
 
 @implementation GameScene  {
     NSMutableArray *spritesArrays;
     NSMutableArray *starSprites;
     NSMutableArray *currentSpriteArray;
-    NSMutableArray *blackHoleTextures;
     NSMutableArray *backgroundTextures;
-    SKAction *blackHoleAction;
     NSNumber *safeToTransition;
     SKSpriteNode *starBackLayer;
     SKSpriteNode *starFrontLayer;
@@ -168,34 +104,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         
         lastTimeHit = 0;
         timesHitWithinSecond = 0;
-        blackHoleTextures = [NSMutableArray arrayWithCapacity:240];
         backgroundTextures = [NSMutableArray arrayWithCapacity:7];
-        NSMutableArray *blackholeSprites = [NSMutableArray arrayWithCapacity:8];
-        NSMutableArray *textureAtlases = [NSMutableArray array];
-        for (int i = 0; i < 8; i++) {
-            SKTextureAtlas *atlas = [SKTextureAtlas atlasNamed:[NSString stringWithFormat:@"BlackHole%d",i]];
-            [textureAtlases addObject:atlas];
-            for (int j = 0; j < 30; j++) {
-                NSString *textureName = [NSString stringWithFormat:@"BH_%0*d", 3, (i*30)+j];
-                NSLog(@"%@",textureName);
-                if (j == 0) {
-                    SKSpriteNode *blackHoleSprite = [SKSpriteNode spriteNodeWithTexture:[atlas textureNamed:textureName]];
-                    [blackholeSprites addObject:blackHoleSprite];
-                }
-                [blackHoleTextures addObject:[atlas textureNamed:textureName]];
-            }
-        }
-        [SKTextureAtlas preloadTextureAtlases:textureAtlases withCompletionHandler:^{
-            ;
-        }];
-        [SKTexture preloadTextures:blackHoleTextures withCompletionHandler:^{
-            ;
-        }];
-        for (SKSpriteNode *sprite in blackholeSprites) {
-            [self addChild:sprite];
-            sprite.position = CGPointMake(size.width * 1.5, size.height * 1.5);
-            sprite.name = removedThisSprite;
-        }
         
         NSMutableArray *backgroundTextureAtlases = [NSMutableArray array];
         for (int i = 0; i < 2; i++) {
@@ -1621,57 +1530,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
 #pragma mark - Black Hole
 
 -(SKSpriteNode*)blackHole {
-    SKSpriteNode *blackHole = [SKSpriteNode spriteNodeWithTexture:blackHoleTextures[0]];//[SKSpriteNode spriteNodeWithColor:[UIColor blackColor] size:CGSizeMake(80, 80)];
-
-    blackHole.name = blackHoleCategoryName;
-    blackHole.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:40];
-    blackHole.physicsBody.mass = 1000000000;
-    blackHole.physicsBody.categoryBitMask = blackHoleCategory;
-    blackHole.physicsBody.contactTestBitMask = shipCategory | asteroidCategory | asteroidInShieldCategory | planetCategory | asteroidShieldCategory;
-    blackHole.physicsBody.collisionBitMask = blackHoleCategory;
-
-    blackHole.userData = [NSMutableDictionary dictionary];
-    if (!blackHoleAction) {
-        SKAction *frameAnimation = [SKAction animateWithTextures:blackHoleTextures timePerFrame:1.f/30.f];
-        blackHoleAction = [SKAction repeatActionForever:frameAnimation];
-    }
-    SKAction *moveRight = [SKAction moveByX:self.frame.size.width+blackHole.size.width y:0 duration:5];
-    SKAction *moveLeft = [SKAction moveByX:-(self.frame.size.width+blackHole.size.width) y:0 duration:5];
-    SKAction *wait = [SKAction waitForDuration:3];
-    SKAction *both;
-    if (arc4random() % 2 == 0) {
-        blackHole.position = CGPointMake(-blackHole.size.width/2, self.frame.size.height/2);
-        both = [SKAction sequence:@[wait,moveRight,wait,moveLeft]];
-    } else {
-        blackHole.position = CGPointMake(self.frame.size.width + blackHole.size.width/2, self.frame.size.height/2);
-        both = [SKAction sequence:@[wait,moveLeft,wait,moveRight]];
-    }
-    SKAction *repeateMovementAnimation = [SKAction repeatActionForever:both];
-    SKAction *animation = [SKAction group:@[blackHoleAction, repeateMovementAnimation]];
-    blackHole.userData[blackHoleAnimation] = animation;
-    blackHole.zPosition = -1;
-    return blackHole;
+    return [BlackHole blackHole];
 }
 
--(UIImage*)blackHoleDistortionImage {
-    CIImage *inputImage = [[CIImage alloc] initWithImage:[UIImage imageNamed:@"Background@2x.png"]];
-    CIFilter * controlsFilter = [CIFilter filterWithName:@"CIHoleDistortion"];
-    [controlsFilter setValue:inputImage forKey:kCIInputImageKey];
-//    [controlsFilter setValue:[NSNumber numberWithFloat: 2.0f] forKey:@"inputEV"];
-    NSLog(@"%@",controlsFilter.attributes);
-    CIImage *displayImage = controlsFilter.outputImage;
-    UIImage *finalImage = [UIImage imageWithCIImage:displayImage];
-    UIImage *returnImage;
-    CIContext *context = [CIContext contextWithOptions:nil];
-    if (displayImage == nil || finalImage == nil) {
-        // We did not get output image. Let's display the original image itself.
-        returnImage = [UIImage imageNamed:@"old-country-rain.jpg"];
-    }else {
-        // We got output image. Display it.
-        returnImage = [UIImage imageWithCGImage:[context createCGImage:displayImage fromRect:displayImage.extent]];
-    }
-    return returnImage;
-}
 
 #pragma mark - Power Ups
 
@@ -1870,7 +1731,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
 #pragma mark - Asteroids
 
 -(NSMutableArray*)asteroidsForLevel:(int)level {
-    level += 25;
     NSMutableArray *asteroids = [NSMutableArray array];
     int numOfAsteroids = arc4random() % ([self maxNumberOfAsteroidsForLevel:level]+1);
     if (numOfAsteroids < [self minNumberOfAsteroidsForLevel:level]) {
@@ -2196,18 +2056,17 @@ CGFloat DegreesToRadians(CGFloat degrees)
 #pragma mark - Planets
 
 -(NSMutableArray*)planetsForLevel:(int)level {
-    level += 25;
     NSMutableArray *planets = [NSMutableArray array];
     int numOfPlanets = arc4random() % ([self maxNumberOfPlanetsForLevel:level] + 1);
     if (numOfPlanets < [self minNumberOfPlanetsForLevel:level]) {
         numOfPlanets = [self minNumberOfPlanetsForLevel:level];
     }
     BOOL forceSun = NO;
-//    if (level > 25) {
-//        if (arc4random() % 8 == 0) {
-//            forceSun = YES;
-//        }
-//    }
+    if (level > 25) {
+        if (arc4random() % 8 == 0) {
+            forceSun = YES;
+        }
+    }
     for (int j = 0; j < numOfPlanets; j++) {
         SKSpriteNode *planet;
         if (j == 0 && forceSun) {
@@ -2334,14 +2193,13 @@ CGFloat DegreesToRadians(CGFloat degrees)
         } else if ([aPlanet.userData[planetNumber] intValue] == 5) {
             bigPlanet = YES;
         }
-
     }
     [planets addObjectsFromArray:asteroidsToAdd];
-//    if (!forceSun && !bigPlanet) {
-//        if (arc4random() % 8 == 0 && level > 25) {
+    if (!forceSun && !bigPlanet) {
+        if (arc4random() % 8 == 0 && level > 25) {
             [planets addObject:[self blackHole]];
-//        }
-//    }
+        }
+    }
     return planets;
 }
 
@@ -2757,40 +2615,4 @@ CGFloat DegreesToRadians(CGFloat degrees)
 }
 
 
-- (UIImage *)radialGradientImage:(CGSize)size start:(UIColor*)start end:(UIColor*)end centre:(CGPoint)centre radius:(float)radius {
-	// Render a radial background
-	// http://developer.apple.com/library/ios/#documentation/GraphicsImaging/Conceptual/drawingwithquartz2d/dq_shadings/dq_shadings.html
-	
-	// Initialise
-	UIGraphicsBeginImageContextWithOptions(size, 0, 1);
-	
-	// Create the gradient's colours
-	size_t num_locations = 2;
-	CGFloat locations[2] = { 0.0, 1.0 };
-	CGFloat components[8] = { 0,0,0,0,  // Start color
-        0,0,0,0 }; // End color
-	[start getRed:&components[0] green:&components[1] blue:&components[2] alpha:&components[3]];
-	[end getRed:&components[4] green:&components[5] blue:&components[6] alpha:&components[7]];
-	
-	CGColorSpaceRef myColorspace = CGColorSpaceCreateDeviceRGB();
-	CGGradientRef myGradient = CGGradientCreateWithColorComponents (myColorspace, components, locations, num_locations);
-	
-	// Normalise the 0-1 ranged inputs to the width of the image
-	CGPoint myCentrePoint = CGPointMake(centre.x * size.width, centre.y * size.height);
-	float myRadius = MIN(size.width, size.height) * radius;
-	
-	// Draw it!
-	CGContextDrawRadialGradient (UIGraphicsGetCurrentContext(), myGradient, myCentrePoint,
-								 0, myCentrePoint, myRadius,
-								 kCGGradientDrawsAfterEndLocation);
-	
-	// Grab it as an autoreleased image
-	UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-	
-	// Clean up
-	CGColorSpaceRelease(myColorspace); // Necessary?
-	CGGradientRelease(myGradient); // Necessary?
-	UIGraphicsEndImageContext(); // Clean up
-	return image;
-}
 @end
