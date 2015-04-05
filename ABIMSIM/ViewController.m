@@ -27,6 +27,11 @@
     
     showingSettings = NO;
     
+    UINib * upgradesViewNib = [UINib nibWithNibName:@"UpgradesView" bundle:nil];
+    self.upgradesView = [upgradesViewNib instantiateWithOwner:self options:nil][0];
+    self.upgradesView.delegate = self;
+    [self.view addSubview:self.upgradesView];
+    
     UINib * mainMenuNib = [UINib nibWithNibName:@"MainMenuView" bundle:nil];
     self.mainMenuView = [mainMenuNib instantiateWithOwner:self options:nil][0];
     self.mainMenuView.delegate = self;
@@ -90,7 +95,11 @@
 
 -(void)mainMenuViewDidSelectButtonType:(MainMenuViewButtonType)type {
     if (type == MainMenuViewButtonTypeUpgrades) {
-        ;
+        [UIView animateKeyframesWithDuration:0.5 delay:0 options:0 animations:^{
+            self.mainMenuView.alpha = 0;
+        } completion:^(BOOL finished) {
+            [self showUpgradesView];
+        }];
     } else if (type == MainMenuViewButtonTypeHighScores) {
         [self showGameCenter];
     } else if (type == MainMenuViewButtonTypePlay) {
@@ -137,7 +146,7 @@
 -(void)pausedViewViewDidSelectButtonType:(PausedViewViewButtonType)type {
     if (type == PausedViewViewButtonTypeMainMenu) {
         self.scene = [GameScene sceneWithSize:self.view.bounds.size];
-        
+        self.scene.gameOver = NO;
         self.scene.size = self.view.bounds.size;
         self.scene.scaleMode = SKSceneScaleModeAspectFill;
         self.scene.viewController = self;
@@ -157,6 +166,7 @@
         }];
     } else if (type == PausedViewViewButtonTypePlay) {
         self.scene.resuming = YES;
+        self.scene.gameOver = NO;
         [self.view insertSubview:[self.pausedView viewWithTag:kBlurBackgroundViewTag] atIndex:1];
         
         [UIView animateKeyframesWithDuration:0.5 delay:0 options:0 animations:^{
@@ -247,10 +257,9 @@
 #pragma mark - Game Over View
 
 -(void)gameOverViewDidSelectButtonType:(GameOverViewButtonType)type {
-
     if (type == GameOverViewButtonTypeMainMenu) {
         self.scene = [GameScene sceneWithSize:self.view.bounds.size];
-        
+        self.scene.gameOver = NO;
         self.scene.size = self.view.bounds.size;
         self.scene.scaleMode = SKSceneScaleModeAspectFill;
         self.scene.viewController = self;
@@ -271,6 +280,12 @@
     } else if (type == GameOverViewButtonTypePlay) {
         [[AudioController sharedController] gameplay];
         [self hideGameOverView];
+    } else if (type == GameOverViewButtonTypeUpgrades) {
+        [UIView animateKeyframesWithDuration:0.5 delay:0 options:0 animations:^{
+            self.gameOverView.alpha = 0;
+        } completion:^(BOOL finished) {
+            [self showUpgradesView];
+        }];
     }
 }
 
@@ -280,6 +295,43 @@
 
 -(void)hideGameOverView {
     [self.gameOverView hide];
+}
+
+#pragma mark - Upgrades View
+
+-(void)upgradesViewDidSelectBackButton {
+    [self hideUpgradesView];
+}
+
+-(void)showUpgradesView {
+    [self.upgradesView.tableView reloadData];
+    [self.upgradesView.tableView setContentOffset:CGPointZero animated:YES];
+    [UIView animateKeyframesWithDuration:0.5 delay:0 options:0 animations:^{
+        self.upgradesView.alpha = 1;
+    } completion:^(BOOL finished) {
+        [self configureButtonsEnabled:YES];
+    }];
+}
+
+-(void)hideUpgradesView {
+    self.scene = [GameScene sceneWithSize:self.view.bounds.size];
+    self.scene.gameOver = NO;
+    self.scene.size = self.view.bounds.size;
+    self.scene.scaleMode = SKSceneScaleModeAspectFill;
+    self.scene.viewController = self;
+    // Present the scene.
+    [(SKView*)self.view presentScene:self.scene];
+    self.pauseButton.alpha = 0;
+    
+    [UIView animateKeyframesWithDuration:0.5 delay:0 options:0 animations:^{
+        self.upgradesView.alpha = 0;
+    } completion:^(BOOL finished) {
+        [UIView animateKeyframesWithDuration:0.5 delay:0 options:0 animations:^{
+            self.mainMenuView.alpha = 1;
+        } completion:^(BOOL finished) {
+            [self configureButtonsEnabled:YES];
+        }];
+    }];
 }
 
 #pragma mark - UI Helpers

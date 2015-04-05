@@ -92,9 +92,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
 -(id)initWithSize:(CGSize)size {
     if (self = [super initWithSize:size]) {
         /* Setup your scene here */
-        [ABIMSIMDefaults setInteger:10 forKey:kMineOccuranceLevel];
-        [ABIMSIMDefaults setInteger:10 forKey:kShieldOccuranceLevel];
-        [ABIMSIMDefaults setBool:NO forKey:kWalkthroughSeen];
         walkthroughSeen = [ABIMSIMDefaults boolForKey:kWalkthroughSeen];
         [ABIMSIMDefaults synchronize];
         
@@ -301,10 +298,11 @@ CGFloat DegreesToRadians(CGFloat degrees)
     if (self.paused) {
         if ((![self childNodeWithName:shipCategoryName] ||
             [self childNodeWithName:shipCategoryName].physicsBody == nil) &&
-            self.viewController.gameOverView.alpha == 0 && !self.reset) {
+            self.viewController.gameOverView.alpha == 0 && !self.reset && !self.gameOver) {
             [self.viewController showGameOverView];
+            self.gameOver = YES;
             flickRecognizer.enabled = NO;
-        } else if (self.viewController.pausedView.alpha == 0 && !self.reset && [self childNodeWithName:shipCategoryName] && [self childNodeWithName:shipCategoryName].physicsBody && !self.resuming && !self.initialPause) {
+        } else if (self.viewController.pausedView.alpha == 0 && !self.reset && [self childNodeWithName:shipCategoryName] && [self childNodeWithName:shipCategoryName].physicsBody && !self.resuming && !self.initialPause && self.viewController.mainMenuView.alpha == 0) {
             [self.viewController showPausedView];
             flickRecognizer.enabled = NO;
         } else if (!flickRecognizer.enabled && self.resuming) {
@@ -1314,6 +1312,14 @@ CGFloat DegreesToRadians(CGFloat degrees)
         [spriteArray addObjectsFromArray:asteroids];
         NSMutableArray *planets = [self planetsForLevel:i];
         [spriteArray addObjectsFromArray:planets];
+        for (SKSpriteNode *planet in planets) {
+            if ([planet isKindOfClass:[BlackHole class]]) {
+                for (SKSpriteNode *sprite in asteroids) {
+                    sprite.physicsBody.collisionBitMask = shipCategory | asteroidCategory | asteroidInShieldCategory | planetCategory | asteroidShieldCategory | powerUpSpaceMineExplodingRingCategory;
+                }
+                break;
+            }
+        }
         NSMutableArray *powerUps = [self powerUpsForLevel:i];
         [spriteArray addObjectsFromArray:powerUps];
         CGRect goalRect;
@@ -1836,7 +1842,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     sprite.physicsBody.linearDamping = 0.0f;
     sprite.physicsBody.dynamic = YES;
     sprite.physicsBody.categoryBitMask = asteroidCategory;
-    sprite.physicsBody.collisionBitMask = /*borderCategory | secondaryBorderCategory |*/ shipCategory | asteroidCategory | asteroidInShieldCategory | planetCategory | asteroidShieldCategory | powerUpSpaceMineExplodingRingCategory;
+    sprite.physicsBody.collisionBitMask = borderCategory | secondaryBorderCategory | shipCategory | asteroidCategory | asteroidInShieldCategory | planetCategory | asteroidShieldCategory | powerUpSpaceMineExplodingRingCategory;
     sprite.physicsBody.contactTestBitMask = goalCategory | shipCategory | asteroidShieldCategory;
 
     sprite.physicsBody.mass = sprite.size.width;

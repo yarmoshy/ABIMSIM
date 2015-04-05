@@ -16,6 +16,7 @@
 @property (assign, nonatomic) BOOL initialPause;
 @property (assign, nonatomic) BOOL resuming;
 @property (assign, nonatomic) BOOL transitioningToMenu;
+@property (assign, nonatomic) BOOL gameOver;
 @property (assign, nonatomic) int currentLevel;
 @property (assign, nonatomic) int bubblesPopped;
 @property (assign, nonatomic) int sunsSurvived;

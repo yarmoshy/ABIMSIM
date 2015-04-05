@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="122" id="KGk-i7-Jjw" customClass="UpgradeTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="122"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" verticalHuggingPriority="251" image="UpgradeBackgroundLeft" translatesAutoresizingMaskIntoConstraints="NO" id="7Z0-2R-Xya">
+                        <rect key="frame" x="0.0" y="0.0" width="181" height="117"/>
+                    </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="UpgradeBackgroundRight" translatesAutoresizingMaskIntoConstraints="NO" id="2Y8-um-cx0">
+                        <rect key="frame" x="181" y="0.0" width="139" height="117"/>
+                    </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SolidRing_Empty" translatesAutoresizingMaskIntoConstraints="NO" id="15P-bT-fkp">
+                        <rect key="frame" x="189" y="7" width="104" height="104"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="104" id="nhE-i6-vCA"/>
+                            <constraint firstAttribute="width" constant="104" id="w8e-s0-GQc"/>
+                        </constraints>
+                    </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="UpgradeText_" translatesAutoresizingMaskIntoConstraints="NO" id="Gjl-BS-vMN">
+                        <rect key="frame" x="218" y="52" width="46" height="13"/>
+                    </imageView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TgB-19-HXp">
+                        <rect key="frame" x="189" y="7" width="104" height="104"/>
+                        <state key="normal">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="upgradeButtonTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="IBU-V8-eRb"/>
+                        </connections>
+                    </button>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f2j-Ii-iGG">
+                        <rect key="frame" x="15" y="36" width="150" height="44"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ShieldStrengthText" translatesAutoresizingMaskIntoConstraints="NO" id="2br-85-ChM">
+                                <rect key="frame" x="0.0" y="0.0" width="102" height="15"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="UnlimitedUpgradesText" translatesAutoresizingMaskIntoConstraints="NO" id="0jF-jQ-4ZY">
+                                <rect key="frame" x="0.0" y="18" width="82" height="10"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="10" id="i0I-S3-FNU"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100 XP" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="97p-kL-Kba">
+                                <rect key="frame" x="-2" y="25" width="40" height="22"/>
+                                <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="18"/>
+                                <color key="textColor" red="0.82745098039215681" green="0.047058823529411764" blue="0.37254901960784315" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="0jF-jQ-4ZY" firstAttribute="leading" secondItem="f2j-Ii-iGG" secondAttribute="leading" id="7GA-Vo-w9S"/>
+                            <constraint firstAttribute="bottom" secondItem="97p-kL-Kba" secondAttribute="bottom" constant="-3" id="E33-Du-QET"/>
+                            <constraint firstItem="97p-kL-Kba" firstAttribute="top" secondItem="0jF-jQ-4ZY" secondAttribute="bottom" constant="-3" id="Gcp-QN-IpI"/>
+                            <constraint firstAttribute="trailing" secondItem="2br-85-ChM" secondAttribute="trailing" id="L3t-6x-tBo"/>
+                            <constraint firstItem="2br-85-ChM" firstAttribute="leading" secondItem="f2j-Ii-iGG" secondAttribute="leading" id="Lsc-ji-H71"/>
+                            <constraint firstItem="0jF-jQ-4ZY" firstAttribute="top" secondItem="2br-85-ChM" secondAttribute="bottom" constant="3" id="MUg-LP-Ra0"/>
+                            <constraint firstItem="97p-kL-Kba" firstAttribute="leading" secondItem="f2j-Ii-iGG" secondAttribute="leading" constant="-2" id="V1m-de-zJM"/>
+                            <constraint firstAttribute="width" constant="150" id="o5k-1h-4yy"/>
+                            <constraint firstItem="2br-85-ChM" firstAttribute="top" secondItem="f2j-Ii-iGG" secondAttribute="top" id="spJ-wF-WWP"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="L3t-6x-tBo"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gcO-Sj-ca9">
+                        <rect key="frame" x="0.0" y="0.0" width="181" height="117.5"/>
+                        <state key="normal">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="descriptionButtonTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="kcT-8z-8EA"/>
+                        </connections>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The higher your upgrade the more often the shield will become available." lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cz0-eo-bdX">
+                        <rect key="frame" x="15" y="17" width="158" height="86"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="158" id="uDr-fe-ZVq"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="15"/>
+                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                <constraints>
+                    <constraint firstItem="cz0-eo-bdX" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="335-Ds-Zeh"/>
+                    <constraint firstItem="gcO-Sj-ca9" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="3Bg-Hq-Bvo"/>
+                    <constraint firstItem="15P-bT-fkp" firstAttribute="trailing" secondItem="TgB-19-HXp" secondAttribute="trailing" id="3Rz-qR-s6N"/>
+                    <constraint firstAttribute="trailing" secondItem="2Y8-um-cx0" secondAttribute="trailing" id="6R8-JE-IA0"/>
+                    <constraint firstItem="f2j-Ii-iGG" firstAttribute="centerY" secondItem="7Z0-2R-Xya" secondAttribute="centerY" id="7iE-Ik-fNy"/>
+                    <constraint firstAttribute="trailing" secondItem="15P-bT-fkp" secondAttribute="trailing" constant="27" id="7zS-gI-eMu"/>
+                    <constraint firstItem="7Z0-2R-Xya" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Bie-e2-iVD"/>
+                    <constraint firstItem="f2j-Ii-iGG" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="BrQ-Jk-f0n"/>
+                    <constraint firstItem="2Y8-um-cx0" firstAttribute="leading" secondItem="gcO-Sj-ca9" secondAttribute="trailing" id="CCa-Mb-piq"/>
+                    <constraint firstItem="15P-bT-fkp" firstAttribute="centerX" secondItem="Gjl-BS-vMN" secondAttribute="centerX" id="D9g-OU-d8a"/>
+                    <constraint firstAttribute="bottom" secondItem="cz0-eo-bdX" secondAttribute="bottom" constant="19" id="DL0-rg-6jk"/>
+                    <constraint firstItem="15P-bT-fkp" firstAttribute="leading" secondItem="TgB-19-HXp" secondAttribute="leading" id="GSF-xs-qBh"/>
+                    <constraint firstItem="gcO-Sj-ca9" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="MXP-00-Ofy"/>
+                    <constraint firstItem="15P-bT-fkp" firstAttribute="bottom" secondItem="TgB-19-HXp" secondAttribute="bottom" id="T6T-I4-6RX"/>
+                    <constraint firstItem="15P-bT-fkp" firstAttribute="top" secondItem="TgB-19-HXp" secondAttribute="top" id="XYN-3X-ykw"/>
+                    <constraint firstItem="15P-bT-fkp" firstAttribute="centerY" secondItem="Gjl-BS-vMN" secondAttribute="centerY" id="cvz-lN-dmx"/>
+                    <constraint firstAttribute="bottom" secondItem="gcO-Sj-ca9" secondAttribute="bottom" constant="4" id="d2X-U4-THR"/>
+                    <constraint firstItem="2Y8-um-cx0" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="ghC-Ig-Wbb"/>
+                    <constraint firstItem="15P-bT-fkp" firstAttribute="centerY" secondItem="2Y8-um-cx0" secondAttribute="centerY" id="ibZ-IK-E8c"/>
+                    <constraint firstItem="15P-bT-fkp" firstAttribute="trailing" secondItem="2Y8-um-cx0" secondAttribute="trailing" constant="-30" id="mcz-6h-Qki"/>
+                    <constraint firstItem="7Z0-2R-Xya" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="pZq-EQ-82p"/>
+                    <constraint firstItem="2Y8-um-cx0" firstAttribute="leading" secondItem="7Z0-2R-Xya" secondAttribute="trailing" id="qvG-qS-56q"/>
+                    <constraint firstItem="cz0-eo-bdX" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="17" id="xrt-Yi-ujA"/>
+                </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="mcz-6h-Qki"/>
+                    </mask>
+                </variation>
+            </tableViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <connections>
+                <outlet property="descriptionLabel" destination="cz0-eo-bdX" id="pUu-R7-07d"/>
+                <outlet property="detailsButton" destination="gcO-Sj-ca9" id="ovR-Sh-kmL"/>
+                <outlet property="ringImageView" destination="15P-bT-fkp" id="Ive-im-vwe"/>
+                <outlet property="typeAndCostContainerView" destination="f2j-Ii-iGG" id="045-G0-0Lp"/>
+                <outlet property="unlimitedUpgradesHeightConstraint" destination="i0I-S3-FNU" id="rfg-Jy-tq3"/>
+                <outlet property="upgradeButton" destination="TgB-19-HXp" id="Exa-ux-aUd"/>
+                <outlet property="upgradeLabel" destination="Gjl-BS-vMN" id="Pql-b8-WaG"/>
+                <outlet property="upgradeTypeImageView" destination="2br-85-ChM" id="SbO-jf-noi"/>
+                <outlet property="xpRequiredLabel" destination="97p-kL-Kba" id="QZz-SQ-6oq"/>
+            </connections>
+            <point key="canvasLocation" x="318" y="333"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="ShieldStrengthText" width="102" height="15"/>
+        <image name="SolidRing_Empty" width="104" height="104"/>
+        <image name="UnlimitedUpgradesText" width="82" height="10"/>
+        <image name="UpgradeBackgroundLeft" width="180" height="117"/>
+        <image name="UpgradeBackgroundRight" width="139" height="117"/>
+        <image name="UpgradeText_" width="46" height="13"/>
+    </resources>
+</document>

@@ -95,7 +95,7 @@
 
 - (IBAction)ggUpgradeTouchUpInside:(id)sender {
     [self animateGGUpgradesButtonDeselect:^{
-        
+        [self.delegate gameOverViewDidSelectButtonType:GameOverViewButtonTypeUpgrades];
     }];
 }
 
@@ -427,6 +427,7 @@
     [UIView animateKeyframesWithDuration:0.5 delay:0 options:0 animations:^{
         self.alpha = 0;
         self.delegate.scene.reset = YES;
+        self.delegate.scene.gameOver = NO;
         self.delegate.scene.paused = NO;
     } completion:^(BOOL finished) {
         [[self viewWithTag:kBlurBackgroundViewTag] removeFromSuperview];

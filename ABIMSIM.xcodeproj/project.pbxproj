@@ -58,6 +58,8 @@
 		B47244431ACB710C002A8B4B /* BlackHole.m in Sources */ = {isa = PBXBuildFile; fileRef = B47244421ACB710C002A8B4B /* BlackHole.m */; };
 		B47244451ACB717A002A8B4B /* PhysicsContstants.h in Sources */ = {isa = PBXBuildFile; fileRef = B47244441ACB717A002A8B4B /* PhysicsContstants.h */; };
 		B47244481ACB71F8002A8B4B /* BaseSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = B47244471ACB71F8002A8B4B /* BaseSprite.m */; };
+		B472444D1ACE0433002A8B4B /* UpgradesView.m in Sources */ = {isa = PBXBuildFile; fileRef = B472444C1ACE0433002A8B4B /* UpgradesView.m */; };
+		B472444F1ACE0441002A8B4B /* UpgradesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B472444E1ACE0441002A8B4B /* UpgradesView.xib */; };
 		B478CFBA19199C0E001A9DB6 /* Planet_5_0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B478CFA319199C0E001A9DB6 /* Planet_5_0@2x.png */; };
 		B478CFBB19199C0E001A9DB6 /* Planet_5_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B478CFA419199C0E001A9DB6 /* Planet_5_1@2x.png */; };
 		B478CFBC19199C0E001A9DB6 /* Planet_5_2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B478CFA519199C0E001A9DB6 /* Planet_5_2@2x.png */; };
@@ -77,6 +79,8 @@
 		B47E22D618DBA7E200F42EBB /* Asteroid_9@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B47E22CA18DBA7E200F42EBB /* Asteroid_9@2x.png */; };
 		B47E22D718DBA7E200F42EBB /* Asteroid_10@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B47E22CB18DBA7E200F42EBB /* Asteroid_10@2x.png */; };
 		B47E22D818DBA7E200F42EBB /* Asteroid_11@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B47E22CC18DBA7E200F42EBB /* Asteroid_11@2x.png */; };
+		B48AA3871AD043C80054CC65 /* UpgradeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B48AA3851AD043C80054CC65 /* UpgradeTableViewCell.m */; };
+		B48AA3881AD043C80054CC65 /* UpgradeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B48AA3861AD043C80054CC65 /* UpgradeTableViewCell.xib */; };
 		B497926A1A844756005174C1 /* AudioController.m in Sources */ = {isa = PBXBuildFile; fileRef = B49792691A844756005174C1 /* AudioController.m */; };
 		B49792D11A86C999005174C1 /* NSMutableArray+STKAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B49792BF1A86C999005174C1 /* NSMutableArray+STKAudioPlayer.m */; };
 		B49792D21A86C999005174C1 /* STKAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B49792C11A86C999005174C1 /* STKAudioPlayer.m */; };
@@ -214,6 +218,9 @@
 		B47244461ACB71F8002A8B4B /* BaseSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseSprite.h; sourceTree = "<group>"; };
 		B47244471ACB71F8002A8B4B /* BaseSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseSprite.m; sourceTree = "<group>"; };
 		B472444A1ACB7596002A8B4B /* SpriteUserDataConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SpriteUserDataConstants.h; sourceTree = "<group>"; };
+		B472444B1ACE0433002A8B4B /* UpgradesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpgradesView.h; sourceTree = "<group>"; };
+		B472444C1ACE0433002A8B4B /* UpgradesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpgradesView.m; sourceTree = "<group>"; };
+		B472444E1ACE0441002A8B4B /* UpgradesView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UpgradesView.xib; sourceTree = "<group>"; };
 		B478CFA319199C0E001A9DB6 /* Planet_5_0@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_5_0@2x.png"; sourceTree = "<group>"; };
 		B478CFA419199C0E001A9DB6 /* Planet_5_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_5_1@2x.png"; sourceTree = "<group>"; };
 		B478CFA519199C0E001A9DB6 /* Planet_5_2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_5_2@2x.png"; sourceTree = "<group>"; };
@@ -233,6 +240,9 @@
 		B47E22CA18DBA7E200F42EBB /* Asteroid_9@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Asteroid_9@2x.png"; sourceTree = "<group>"; };
 		B47E22CB18DBA7E200F42EBB /* Asteroid_10@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Asteroid_10@2x.png"; sourceTree = "<group>"; };
 		B47E22CC18DBA7E200F42EBB /* Asteroid_11@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Asteroid_11@2x.png"; sourceTree = "<group>"; };
+		B48AA3841AD043C80054CC65 /* UpgradeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpgradeTableViewCell.h; sourceTree = "<group>"; };
+		B48AA3851AD043C80054CC65 /* UpgradeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpgradeTableViewCell.m; sourceTree = "<group>"; };
+		B48AA3861AD043C80054CC65 /* UpgradeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UpgradeTableViewCell.xib; sourceTree = "<group>"; };
 		B49792681A844756005174C1 /* AudioController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioController.h; sourceTree = "<group>"; };
 		B49792691A844756005174C1 /* AudioController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioController.m; sourceTree = "<group>"; };
 		B49792BE1A86C999005174C1 /* NSMutableArray+STKAudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+STKAudioPlayer.h"; sourceTree = "<group>"; };
@@ -428,6 +438,12 @@
 				B4557EE11AC3B26B004E097E /* MainMenuView.h */,
 				B4557EE21AC3B26B004E097E /* MainMenuView.m */,
 				B4557EDF1AC3B24D004E097E /* MainMenuView.xib */,
+				B472444B1ACE0433002A8B4B /* UpgradesView.h */,
+				B472444C1ACE0433002A8B4B /* UpgradesView.m */,
+				B472444E1ACE0441002A8B4B /* UpgradesView.xib */,
+				B48AA3841AD043C80054CC65 /* UpgradeTableViewCell.h */,
+				B48AA3851AD043C80054CC65 /* UpgradeTableViewCell.m */,
+				B48AA3861AD043C80054CC65 /* UpgradeTableViewCell.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -795,6 +811,8 @@
 				B47E22D218DBA7E200F42EBB /* Asteroid_5@2x.png in Resources */,
 				B43F4D0C192ABB510000ACA4 /* AsteroidShield_1@2x.png in Resources */,
 				B46363A61979EBA2007B657C /* SpaceMine_Friendly_2@2x.png in Resources */,
+				B48AA3881AD043C80054CC65 /* UpgradeTableViewCell.xib in Resources */,
+				B472444F1ACE0441002A8B4B /* UpgradesView.xib in Resources */,
 				B4557EC51AC0D4DD004E097E /* GameOverView.xib in Resources */,
 				B4D4B625191FFF4F00834942 /* Planet_3_1@2x.png in Resources */,
 				B4467174192D8C7700B4A8C7 /* AsteroidShield_Impact_1@2x.png in Resources */,
@@ -869,6 +887,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B48AA3871AD043C80054CC65 /* UpgradeTableViewCell.m in Sources */,
 				B4557ECC1AC0DDF1004E097E /* UIImage+Effects.m in Sources */,
 				B49792D61A86C999005174C1 /* STKDataSourceWrapper.m in Sources */,
 				B45865EC18DA3ACA005C9566 /* HexColor.m in Sources */,
@@ -897,6 +916,7 @@
 				B47244481ACB71F8002A8B4B /* BaseSprite.m in Sources */,
 				B497926A1A844756005174C1 /* AudioController.m in Sources */,
 				B45FF13618CE8708001662CD /* main.m in Sources */,
+				B472444D1ACE0433002A8B4B /* UpgradesView.m in Sources */,
 				B4557EE31AC3B26B004E097E /* MainMenuView.m in Sources */,
 				B49792D31A86C999005174C1 /* STKAutoRecoveringHTTPDataSource.m in Sources */,
 				E1D4EDF81A5B5E5900676C17 /* DCRoundSwitchToggleLayer.m in Sources */,

@@ -12,29 +12,24 @@
 #import "PausedView.h"
 #import "SettingsView.h"
 #import "MainMenuView.h"
+#import "UpgradesView.h"
 #import "UIView+Screenshot.h"
 #import "UIImage+Effects.h"
 
 @class GameScene;
 @class DCRoundSwitch;
 
-@interface ViewController : UIViewController <GKGameCenterControllerDelegate, UIAlertViewDelegate, GameOverViewDelegate, PausedViewDelegate, SettingsViewDelegate, MainMenuViewDelegate>
+@interface ViewController : UIViewController <GKGameCenterControllerDelegate, UIAlertViewDelegate, GameOverViewDelegate, PausedViewDelegate, SettingsViewDelegate, MainMenuViewDelegate, UpgradesViewDelegate>
 
 @property (strong, nonatomic) GameScene *scene;
 @property (weak, nonatomic) IBOutlet UIButton *pauseButton;
 
-#pragma mark - Main Menu
+@property (weak, nonatomic) MainMenuView *mainMenuView;
+@property (weak, nonatomic) SettingsView *settingsView;
+@property (weak, nonatomic) PausedView *pausedView;
+@property (weak, nonatomic) GameOverView *gameOverView;
+@property (weak, nonatomic) UpgradesView *upgradesView;
 
-@property (weak, nonatomic) IBOutlet MainMenuView *mainMenuView;
-
-#pragma mark - Settings
-@property (weak, nonatomic) IBOutlet SettingsView *settingsView;
-
-#pragma mark - Paused
-@property (weak, nonatomic) IBOutlet PausedView *pausedView;
-
-#pragma mark - Game Over
-@property (weak, nonatomic) IBOutlet GameOverView *gameOverView;
 
 #pragma mark - Game Play
 - (IBAction)pauseButtonTapped:(id)sender;

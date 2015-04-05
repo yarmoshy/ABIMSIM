@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view alpha="0.0" contentMode="scaleToFill" id="iN0-l3-epB" customClass="UpgradesView">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view alpha="0.10000000000000007" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dHm-rb-9KP">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="72"/>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="72" id="Xdy-gE-vZH"/>
+                    </constraints>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eVw-28-GZV">
+                    <rect key="frame" x="15" y="21" width="46" height="30"/>
+                    <state key="normal" title="BACK!">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="backButtonTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="Ze0-ux-vS5"/>
+                    </connections>
+                </button>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="UpgradesHeaderTitle" translatesAutoresizingMaskIntoConstraints="NO" id="qOY-HB-JBK">
+                    <rect key="frame" x="109" y="22" width="102" height="27"/>
+                </imageView>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="ROn-Yt-dQR">
+                    <rect key="frame" x="0.0" y="72" width="320" height="496"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <connections>
+                        <outlet property="dataSource" destination="iN0-l3-epB" id="xi6-Dl-hDB"/>
+                        <outlet property="delegate" destination="iN0-l3-epB" id="FfZ-uX-Cex"/>
+                    </connections>
+                </tableView>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="dHm-rb-9KP" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="5F1-C2-aoo"/>
+                <constraint firstItem="dHm-rb-9KP" firstAttribute="centerY" secondItem="eVw-28-GZV" secondAttribute="centerY" id="A0S-ls-lhU"/>
+                <constraint firstAttribute="trailing" secondItem="ROn-Yt-dQR" secondAttribute="trailing" id="H6f-6K-CZn"/>
+                <constraint firstItem="qOY-HB-JBK" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="22" id="QEe-4R-DHX"/>
+                <constraint firstItem="dHm-rb-9KP" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="SVV-ZT-NQf"/>
+                <constraint firstAttribute="centerX" secondItem="qOY-HB-JBK" secondAttribute="centerX" id="TT2-oa-Ehd"/>
+                <constraint firstAttribute="bottom" secondItem="ROn-Yt-dQR" secondAttribute="bottom" id="TtU-yn-nBC"/>
+                <constraint firstItem="ROn-Yt-dQR" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="VSR-u0-9FZ"/>
+                <constraint firstAttribute="trailing" secondItem="dHm-rb-9KP" secondAttribute="trailing" id="eFj-G8-VRM"/>
+                <constraint firstItem="eVw-28-GZV" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="san-GG-qD7"/>
+                <constraint firstItem="ROn-Yt-dQR" firstAttribute="top" secondItem="dHm-rb-9KP" secondAttribute="bottom" id="vLE-9p-ueG"/>
+            </constraints>
+            <connections>
+                <outlet property="tableView" destination="ROn-Yt-dQR" id="fpc-WS-pHa"/>
+            </connections>
+            <point key="canvasLocation" x="318" y="294"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="UpgradesHeaderTitle" width="102" height="27"/>
+    </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>
