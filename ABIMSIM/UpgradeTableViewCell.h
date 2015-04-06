@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@class UpgradeTableViewCell;
 typedef enum {
     UpgradeTableViewCellTypeUnlockShield,
     UpgradeTableViewCellTypeStartWithShield,
@@ -19,7 +19,7 @@ typedef enum {
 } UpgradeTableViewCellType;
 
 @protocol UpgradeTableViewCellDelegate <NSObject>
--(void)upgradeCellTappedOfType:(UpgradeTableViewCellType)cellType;
+-(void)upgradeCellTapped:(UpgradeTableViewCell*)cell;
 
 @end
 

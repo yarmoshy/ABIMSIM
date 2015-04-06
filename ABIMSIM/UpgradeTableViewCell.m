@@ -54,7 +54,7 @@
 }
 
 - (IBAction)upgradeButtonTapped:(id)sender {
-    [self.delegate upgradeCellTappedOfType:self.cellType];
+    [self.delegate upgradeCellTapped:self];
 }
 
 @end
