@@ -1077,11 +1077,10 @@ CGFloat DegreesToRadians(CGFloat degrees)
     hasShield = [ABIMSIMDefaults boolForKey:kShieldOnStart];
     if (hasShield) {
         shieldHitPoints = 1 + [ABIMSIMDefaults integerForKey:kShieldDurabilityLevel];
-//        shieldFireHitPoints = [ABIMSIMDefaults integerForKey:kShieldFireDurabilityLevel];
     } else {
         shieldHitPoints = 0;
     }
-    shipHitPoints = 1;// + [ABIMSIMDefaults integerForKey:kHullDurabilityLevel];
+    shipHitPoints = 1;
 
     ((SKLabelNode*)[self childNodeWithName:levelNodeName]).text = [NSString stringWithFormat:@"%d",self.currentLevel];
 
