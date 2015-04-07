@@ -358,6 +358,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
     } else {
         shipSprite.physicsBody.linearDamping = 0.0f;
     }
+//    CGPoint velocity = CGPointMake(shipSprite.physicsBody.velocity.dx, shipSprite.physicsBody.velocity.dy) ;
+//    [shipSprite runAction:[SKAction rotateToAngle:[self pointPairToBearingDegrees:CGPointZero secondPoint:velocity] duration:0]];
     if (currentBlackHole) {
         for (SKSpriteNode *sprite in currentBlackHole.children) {
             if ([sprite.name isEqualToString:removedThisSprite]) {
@@ -1037,7 +1039,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
 #pragma mark - Level generation
 
 -(SKSpriteNode*)createShip {
-    SKSpriteNode *shipImage = [SKSpriteNode spriteNodeWithImageNamed:@"Ship"];
+    SKSpriteNode *shipImage = [SKSpriteNode spriteNodeWithImageNamed:@"Ship_000"];
     shipImage.name = shipImageSpriteName;
     SKSpriteNode *shipShieldImage = [SKSpriteNode spriteNodeWithImageNamed:@"ShipShield"];
     shipShieldImage.name = shipShieldSpriteName;
@@ -1057,6 +1059,14 @@ CGFloat DegreesToRadians(CGFloat degrees)
     SKAction *snapBack = [SKAction scaleTo:1.0 duration:0.1];
     SKAction *sequence = [SKAction sequence:@[shieldSetup,growAction,snapBack]];
     ship.userData[shipShieldOnAnimation] = sequence;
+    
+    NSMutableArray *shipTextures = [NSMutableArray arrayWithCapacity:60];
+    for (int i = 0; i < 60; i++) {
+        NSString *assetName = [NSString stringWithFormat:@"Ship_%.3d",i];
+        [shipTextures addObject:[SKTexture textureWithImageNamed:assetName]];
+    }
+    SKAction *animationAction = [SKAction animateWithTextures:shipTextures timePerFrame:0.05];
+    [shipImage runAction:[SKAction repeatActionForever:animationAction]];
     return ship;
 }
 
