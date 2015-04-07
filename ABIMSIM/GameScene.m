@@ -1060,13 +1060,13 @@ CGFloat DegreesToRadians(CGFloat degrees)
     SKAction *sequence = [SKAction sequence:@[shieldSetup,growAction,snapBack]];
     ship.userData[shipShieldOnAnimation] = sequence;
     
-    NSMutableArray *shipTextures = [NSMutableArray arrayWithCapacity:60];
-    for (int i = 0; i < 60; i++) {
-        NSString *assetName = [NSString stringWithFormat:@"Ship_%.3d",i];
-        [shipTextures addObject:[SKTexture textureWithImageNamed:assetName]];
-    }
-    SKAction *animationAction = [SKAction animateWithTextures:shipTextures timePerFrame:0.05];
-    [shipImage runAction:[SKAction repeatActionForever:animationAction]];
+//    NSMutableArray *shipTextures = [NSMutableArray arrayWithCapacity:60];
+//    for (int i = 0; i < 60; i++) {
+//        NSString *assetName = [NSString stringWithFormat:@"Ship_%.3d",i];
+//        [shipTextures addObject:[SKTexture textureWithImageNamed:assetName]];
+//    }
+//    SKAction *animationAction = [SKAction animateWithTextures:shipTextures timePerFrame:0.05];
+//    [shipImage runAction:[SKAction repeatActionForever:animationAction]];
     return ship;
 }
 
