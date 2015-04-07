@@ -17,6 +17,7 @@
     NSMutableArray *hamburgerToXImages;
     NSMutableArray *hamburgerToOriginalImages;
     BOOL showingSettings;
+    BOOL showingUpgradesFromGameOver;
 }
 
 - (void)viewDidLoad
@@ -281,6 +282,8 @@
         [[AudioController sharedController] gameplay];
         [self hideGameOverView];
     } else if (type == GameOverViewButtonTypeUpgrades) {
+        showingUpgradesFromGameOver = YES;
+        [self.view insertSubview:[self.gameOverView viewWithTag:kBlurBackgroundViewTag] belowSubview:self.gameOverView];
         [UIView animateKeyframesWithDuration:0.5 delay:0 options:0 animations:^{
             self.gameOverView.alpha = 0;
         } completion:^(BOOL finished) {
@@ -314,6 +317,20 @@
 }
 
 -(void)hideUpgradesView {
+    if (showingUpgradesFromGameOver) {
+        showingUpgradesFromGameOver = NO;
+        [UIView animateKeyframesWithDuration:0.5 delay:0 options:0 animations:^{
+            self.upgradesView.alpha = 0;
+        } completion:^(BOOL finished) {
+            [UIView animateKeyframesWithDuration:0.5 delay:0 options:0 animations:^{
+                self.gameOverView.alpha = 1;
+            } completion:^(BOOL finished) {
+                [self.gameOverView insertSubview:[self.view viewWithTag:kBlurBackgroundViewTag] atIndex:0];
+                [self configureButtonsEnabled:YES];
+            }];
+        }];
+        return;
+    }
     self.scene = [GameScene sceneWithSize:self.view.bounds.size];
     self.scene.gameOver = NO;
     self.scene.size = self.view.bounds.size;
