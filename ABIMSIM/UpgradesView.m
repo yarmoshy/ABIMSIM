@@ -12,6 +12,7 @@
 
 @implementation UpgradesView {
     long shieldOccurance, shieldDurability, shieldOnStart, mineOccurance, mineBlastSpeed;
+    BOOL animating;
 }
 
 -(id)initWithCoder:(NSCoder *)aDecoder {
@@ -359,6 +360,9 @@
 }
 
 -(void)upgradeCellTapped:(UpgradeTableViewCell*)cell {
+    if (animating) {
+        return;
+    }
     BOOL unlock = NO;
     BOOL delay = NO;
     switch (cell.cellType) {
@@ -414,6 +418,7 @@
     [ABIMSIMDefaults setInteger:[ABIMSIMDefaults integerForKey:kUserDuckets] - ducketCost forKey:kUserDuckets];
     [ABIMSIMDefaults synchronize];
     if (unlock) {
+        animating = YES;
         [UIView animateWithDuration:0.5 animations:^{
             cell.contentView.alpha = 0;
         }];
@@ -422,10 +427,18 @@
             NSArray *indexPathsToDelete, *indexPathsToUpdate;
             if (cell.cellType == UpgradeTableViewCellTypeUnlockMines) {
                 indexPathsToDelete = @[[NSIndexPath indexPathForRow:1 inSection:2]];
-                indexPathsToUpdate = @[[NSIndexPath indexPathForRow:0 inSection:0], [NSIndexPath indexPathForRow:1 inSection:2], [NSIndexPath indexPathForRow:2 inSection:2]];
-            } else {
+                if ([ABIMSIMDefaults integerForKey:kShieldOccuranceLevel] > 0) {
+                    indexPathsToUpdate = @[[NSIndexPath indexPathForRow:0 inSection:0], [NSIndexPath indexPathForRow:1 inSection:2], [NSIndexPath indexPathForRow:2 inSection:2], [NSIndexPath indexPathForRow:1 inSection:1], [NSIndexPath indexPathForRow:2 inSection:1], [NSIndexPath indexPathForRow:3 inSection:1]];
+                } else {
+                    indexPathsToUpdate = @[[NSIndexPath indexPathForRow:0 inSection:0], [NSIndexPath indexPathForRow:1 inSection:2], [NSIndexPath indexPathForRow:2 inSection:2]];
+                }
+            } else if (cell.cellType == UpgradeTableViewCellTypeUnlockShield) {
                 indexPathsToDelete = @[[NSIndexPath indexPathForRow:1 inSection:1]];
-                indexPathsToUpdate = @[[NSIndexPath indexPathForRow:0 inSection:0], [NSIndexPath indexPathForRow:1 inSection:1], [NSIndexPath indexPathForRow:2 inSection:1], [NSIndexPath indexPathForRow:3 inSection:1]];
+                if ([ABIMSIMDefaults integerForKey:kShieldOccuranceLevel] > 0) {
+                    indexPathsToUpdate = @[[NSIndexPath indexPathForRow:0 inSection:0], [NSIndexPath indexPathForRow:1 inSection:2], [NSIndexPath indexPathForRow:2 inSection:2], [NSIndexPath indexPathForRow:1 inSection:1], [NSIndexPath indexPathForRow:2 inSection:1], [NSIndexPath indexPathForRow:3 inSection:1]];
+                } else {
+                    indexPathsToUpdate = @[[NSIndexPath indexPathForRow:0 inSection:0], [NSIndexPath indexPathForRow:1 inSection:1], [NSIndexPath indexPathForRow:2 inSection:1], [NSIndexPath indexPathForRow:3 inSection:1]];
+                }
             }
             [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
             [self.tableView deleteRowsAtIndexPaths:indexPathsToDelete withRowAnimation:UITableViewRowAnimationNone];
@@ -434,12 +447,15 @@
                 [self.tableView beginUpdates];
                 [self.tableView reloadRowsAtIndexPaths:indexPathsToUpdate withRowAnimation:UITableViewRowAnimationNone];
                 [self.tableView endUpdates];
+                animating = NO;
             });
         });
     } else {
         if (delay) {
+            animating = YES;
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [self.tableView reloadData];
+                animating = NO;
             });
         } else
             [self.tableView reloadData];
