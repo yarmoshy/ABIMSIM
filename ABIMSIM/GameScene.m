@@ -574,11 +574,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
 -(void)checkLevelAchievements {
     NSString *identifier = @"";
     switch (self.currentLevel) {
-        case 2:
-            if (lastLevelPanned == 0) {
-                identifier = @"iGuessThatWorks";
-            }
-            break;
         case 10:
             identifier = @"learningToFly";
             break;
@@ -939,6 +934,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
             SKAction *deathAction =[SKAction sequence:@[[SKAction group:@[[SKAction moveTo:CGPointZero duration:duration],[SKAction scaleTo:0 duration:duration]]], [SKAction customActionWithDuration:0 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
                 if (![node.name isEqualToString:@"dyingStar"]) {
                     if ([node.name isEqualToString:@"dyingShip"]) {
+                        [self sendAchievementWithIdentifier:@"blackHole"];
                         [self killShipAndStartOver];
                     } else {
                         node.name = removedThisSprite;
