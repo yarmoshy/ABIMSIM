@@ -79,10 +79,6 @@
     SKAction *spaceMineSoundAction;
 }
 
-static NSMutableArray *asteroidTextures;
-static NSMutableArray *planetTextures;
-static NSMutableArray *backgroundTextures;
-
 CGFloat DegreesToRadians(CGFloat degrees)
 {
     return degrees * (M_PI / 180);
@@ -93,7 +89,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
     if (self = [super initWithSize:size]) {
         /* Setup your scene here */
         walkthroughSeen = [ABIMSIMDefaults boolForKey:kWalkthroughSeen];
-        [ABIMSIMDefaults synchronize];
         
         shieldUpSoundAction = [SKAction playSoundFileNamed:@"activateShieldTrimmed.caf" waitForCompletion:NO];
         shieldDownSoundAction = [SKAction playSoundFileNamed:@"deactivateShieldTrimmed.caf" waitForCompletion:NO];
@@ -102,54 +97,46 @@ CGFloat DegreesToRadians(CGFloat degrees)
         lastTimeHit = 0;
         timesHitWithinSecond = 0;
         
-        if (!backgroundTextures) {
-            backgroundTextures = [NSMutableArray arrayWithCapacity:7];
-            NSMutableArray *backgroundTextureAtlases = [NSMutableArray array];
-            for (int i = 0; i < 2; i++) {
-                SKTextureAtlas *atlas = [SKTextureAtlas atlasNamed:[NSString stringWithFormat:@"Background%d",i]];
-                [backgroundTextureAtlases addObject:atlas];
-                for (int j = 0; j < 4; j++) {
-                    NSString *textureName = [NSString stringWithFormat:@"Background_%d", (i*4)+j];
-                    if ((i*4)+j > 6) {
-                        break;
-                    }
-                    NSLog(@"%@",textureName);
-                    [backgroundTextures addObject:[atlas textureNamed:textureName]];
+        NSMutableArray *backgroundTextures = [NSMutableArray arrayWithCapacity:7];
+        NSMutableArray *backgroundTextureAtlases = [NSMutableArray array];
+        for (int i = 0; i < 2; i++) {
+            SKTextureAtlas *atlas = [SKTextureAtlas atlasNamed:[NSString stringWithFormat:@"Background%d",i]];
+            [backgroundTextureAtlases addObject:atlas];
+            for (int j = 0; j < 4; j++) {
+                NSString *textureName = [NSString stringWithFormat:@"Background_%d", (i*4)+j];
+                if ((i*4)+j > 6) {
+                    break;
                 }
-            }
-            [SKTextureAtlas preloadTextureAtlases:backgroundTextureAtlases withCompletionHandler:^{
-                ;
-            }];
-            [SKTexture preloadTextures:backgroundTextures withCompletionHandler:^{
-                ;
-            }];
-        }
-
-        if (!planetTextures) {
-            planetTextures = [NSMutableArray array];
-            for (int i = 0; i < 6; i++) {
-                for (int j = 0; j < 4; j++) {
-                    NSString *textureName = [NSString stringWithFormat:@"Planet_%d_%d", i, j];
-                    NSLog(@"%@",textureName);
-                    [planetTextures addObject:[SKTexture textureWithImageNamed:textureName]];
-                }
-            }
-            [SKTexture preloadTextures:planetTextures withCompletionHandler:^{
-                ;
-            }];
-        }
-       
-        if (!asteroidTextures) {
-            asteroidTextures = [NSMutableArray array];
-            for (int i = 0; i < 12; i++) {
-                NSString *textureName = [NSString stringWithFormat:@"Asteroid_%d", i];
                 NSLog(@"%@",textureName);
-                [asteroidTextures addObject:[SKTexture textureWithImageNamed:textureName]];
+                [backgroundTextures addObject:[atlas textureNamed:textureName]];
             }
-            [SKTexture preloadTextures:asteroidTextures withCompletionHandler:^{
-                ;
-            }];
         }
+        [SKTextureAtlas preloadTextureAtlases:backgroundTextureAtlases withCompletionHandler:^{
+            ;
+        }];
+        [SKTexture preloadTextures:backgroundTextures withCompletionHandler:^{
+            ;
+        }];
+        NSMutableArray *planetTextures = [NSMutableArray array];
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 4; j++) {
+                NSString *textureName = [NSString stringWithFormat:@"Planet_%d_%d", i, j];
+                NSLog(@"%@",textureName);
+                [planetTextures addObject:[SKTexture textureWithImageNamed:textureName]];
+            }
+        }
+        [SKTexture preloadTextures:planetTextures withCompletionHandler:^{
+            ;
+        }];
+        NSMutableArray *asteroidTextures = [NSMutableArray array];
+        for (int i = 0; i < 12; i++) {
+            NSString *textureName = [NSString stringWithFormat:@"Asteroid_%d", i];
+            NSLog(@"%@",textureName);
+            [asteroidTextures addObject:[SKTexture textureWithImageNamed:textureName]];
+        }
+        [SKTexture preloadTextures:asteroidTextures withCompletionHandler:^{
+            ;
+        }];
         
         self.physicsWorld.gravity = CGVectorMake(0.0f, 0.0f);
         SKPhysicsBody* borderBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:CGRectMake(0, -kExtraSpaceOffScreen, size.width, size.height+kExtraSpaceOffScreen*2)];
@@ -158,14 +145,13 @@ CGFloat DegreesToRadians(CGFloat degrees)
         self.physicsBody.friction = 0.0f;
         self.physicsWorld.contactDelegate = self;
         
-        background2 = [SKSpriteNode spriteNodeWithTexture:backgroundTextures[1]];
+        background2 = [SKSpriteNode spriteNodeWithImageNamed:[NSString stringWithFormat:@"Background_%d", 1]];
         background2.anchorPoint = CGPointZero;
         background2.zPosition = -1;
         background2.alpha = 0;
         [self addChild:background2];
 
-        
-        background = [SKSpriteNode spriteNodeWithTexture:backgroundTextures[0]];
+        background = [SKSpriteNode spriteNodeWithImageNamed:[NSString stringWithFormat:@"Background_%d", 0]];
         background.anchorPoint = CGPointZero;
         background.zPosition = -1;
         [self addChild:background];
@@ -190,11 +176,10 @@ CGFloat DegreesToRadians(CGFloat degrees)
         hasShield = [ABIMSIMDefaults boolForKey:kShieldOnStart];
         if (hasShield) {
             shieldHitPoints = 1 + [ABIMSIMDefaults integerForKey:kShieldDurabilityLevel];
-//            shieldFireHitPoints = [ABIMSIMDefaults integerForKey:kShieldFireDurabilityLevel];
         } else {
             shieldHitPoints = 0;
         }
-        shipHitPoints = 1;// + [ABIMSIMDefaults integerForKey:kHullDurabilityLevel];
+        shipHitPoints = 1;
         shipSprite = [self createShip];
         
         spritesArrays = [NSMutableArray array];
@@ -1078,9 +1063,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
 }
 
 -(void)resetWorld {
-    [background setTexture:backgroundTextures[0]];
+    [background setTexture:[SKTexture textureWithImageNamed:[NSString stringWithFormat:@"Background_%d", 0]]];
     background.alpha = 1;
-    [background2 setTexture:backgroundTextures[1]];
+    [background2 setTexture:[SKTexture textureWithImageNamed:[NSString stringWithFormat:@"Background_%d", 1]]];
     background2.alpha = 0;
 
     [self removeOverlayChildren];
@@ -1393,11 +1378,11 @@ CGFloat DegreesToRadians(CGFloat degrees)
         if (background.alpha == 0) {
             [background runAction:[SKAction fadeAlphaTo:1 duration:0.5]];
             [background2 runAction:[SKAction fadeAlphaTo:0 duration:0.5] completion:^{
-                [background2 setTexture:backgroundTextures[backgroundNumber]];
+                [background2 setTexture:[SKTexture textureWithImageNamed:[NSString stringWithFormat:@"Background_%d", backgroundNumber]]];
             }];
         } else {
             [background runAction:[SKAction fadeAlphaTo:0 duration:0.5] completion:^{
-                [background setTexture:backgroundTextures[backgroundNumber]];
+                [background setTexture:[SKTexture textureWithImageNamed:[NSString stringWithFormat:@"Background_%d", backgroundNumber]]];
             }];
             [background2 runAction:[SKAction fadeAlphaTo:1 duration:0.5]];
         }
