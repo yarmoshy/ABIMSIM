@@ -60,7 +60,7 @@
     BOOL shipWarping;
     BOOL hasShield;
     BOOL showingSun;
-    int possibleBubblesPopped;
+    int possibleBubblesPopped, lastShieldLevel, lastMineLevel;
     
     NSInteger shieldHitPoints;
     NSInteger shipHitPoints;
@@ -173,6 +173,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
         [self addChild:starBackLayer];
         [self addChild:starFrontLayer];
 
+        lastShieldLevel = lastMineLevel = 0;
+        
         hasShield = [ABIMSIMDefaults boolForKey:kShieldOnStart];
         if (hasShield) {
             shieldHitPoints = 1 + [ABIMSIMDefaults integerForKey:kShieldDurabilityLevel];
@@ -1063,6 +1065,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
 }
 
 -(void)resetWorld {
+    lastShieldLevel = lastMineLevel = 0;
+    
     [background setTexture:[SKTexture textureWithImageNamed:[NSString stringWithFormat:@"Background_%d", 0]]];
     background.alpha = 1;
     [background2 setTexture:[SKTexture textureWithImageNamed:[NSString stringWithFormat:@"Background_%d", 1]]];
@@ -1533,22 +1537,32 @@ CGFloat DegreesToRadians(CGFloat degrees)
 -(NSMutableArray*)powerUpsForLevel:(int)level {
     NSMutableArray *powerUps = [[NSMutableArray alloc] init];
     if ([ABIMSIMDefaults integerForKey:kShieldOccuranceLevel] > 0) {
-        if (level % 10 == 0) {
-            if (level == 10 || ((arc4random() % 100)+1) <= 10 * [ABIMSIMDefaults integerForKey:kShieldOccuranceLevel]) {
+        if (level - lastShieldLevel >= 10 || (level >= 5 && lastShieldLevel == 0)) {
+            long number = 10 * ([ABIMSIMDefaults integerForKey:kShieldOccuranceLevel] + (lastMineLevel == 0 ? 5 : 0));
+            if (((arc4random() % 100)+1) <= number) {
                 SKSpriteNode *shieldPowerUp = [self shieldPowerUp];
                 [powerUps addObject:shieldPowerUp];
+                lastShieldLevel = level;
             }
         }
     }
     if ([ABIMSIMDefaults integerForKey:kMineOccuranceLevel] > 0) {
-        if ((level+5) % 10 == 0) {
-            if (level == 5 || ((arc4random() % 100)+1) <= 10 * [ABIMSIMDefaults integerForKey:kMineOccuranceLevel]) {
+        if (level - lastMineLevel >= 10 || (level >= 5 && lastMineLevel == 0)) {
+            long number = 10 * ([ABIMSIMDefaults integerForKey:kMineOccuranceLevel] + (lastMineLevel == 0 ? 5 : 0));
+            if (((arc4random() % 100)+1) <= number) {
                 SKSpriteNode *spaceMinePowerUp = [self spaceMinePowerUp];
                 [powerUps addObject:spaceMinePowerUp];
+                lastMineLevel = level;
             }
         }
     }
-
+    if (powerUps.count == 2) {
+        SKSpriteNode *shield = powerUps[0];
+        shield.position = CGPointMake(shield.position.x - 30, shield.position.y);
+        SKSpriteNode *mine = powerUps[1];
+        mine.position = CGPointMake(mine.position.x + 30, mine.position.y);
+        
+    }
     return powerUps;
 }
 
