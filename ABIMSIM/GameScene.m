@@ -675,6 +675,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         [self removeOverlayChildren];
     }
     shipSprite.physicsBody.velocity = CGVectorMake(newVelocity.x, -newVelocity.y);
+    [[shipSprite childNodeWithName:shipThrusterSpriteName] runAction:shipSprite.userData[shipThrusterAnimation] withKey:shipThrusterAnimation];
 }
 
 
@@ -1045,19 +1046,24 @@ CGFloat DegreesToRadians(CGFloat degrees)
 #pragma mark - Level generation
 
 -(SKSpriteNode*)createShip {
-    SKSpriteNode *shipImage = [SKSpriteNode spriteNodeWithImageNamed:@"Ship_000"];
+    SKSpriteNode *shipImage = [SKSpriteNode spriteNodeWithImageNamed:@"Ship"];
     shipImage.name = shipImageSpriteName;
+    SKSpriteNode *shipThruster = [SKSpriteNode spriteNodeWithImageNamed:@"EngineExhaust"];
+    shipThruster.name = shipThrusterSpriteName;
+    shipThruster.alpha = 0;
     SKSpriteNode *shipShieldImage = [SKSpriteNode spriteNodeWithImageNamed:@"ShipShield"];
     shipShieldImage.name = shipShieldSpriteName;
     shipShieldImage.alpha = 0;
     SKSpriteNode *ship = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:shipShieldImage.size];
     [ship addChild:shipImage];
+    [ship addChild:shipThruster];
     [ship addChild:shipShieldImage];
     ship.name = shipCategoryName;
     ship.position = CGPointMake(self.frame.size.width/2, -kExtraSpaceOffScreen + ship.size.height/2);
     ship.zPosition = 1;
     ship.userData = [NSMutableDictionary dictionary];
     SKAction *shieldSetup = [SKAction customActionWithDuration:0 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
+        [node removeActionForKey:shipThrusterAnimation];
         node.alpha = 1;
         node.scale = 0.71;
     }];
@@ -1066,6 +1072,22 @@ CGFloat DegreesToRadians(CGFloat degrees)
     SKAction *sequence = [SKAction sequence:@[shieldSetup,growAction,snapBack]];
     ship.userData[shipShieldOnAnimation] = sequence;
     
+    SKAction *thrusterSetup = [SKAction customActionWithDuration:0 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
+        node.alpha = 0;
+        node.scale = 0.71;
+    }];
+    SKAction *thrusterGrowAction = [SKAction scaleTo:1.1 duration:0.1];
+    SKAction *thrusterSnapBack = [SKAction scaleTo:1.0 duration:0.1];
+    SKAction *thrusterSizeSequenceAction = [SKAction sequence:@[thrusterGrowAction,thrusterSnapBack]];
+    SKAction *thrusterFadeInAction = [SKAction fadeAlphaTo:1 duration:0.2];
+    SKAction *thrusterWaitAction = [SKAction waitForDuration:0.1];
+    SKAction *thrusterFadeOutAction = [SKAction fadeAlphaTo:0 duration:0.1];
+    SKAction *thrusterFadeSequenceAction = [SKAction sequence:@[thrusterFadeInAction,thrusterWaitAction,thrusterFadeOutAction]];
+    SKAction *sizeAndFadeGroupAction = [SKAction group:@[thrusterSizeSequenceAction,thrusterFadeSequenceAction]];
+    SKAction *thrusterSequence = [SKAction sequence:@[thrusterSetup,sizeAndFadeGroupAction]];
+    ship.userData[shipThrusterAnimation] = thrusterSequence;
+
+//    shipThrusterAnimation
 //    NSMutableArray *shipTextures = [NSMutableArray arrayWithCapacity:60];
 //    for (int i = 0; i < 60; i++) {
 //        NSString *assetName = [NSString stringWithFormat:@"Ship_%.3d",i];

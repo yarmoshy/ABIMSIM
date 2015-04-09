@@ -22,6 +22,7 @@
 #define powerUpSpaceMineExplosionGlowAnimation @"powerUpSpaceMineExplosionGlowAnimation"
 
 #define shipShieldOnAnimation @"shipShieldOnAnimation"
+#define shipThrusterAnimation @"shipThrusterAnimation"
 #define shipShieldPopAnimation @"shipShieldPopAnimation"
 #define shipShieldImpactAnimation @"shipShieldImpactAnimation"
 #define shipThrusterAnimation @"shipThrusterAnimation"
