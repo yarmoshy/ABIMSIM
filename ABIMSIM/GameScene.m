@@ -2449,6 +2449,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     sprite.userData[planetNumber] = @(planetNum);
     sprite.userData[planetFlavorNumber] = @(4);
     sprite.zPosition = 1;
+    sprite.zRotation =arc4random() % 360;
     return sprite;
 
 }
