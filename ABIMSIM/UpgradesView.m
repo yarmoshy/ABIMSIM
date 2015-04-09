@@ -150,6 +150,9 @@
             UpgradeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UpgradeTableViewCell" forIndexPath:indexPath];
             cell.delegate = self;
             cell.contentView.alpha = 1;
+            cell.upgradeLabel.alpha = 1;
+            cell.upgradeTypeImageView.alpha = 1;
+            cell.xpRequiredLabel.alpha = 1;
             if (indexPath.section == 1) {
                 if (shieldOccurance > 0) {
                     switch (indexPath.row) {
@@ -183,8 +186,10 @@
                             break;
                     }
                     if (indexPath.row > 1) {
-                        cell.contentView.alpha = 0.5;
-                        cell.upgradeLabel.alpha = 0.5;
+                        cell.contentView.alpha = 0.4;
+                        cell.upgradeLabel.alpha = 0.4;
+                        cell.upgradeTypeImageView.alpha = 0.4;
+                        cell.xpRequiredLabel.alpha = 0.4;
                         cell.upgradeButton.enabled = NO;
                     }
                 }
@@ -215,8 +220,10 @@
                             break;
                     }
                     if (indexPath.row > 1) {
-                        cell.contentView.alpha = 0.5;
-                        cell.upgradeLabel.alpha = 0.5;
+                        cell.contentView.alpha = 0.4;
+                        cell.upgradeLabel.alpha = 0.4;
+                        cell.upgradeTypeImageView.alpha = 0.4;
+                        cell.xpRequiredLabel.alpha = 0.4;
                         cell.upgradeButton.enabled = NO;
                     }
                 }
@@ -230,6 +237,8 @@
     [self.delegate upgradesViewDidSelectBackButton];
 }
 
+#define disabledAlpha 0.3f
+
 -(void)configureUnlockShieldCell:(UpgradeTableViewCell*)cell {
     cell.cellType = UpgradeTableViewCellTypeUnlockShield;
     cell.upgradeTypeImageView.image = [UIImage imageNamed:@"UnlockShieldTitle"];
@@ -238,7 +247,7 @@
     cell.ringImageView.image = [UIImage imageNamed:@"SolidRing_Empty"];
     cell.descriptionLabel.text = @"The shield will become available to use and upgrade.";
     if ([ABIMSIMDefaults integerForKey:kUserDuckets] < 10) {
-        cell.upgradeLabel.alpha = 0.5;
+        cell.upgradeLabel.alpha = disabledAlpha;
         cell.upgradeButton.enabled = NO;
     } else {
         cell.upgradeLabel.alpha = 1;
@@ -259,7 +268,7 @@
         cell.upgradeButton.enabled = NO;
         cell.ringImageView.image = [UIImage imageNamed:@"SolidRing_Full"];
     } else if ([ABIMSIMDefaults integerForKey:kUserDuckets] < 100) {
-        cell.upgradeLabel.alpha = 0.5;
+        cell.upgradeLabel.alpha = disabledAlpha;
         cell.upgradeButton.enabled = NO;
     } else {
         cell.upgradeLabel.alpha = 1;
@@ -279,7 +288,7 @@
         cell.upgradeButton.enabled = NO;
         cell.xpRequiredLabel.text = @"";
     } else if ([ABIMSIMDefaults integerForKey:kUserDuckets] < (shieldOccurance+1)*10) {
-        cell.upgradeLabel.alpha = 0.5;
+        cell.upgradeLabel.alpha = disabledAlpha;
         cell.upgradeButton.enabled = NO;
     } else {
         cell.upgradeLabel.alpha = 1;
@@ -295,7 +304,7 @@
     cell.unlimitedUpgradesHeightConstraint.constant = 10;
     cell.descriptionLabel.text = @"The higher your upgrade, the more hits it will take to pop your shield.";
     if ([ABIMSIMDefaults integerForKey:kUserDuckets] < (shieldDurability+1)*100) {
-        cell.upgradeLabel.alpha = 0.5;
+        cell.upgradeLabel.alpha = disabledAlpha;
         cell.upgradeButton.enabled = NO;
     } else {
         cell.upgradeLabel.alpha = 1;
@@ -311,7 +320,7 @@
     cell.ringImageView.image = [UIImage imageNamed:@"SolidRing_Empty"];
     cell.descriptionLabel.text = @"The mines will become available to use and upgrade.";
     if ([ABIMSIMDefaults integerForKey:kUserDuckets] < 10) {
-        cell.upgradeLabel.alpha = 0.5;
+        cell.upgradeLabel.alpha = disabledAlpha;
         cell.upgradeButton.enabled = NO;
     } else {
         cell.upgradeLabel.alpha = 1;
@@ -331,7 +340,7 @@
         cell.xpRequiredLabel.text = @"";
         cell.upgradeButton.enabled = NO;
     } else if ([ABIMSIMDefaults integerForKey:kUserDuckets] < (mineOccurance+1)*10) {
-        cell.upgradeLabel.alpha = 0.5;
+        cell.upgradeLabel.alpha = disabledAlpha;
         cell.upgradeButton.enabled = NO;
     } else {
         cell.upgradeLabel.alpha = 1;
@@ -351,7 +360,7 @@
         cell.xpRequiredLabel.text = @"";
         cell.upgradeButton.enabled = NO;
     } else if ([ABIMSIMDefaults integerForKey:kUserDuckets] < (mineBlastSpeed+1)*20) {
-        cell.upgradeLabel.alpha = 0.5;
+        cell.upgradeLabel.alpha = disabledAlpha;
         cell.upgradeButton.enabled = NO;
     } else {
         cell.upgradeLabel.alpha = 1;
