@@ -79,6 +79,8 @@
     SKAction *spaceMineSoundAction;
 }
 
+static NSMutableArray *backgroundTextures;
+static NSMutableArray *backgroundTextureAtlases;
 CGFloat DegreesToRadians(CGFloat degrees)
 {
     return degrees * (M_PI / 180);
@@ -97,18 +99,20 @@ CGFloat DegreesToRadians(CGFloat degrees)
         lastTimeHit = 0;
         timesHitWithinSecond = 0;
         
-        NSMutableArray *backgroundTextures = [NSMutableArray arrayWithCapacity:7];
-        NSMutableArray *backgroundTextureAtlases = [NSMutableArray array];
-        for (int i = 0; i < 2; i++) {
-            SKTextureAtlas *atlas = [SKTextureAtlas atlasNamed:[NSString stringWithFormat:@"Background%d",i]];
-            [backgroundTextureAtlases addObject:atlas];
-            for (int j = 0; j < 4; j++) {
-                NSString *textureName = [NSString stringWithFormat:@"Background_%d", (i*4)+j];
-                if ((i*4)+j > 6) {
-                    break;
+        if (!backgroundTextures) {
+            backgroundTextures = [NSMutableArray arrayWithCapacity:7];
+            NSMutableArray *backgroundTextureAtlases = [NSMutableArray array];
+            for (int i = 0; i < 2; i++) {
+                SKTextureAtlas *atlas = [SKTextureAtlas atlasNamed:[NSString stringWithFormat:@"Background%d",i]];
+                [backgroundTextureAtlases addObject:atlas];
+                for (int j = 0; j < 4; j++) {
+                    NSString *textureName = [NSString stringWithFormat:@"Background_%d", (i*4)+j];
+                    if ((i*4)+j > 6) {
+                        break;
+                    }
+                    NSLog(@"%@",textureName);
+                    [backgroundTextures addObject:[atlas textureNamed:textureName]];
                 }
-                NSLog(@"%@",textureName);
-                [backgroundTextures addObject:[atlas textureNamed:textureName]];
             }
         }
         [SKTextureAtlas preloadTextureAtlases:backgroundTextureAtlases withCompletionHandler:^{
@@ -117,6 +121,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         [SKTexture preloadTextures:backgroundTextures withCompletionHandler:^{
             ;
         }];
+        
         NSMutableArray *planetTextures = [NSMutableArray array];
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 4; j++) {
@@ -145,13 +150,14 @@ CGFloat DegreesToRadians(CGFloat degrees)
         self.physicsBody.friction = 0.0f;
         self.physicsWorld.contactDelegate = self;
         
-        background2 = [SKSpriteNode spriteNodeWithImageNamed:[NSString stringWithFormat:@"Background_%d", 1]];
+        background2 = [SKSpriteNode spriteNodeWithTexture:backgroundTextures[1]];
         background2.anchorPoint = CGPointZero;
         background2.zPosition = -1;
         background2.alpha = 0;
         [self addChild:background2];
 
-        background = [SKSpriteNode spriteNodeWithImageNamed:[NSString stringWithFormat:@"Background_%d", 0]];
+        
+        background = [SKSpriteNode spriteNodeWithTexture:backgroundTextures[0]];
         background.anchorPoint = CGPointZero;
         background.zPosition = -1;
         [self addChild:background];
@@ -1073,9 +1079,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
 -(void)resetWorld {
     lastShieldLevel = lastMineLevel = 0;
     
-    [background setTexture:[SKTexture textureWithImageNamed:[NSString stringWithFormat:@"Background_%d", 0]]];
+    [background setTexture:backgroundTextures[0]];
     background.alpha = 1;
-    [background2 setTexture:[SKTexture textureWithImageNamed:[NSString stringWithFormat:@"Background_%d", 1]]];
+    [background2 setTexture:backgroundTextures[1]];
     background2.alpha = 0;
 
     [self removeOverlayChildren];
@@ -1387,16 +1393,16 @@ CGFloat DegreesToRadians(CGFloat degrees)
         if (background.alpha == 0) {
             [background runAction:[SKAction fadeAlphaTo:1 duration:0.5]];
             [background2 runAction:[SKAction fadeAlphaTo:0 duration:0.5] completion:^{
-                [background2 setTexture:[SKTexture textureWithImageNamed:[NSString stringWithFormat:@"Background_%d", backgroundNumber]]];
+                [background2 setTexture:backgroundTextures[backgroundNumber]];
             }];
         } else {
             [background runAction:[SKAction fadeAlphaTo:0 duration:0.5] completion:^{
-                [background setTexture:[SKTexture textureWithImageNamed:[NSString stringWithFormat:@"Background_%d", backgroundNumber]]];
+                [background setTexture:backgroundTextures[backgroundNumber]];
             }];
             [background2 runAction:[SKAction fadeAlphaTo:1 duration:0.5]];
         }
     }
-    
+
     ((SKLabelNode*)[self childNodeWithName:levelNodeName]).text = [NSString stringWithFormat:@"%d",self.currentLevel];
     CGRect goalRect;
     goalRect = CGRectMake(self.frame.origin.x, self.frame.size.height + kExtraSpaceOffScreen, self.frame.size.width, 1);
