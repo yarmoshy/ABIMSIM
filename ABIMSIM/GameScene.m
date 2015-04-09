@@ -77,6 +77,8 @@
     SKAction *shieldUpSoundAction;
     SKAction *shieldDownSoundAction;
     SKAction *spaceMineSoundAction;
+    
+    CGPoint lastShipPosition;
 }
 
 static NSMutableArray *backgroundTextures;
@@ -308,6 +310,10 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
         return;
     }
+    
+    if (shipSprite.physicsBody.velocity.dx!=0 || shipSprite.physicsBody.velocity.dy!=0)
+        shipSprite.zRotation = atan2f(-shipSprite.physicsBody.velocity.dx, shipSprite.physicsBody.velocity.dy);
+    
     if (!walkthroughSeen) {
         if (self.currentLevel == 2) {
             SKSpriteNode *directions = [SKSpriteNode spriteNodeWithImageNamed:@"Instructions_Screen2"];
