@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Kevin Yarmosh. All rights reserved.
 //
 
-#define kExtraSpaceOffScreen 63
+#define kExtraSpaceOffScreen 65
 #define kNumberOfLevelsToGenerate 2
 
 #define MAX_VELOCITY 300
@@ -238,9 +238,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
     [[self childNodeWithName:directionsSpriteName] runAction:group completion:^{
         for (SKSpriteNode *direction in [self children]) {
             if ([direction.name isEqualToString:directionsSecondarySpriteName]) {
-                [direction runAction:[SKAction sequence:@[[SKAction waitForDuration:1],alphaIn]]];
+                [direction runAction:[SKAction sequence:@[[SKAction waitForDuration:0.25],alphaIn]]];
             } else if ([direction.name isEqualToString:directionsSecondaryBlinkingSpriteName]) {
-                SKAction *wait = [SKAction waitForDuration:1];
+                SKAction *wait = [SKAction waitForDuration:0.25];
                 SKAction *alphaIn = [SKAction fadeAlphaTo:1 duration:1];
                 SKAction *alphaOut = [SKAction fadeAlphaTo:0 duration:1];
                 SKAction *sequence = [SKAction sequence:@[alphaIn, alphaOut, [SKAction waitForDuration:0.5]]];
@@ -1054,6 +1054,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     SKSpriteNode *shipShieldImage = [SKSpriteNode spriteNodeWithImageNamed:@"ShipShield"];
     shipShieldImage.name = shipShieldSpriteName;
     shipShieldImage.alpha = 0;
+    shipShieldImage.position = CGPointMake(0, 3);
     SKSpriteNode *ship = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:shipShieldImage.size];
     [ship addChild:shipImage];
     [ship addChild:shipThruster];
@@ -1506,13 +1507,13 @@ CGFloat DegreesToRadians(CGFloat degrees)
         directions.name = directionsSpriteName;
         
         SKSpriteNode *swipeToStart = [SKSpriteNode spriteNodeWithImageNamed:@"SwipeToStartText"];
-        swipeToStart.position = CGPointMake(self.frame.size.width/2, ((SKSpriteNode*)[self childNodeWithName:shipCategoryName]).size.height*3 - swipeToStart.size.height);
+        swipeToStart.position = CGPointMake(self.frame.size.width/2, ((SKSpriteNode*)[self childNodeWithName:shipCategoryName]).size.height*3 - swipeToStart.size.height + 3);
         [self addChild:swipeToStart];
         swipeToStart.alpha = 0;
         swipeToStart.name = directionsSecondarySpriteName;
 
         SKSpriteNode *shipDashedLine = [SKSpriteNode spriteNodeWithImageNamed:@"ShipDashedLine"];
-        shipDashedLine.position = CGPointMake(self.frame.size.width/2, ((SKSpriteNode*)[self childNodeWithName:shipCategoryName]).size.height*2);
+        shipDashedLine.position = CGPointMake(self.frame.size.width/2, ((SKSpriteNode*)[self childNodeWithName:shipCategoryName]).size.height*2 + 3);
         [self addChild:shipDashedLine];
         shipDashedLine.alpha = 0;
         shipDashedLine.name = directionsSecondaryBlinkingSpriteName;
@@ -1749,6 +1750,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
             float scale = 0.64;
             float duration = 0.5;
             SKSpriteNode *explosionSprite = [SKSpriteNode spriteNodeWithImageNamed:imageName];
+            explosionSprite.position = CGPointMake(0, 3);
             [explosionSprite setScale:scale];
             explosionSprite.zPosition = 10;
             [ship addChild:explosionSprite];
