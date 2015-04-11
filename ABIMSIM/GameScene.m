@@ -395,8 +395,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
     } else {
         shipSprite.physicsBody.linearDamping = 0.0f;
     }
-//    CGPoint velocity = CGPointMake(shipSprite.physicsBody.velocity.dx, shipSprite.physicsBody.velocity.dy) ;
-//    [shipSprite runAction:[SKAction rotateToAngle:[self pointPairToBearingDegrees:CGPointZero secondPoint:velocity] duration:0]];
     if (currentBlackHole) {
         for (SKSpriteNode *sprite in currentBlackHole.children) {
             if ([sprite.name isEqualToString:removedThisSprite]) {
@@ -417,17 +415,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
                 }
             }
         }
-//        for (SKSpriteNode *star in starFrontLayer.children) {
-//            if (star.xScale != 0 && star.yScale != 0) {
-//                [self applyBlackHolePullToSprite:star];
-//            }
-//        }
-//        for (SKSpriteNode *star in starBackLayer.children) {
-//            if (star.xScale != 0 && star.yScale != 0) {
-//                [self applyBlackHolePullToSprite:star];
-//            }
-//        }
-
     }
 
     for (SKSpriteNode *asteroid in currentSpriteArray) {
@@ -460,8 +447,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
         }
     }
     
-//    SKSpriteNode *explodingMine = (SKSpriteNode*)[self childNodeWithName:explodingSpaceMine];
-//    SKSpriteNode *explodedMine = (SKSpriteNode*)[self childNodeWithName:explodedSpaceMine];
     if (explodingMine) {
         SKSpriteNode *explodingRing = (SKSpriteNode*)[explodingMine childNodeWithName:powerUpSpaceMineExplodeRingName];
         if (explodingRing.size.width > 0) {
@@ -853,7 +838,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
                 ;
             }];
 
-            SKAction *sequenceAction = [SKAction sequence:@[[SKAction waitForDuration:0.5],secondBody.node.userData[powerUpSpaceMineExplosionRingAnimation],[SKAction waitForDuration:1]]];
+            SKAction *sequenceAction = [SKAction sequence:@[[SKAction waitForDuration:0.5],secondBody.node.userData[powerUpSpaceMineExplosionRingAnimation],[SKAction waitForDuration:1.75 - ([ABIMSIMDefaults integerForKey:kMineBlastSpeedLevel] * 0.25)]]];
             [secondBody.node runAction:sequenceAction completion:^{
                 secondBody.node.name = explodedSpaceMine;
                 explodedMine = (SKSpriteNode*)secondBody.node;
@@ -1427,6 +1412,12 @@ CGFloat DegreesToRadians(CGFloat degrees)
         
     }
     [currentSpriteArray removeAllObjects];
+    
+    if (explodingMine) {
+        SKSpriteNode *explodingRing = (SKSpriteNode*)[explodingMine childNodeWithName:powerUpSpaceMineExplodeRingName];
+        [explodingRing removeFromParent];
+        [explodingMine removeFromParent];
+    }
 }
 
 -(void)advanceToNextLevel {
@@ -1679,7 +1670,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         sprite.userData = [NSMutableDictionary new];
     }
     float scale = 0;
-    float duration = 1;
+    float duration = 1.75 - ([ABIMSIMDefaults integerForKey:kMineBlastSpeedLevel] * 0.25);
     SKSpriteNode *ring1 = [SKSpriteNode spriteNodeWithTexture:powerUpTextures[0]];
     [sprite addChild:ring1];
     ring1.name = powerUpSpaceMineExplodeRingName;
@@ -1700,7 +1691,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
     sprite.userData[powerUpSpaceMineExplosionRingAnimation] = animationAction;
 
     scale = 0;
-    duration = 1;
     SKSpriteNode *largeGlow = [SKSpriteNode spriteNodeWithTexture:powerUpTextures[1]];
     [sprite addChild:largeGlow];
     largeGlow.name = powerUpSpaceMineExplodeGlowName;
