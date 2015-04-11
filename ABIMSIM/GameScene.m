@@ -417,16 +417,16 @@ CGFloat DegreesToRadians(CGFloat degrees)
                 }
             }
         }
-        for (SKSpriteNode *star in starFrontLayer.children) {
-            if (star.xScale != 0 && star.yScale != 0) {
-                [self applyBlackHolePullToSprite:star];
-            }
-        }
-        for (SKSpriteNode *star in starBackLayer.children) {
-            if (star.xScale != 0 && star.yScale != 0) {
-                [self applyBlackHolePullToSprite:star];
-            }
-        }
+//        for (SKSpriteNode *star in starFrontLayer.children) {
+//            if (star.xScale != 0 && star.yScale != 0) {
+//                [self applyBlackHolePullToSprite:star];
+//            }
+//        }
+//        for (SKSpriteNode *star in starBackLayer.children) {
+//            if (star.xScale != 0 && star.yScale != 0) {
+//                [self applyBlackHolePullToSprite:star];
+//            }
+//        }
 
     }
 
@@ -1212,11 +1212,11 @@ CGFloat DegreesToRadians(CGFloat degrees)
         for (int i = 0; i < 12; i++) {
             SKSpriteNode *star = [SKSpriteNode spriteNodeWithImageNamed:@"LargeStar"];
             star.alpha = 0.4;
-            star.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:15];
-            star.physicsBody.dynamic = NO;
-            star.physicsBody.categoryBitMask = starCategory;
-            star.physicsBody.collisionBitMask = 0;
-            star.physicsBody.contactTestBitMask = blackHoleCategory;
+//            star.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:15];
+//            star.physicsBody.dynamic = NO;
+//            star.physicsBody.categoryBitMask = starCategory;
+//            star.physicsBody.collisionBitMask = 0;
+//            star.physicsBody.contactTestBitMask = blackHoleCategory;
             star.name = starSpriteName;
             [starSprites addObject:star];
             float x = arc4random() % (int)self.frame.size.width * 1;
@@ -1269,11 +1269,11 @@ CGFloat DegreesToRadians(CGFloat degrees)
         for (int i = 0; i < 12; i++) {
             SKSpriteNode *star = [SKSpriteNode spriteNodeWithImageNamed:@"LargeStar"];
             star.alpha = 0.4;
-            star.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:15];
-            star.physicsBody.dynamic = NO;
-            star.physicsBody.categoryBitMask = starCategory;
-            star.physicsBody.collisionBitMask = 0;
-            star.physicsBody.contactTestBitMask = blackHoleCategory;
+//            star.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:15];
+//            star.physicsBody.dynamic = NO;
+//            star.physicsBody.categoryBitMask = starCategory;
+//            star.physicsBody.collisionBitMask = 0;
+//            star.physicsBody.contactTestBitMask = blackHoleCategory;
             star.name = starSpriteName;
             [starSprites addObject:star];
             [star setScale:0];
@@ -1338,11 +1338,11 @@ CGFloat DegreesToRadians(CGFloat degrees)
                 star.physicsBody = nil;
                 star.position = CGPointMake(x, y);
                 [star runAction:[SKAction scaleTo:scale duration:0.5] completion:^{
-                    star.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:15];
-                    star.physicsBody.dynamic = NO;
-                    star.physicsBody.categoryBitMask = starCategory;
-                    star.physicsBody.collisionBitMask = 0;
-                    star.physicsBody.contactTestBitMask = blackHoleCategory;
+//                    star.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:15];
+//                    star.physicsBody.dynamic = NO;
+//                    star.physicsBody.categoryBitMask = starCategory;
+//                    star.physicsBody.collisionBitMask = 0;
+//                    star.physicsBody.contactTestBitMask = blackHoleCategory;
                     star.name = starSpriteName;
                 }];
             } else {
