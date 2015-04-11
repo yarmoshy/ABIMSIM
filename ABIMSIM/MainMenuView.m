@@ -113,13 +113,13 @@
 
 -(void)showSettings {
     [self.delegate showSettings];
-    [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionAllowAnimatedContent animations:^{
+    [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionAllowAnimatedContent animations:^{
         self.buttonContainerView.alpha = 0;
     } completion:^(BOOL finished) {
         ;
     }];
     
-    [UIView animateWithDuration:1 delay:0 options:UIViewAnimationOptionAllowAnimatedContent animations:^{
+    [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionAllowAnimatedContent animations:^{
         self.settingsContainerTopAlignmentConstraint.constant = 0;
         self.settingsContainerTrailingConstraint.constant = 0;
         self.hamburgerBottomConstraint.constant = self.superview.frame.size.height - self.buttonContainerView.frame.origin.y - 100;
@@ -133,13 +133,13 @@
 
 -(void)hideSettings {
     [self.delegate hideSettings];
-    [UIView animateWithDuration:0.5 delay:0.5 options:UIViewAnimationOptionAllowAnimatedContent animations:^{
+    [UIView animateWithDuration:0.25 delay:0.25 options:UIViewAnimationOptionAllowAnimatedContent animations:^{
         self.buttonContainerView.alpha = 1;
     } completion:^(BOOL finished) {
         ;
     }];
     
-    [UIView animateWithDuration:1 delay:0 options:UIViewAnimationOptionAllowAnimatedContent animations:^{
+    [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionAllowAnimatedContent animations:^{
         self.settingsContainerTrailingConstraint.constant = self.superview.frame.size.width;
         self.hamburgerBottomConstraint.constant = 10;
         self.hamburgerLeadingConstraint.constant = 10;
@@ -164,7 +164,7 @@
         [self.hamburgerButton setImage:hamburgerToXImages.lastObject forState:UIControlStateNormal];
     }
     [self.hamburgerButton setHighlighted:NO];
-    [self.hamburgerButton.imageView setAnimationDuration:1];
+    [self.hamburgerButton.imageView setAnimationDuration:0.5];
     [self.hamburgerButton.imageView setAnimationRepeatCount:1];
     [self.hamburgerButton.imageView startAnimating];
 }

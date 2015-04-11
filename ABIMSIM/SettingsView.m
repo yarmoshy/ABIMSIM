@@ -47,7 +47,7 @@
 
 
 -(void)showSettings {
-    [UIView animateWithDuration:1 delay:0 options:UIViewAnimationOptionAllowAnimatedContent animations:^{
+    [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionAllowAnimatedContent animations:^{
         self.settingsTopConstraint.constant = 50;
         self.settingsLeadngConstraint.constant = 15;
         [self.superview layoutIfNeeded];
@@ -57,7 +57,7 @@
 }
 
 -(void)hideSettings {
-    [UIView animateWithDuration:1 delay:0 options:UIViewAnimationOptionAllowAnimatedContent animations:^{
+    [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionAllowAnimatedContent animations:^{
         self.settingsLeadngConstraint.constant = -1 * self.superview.frame.size.height;
         self.settingsTopConstraint.constant = 200;
         
