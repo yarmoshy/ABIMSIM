@@ -224,10 +224,13 @@
 
 - (IBAction)pauseButtonTapped:(id)sender {
     if (self.scene.initialPause || self.scene.resuming) return;
-    self.scene.paused = !self.scene.paused;
+    [self.scene pause];
 }
 
 -(void)showPausedView {
+    if (self.pausedView.alpha != 0) {
+        return;
+    }
     UIImageView *blurredBackgroundImageView = ({
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
         imageView.contentMode = UIViewContentModeScaleAspectFit;

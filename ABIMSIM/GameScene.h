@@ -23,4 +23,5 @@
 @property (assign, nonatomic) int blackHolesSurvived;
 
 -(void)transitionFromMainMenu;
+-(void)pause;
 @end

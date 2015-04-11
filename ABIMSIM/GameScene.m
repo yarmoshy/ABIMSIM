@@ -278,10 +278,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
 -(void)pause {
     self.paused = YES;
-}
-
--(void)pauseTapped:(id)sender {
-    self.paused = !self.paused;
+    flickRecognizer.enabled = NO;
+    [self.viewController showPausedView];
 }
 
 -(void)upgradeTapped:(id)sender {
@@ -295,19 +293,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
         [self pause];
     }
     if (self.paused) {
-        if ((![self childNodeWithName:shipCategoryName] ||
-            [self childNodeWithName:shipCategoryName].physicsBody == nil) &&
-            self.viewController.gameOverView.alpha == 0 && !self.reset && !self.gameOver) {
-            [self.viewController showGameOverView];
-            self.gameOver = YES;
-            flickRecognizer.enabled = NO;
-        } else if (self.viewController.pausedView.alpha == 0 && !self.reset && [self childNodeWithName:shipCategoryName] && [self childNodeWithName:shipCategoryName].physicsBody && !self.resuming && !self.initialPause && self.viewController.mainMenuView.alpha == 0) {
-            [self.viewController showPausedView];
-            flickRecognizer.enabled = NO;
-        } else if (!flickRecognizer.enabled && self.resuming) {
+        if (self.resuming && !flickRecognizer.enabled) {
             flickRecognizer.enabled = YES;
         }
-
         return;
     }
     
@@ -1049,6 +1037,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         self.paused = YES;
+        [self.viewController showGameOverView];
+        self.gameOver = YES;
+        flickRecognizer.enabled = NO;
     });
 }
 
