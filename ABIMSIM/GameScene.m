@@ -136,6 +136,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
                     [planetTextures addObject:[SKTexture textureWithImageNamed:textureName]];
                 }
             }
+            [planetTextures addObject:[SKTexture textureWithImageNamed:@"Planet_5_S"]];
             [planetTextures addObject:[SKTexture textureWithImageNamed:@"AsteroidShield_0"]];
             [planetTextures addObject:[SKTexture textureWithImageNamed:@"AsteroidShield_1"]];
         }
@@ -2436,9 +2437,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
 }
 
 -(SKSpriteNode*)randomSun {
-    int planetNum = 5;
-    NSString *imageName = [NSString stringWithFormat:@"Planet_%d_S",planetNum];
-    SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithImageNamed:imageName];
+    SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithTexture:planetTextures[planetTextures.count-3]];
     
     UIBezierPath *hoverPath = [UIBezierPath bezierPath];
 	[hoverPath moveToPoint:sprite.position];
@@ -2459,13 +2458,12 @@ CGFloat DegreesToRadians(CGFloat degrees)
     [sprite runAction:[SKAction repeatActionForever:[SKAction followPath:hoverPath.CGPath asOffset:YES orientToPath:NO duration:30]]];
     [self randomizeSprite:sprite];
     sprite.position = CGPointMake(0, sprite.position.y);
-    if (planetNum == 5) {
-        [self adjustGiantPlanet:sprite];
-    }
+    [self adjustGiantPlanet:sprite];
+
     sprite.name = sunObjectSpriteName;
     
     sprite.userData = [NSMutableDictionary dictionary];
-    sprite.userData[planetNumber] = @(planetNum);
+    sprite.userData[planetNumber] = @(5);
     sprite.userData[planetFlavorNumber] = @(4);
     sprite.zPosition = 1;
     sprite.zRotation =arc4random() % 360;
