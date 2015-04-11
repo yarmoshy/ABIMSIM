@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Kevin Yarmosh. All rights reserved.
 //
 
-#define kExtraSpaceOffScreen 65
+#define kExtraSpaceOffScreen 67
 #define kNumberOfLevelsToGenerate 2
 
 #define MAX_VELOCITY 300
@@ -72,8 +72,6 @@
     NSTimeInterval lastTimeHit;
     int timesHitWithinSecond;
     
-    NSArray *spaceMineTextures;
-    
     SKAction *shieldUpSoundAction;
     SKAction *shieldDownSoundAction;
     SKAction *spaceMineSoundAction;
@@ -83,6 +81,11 @@
 
 static NSMutableArray *backgroundTextures;
 static NSMutableArray *backgroundTextureAtlases;
+static NSMutableArray *planetTextures;
+static NSMutableArray *asteroidTextures;
+static NSMutableArray *powerUpTextures;
+static NSMutableArray *spaceMineTextures;
+
 CGFloat DegreesToRadians(CGFloat degrees)
 {
     return degrees * (M_PI / 180);
@@ -124,24 +127,58 @@ CGFloat DegreesToRadians(CGFloat degrees)
             ;
         }];
         
-        NSMutableArray *planetTextures = [NSMutableArray array];
-        for (int i = 0; i < 6; i++) {
-            for (int j = 0; j < 4; j++) {
-                NSString *textureName = [NSString stringWithFormat:@"Planet_%d_%d", i, j];
-                NSLog(@"%@",textureName);
-                [planetTextures addObject:[SKTexture textureWithImageNamed:textureName]];
+        if (!planetTextures) {
+            planetTextures = [NSMutableArray array];
+            for (int i = 0; i < 6; i++) {
+                for (int j = 0; j < 4; j++) {
+                    NSString *textureName = [NSString stringWithFormat:@"Planet_%d_%d", i, j];
+                    NSLog(@"%@",textureName);
+                    [planetTextures addObject:[SKTexture textureWithImageNamed:textureName]];
+                }
             }
+            [planetTextures addObject:[SKTexture textureWithImageNamed:@"AsteroidShield_0"]];
+            [planetTextures addObject:[SKTexture textureWithImageNamed:@"AsteroidShield_1"]];
         }
         [SKTexture preloadTextures:planetTextures withCompletionHandler:^{
             ;
         }];
-        NSMutableArray *asteroidTextures = [NSMutableArray array];
-        for (int i = 0; i < 12; i++) {
-            NSString *textureName = [NSString stringWithFormat:@"Asteroid_%d", i];
-            NSLog(@"%@",textureName);
-            [asteroidTextures addObject:[SKTexture textureWithImageNamed:textureName]];
+        
+        if (!asteroidTextures) {
+            asteroidTextures = [NSMutableArray array];
+            for (int i = 0; i < 12; i++) {
+                NSString *textureName = [NSString stringWithFormat:@"Asteroid_%d", i];
+                NSLog(@"%@",textureName);
+                [asteroidTextures addObject:[SKTexture textureWithImageNamed:textureName]];
+            }
         }
         [SKTexture preloadTextures:asteroidTextures withCompletionHandler:^{
+            ;
+        }];
+        
+        if (!spaceMineTextures) {
+            spaceMineTextures = [NSMutableArray array];
+            for (int i = 0; i < 9; i++) {
+                NSString *textureName = [NSString stringWithFormat:@"SpaceMine_Friendly_%d", i];
+                NSLog(@"%@",textureName);
+                [spaceMineTextures addObject:[SKTexture textureWithImageNamed:textureName]];
+            }
+        }
+        [SKTexture preloadTextures:spaceMineTextures withCompletionHandler:^{
+            ;
+        }];
+        
+        [BlackHole blackHole];
+        
+        if (!powerUpTextures) {
+            powerUpTextures = [NSMutableArray arrayWithCapacity:3];
+            [powerUpTextures addObject:[SKTexture textureWithImageNamed:@"SpaceMine_ExplodingRing_0"]];
+            [powerUpTextures addObject:[SKTexture textureWithImageNamed:@"SpaceMine_LargeGlow_0"]];
+            [powerUpTextures addObject:[SKTexture textureWithImageNamed:@"SpaceMine_Friendly_0"]];
+            [powerUpTextures addObject:[SKTexture textureWithImageNamed:@"SpaceMine_CenterGlow_0"]];
+            [powerUpTextures addObject:[SKTexture textureWithImageNamed:@"ShieldPowerUp"]];
+            [powerUpTextures addObject:[SKTexture textureWithImageNamed:@"ShieldPowerUp_Animated"]];
+        }
+        [SKTexture preloadTextures:powerUpTextures withCompletionHandler:^{
             ;
         }];
         
@@ -1605,7 +1642,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
 }
 
 -(SKSpriteNode*)spaceMinePowerUp {
-    SKSpriteNode *spaceMinePowerUp = [SKSpriteNode spriteNodeWithImageNamed:@"SpaceMine_Friendly_0"];
+    SKSpriteNode *spaceMinePowerUp = [SKSpriteNode spriteNodeWithTexture:powerUpTextures[2]];
     spaceMinePowerUp.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:29];
     spaceMinePowerUp.physicsBody.dynamic = NO;
     spaceMinePowerUp.physicsBody.categoryBitMask = powerUpSpaceMineCategory;
@@ -1614,7 +1651,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     spaceMinePowerUp.position = CGPointMake(self.size.width/2, 100);
     spaceMinePowerUp.zPosition = 1;
     spaceMinePowerUp.userData = [NSMutableDictionary dictionary];
-    SKSpriteNode *glowSprite = [SKSpriteNode spriteNodeWithImageNamed:@"SpaceMine_CenterGlow_0"];
+    SKSpriteNode *glowSprite = [SKSpriteNode spriteNodeWithTexture:powerUpTextures[3]];
     glowSprite.name = powerUpSpaceMineGlowName;
     [spaceMinePowerUp addChild:glowSprite];
     glowSprite.alpha = 0;
@@ -1627,17 +1664,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
         [[node childNodeWithName:powerUpSpaceMineGlowName] runAction:repeat];
     }];
     spaceMinePowerUp.userData[powerUpSpaceMinePulseAnimation] = animationAction;
-    
-    if (!spaceMineTextures) {
-        NSMutableArray *textures = [NSMutableArray arrayWithCapacity:9];
-        for (int i = 0; i < 9; i++) {
-            NSString *imageName = [NSString stringWithFormat:@"SpaceMine_Friendly_%d",i];
-            UIImage *image = [UIImage imageNamed:imageName];
-            SKTexture* spaceMine = [SKTexture textureWithImage:image];
-            [textures addObject:spaceMine];
-        }
-        spaceMineTextures = [NSArray arrayWithArray:textures];
-    }
     
     SKAction *animation = [SKAction animateWithTextures:spaceMineTextures timePerFrame:0.1 resize:NO restore:NO];
     SKAction *repeatAnimation = [SKAction repeatActionForever:animation];
@@ -1652,10 +1678,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
     if (!sprite.userData) {
         sprite.userData = [NSMutableDictionary new];
     }
-    NSString *imageName = @"SpaceMine_ExplodingRing_0";
     float scale = 0;
     float duration = 1;
-    SKSpriteNode *ring1 = [SKSpriteNode spriteNodeWithImageNamed:imageName];
+    SKSpriteNode *ring1 = [SKSpriteNode spriteNodeWithTexture:powerUpTextures[0]];
     [sprite addChild:ring1];
     ring1.name = powerUpSpaceMineExplodeRingName;
     ring1.alpha = 0;
@@ -1674,10 +1699,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
     }];
     sprite.userData[powerUpSpaceMineExplosionRingAnimation] = animationAction;
 
-    imageName = @"SpaceMine_LargeGlow_0";
     scale = 0;
     duration = 1;
-    SKSpriteNode *largeGlow = [SKSpriteNode spriteNodeWithImageNamed:imageName];
+    SKSpriteNode *largeGlow = [SKSpriteNode spriteNodeWithTexture:powerUpTextures[1]];
     [sprite addChild:largeGlow];
     largeGlow.name = powerUpSpaceMineExplodeGlowName;
     largeGlow.alpha = 0;
@@ -1704,7 +1728,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
 
 -(SKSpriteNode*)shieldPowerUp {
-    SKSpriteNode *shieldPowerUp = [SKSpriteNode spriteNodeWithImageNamed:@"ShieldPowerUp"];
+    SKSpriteNode *shieldPowerUp = [SKSpriteNode spriteNodeWithTexture:powerUpTextures[4]];
     shieldPowerUp.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:29];
     shieldPowerUp.physicsBody.dynamic = NO;
     shieldPowerUp.physicsBody.categoryBitMask = powerUpShieldCategory;
@@ -1713,7 +1737,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     shieldPowerUp.position = CGPointMake(self.size.width/2, 100);
     shieldPowerUp.zPosition = 1;
     shieldPowerUp.userData = [NSMutableDictionary dictionary];
-    SKSpriteNode *glowSprite = [SKSpriteNode spriteNodeWithImageNamed:@"ShieldPowerUp_Animated"];
+    SKSpriteNode *glowSprite = [SKSpriteNode spriteNodeWithTexture:powerUpTextures[5]];
     glowSprite.name = powerUpShieldRingName;
     [shieldPowerUp addChild:glowSprite];
     glowSprite.alpha = 0;
@@ -1875,8 +1899,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
 -(SKSpriteNode*)randomAsteroidForLevel:(int)level {
     int asteroidNum = arc4random() % [self maxAsteroidNumForLevel:level];
-    NSString *imageName = [NSString stringWithFormat:@"Asteroid_%d",asteroidNum];
-    SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithTexture:[SKTexture textureWithImageNamed:imageName]];
+    SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithTexture:asteroidTextures[asteroidNum]];
     sprite.physicsBody = [SKPhysicsBody bodyWithPolygonFromPath:[self pathForAsteroidNum:asteroidNum withSprite:sprite]];
     sprite.physicsBody.friction = 0.0f;
     sprite.physicsBody.restitution = 1.0f;
@@ -2357,19 +2380,26 @@ CGFloat DegreesToRadians(CGFloat degrees)
             }
         }
     }
-    NSString *imageName = [NSString stringWithFormat:@"Planet_%d_%d",planetNum, planetFlavor];
     BOOL isAsteroidShield = NO;
+    SKSpriteNode *sprite;
+
     if ((planetNum == 4 || planetNum == 3) && !sunFlavor) {
         if (arc4random() % 2 == 0) { //50%
             if (planetNum == 4) {
-                imageName = @"AsteroidShield_1";
+                SKTexture *planetTexture = [planetTextures objectAtIndex:planetTextures.count-1];
+                sprite = [SKSpriteNode spriteNodeWithTexture:planetTexture];
             } else {
-                imageName = @"AsteroidShield_0";
+                SKTexture *planetTexture = [planetTextures objectAtIndex:planetTextures.count-2];
+                sprite = [SKSpriteNode spriteNodeWithTexture:planetTexture];
             }
             isAsteroidShield = YES;
         }
     }
-    SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithTexture:[SKTexture textureWithImageNamed:imageName]];
+    if (!isAsteroidShield) {
+        SKTexture *planetTexture = [planetTextures objectAtIndex:planetNum * 4 + planetFlavor];
+        sprite = [SKSpriteNode spriteNodeWithTexture:planetTexture];
+    }
+
     
     UIBezierPath *hoverPath = [UIBezierPath bezierPath];
 	[hoverPath moveToPoint:sprite.position];
@@ -2463,8 +2493,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
 }
 
 -(SKSpriteNode*)moonForPlanetNum:(int)planetNum withPlanet:(SKSpriteNode*)planet {
-    NSString *imageName = [NSString stringWithFormat:@"Asteroid_%d",planetNum];
-    SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithTexture:[SKTexture textureWithImageNamed:imageName]];
+    SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithTexture:asteroidTextures[planetNum]];
     float distance = planet.size.width/2 + sprite.size.width/2;
     float angle = arc4random() % 360;
     sprite.position = CGPointMake(planet.position.x + (cosf(DegreesToRadians(angle)) * distance), planet.position.y + (sinf(DegreesToRadians(angle)) * distance)) ;

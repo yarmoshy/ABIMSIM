@@ -229,7 +229,7 @@
 }
 
 -(void)showPausedView {
-    if (self.pausedView.alpha != 0) {
+    if (self.pausedView.alpha != 0 || self.gameOverView.alpha != 0 || self.mainMenuView.alpha != 0) {
         return;
     }
     UIImageView *blurredBackgroundImageView = ({
