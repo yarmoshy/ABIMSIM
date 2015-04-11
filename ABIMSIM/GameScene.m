@@ -1173,6 +1173,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         starSprites = [NSMutableArray array];
         for (int i = 0; i < 12; i++) {
             SKSpriteNode *star = [SKSpriteNode spriteNodeWithImageNamed:@"LargeStar"];
+            star.alpha = 0.4;
             star.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:15];
             star.physicsBody.dynamic = NO;
             star.physicsBody.categoryBitMask = starCategory;
@@ -1229,6 +1230,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         }
         for (int i = 0; i < 12; i++) {
             SKSpriteNode *star = [SKSpriteNode spriteNodeWithImageNamed:@"LargeStar"];
+            star.alpha = 0.4;
             star.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:15];
             star.physicsBody.dynamic = NO;
             star.physicsBody.categoryBitMask = starCategory;

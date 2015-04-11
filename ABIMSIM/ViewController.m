@@ -69,6 +69,7 @@
     self.scene.viewController = self;
     // Present the scene.
     [skView presentScene:self.scene];
+    [[AudioController sharedController] playerDeath];
     
 }
 
