@@ -681,7 +681,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
         [self removeOverlayChildren];
     }
     shipSprite.physicsBody.velocity = CGVectorMake(newVelocity.x, -newVelocity.y);
-    [[shipSprite childNodeWithName:shipThrusterSpriteName] runAction:shipSprite.userData[shipThrusterAnimation] withKey:shipThrusterAnimation];
+    if (shipSprite.physicsBody) {
+        [[shipSprite childNodeWithName:shipThrusterSpriteName] runAction:shipSprite.userData[shipThrusterAnimation] withKey:shipThrusterAnimation];
+    }
 }
 
 
@@ -1040,6 +1042,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     }];
     [[self childNodeWithName:shipCategoryName] childNodeWithName:shipShieldSpriteName].hidden = YES;
     [[self childNodeWithName:shipCategoryName] childNodeWithName:shipImageSpriteName].hidden = YES;
+    [[self childNodeWithName:shipCategoryName] childNodeWithName:shipThrusterSpriteName].hidden = YES;
     [self childNodeWithName:shipCategoryName].physicsBody = nil;
 
     [[AudioController sharedController] playerDeath];
@@ -1137,6 +1140,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     }
     [shipSprite childNodeWithName:shipShieldSpriteName].hidden = NO;
     [shipSprite childNodeWithName:shipImageSpriteName].hidden = NO;
+    [shipSprite childNodeWithName:shipThrusterSpriteName].hidden = NO;
     [self updateShipPhysics];
     shipSprite.physicsBody.velocity = CGVectorMake(0, MAX_VELOCITY);
     
