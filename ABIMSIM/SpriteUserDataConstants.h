@@ -14,6 +14,8 @@
 #define planetNumber @"planetNumber"
 #define planetFlavorNumber @"planetFlavorNumber"
 #define asteroidShieldTag @"asteroidShieldTag"
+#define asteroidNumber @"asteroidNumber"
+
 #define asteroidShieldPulseAnimationAction @"asteroidShieldPulseAnimationAction"
 #define powerUpShieldPulseAnimation @"powerUpShieldPulseAnimation"
 #define powerUpSpaceMineRotationAnimation @"powerUpSpaceMineRotationAnimation"

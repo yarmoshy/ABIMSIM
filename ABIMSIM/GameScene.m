@@ -40,6 +40,8 @@
 
 #define appStoreLink @"http://itunes.com/app/ABIMSIM"
 
+#define kAsteroidSpriteArrayKey @"kAsteroidSpriteArrayKey%d"
+
 #import "GameScene.h"
 #import "HexColor.h"
 #import "UpgradeScene.h"
@@ -77,6 +79,8 @@
     SKAction *spaceMineSoundAction;
     
     CGPoint lastShipPosition;
+    
+    NSMutableDictionary *asteroidSpritesDictionary;
 }
 
 static NSMutableArray *backgroundTextures;
@@ -103,6 +107,11 @@ CGFloat DegreesToRadians(CGFloat degrees)
         
         lastTimeHit = 0;
         timesHitWithinSecond = 0;
+        
+        asteroidSpritesDictionary = [NSMutableDictionary new];
+        for (int i = 0; i < 10; i++) {
+            [asteroidSpritesDictionary setObject:[NSMutableArray new] forKey:[NSString stringWithFormat:kAsteroidSpriteArrayKey,i]];
+        }
         
         if (!backgroundTextures) {
             backgroundTextures = [NSMutableArray arrayWithCapacity:7];
@@ -1410,6 +1419,11 @@ CGFloat DegreesToRadians(CGFloat degrees)
             [[currentSpriteArray[i] name] isEqual:powerUpShieldName]) {
             [currentSpriteArray[i] removeFromParent];
         }
+        if ([[currentSpriteArray[i] name] isEqual:asteroidCategoryName]) {
+            SKSpriteNode *asteroid = currentSpriteArray[i];
+            NSMutableArray *asteroidArray = [asteroidSpritesDictionary objectForKey:[NSString stringWithFormat:kAsteroidSpriteArrayKey, [asteroid.userData[asteroidNumber] intValue]]];
+            [asteroidArray addObject:asteroid];
+        }
         
     }
     [currentSpriteArray removeAllObjects];
@@ -1890,19 +1904,38 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
 -(SKSpriteNode*)randomAsteroidForLevel:(int)level {
     int asteroidNum = arc4random() % [self maxAsteroidNumForLevel:level];
-    SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithTexture:asteroidTextures[asteroidNum]];
-    sprite.physicsBody = [SKPhysicsBody bodyWithPolygonFromPath:[self pathForAsteroidNum:asteroidNum withSprite:sprite]];
-    sprite.physicsBody.friction = 0.0f;
-    sprite.physicsBody.restitution = 1.0f;
-    sprite.physicsBody.linearDamping = 0.0f;
-    sprite.physicsBody.dynamic = YES;
-    sprite.physicsBody.categoryBitMask = asteroidCategory;
-    sprite.physicsBody.collisionBitMask = borderCategory | secondaryBorderCategory | shipCategory | asteroidCategory | asteroidInShieldCategory | planetCategory | asteroidShieldCategory | powerUpSpaceMineExplodingRingCategory;
-    sprite.physicsBody.contactTestBitMask = goalCategory | shipCategory | asteroidShieldCategory;
+    SKSpriteNode *sprite;
+    NSMutableArray *asteroidArray = [asteroidSpritesDictionary objectForKey:[NSString stringWithFormat:kAsteroidSpriteArrayKey, asteroidNum]];
+    if (asteroidArray.count) {
+        sprite = asteroidArray[0];
+        [asteroidArray removeObject:sprite];
+    } else {
+        sprite = [SKSpriteNode spriteNodeWithTexture:asteroidTextures[asteroidNum]];
+        sprite.physicsBody = [SKPhysicsBody bodyWithPolygonFromPath:[self pathForAsteroidNum:asteroidNum withSprite:sprite]];
+        sprite.physicsBody.friction = 0.0f;
+        sprite.physicsBody.restitution = 1.0f;
+        sprite.physicsBody.linearDamping = 0.0f;
+        sprite.physicsBody.dynamic = YES;
+        sprite.physicsBody.categoryBitMask = asteroidCategory;
+        sprite.physicsBody.collisionBitMask = borderCategory | secondaryBorderCategory | shipCategory | asteroidCategory | asteroidInShieldCategory | planetCategory | asteroidShieldCategory | powerUpSpaceMineExplodingRingCategory;
+        sprite.physicsBody.contactTestBitMask = goalCategory | shipCategory | asteroidShieldCategory;
+        sprite.physicsBody.mass = sprite.size.width;
+        sprite.name = asteroidCategoryName;
+        sprite.physicsBody.allowsRotation = YES;
+        sprite.colorBlendFactor = 1.0;
+        sprite.zPosition = 1;
+        sprite.userData = [NSMutableDictionary dictionary];
+        sprite.userData[asteroidNumber] = @(asteroidNum);
+    }
+    if ([sprite.userData valueForKey:asteroidShieldTag]) {
+        sprite.name = asteroidCategoryName;
+        sprite.physicsBody.categoryBitMask = asteroidCategory;
+        sprite.physicsBody.collisionBitMask = borderCategory | secondaryBorderCategory | shipCategory | asteroidCategory | asteroidInShieldCategory | planetCategory | asteroidShieldCategory | powerUpSpaceMineExplodingRingCategory;
+        sprite.physicsBody.contactTestBitMask = goalCategory | shipCategory | asteroidShieldCategory;
+        sprite.zPosition = 1;
+        [sprite.userData removeObjectForKey:asteroidShieldTag];
+    }
 
-    sprite.physicsBody.mass = sprite.size.width;
-    sprite.name = asteroidCategoryName;
-    sprite.physicsBody.allowsRotation = YES;
     int colorInt = arc4random() % 6;
     switch (colorInt) {
         case 0:
@@ -1926,8 +1959,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
         default:
             break;
     }
-    sprite.colorBlendFactor = 1.0;
-    sprite.zPosition = 1;
     return sprite;
 }
 
@@ -2245,7 +2276,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
                 asteroid.physicsBody.categoryBitMask = asteroidInShieldCategory;
                 asteroid.physicsBody.collisionBitMask = shipCategory | asteroidCategory | asteroidInShieldCategory | planetCategory | asteroidShieldCategory;
                 asteroid.physicsBody.contactTestBitMask = shipCategory | asteroidShieldCategory;
-                asteroid.userData = [NSMutableDictionary new];
                 asteroid.userData[asteroidShieldTag] = @(shieldCount);
                 asteroid.zPosition = 0;
                 [asteroidsToAdd addObject:asteroid];
