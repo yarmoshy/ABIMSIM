@@ -12,11 +12,11 @@
 		B407A22E1AD6358B00C87AC7 /* Planet_5_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B407A2291AD6358B00C87AC7 /* Planet_5_1@2x.png */; };
 		B407A22F1AD6358B00C87AC7 /* Planet_5_2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B407A22A1AD6358B00C87AC7 /* Planet_5_2@2x.png */; };
 		B407A2301AD6358B00C87AC7 /* Planet_5_3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B407A22B1AD6358B00C87AC7 /* Planet_5_3@2x.png */; };
-		B407A2311AD6358B00C87AC7 /* Planet_5_S@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B407A22C1AD6358B00C87AC7 /* Planet_5_S@2x.png */; };
 		B43F4D0C192ABB510000ACA4 /* AsteroidShield_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B43F4D0B192ABB510000ACA4 /* AsteroidShield_1@2x.png */; };
 		B43F4D0E192ABB560000ACA4 /* AsteroidShield_Ring_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B43F4D0D192ABB560000ACA4 /* AsteroidShield_Ring_1@2x.png */; };
 		B43F4D12192ABB6C0000ACA4 /* AsteroidShield_0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B43F4D11192ABB6C0000ACA4 /* AsteroidShield_0@2x.png */; };
 		B43F4D16192ABB770000ACA4 /* AsteroidShield_Ring_0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B43F4D15192ABB770000ACA4 /* AsteroidShield_Ring_0@2x.png */; };
+		B445413E1AD99D5600AA7A13 /* Planet_5_S@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B445413D1AD99D5600AA7A13 /* Planet_5_S@2x.png */; };
 		B4467174192D8C7700B4A8C7 /* AsteroidShield_Impact_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4467173192D8C7700B4A8C7 /* AsteroidShield_Impact_1@2x.png */; };
 		B4467176192D8CC500B4A8C7 /* AsteroidShield_Impact_0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4467175192D8CC500B4A8C7 /* AsteroidShield_Impact_0@2x.png */; };
 		B4467178192D906400B4A8C7 /* AsteroidShield_Pop_0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4467177192D906400B4A8C7 /* AsteroidShield_Pop_0@2x.png */; };
@@ -153,11 +153,11 @@
 		B407A2291AD6358B00C87AC7 /* Planet_5_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_5_1@2x.png"; sourceTree = "<group>"; };
 		B407A22A1AD6358B00C87AC7 /* Planet_5_2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_5_2@2x.png"; sourceTree = "<group>"; };
 		B407A22B1AD6358B00C87AC7 /* Planet_5_3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_5_3@2x.png"; sourceTree = "<group>"; };
-		B407A22C1AD6358B00C87AC7 /* Planet_5_S@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_5_S@2x.png"; sourceTree = "<group>"; };
 		B43F4D0B192ABB510000ACA4 /* AsteroidShield_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AsteroidShield_1@2x.png"; sourceTree = "<group>"; };
 		B43F4D0D192ABB560000ACA4 /* AsteroidShield_Ring_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AsteroidShield_Ring_1@2x.png"; sourceTree = "<group>"; };
 		B43F4D11192ABB6C0000ACA4 /* AsteroidShield_0@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AsteroidShield_0@2x.png"; sourceTree = "<group>"; };
 		B43F4D15192ABB770000ACA4 /* AsteroidShield_Ring_0@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AsteroidShield_Ring_0@2x.png"; sourceTree = "<group>"; };
+		B445413D1AD99D5600AA7A13 /* Planet_5_S@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_5_S@2x.png"; sourceTree = "<group>"; };
 		B4467173192D8C7700B4A8C7 /* AsteroidShield_Impact_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AsteroidShield_Impact_1@2x.png"; sourceTree = "<group>"; };
 		B4467175192D8CC500B4A8C7 /* AsteroidShield_Impact_0@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AsteroidShield_Impact_0@2x.png"; sourceTree = "<group>"; };
 		B4467177192D906400B4A8C7 /* AsteroidShield_Pop_0@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AsteroidShield_Pop_0@2x.png"; sourceTree = "<group>"; };
@@ -388,7 +388,7 @@
 				B407A2291AD6358B00C87AC7 /* Planet_5_1@2x.png */,
 				B407A22A1AD6358B00C87AC7 /* Planet_5_2@2x.png */,
 				B407A22B1AD6358B00C87AC7 /* Planet_5_3@2x.png */,
-				B407A22C1AD6358B00C87AC7 /* Planet_5_S@2x.png */,
+				B445413D1AD99D5600AA7A13 /* Planet_5_S@2x.png */,
 			);
 			name = Planets;
 			sourceTree = "<group>";
@@ -777,7 +777,7 @@
 				B46363A91979EBA2007B657C /* SpaceMine_Friendly_5@2x.png in Resources */,
 				B446717A192D906A00B4A8C7 /* AsteroidShield_Pop_1@2x.png in Resources */,
 				B43F4D16192ABB770000ACA4 /* AsteroidShield_Ring_0@2x.png in Resources */,
-				B407A2311AD6358B00C87AC7 /* Planet_5_S@2x.png in Resources */,
+				B445413E1AD99D5600AA7A13 /* Planet_5_S@2x.png in Resources */,
 				B46363A71979EBA2007B657C /* SpaceMine_Friendly_3@2x.png in Resources */,
 				B47E22CE18DBA7E200F42EBB /* Asteroid_1@2x.png in Resources */,
 				B47E22D118DBA7E200F42EBB /* Asteroid_4@2x.png in Resources */,
