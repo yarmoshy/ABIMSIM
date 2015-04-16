@@ -41,6 +41,8 @@
 #define appStoreLink @"http://itunes.com/app/ABIMSIM"
 
 #define kAsteroidSpriteArrayKey @"kAsteroidSpriteArrayKey%d"
+#define kPlanetSpriteArrayKey @"kPlanetSpriteArrayKey%d"
+#define kPlanetHoverActionKey @"kPlanetHoverActionKey"
 
 #import "GameScene.h"
 #import "HexColor.h"
@@ -81,6 +83,7 @@
     CGPoint lastShipPosition;
     
     NSMutableDictionary *asteroidSpritesDictionary;
+    NSMutableDictionary *planetSpritesDictionary;
 }
 
 static NSMutableArray *backgroundTextures;
@@ -111,6 +114,15 @@ CGFloat DegreesToRadians(CGFloat degrees)
         asteroidSpritesDictionary = [NSMutableDictionary new];
         for (int i = 0; i < 10; i++) {
             [asteroidSpritesDictionary setObject:[NSMutableArray new] forKey:[NSString stringWithFormat:kAsteroidSpriteArrayKey,i]];
+        }
+        planetSpritesDictionary = [NSMutableDictionary new];
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 4; j++) {
+                [planetSpritesDictionary setObject:[NSMutableArray new] forKey:[NSString stringWithFormat:kPlanetSpriteArrayKey,i * 4 + j]];
+            }
+        }
+        for (int i = 0; i < 3; i++) {
+            [planetSpritesDictionary setObject:[NSMutableArray new] forKey:[NSString stringWithFormat:kPlanetSpriteArrayKey,[planetSpritesDictionary allKeys].count-1]];
         }
         
         if (!backgroundTextures) {
@@ -1421,10 +1433,17 @@ CGFloat DegreesToRadians(CGFloat degrees)
         }
         if ([[currentSpriteArray[i] name] isEqual:asteroidCategoryName]) {
             SKSpriteNode *asteroid = currentSpriteArray[i];
-            NSMutableArray *asteroidArray = [asteroidSpritesDictionary objectForKey:[NSString stringWithFormat:kAsteroidSpriteArrayKey, [asteroid.userData[asteroidNumber] intValue]]];
-            [asteroidArray addObject:asteroid];
+            if ([asteroid.userData objectForKey:[NSString stringWithFormat:kAsteroidSpriteArrayKey, [asteroid.userData[asteroidsIndex] intValue]]]) {
+                NSMutableArray *asteroidArray = [asteroidSpritesDictionary objectForKey:[NSString stringWithFormat:kAsteroidSpriteArrayKey, [asteroid.userData[asteroidsIndex] intValue]]];
+                [asteroidArray addObject:asteroid];
+            }
         }
-        
+        if ([[currentSpriteArray[i] name] isEqual:planetCategoryName]) {
+            SKSpriteNode *planet = currentSpriteArray[i];
+            NSMutableArray *planetArray = [planetSpritesDictionary objectForKey:[NSString stringWithFormat:kPlanetSpriteArrayKey, [planet.userData[planetsIndex] intValue]]];
+            [planetArray addObject:planet];
+        }
+
     }
     [currentSpriteArray removeAllObjects];
     
@@ -1903,15 +1922,15 @@ CGFloat DegreesToRadians(CGFloat degrees)
 }
 
 -(SKSpriteNode*)randomAsteroidForLevel:(int)level {
-    int asteroidNum = arc4random() % [self maxAsteroidNumForLevel:level];
+    int asteroidIndex = arc4random() % [self maxAsteroidNumForLevel:level];
     SKSpriteNode *sprite;
-    NSMutableArray *asteroidArray = [asteroidSpritesDictionary objectForKey:[NSString stringWithFormat:kAsteroidSpriteArrayKey, asteroidNum]];
+    NSMutableArray *asteroidArray = [asteroidSpritesDictionary objectForKey:[NSString stringWithFormat:kAsteroidSpriteArrayKey, asteroidIndex]];
     if (asteroidArray.count) {
         sprite = asteroidArray[0];
         [asteroidArray removeObject:sprite];
     } else {
-        sprite = [SKSpriteNode spriteNodeWithTexture:asteroidTextures[asteroidNum]];
-        sprite.physicsBody = [SKPhysicsBody bodyWithPolygonFromPath:[self pathForAsteroidNum:asteroidNum withSprite:sprite]];
+        sprite = [SKSpriteNode spriteNodeWithTexture:asteroidTextures[asteroidIndex]];
+        sprite.physicsBody = [SKPhysicsBody bodyWithPolygonFromPath:[self pathForAsteroidNum:asteroidIndex withSprite:sprite]];
         sprite.physicsBody.friction = 0.0f;
         sprite.physicsBody.restitution = 1.0f;
         sprite.physicsBody.linearDamping = 0.0f;
@@ -1925,7 +1944,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         sprite.colorBlendFactor = 1.0;
         sprite.zPosition = 1;
         sprite.userData = [NSMutableDictionary dictionary];
-        sprite.userData[asteroidNumber] = @(asteroidNum);
+        sprite.userData[asteroidsIndex] = @(asteroidIndex);
     }
     if ([sprite.userData valueForKey:asteroidShieldTag]) {
         sprite.name = asteroidCategoryName;
@@ -2227,30 +2246,36 @@ CGFloat DegreesToRadians(CGFloat degrees)
             attempt++;
         }
         if (addPlanet) {
-            if ([planet.userData[planetNumber] intValue] >= asteroidShield0) {
-                float radius = [self radiusForPlanetNum:[planet.userData[planetNumber] intValue]];
-                CGMutablePathRef path = CGPathCreateMutable();
-                CGPathAddArc(path, NULL, 0, 0, radius, 0, M_PI * 2, YES);
-                planet.physicsBody = [SKPhysicsBody bodyWithEdgeChainFromPath:path];
-                planet.physicsBody.categoryBitMask = asteroidShieldCategory;
-                planet.physicsBody.contactTestBitMask = asteroidShieldCategory;
-            } else {
-                planet.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:[self radiusForPlanetNum:[planet.userData[planetNumber] intValue]]];
-                planet.physicsBody.categoryBitMask = planetCategory;
-                planet.physicsBody.contactTestBitMask = planetCategory;
-                if (forceSun) {
-                    planet.physicsBody.contactTestBitMask = shipCategory | asteroidCategory;
+            if (!planet.physicsBody) {
+                if ([planet.userData[planetNumber] intValue] >= asteroidShield0) {
+                    float radius = [self radiusForPlanetNum:[planet.userData[planetNumber] intValue]];
+                    CGMutablePathRef path = CGPathCreateMutable();
+                    CGPathAddArc(path, NULL, 0, 0, radius, 0, M_PI * 2, YES);
+                    planet.physicsBody = [SKPhysicsBody bodyWithEdgeChainFromPath:path];
+                    planet.physicsBody.categoryBitMask = asteroidShieldCategory;
+                    planet.physicsBody.contactTestBitMask = asteroidShieldCategory;
+                } else {
+                    planet.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:[self radiusForPlanetNum:[planet.userData[planetNumber] intValue]]];
+                    planet.physicsBody.categoryBitMask = planetCategory;
+                    planet.physicsBody.contactTestBitMask = planetCategory;
+                    if (forceSun) {
+                        planet.physicsBody.contactTestBitMask = shipCategory | asteroidCategory;
+                    }
                 }
-            }
-            planet.physicsBody.mass = 100000;
-            planet.physicsBody.dynamic = YES;
-            planet.physicsBody.collisionBitMask = shipCategory | asteroidCategory | asteroidInShieldCategory | asteroidShieldCategory;
-            planet.physicsBody.allowsRotation = NO;
-            if (![self addRingPhysicsBodyIfApplicableForPlanet:planet] && ![planet.name isEqualToString:sunObjectSpriteName] && [planet.userData[planetNumber] intValue] < 5) {
-                planet.userData[moonsArray] = @[[self moonForPlanetNum:[planet.userData[planetNumber] intValue] withPlanet:planet]];
-            }
-            if ([planet.userData[planetNumber] intValue] >= asteroidShield0) {
-                [self addAsteroidShieldAnimationsToSprite:planet];
+                planet.physicsBody.mass = 100000;
+                planet.physicsBody.dynamic = YES;
+                planet.physicsBody.collisionBitMask = shipCategory | asteroidCategory | asteroidInShieldCategory | asteroidShieldCategory;
+                planet.physicsBody.allowsRotation = NO;
+                if (![self addRingPhysicsBodyIfApplicableForPlanet:planet] && ![planet.name isEqualToString:sunObjectSpriteName] && [planet.userData[planetNumber] intValue] < 5) {
+                    planet.userData[moonsArray] = @[[self moonForPlanetNum:[planet.userData[planetNumber] intValue] withPlanet:planet]];
+                }
+                if ([planet.userData[planetNumber] intValue] >= asteroidShield0) {
+                    [self addAsteroidShieldAnimationsToSprite:planet];
+                }
+            } else {
+                if (![planet.userData[planetFlavorNumber] isEqualToNumber:@2] && ![planet.name isEqualToString:sunObjectSpriteName] && [planet.userData[planetNumber] intValue] < 5) {
+                    planet.userData[moonsArray] = @[[self moonForPlanetNum:[planet.userData[planetNumber] intValue] withPlanet:planet]];
+                }
             }
             [planets addObject:planet];
         }
@@ -2403,100 +2428,125 @@ CGFloat DegreesToRadians(CGFloat degrees)
     }
     BOOL isAsteroidShield = NO;
     SKSpriteNode *sprite;
-
+    int planetIndex = planetNum * 4 + planetFlavor;
     if ((planetNum == 4 || planetNum == 3) && !sunFlavor) {
         if (arc4random() % 2 == 0) { //50%
             if (planetNum == 4) {
-                SKTexture *planetTexture = [planetTextures objectAtIndex:planetTextures.count-1];
-                sprite = [SKSpriteNode spriteNodeWithTexture:planetTexture];
+                planetIndex= (int)planetTextures.count-1;
             } else {
-                SKTexture *planetTexture = [planetTextures objectAtIndex:planetTextures.count-2];
-                sprite = [SKSpriteNode spriteNodeWithTexture:planetTexture];
+                planetIndex= (int)planetTextures.count-2;
             }
             isAsteroidShield = YES;
         }
     }
-    if (!isAsteroidShield) {
-        SKTexture *planetTexture = [planetTextures objectAtIndex:planetNum * 4 + planetFlavor];
+    NSMutableArray *planetArray = [planetSpritesDictionary objectForKey:[NSString stringWithFormat:kPlanetSpriteArrayKey, planetIndex]];
+    if (planetArray.count) {
+        sprite = planetArray[0];
+        [planetArray removeObject:sprite];
+        [sprite removeAllActions];
+    } else {
+        SKTexture *planetTexture = [planetTextures objectAtIndex:planetIndex];
         sprite = [SKSpriteNode spriteNodeWithTexture:planetTexture];
+        if (sunFlavor) {
+            sprite.name = sunObjectSpriteName;
+        } else if (isAsteroidShield) {
+            sprite.name = asteroidShieldCategoryName;
+        } else {
+            sprite.name = planetCategoryName;
+        }
+        
+        sprite.userData = [NSMutableDictionary dictionary];
+        if (isAsteroidShield) {
+            if (planetNum == 3) {
+                sprite.userData[planetNumber] = @(asteroidShield0);
+            } else {
+                sprite.userData[planetNumber] = @(asteroidShield1);
+            }
+        } else {
+            sprite.userData[planetNumber] = @(planetNum);
+        }
+        sprite.userData[planetFlavorNumber] = @(planetFlavor);
+        sprite.userData[planetsIndex] = @(planetIndex);
+        sprite.zPosition = 1;
     }
 
+    SKAction *hoverAction;
+    if ([sprite.userData objectForKey:kPlanetHoverActionKey]) {
+        hoverAction = [sprite.userData objectForKey:kPlanetHoverActionKey];
+    } else {
+        UIBezierPath *hoverPath = [UIBezierPath bezierPath];
+        [hoverPath moveToPoint:sprite.position];
+        [hoverPath addCurveToPoint:CGPointMake(sprite.position.x + (sprite.size.width * 0.1), sprite.position.y)
+                     controlPoint1:CGPointMake(sprite.position.x, sprite.position.y + sprite.size.height * 0.1)
+                     controlPoint2:CGPointMake(sprite.position.x + (sprite.size.width * 0.1), sprite.position.y + sprite.size.height * 0.1)];
+        [hoverPath addCurveToPoint:sprite.position
+                     controlPoint1:CGPointMake(sprite.position.x + (sprite.size.width * 0.1), sprite.position.y - sprite.size.height * 0.1)
+                     controlPoint2:CGPointMake(sprite.position.x, sprite.position.y - sprite.size.height * 0.1)];
+        [hoverPath addCurveToPoint:CGPointMake(sprite.position.x - (sprite.size.width * 0.1), sprite.position.y)
+                     controlPoint1:CGPointMake(sprite.position.x, sprite.position.y + sprite.size.height * 0.1)
+                     controlPoint2:CGPointMake(sprite.position.x - (sprite.size.width * 0.1), sprite.position.y + sprite.size.height * 0.1)];
+        [hoverPath addCurveToPoint:sprite.position
+                     controlPoint1:CGPointMake(sprite.position.x - (sprite.size.width * 0.1), sprite.position.y - sprite.size.height * 0.1)
+                     controlPoint2:CGPointMake(sprite.position.x, sprite.position.y - sprite.size.height * 0.1)];
+        hoverAction = [SKAction repeatActionForever:[SKAction followPath:hoverPath.CGPath asOffset:YES orientToPath:NO duration:30]];
+        [sprite.userData setObject:hoverAction forKey:kPlanetHoverActionKey];
+    }
+    [sprite runAction:hoverAction];
     
-    UIBezierPath *hoverPath = [UIBezierPath bezierPath];
-	[hoverPath moveToPoint:sprite.position];
-	[hoverPath addCurveToPoint:CGPointMake(sprite.position.x + (sprite.size.width * 0.1), sprite.position.y)
-				 controlPoint1:CGPointMake(sprite.position.x, sprite.position.y + sprite.size.height * 0.1)
-				 controlPoint2:CGPointMake(sprite.position.x + (sprite.size.width * 0.1), sprite.position.y + sprite.size.height * 0.1)];
-	[hoverPath addCurveToPoint:sprite.position
-				 controlPoint1:CGPointMake(sprite.position.x + (sprite.size.width * 0.1), sprite.position.y - sprite.size.height * 0.1)
-				 controlPoint2:CGPointMake(sprite.position.x, sprite.position.y - sprite.size.height * 0.1)];
-	[hoverPath addCurveToPoint:CGPointMake(sprite.position.x - (sprite.size.width * 0.1), sprite.position.y)
-				 controlPoint1:CGPointMake(sprite.position.x, sprite.position.y + sprite.size.height * 0.1)
-				 controlPoint2:CGPointMake(sprite.position.x - (sprite.size.width * 0.1), sprite.position.y + sprite.size.height * 0.1)];
-	[hoverPath addCurveToPoint:sprite.position
-				 controlPoint1:CGPointMake(sprite.position.x - (sprite.size.width * 0.1), sprite.position.y - sprite.size.height * 0.1)
-				 controlPoint2:CGPointMake(sprite.position.x, sprite.position.y - sprite.size.height * 0.1)];
-    
-    
-    [sprite runAction:[SKAction repeatActionForever:[SKAction followPath:hoverPath.CGPath asOffset:YES orientToPath:NO duration:30]]];
     [self randomizeSprite:sprite];
     if (planetNum == 5) {
         [self adjustGiantPlanet:sprite];
     }
-    if (sunFlavor) {
-        sprite.name = sunObjectSpriteName;
-    } else if (isAsteroidShield) {
-        sprite.name = asteroidShieldCategoryName;
-    } else {
-        sprite.name = planetCategoryName;
-    }
-    
-    sprite.userData = [NSMutableDictionary dictionary];
-    if (isAsteroidShield) {
-        if (planetNum == 3) {
-            sprite.userData[planetNumber] = @(asteroidShield0);
-        } else {
-            sprite.userData[planetNumber] = @(asteroidShield1);
-        }
-    } else {
-        sprite.userData[planetNumber] = @(planetNum);
-    }
-    sprite.userData[planetFlavorNumber] = @(planetFlavor);
-    sprite.zPosition = 1;
     return sprite;
 }
 
 -(SKSpriteNode*)randomSun {
-    SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithTexture:planetTextures[planetTextures.count-3]];
+    int planetIndex = (int)planetTextures.count-3;
+    NSMutableArray *planetArray = [asteroidSpritesDictionary objectForKey:[NSString stringWithFormat:kPlanetSpriteArrayKey, planetIndex]];
+    SKSpriteNode *sprite;
+    if (planetArray.count) {
+        sprite = planetArray[0];
+        [planetArray removeObject:sprite];
+        [sprite removeAllActions];
+    } else {
+        SKTexture *planetTexture = [planetTextures objectAtIndex:planetIndex];
+        sprite = [SKSpriteNode spriteNodeWithTexture:planetTexture];
+        sprite.name = sunObjectSpriteName;
+        
+        sprite.userData = [NSMutableDictionary dictionary];
+        sprite.userData[planetNumber] = @(5);
+        sprite.userData[planetFlavorNumber] = @(4);
+        sprite.userData[planetsIndex] = @(planetIndex);
+        sprite.zPosition = 1;
+        sprite.zRotation =arc4random() % 360;
+    }
     
-    UIBezierPath *hoverPath = [UIBezierPath bezierPath];
-	[hoverPath moveToPoint:sprite.position];
-	[hoverPath addCurveToPoint:CGPointMake(sprite.position.x + (sprite.size.width * 0.1), sprite.position.y)
-				 controlPoint1:CGPointMake(sprite.position.x, sprite.position.y + sprite.size.height * 0.1)
-				 controlPoint2:CGPointMake(sprite.position.x + (sprite.size.width * 0.1), sprite.position.y + sprite.size.height * 0.1)];
-	[hoverPath addCurveToPoint:sprite.position
-				 controlPoint1:CGPointMake(sprite.position.x + (sprite.size.width * 0.1), sprite.position.y - sprite.size.height * 0.1)
-				 controlPoint2:CGPointMake(sprite.position.x, sprite.position.y - sprite.size.height * 0.1)];
-	[hoverPath addCurveToPoint:CGPointMake(sprite.position.x - (sprite.size.width * 0.1), sprite.position.y)
-				 controlPoint1:CGPointMake(sprite.position.x, sprite.position.y + sprite.size.height * 0.1)
-				 controlPoint2:CGPointMake(sprite.position.x - (sprite.size.width * 0.1), sprite.position.y + sprite.size.height * 0.1)];
-	[hoverPath addCurveToPoint:sprite.position
-				 controlPoint1:CGPointMake(sprite.position.x - (sprite.size.width * 0.1), sprite.position.y - sprite.size.height * 0.1)
-				 controlPoint2:CGPointMake(sprite.position.x, sprite.position.y - sprite.size.height * 0.1)];
+    SKAction *hoverAction;
+    if ([sprite.userData objectForKey:kPlanetHoverActionKey]) {
+        hoverAction = [sprite.userData objectForKey:kPlanetHoverActionKey];
+    } else {
+        UIBezierPath *hoverPath = [UIBezierPath bezierPath];
+        [hoverPath moveToPoint:sprite.position];
+        [hoverPath addCurveToPoint:CGPointMake(sprite.position.x + (sprite.size.width * 0.1), sprite.position.y)
+                     controlPoint1:CGPointMake(sprite.position.x, sprite.position.y + sprite.size.height * 0.1)
+                     controlPoint2:CGPointMake(sprite.position.x + (sprite.size.width * 0.1), sprite.position.y + sprite.size.height * 0.1)];
+        [hoverPath addCurveToPoint:sprite.position
+                     controlPoint1:CGPointMake(sprite.position.x + (sprite.size.width * 0.1), sprite.position.y - sprite.size.height * 0.1)
+                     controlPoint2:CGPointMake(sprite.position.x, sprite.position.y - sprite.size.height * 0.1)];
+        [hoverPath addCurveToPoint:CGPointMake(sprite.position.x - (sprite.size.width * 0.1), sprite.position.y)
+                     controlPoint1:CGPointMake(sprite.position.x, sprite.position.y + sprite.size.height * 0.1)
+                     controlPoint2:CGPointMake(sprite.position.x - (sprite.size.width * 0.1), sprite.position.y + sprite.size.height * 0.1)];
+        [hoverPath addCurveToPoint:sprite.position
+                     controlPoint1:CGPointMake(sprite.position.x - (sprite.size.width * 0.1), sprite.position.y - sprite.size.height * 0.1)
+                     controlPoint2:CGPointMake(sprite.position.x, sprite.position.y - sprite.size.height * 0.1)];
+        hoverAction = [SKAction repeatActionForever:[SKAction followPath:hoverPath.CGPath asOffset:YES orientToPath:NO duration:30]];
+    }
     
-    
-    [sprite runAction:[SKAction repeatActionForever:[SKAction followPath:hoverPath.CGPath asOffset:YES orientToPath:NO duration:30]]];
+    [sprite runAction:hoverAction];
     [self randomizeSprite:sprite];
     sprite.position = CGPointMake(0, sprite.position.y);
     [self adjustGiantPlanet:sprite];
 
-    sprite.name = sunObjectSpriteName;
-    
-    sprite.userData = [NSMutableDictionary dictionary];
-    sprite.userData[planetNumber] = @(5);
-    sprite.userData[planetFlavorNumber] = @(4);
-    sprite.zPosition = 1;
-    sprite.zRotation =arc4random() % 360;
     return sprite;
 
 }
