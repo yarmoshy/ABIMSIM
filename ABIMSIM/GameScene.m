@@ -358,6 +358,11 @@ CGFloat DegreesToRadians(CGFloat degrees)
         return;
     }
     
+    if (shieldHitPoints <= 0 && hasShield) {
+        hasShield = NO;
+        [self updateShipPhysics];
+    }
+    
     if (shipSprite.physicsBody.velocity.dx!=0 || shipSprite.physicsBody.velocity.dy!=0)
         shipSprite.zRotation = atan2f(-shipSprite.physicsBody.velocity.dx, shipSprite.physicsBody.velocity.dy);
     
@@ -865,7 +870,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
                 secondBody.node.name = explodedSpaceMine;
                 explodedMine = (SKSpriteNode*)secondBody.node;
             }];
-            [self runAction:spaceMineSoundAction];
+            if ([ABIMSIMDefaults boolForKey:kSFXSetting]) {
+                [self runAction:spaceMineSoundAction];
+            }
         }
 
         if (firstBody.categoryBitMask == shipCategory && secondBody.categoryBitMask == goalCategory) {
@@ -1027,10 +1034,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         [self checkHitAchievement];
         if (hasShield) {
             shieldHitPoints--;
-            if (shieldHitPoints <= 0) {
-                hasShield = NO;
-                [self updateShipPhysics];
-            } else {
+            if (shieldHitPoints > 0) {
                 NSString *imageName = @"ShipShield_Impact";
                 SKSpriteNode *impactSprite = [SKSpriteNode spriteNodeWithImageNamed:imageName];
                 [[firstBody.node childNodeWithName:shipShieldSpriteName] addChild:impactSprite];
@@ -1785,7 +1789,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
     if (hasShield) {
         width = ship.size.width;
         if (self.currentLevel != 0) {
-            [self runAction:shieldUpSoundAction];
+            if ([ABIMSIMDefaults boolForKey:kSFXSetting]) {
+                [self runAction:shieldUpSoundAction];
+            }
             [[ship childNodeWithName:shipShieldSpriteName] runAction:ship.userData[shipShieldOnAnimation]];
         } else {
             [ship childNodeWithName:shipShieldSpriteName].alpha = 1;
@@ -1793,7 +1799,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
         }
     } else {
         if (self.currentLevel != 0) {
-            [self runAction:shieldDownSoundAction];
+            if ([ABIMSIMDefaults boolForKey:kSFXSetting]) {
+                [self runAction:shieldDownSoundAction];
+            }
             NSString *imageName = @"ShipShield_Pop";
             float scale = 0.64;
             float duration = 0.5;
