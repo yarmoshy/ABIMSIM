@@ -122,7 +122,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
             }
         }
         for (int i = 0; i < 3; i++) {
-            [planetSpritesDictionary setObject:[NSMutableArray new] forKey:[NSString stringWithFormat:kPlanetSpriteArrayKey,[planetSpritesDictionary allKeys].count-1]];
+            [planetSpritesDictionary setObject:[NSMutableArray new] forKey:[NSString stringWithFormat:kPlanetSpriteArrayKey,(int)[planetSpritesDictionary allKeys].count]];
         }
         
         if (!backgroundTextures) {
@@ -679,10 +679,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
                  [GKAchievementDescription loadAchievementDescriptionsWithCompletionHandler:^(NSArray *descriptions, NSError *error) {
                      for (GKAchievementDescription *description in descriptions) {
                          if ([description.identifier isEqualToString:identifier]) {
-                             [GKNotificationBanner showBannerWithTitle:description.title message:description.achievedDescription duration:1 completionHandler:^{
-                                 [ABIMSIMDefaults setBool:YES forKey:identifier];
-                                 [ABIMSIMDefaults synchronize];
-                             }];
+                             [ABIMSIMDefaults setBool:YES forKey:identifier];
+                             [ABIMSIMDefaults synchronize];
                          }
                      }
                  }];
@@ -1437,10 +1435,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
         }
         if ([[currentSpriteArray[i] name] isEqual:asteroidCategoryName]) {
             SKSpriteNode *asteroid = currentSpriteArray[i];
-            if ([asteroid.userData objectForKey:[NSString stringWithFormat:kAsteroidSpriteArrayKey, [asteroid.userData[asteroidsIndex] intValue]]]) {
-                NSMutableArray *asteroidArray = [asteroidSpritesDictionary objectForKey:[NSString stringWithFormat:kAsteroidSpriteArrayKey, [asteroid.userData[asteroidsIndex] intValue]]];
-                [asteroidArray addObject:asteroid];
-            }
+            NSMutableArray *asteroidArray = [asteroidSpritesDictionary objectForKey:[NSString stringWithFormat:kAsteroidSpriteArrayKey, [asteroid.userData[asteroidsIndex] intValue]]];
+            [asteroidArray addObject:asteroid];
         }
         if ([[currentSpriteArray[i] name] isEqual:planetCategoryName]) {
             SKSpriteNode *planet = currentSpriteArray[i];
@@ -2282,7 +2278,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
                 }
             } else {
                 if (![planet.userData[planetFlavorNumber] isEqualToNumber:@2] && ![planet.name isEqualToString:sunObjectSpriteName] && [planet.userData[planetNumber] intValue] < 5) {
-                    planet.userData[moonsArray] = @[[self moonForPlanetNum:[planet.userData[planetNumber] intValue] withPlanet:planet]];
+                    [self adjustMoon:planet.userData[moonsArray][0] forPlanet:planet];
                 }
             }
             [planets addObject:planet];
@@ -2440,9 +2436,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
     if ((planetNum == 4 || planetNum == 3) && !sunFlavor) {
         if (arc4random() % 2 == 0) { //50%
             if (planetNum == 4) {
-                planetIndex= (int)planetTextures.count-1;
+                planetIndex = (int)planetTextures.count-1;
             } else {
-                planetIndex= (int)planetTextures.count-2;
+                planetIndex = (int)planetTextures.count-2;
             }
             isAsteroidShield = YES;
         }
@@ -2570,10 +2566,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
 -(SKSpriteNode*)moonForPlanetNum:(int)planetNum withPlanet:(SKSpriteNode*)planet {
     SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithTexture:asteroidTextures[planetNum]];
-    float distance = planet.size.width/2 + sprite.size.width/2;
-    float angle = arc4random() % 360;
-    sprite.position = CGPointMake(planet.position.x + (cosf(DegreesToRadians(angle)) * distance), planet.position.y + (sinf(DegreesToRadians(angle)) * distance)) ;
-
     sprite.physicsBody = [SKPhysicsBody bodyWithPolygonFromPath:[self pathForAsteroidNum:planetNum withSprite:sprite]];
     sprite.physicsBody.friction = 0.0f;
     sprite.physicsBody.restitution = 1.0f;
@@ -2584,6 +2576,19 @@ CGFloat DegreesToRadians(CGFloat degrees)
     sprite.physicsBody.mass = sprite.size.width;
     sprite.name = asteroidCategoryName;
     sprite.physicsBody.allowsRotation = YES;
+    sprite.colorBlendFactor = 1.0;
+    sprite.name = asteroidCategoryName;
+    sprite.userData = [NSMutableDictionary dictionary];
+    sprite.hidden = YES;
+    sprite.zPosition = 1;
+    [self adjustMoon:sprite forPlanet:planet];
+    return sprite;
+}
+
+-(void)adjustMoon:(SKSpriteNode*)sprite forPlanet:(SKSpriteNode*)planet {
+    float distance = planet.size.width/2 + sprite.size.width/2;
+    float angle = arc4random() % 360;
+    sprite.position = CGPointMake(planet.position.x + (cosf(DegreesToRadians(angle)) * distance), planet.position.y + (sinf(DegreesToRadians(angle)) * distance)) ;
     int colorInt = arc4random() % 6;
     switch (colorInt) {
         case 0:
@@ -2607,14 +2612,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
         default:
             break;
     }
-    sprite.colorBlendFactor = 1.0;
-    sprite.name = asteroidCategoryName;
     SKPhysicsJointPin *centerPin = [SKPhysicsJointPin jointWithBodyA:sprite.physicsBody bodyB: planet.physicsBody anchor:planet.position];
-    sprite.userData = [NSMutableDictionary dictionary];
     sprite.userData[orbitJoint] = centerPin;
-    sprite.hidden = YES;
-    sprite.zPosition = 1;
-    return sprite;
 }
 
 -(float)radiusForPlanetNum:(int)planetNum {
