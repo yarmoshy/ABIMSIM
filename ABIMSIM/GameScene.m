@@ -2286,6 +2286,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
                     planet.physicsBody.contactTestBitMask = planetCategory;
                     if (forceSun) {
                         planet.physicsBody.contactTestBitMask = shipCategory | asteroidCategory;
+                        planet.zRotation = arc4random() % 360;
                     }
                 }
                 planet.physicsBody.mass = 100000;
@@ -2544,27 +2545,28 @@ CGFloat DegreesToRadians(CGFloat degrees)
         sprite.userData[planetFlavorNumber] = @(4);
         sprite.userData[planetsIndex] = @(planetIndex);
         sprite.zPosition = 1;
-        sprite.zRotation =arc4random() % 360;
     }
+    sprite.zRotation =0;
+
     
     SKAction *hoverAction;
     if ([sprite.userData objectForKey:kPlanetHoverActionKey]) {
         hoverAction = [sprite.userData objectForKey:kPlanetHoverActionKey];
     } else {
         UIBezierPath *hoverPath = [UIBezierPath bezierPath];
-        [hoverPath moveToPoint:sprite.position];
-        [hoverPath addCurveToPoint:CGPointMake(sprite.position.x + (sprite.size.width * 0.1), sprite.position.y)
-                     controlPoint1:CGPointMake(sprite.position.x, sprite.position.y + sprite.size.height * 0.1)
-                     controlPoint2:CGPointMake(sprite.position.x + (sprite.size.width * 0.1), sprite.position.y + sprite.size.height * 0.1)];
-        [hoverPath addCurveToPoint:sprite.position
-                     controlPoint1:CGPointMake(sprite.position.x + (sprite.size.width * 0.1), sprite.position.y - sprite.size.height * 0.1)
-                     controlPoint2:CGPointMake(sprite.position.x, sprite.position.y - sprite.size.height * 0.1)];
-        [hoverPath addCurveToPoint:CGPointMake(sprite.position.x - (sprite.size.width * 0.1), sprite.position.y)
-                     controlPoint1:CGPointMake(sprite.position.x, sprite.position.y + sprite.size.height * 0.1)
-                     controlPoint2:CGPointMake(sprite.position.x - (sprite.size.width * 0.1), sprite.position.y + sprite.size.height * 0.1)];
-        [hoverPath addCurveToPoint:sprite.position
-                     controlPoint1:CGPointMake(sprite.position.x - (sprite.size.width * 0.1), sprite.position.y - sprite.size.height * 0.1)
-                     controlPoint2:CGPointMake(sprite.position.x, sprite.position.y - sprite.size.height * 0.1)];
+        [hoverPath moveToPoint:CGPointZero];
+        [hoverPath addCurveToPoint:CGPointMake(0 + (sprite.size.width * 0.1), 0)
+                     controlPoint1:CGPointMake(0, 0 + sprite.size.height * 0.1)
+                     controlPoint2:CGPointMake(0 + (sprite.size.width * 0.1), 0 + sprite.size.height * 0.1)];
+        [hoverPath addCurveToPoint:CGPointZero
+                     controlPoint1:CGPointMake(0 + (sprite.size.width * 0.1), 0 - sprite.size.height * 0.1)
+                     controlPoint2:CGPointMake(0, 0 - sprite.size.height * 0.1)];
+        [hoverPath addCurveToPoint:CGPointMake(0 - (sprite.size.width * 0.1), 0)
+                     controlPoint1:CGPointMake(0, 0 + sprite.size.height * 0.1)
+                     controlPoint2:CGPointMake(0 - (sprite.size.width * 0.1), 0 + sprite.size.height * 0.1)];
+        [hoverPath addCurveToPoint:CGPointZero
+                     controlPoint1:CGPointMake(0 - (sprite.size.width * 0.1), 0 - sprite.size.height * 0.1)
+                     controlPoint2:CGPointMake(0, 0 - sprite.size.height * 0.1)];
         hoverAction = [SKAction repeatActionForever:[SKAction followPath:hoverPath.CGPath asOffset:YES orientToPath:NO duration:30]];
     }
     
