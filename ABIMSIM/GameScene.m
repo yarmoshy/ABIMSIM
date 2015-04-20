@@ -59,6 +59,10 @@
     NSNumber *safeToTransition;
     SKSpriteNode *starBackLayer;
     SKSpriteNode *starFrontLayer;
+    SKSpriteNode *alternateBackLayer;
+    SKSpriteNode *alternateFrontLayer;
+    SKSpriteNode *currentFrontLayer;
+    SKSpriteNode *currentBackLayer;
     SKSpriteNode *background, *background2;
     SKSpriteNode *shipSprite, *currentBlackHole, *explodingMine, *explodedMine;
     BOOL shipWarping;
@@ -233,10 +237,13 @@ CGFloat DegreesToRadians(CGFloat degrees)
         [self addChild:secondaryBorderSprite];
 
         starBackLayer = [[SKSpriteNode alloc] initWithColor:[UIColor clearColor] size:CGSizeMake(size.width, size.height * starBackMovement)];
+        alternateBackLayer = [[SKSpriteNode alloc] initWithColor:[UIColor clearColor] size:CGSizeMake(size.width, size.height * starBackMovement)];
         starFrontLayer = [[SKSpriteNode alloc] initWithColor:[UIColor clearColor] size:CGSizeMake(size.width, size.height * starFrontMovement)];
-        starFrontLayer.anchorPoint = CGPointZero;
-        starBackLayer.anchorPoint = CGPointZero;
-        starBackLayer.position = starFrontLayer.position = CGPointMake(0, 0);
+        alternateFrontLayer = [[SKSpriteNode alloc] initWithColor:[UIColor clearColor] size:CGSizeMake(size.width, size.height * starFrontMovement)];
+
+        starFrontLayer.anchorPoint = alternateFrontLayer.anchorPoint = CGPointZero;
+        starBackLayer.anchorPoint = alternateBackLayer.anchorPoint = CGPointZero;
+        starBackLayer.position = starFrontLayer.position = alternateBackLayer.position = alternateFrontLayer.position = CGPointMake(0, 0);
         [self addChild:starBackLayer];
         [self addChild:starFrontLayer];
 
@@ -279,8 +286,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
     [[AudioController sharedController] gameplay];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pause) name:UIApplicationDidBecomeActiveNotification object:nil];
-
+    self.currentLevel = 0;
     [self transitionStars];
+    self.currentLevel = 1;
     [self showCurrentSprites];
     self.viewController.pauseButton.hidden = NO;
     self.viewController.pauseButton.alpha = 0;
@@ -411,8 +419,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
         frontY = frontY + (frontMaxY);
         float backY = (yPercentageFromCenter * backMaxY);
         backY = backY + (backMaxY);
-        starFrontLayer.position = CGPointMake(starFrontLayer.position.x, -frontY);
-        starBackLayer.position = CGPointMake(starBackLayer.position.x, -backY);
+        currentFrontLayer.position = CGPointMake(currentFrontLayer.position.x, -frontY);
+        currentBackLayer.position = CGPointMake(currentBackLayer.position.x, -backY);
     }
     
     static int maxSpeed = MAX_VELOCITY;
@@ -1204,17 +1212,31 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
 -(void)transitionStars {
     float yVelocity = ((SKSpriteNode*)[self childNodeWithName:shipCategoryName]).physicsBody.velocity.dy;
-    SKSpriteNode *oldStarFrontLayer = starFrontLayer;
-    SKSpriteNode *oldStarBackLayer = starBackLayer;
-    starBackLayer = [[SKSpriteNode alloc] initWithColor:[UIColor clearColor] size:CGSizeMake(self.size.width, self.size.height * starBackMovement)];
-    starFrontLayer = [[SKSpriteNode alloc] initWithColor:[UIColor clearColor] size:CGSizeMake(self.size.width, self.size.height * starFrontMovement)];
-    starBackLayer.zPosition = 0;
-    starFrontLayer.zPosition = 0;
-    starFrontLayer.anchorPoint = CGPointZero;
-    starBackLayer.anchorPoint = CGPointZero;
-    starBackLayer.position = starFrontLayer.position = CGPointMake(0, 0);
-    [self insertChild:starBackLayer atIndex:0];
-    [self insertChild:starFrontLayer atIndex:0];
+    SKSpriteNode *oldStarFrontLayer;
+    SKSpriteNode *oldStarBackLayer;
+    SKSpriteNode *newStarFrontLayer;
+    SKSpriteNode *newStarBackLayer;
+    if (self.currentLevel % 2 == 0) {
+        oldStarFrontLayer = starFrontLayer;
+        oldStarBackLayer = starBackLayer;
+        newStarFrontLayer = alternateFrontLayer;
+        newStarBackLayer = alternateBackLayer;
+    } else {
+        oldStarFrontLayer = alternateFrontLayer;
+        oldStarBackLayer = alternateBackLayer;
+        newStarFrontLayer = starFrontLayer;
+        newStarBackLayer = starBackLayer;
+    }
+    currentBackLayer = newStarBackLayer;
+    currentFrontLayer = newStarFrontLayer;
+
+    newStarBackLayer.zPosition = 0;
+    newStarFrontLayer.zPosition = 0;
+    newStarFrontLayer.anchorPoint = CGPointZero;
+    newStarBackLayer.anchorPoint = CGPointZero;
+    newStarBackLayer.position = newStarFrontLayer.position = CGPointMake(0, 0);
+    [self insertChild:newStarBackLayer atIndex:0];
+    [self insertChild:newStarFrontLayer atIndex:0];
 
     if (!starSprites) {
         starSprites = [NSMutableArray array];
@@ -1268,9 +1290,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
             }
             star.colorBlendFactor = 1.0;
             if (i < 6) {
-                [starBackLayer addChild:star];
+                [newStarBackLayer addChild:star];
             } else {
-                [starFrontLayer addChild:star];
+                [newStarFrontLayer addChild:star];
             }
             [star setScale:0];
             [star runAction:[SKAction scaleTo:1 duration:0.5]];
@@ -1288,9 +1310,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
             [star setScale:0];
             star.colorBlendFactor = 1.0;
             if (i < 6) {
-                [starBackLayer addChild:star];
+                [newStarBackLayer addChild:star];
             } else {
-                [starFrontLayer addChild:star];
+                [newStarFrontLayer addChild:star];
             }
         }
     } else {
@@ -1310,9 +1332,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
                 (!shrinkBackHalf && half == 1)) {
                 [star removeFromParent];
                 if (i < 6) {
-                    [starBackLayer addChild:star];
+                    [newStarBackLayer addChild:star];
                 } else {
-                    [starFrontLayer addChild:star];
+                    [newStarFrontLayer addChild:star];
                 }
                 star.position = CGPointMake(x, y);
                 int size = arc4random() % 3;
@@ -1360,9 +1382,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
                     [star runAction:[SKAction scaleTo:0 duration:0.5] completion:^{
                         [star removeFromParent];
                         if (i < 6) {
-                            [starBackLayer addChild:star];
+                            [newStarBackLayer addChild:star];
                         } else {
-                            [starFrontLayer addChild:star];
+                            [newStarFrontLayer addChild:star];
                         }
                         [oldStarFrontLayer removeFromParent];
                         [oldStarBackLayer removeFromParent];
