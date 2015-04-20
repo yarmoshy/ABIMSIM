@@ -86,8 +86,6 @@
     
     CGPoint lastShipPosition;
     
-    NSMutableDictionary *asteroidSpritesDictionary;
-    NSMutableDictionary *planetSpritesDictionary;
 }
 
 static NSMutableArray *backgroundTextures;
@@ -96,6 +94,8 @@ static NSMutableArray *planetTextures;
 static NSMutableArray *asteroidTextures;
 static NSMutableArray *powerUpTextures;
 static NSMutableArray *spaceMineTextures;
+static NSMutableDictionary *asteroidSpritesDictionary;
+static NSMutableDictionary *planetSpritesDictionary;
 
 CGFloat DegreesToRadians(CGFloat degrees)
 {
@@ -115,18 +115,22 @@ CGFloat DegreesToRadians(CGFloat degrees)
         lastTimeHit = 0;
         timesHitWithinSecond = 0;
         
-        asteroidSpritesDictionary = [NSMutableDictionary new];
-        for (int i = 0; i < 10; i++) {
-            [asteroidSpritesDictionary setObject:[NSMutableArray new] forKey:[NSString stringWithFormat:kAsteroidSpriteArrayKey,i]];
-        }
-        planetSpritesDictionary = [NSMutableDictionary new];
-        for (int i = 0; i < 6; i++) {
-            for (int j = 0; j < 4; j++) {
-                [planetSpritesDictionary setObject:[NSMutableArray new] forKey:[NSString stringWithFormat:kPlanetSpriteArrayKey,i * 4 + j]];
+        if (!asteroidSpritesDictionary) {
+            asteroidSpritesDictionary = [NSMutableDictionary new];
+            for (int i = 0; i < 10; i++) {
+                [asteroidSpritesDictionary setObject:[NSMutableArray new] forKey:[NSString stringWithFormat:kAsteroidSpriteArrayKey,i]];
             }
         }
-        for (int i = 0; i < 3; i++) {
-            [planetSpritesDictionary setObject:[NSMutableArray new] forKey:[NSString stringWithFormat:kPlanetSpriteArrayKey,(int)[planetSpritesDictionary allKeys].count]];
+        if (!planetSpritesDictionary) {
+            planetSpritesDictionary = [NSMutableDictionary new];
+            for (int i = 0; i < 6; i++) {
+                for (int j = 0; j < 4; j++) {
+                    [planetSpritesDictionary setObject:[NSMutableArray new] forKey:[NSString stringWithFormat:kPlanetSpriteArrayKey,i * 4 + j]];
+                }
+            }
+            for (int i = 0; i < 3; i++) {
+                [planetSpritesDictionary setObject:[NSMutableArray new] forKey:[NSString stringWithFormat:kPlanetSpriteArrayKey,(int)[planetSpritesDictionary allKeys].count]];
+            }
         }
         
         if (!backgroundTextures) {
