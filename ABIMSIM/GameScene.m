@@ -135,14 +135,14 @@ CGFloat DegreesToRadians(CGFloat degrees)
         }
         
         if (!backgroundTextures) {
-            backgroundTextures = [NSMutableArray arrayWithCapacity:7];
+            backgroundTextures = [NSMutableArray arrayWithCapacity:8];
             NSMutableArray *backgroundTextureAtlases = [NSMutableArray array];
-            for (int i = 0; i < 2; i++) {
+            for (int i = 0; i < 3; i++) {
                 SKTextureAtlas *atlas = [SKTextureAtlas atlasNamed:[NSString stringWithFormat:@"Background%d",i]];
                 [backgroundTextureAtlases addObject:atlas];
                 for (int j = 0; j < 4; j++) {
                     NSString *textureName = [NSString stringWithFormat:@"Background_%d", (i*4)+j];
-                    if ((i*4)+j > 6) {
+                    if ((i*4)+j > 8) {
                         break;
                     }
                     NSLog(@"%@",textureName);
@@ -1522,7 +1522,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     if (self.currentLevel % 10 == 0) {
         int backgroundNumber = self.currentLevel / 10;
         backgroundNumber++;
-        if (backgroundNumber > 6) backgroundNumber = 6;
+        if (backgroundNumber > 8) backgroundNumber = 8;
         if (background.alpha == 0) {
             [background runAction:[SKAction fadeAlphaTo:1 duration:0.5]];
             [background2 runAction:[SKAction fadeAlphaTo:0 duration:0.5] completion:^{

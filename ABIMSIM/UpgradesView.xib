@@ -11,7 +11,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="UpgradesBackground" translatesAutoresizingMaskIntoConstraints="NO" id="FdE-VK-S8r">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Background_7.png" translatesAutoresizingMaskIntoConstraints="NO" id="FdE-VK-S8r">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                 </imageView>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="ROn-Yt-dQR">
@@ -68,7 +68,7 @@
         </view>
     </objects>
     <resources>
-        <image name="UpgradesBackground" width="320" height="568"/>
+        <image name="Background_7.png" width="320" height="568"/>
         <image name="UpgradesChevron" width="15" height="23"/>
         <image name="UpgradesHeaderTitle" width="102" height="27"/>
     </resources>
