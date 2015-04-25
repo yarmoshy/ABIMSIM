@@ -570,16 +570,13 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
     float distance = sqrtf(powf(p1.x - p2.x,2) + powf(p1.y - p2.y, 2));
     float magnitude = (self.frame.size.height / distance);
-    if (sprite.name == planetCategoryName) {
-        magnitude = powf(magnitude, 7.5);
-        magnitude *= 10;
-    } else if (sprite.name == shipCategoryName) {
+    if (sprite.name == shipCategoryName) {
         magnitude = powf(magnitude, 4.5);
     } else {
         magnitude = powf(magnitude, 4);
     }
     [sprite.physicsBody applyImpulse:CGVectorMake(-x*magnitude, -y*magnitude)];
-    if ([sprite.name isEqualToString:asteroidShieldCategoryName] || [sprite.name isEqualToString:starSpriteName]) {
+    if (sprite.name == planetCategoryName || sprite.name == asteroidShieldCategoryName || sprite.name == starSpriteName) {
         if (magnitude > 250) {
             magnitude = 250;
         }
@@ -2294,8 +2291,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
                         planet.zRotation = arc4random() % 360;
                     }
                 }
-                planet.physicsBody.mass = 100000;
-                planet.physicsBody.dynamic = YES;
+//                planet.physicsBody.mass = 100000;
+                planet.physicsBody.dynamic = NO;
                 planet.physicsBody.collisionBitMask = shipCategory | asteroidCategory | asteroidInShieldCategory | asteroidShieldCategory;
                 planet.physicsBody.allowsRotation = NO;
                 if (![self addRingPhysicsBodyIfApplicableForPlanet:planet] && ![planet.name isEqualToString:sunObjectSpriteName] && [planet.userData[planetNumber] intValue] < 5) {
@@ -2359,7 +2356,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         extraBodySprite.physicsBody.categoryBitMask = planetCategory;
         extraBodySprite.physicsBody.collisionBitMask = shipCategory | asteroidCategory;
         extraBodySprite.physicsBody.allowsRotation = NO;
-        extraBodySprite.physicsBody.mass = 100000;
+//        extraBodySprite.physicsBody.mass = 100000;
         [planet addChild:extraBodySprite];
         return YES;
     }
@@ -2575,7 +2572,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         hoverAction = [SKAction repeatActionForever:[SKAction followPath:hoverPath.CGPath asOffset:YES orientToPath:NO duration:30]];
     }
     
-    [sprite runAction:hoverAction];
+//    [sprite runAction:hoverAction];
     [self randomizeSprite:sprite];
     sprite.position = CGPointMake(0, sprite.position.y);
     [self adjustGiantPlanet:sprite];
