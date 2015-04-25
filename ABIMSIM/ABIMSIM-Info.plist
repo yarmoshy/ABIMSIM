@@ -27,6 +27,7 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>Voltaire-Regular.ttf</string>
+		<string>Moki-Lean.otf</string>
 	</array>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>

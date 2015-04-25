@@ -266,7 +266,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
         spritesArrays = [NSMutableArray array];
         currentSpriteArray = [NSMutableArray array];
         
-        SKLabelNode *level = [[SKLabelNode alloc] initWithFontNamed:@"Voltaire"];
+        SKLabelNode *level = [[SKLabelNode alloc] initWithFontNamed:@"Moki-Lean"];
+        level.alpha = 0.7f;
+        level.fontSize = 15;
         level.text = [NSString stringWithFormat:@"%d",self.currentLevel];
         level.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeLeft;
         level.position = CGPointMake(15, 15);
@@ -274,7 +276,18 @@ CGFloat DegreesToRadians(CGFloat degrees)
         level.name = levelNodeName;
         level.hidden = YES;
         [self addChild:level];
-                
+        
+        SKLabelNode *levelParsecs = [[SKLabelNode alloc] initWithFontNamed:@"Futura-CondensedMedium"];
+        levelParsecs.alpha = 0.7f;
+        levelParsecs.fontSize = 12;
+        levelParsecs.text = @"PARSEC";
+        levelParsecs.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeLeft;
+        levelParsecs.position = CGPointMake(level.position.x + level.frame.size.width + 1, 16);
+        levelParsecs.zPosition = 100;
+        levelParsecs.name = levelParsecsNodeName;
+        levelParsecs.hidden = YES;
+        [self addChild:levelParsecs];
+
         [self addChild:shipSprite];
         [self updateShipPhysics];
         [self childNodeWithName:shipCategoryName].physicsBody.collisionBitMask = borderCategory | asteroidCategory | planetCategory;
@@ -316,6 +329,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
     self.viewController.pauseButton.alpha = 0;
     [self childNodeWithName:levelNodeName].hidden = NO;
     [self childNodeWithName:levelNodeName].alpha = 0;
+    [self childNodeWithName:levelParsecsNodeName].hidden = NO;
+    [self childNodeWithName:levelParsecsNodeName].alpha = 0;
+
     [[self childNodeWithName:shipCategoryName] runAction:[SKAction moveTo:CGPointMake(self.frame.size.width/2, ((SKSpriteNode*)[self childNodeWithName:shipCategoryName]).size.height*2) duration:0.5] completion:^{
         self.paused = NO;
         self.initialPause = YES;
@@ -339,8 +355,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
     }];
 
     [UIView animateWithDuration:0.25 delay:0 options:0 animations:^{
-        self.viewController.pauseButton.alpha = 1;
-        [self childNodeWithName:levelNodeName].alpha = 1;
+        self.viewController.pauseButton.alpha = 0.7;
+        [self childNodeWithName:levelNodeName].alpha = 0.7;
+        [self childNodeWithName:levelParsecsNodeName].alpha = 0.7;
     } completion:^(BOOL finished) {
         ;
     }];
@@ -917,6 +934,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
             firstBody.node.name = removedThisSprite;
         }
         if (firstBody.categoryBitMask == shipCategory && secondBody.categoryBitMask == powerUpShieldCategory) {
+            hasShield = NO;
             secondBody.node.name = removedThisSprite;
             shieldHitPoints = 1 + [ABIMSIMDefaults integerForKey:kShieldDurabilityLevel];
         }
@@ -1172,8 +1190,12 @@ CGFloat DegreesToRadians(CGFloat degrees)
     }
     shipHitPoints = 1;
 
-    ((SKLabelNode*)[self childNodeWithName:levelNodeName]).text = [NSString stringWithFormat:@"%d",self.currentLevel];
+    SKLabelNode *level = (SKLabelNode*)[self childNodeWithName:levelNodeName];
+    level.text = [NSString stringWithFormat:@"%d",self.currentLevel];
+    [self childNodeWithName:levelParsecsNodeName].position = CGPointMake(level.position.x + level.frame.size.width + 1, 16);
+    ((SKLabelNode*)[self childNodeWithName:levelParsecsNodeName]).text = @"PARSEC";
 
+//    [self childNodeWithName:levelParsecsNodeName].position =
     safeToTransition = @YES;
     SKSpriteNode *goal = (SKSpriteNode*)[self childNodeWithName:goalCategoryName];
     [goal removeFromParent];
@@ -1400,7 +1422,11 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
 -(void)generateInitialLevelsAndShowSprites:(BOOL)show {
     self.currentLevel = 1;
-    ((SKLabelNode*)[self childNodeWithName:levelNodeName]).text = @"1";
+    SKLabelNode *level = (SKLabelNode*)[self childNodeWithName:levelNodeName];
+    level.text = @"1";
+    [self childNodeWithName:levelParsecsNodeName].position = CGPointMake(level.position.x + level.frame.size.width + 1, 16);
+    ((SKLabelNode*)[self childNodeWithName:levelParsecsNodeName]).text = @"PARSEC";
+
     for (int i = 1; i <= kNumberOfLevelsToGenerate; i++) {
         NSMutableArray *spriteArray = [NSMutableArray array];
         NSMutableArray *asteroids = [self asteroidsForLevel:i];
@@ -1510,7 +1536,11 @@ CGFloat DegreesToRadians(CGFloat degrees)
         }
     }
 
-    ((SKLabelNode*)[self childNodeWithName:levelNodeName]).text = [NSString stringWithFormat:@"%d",self.currentLevel];
+    SKLabelNode *level = (SKLabelNode*)[self childNodeWithName:levelNodeName];
+    level.text = [NSString stringWithFormat:@"%d",self.currentLevel];
+    [self childNodeWithName:levelParsecsNodeName].position = CGPointMake(level.position.x + level.frame.size.width + 1, 16);
+    ((SKLabelNode*)[self childNodeWithName:levelParsecsNodeName]).text = @"PARSECS";
+
     CGRect goalRect;
     goalRect = CGRectMake(self.frame.origin.x, self.frame.size.height + kExtraSpaceOffScreen, self.frame.size.width, 1);
     SKNode* goal = [SKNode node];

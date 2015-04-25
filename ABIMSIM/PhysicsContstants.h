@@ -22,6 +22,8 @@ static NSString* blackHoleCategoryName = @"blackHole";
 static NSString* asteroidShieldCategoryName = @"asteroidShield";
 static NSString* goalCategoryName = @"goal";
 static NSString* levelNodeName = @"level";
+static NSString* levelParsecsNodeName = @"levelParsecs";
+
 static NSString* powerUpShieldName = @"shield";
 static NSString* powerUpShieldRingName = @"shieldGlow";
 static NSString* powerUpSpaceMineName = @"spaceMine";
