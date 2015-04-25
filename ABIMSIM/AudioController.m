@@ -19,11 +19,12 @@ typedef enum {
     AVAudioPlayer *minePlayer;
     AVAudioPlayer *shieldUpPlayer;
     AVAudioPlayer *shieldDownPlayer;
+    AVAudioPlayer *shipExplosion;
 
     STKAudioPlayer* audioPlayer;
     MusicMode musicMode;
     NSTimer *currentTimeTimer;
-    BOOL playSoundEffect;
+    BOOL playSoundEffect, playMusic;
 }
 
 
@@ -46,14 +47,21 @@ typedef enum {
         
         audioPlayer = [[STKAudioPlayer alloc] initWithOptions:(STKAudioPlayerOptions){ .flushQueueOnSeek = YES, .enableVolumeMixer = YES, .equalizerBandFrequencies = {50, 100, 200, 400, 800, 1600, 2600, 16000} }];
         audioPlayer.meteringEnabled = YES;
-        audioPlayer.volume = [ABIMSIMDefaults boolForKey:kMusicSetting];
+        audioPlayer.volume = 1;
         audioPlayer.delegate = self;
-        playSoundEffect = [ABIMSIMDefaults boolForKey:kMusicSetting];
+        playSoundEffect = [ABIMSIMDefaults boolForKey:kSFXSetting];
+        playMusic = [ABIMSIMDefaults boolForKey:kMusicSetting];
 //        NSString* path = [[NSBundle mainBundle] pathForResource:@"Level1" ofType:@"mp3"];
 //        NSURL* url = [NSURL fileURLWithPath:path];
 //        
 //        STKDataSource* dataSource = [STKAudioPlayer dataSourceFromURL:url];
 //        [audioPlayer queueDataSource:dataSource withQueueItemId:[[SampleQueueId alloc] initWithUrl:url andCount:0]];
+
+        AVAudioSession *session = [AVAudioSession sharedInstance];
+        NSError *setCategoryError = nil;
+        [session setCategory:AVAudioSessionCategoryPlayback
+                 withOptions:AVAudioSessionCategoryOptionMixWithOthers
+                       error:&setCategoryError];
         
         NSError __autoreleasing *errorMine;
         NSString *filePath = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"explosionMineTrimmed.caf"];
@@ -74,6 +82,13 @@ typedef enum {
         shieldDownPlayer.delegate = self;
         [shieldDownPlayer prepareToPlay];
         
+        filePath = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"explosionTrimmed.caf"];
+        shipExplosion = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:filePath] fileTypeHint:@"caf" error:&errorMine];
+        shipExplosion.numberOfLoops = 0;
+        shipExplosion.delegate = self;
+        [shipExplosion prepareToPlay];
+
+        
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(musicToggled) name:kMusicToggleChanged object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sfxToggled) name:kSFXToggleChanged object:nil];
     }
@@ -81,7 +96,13 @@ typedef enum {
 }
 
 -(void)musicToggled {
-    audioPlayer.volume = [ABIMSIMDefaults boolForKey:kMusicSetting];
+    playMusic = [ABIMSIMDefaults boolForKey:kMusicSetting];
+    if (!playMusic) {
+        [audioPlayer clearQueue];
+        [audioPlayer stop];
+    } else {
+        [self audioPlayer:audioPlayer didStartPlayingQueueItemId:nil];
+    }
 }
 
 -(void)sfxToggled {
@@ -91,28 +112,22 @@ typedef enum {
 -(void)playerDeath {
     musicMode = MusicModeIntro;
     if (playSoundEffect) {
-        NSString* path = [[NSBundle mainBundle] pathForResource:@"explosionTrimmed" ofType:@"caf"];
-        NSURL* url = [NSURL fileURLWithPath:path];
-        
-        STKDataSource* dataSource = [STKAudioPlayer dataSourceFromURL:url];
-        [audioPlayer playDataSource:dataSource withQueueItemID:[[SampleQueueId alloc] initWithUrl:url andCount:0]];
-    } else {
-        [audioPlayer stop];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [self audioPlayer:audioPlayer didStartPlayingQueueItemId:nil];
-        });
+        [shipExplosion play];
     }
+    [audioPlayer stop];
+    [self audioPlayer:audioPlayer didStartPlayingQueueItemId:nil];
 }
 
 -(void)gameplay {
     musicMode = MusicModeGame;
     [audioPlayer clearQueue];
-    
-    NSString* path = [[NSBundle mainBundle] pathForResource:@"parsecsGameplayMusic" ofType:@"mp3"];
-    NSURL* url = [NSURL fileURLWithPath:path];
-    
-    STKDataSource* dataSource = [STKAudioPlayer dataSourceFromURL:url];
-    [audioPlayer queueDataSource:dataSource withQueueItemId:[[SampleQueueId alloc] initWithUrl:url andCount:0]];
+    if (playMusic) {
+        NSString* path = [[NSBundle mainBundle] pathForResource:@"parsecsGameplayMusic" ofType:@"mp3"];
+        NSURL* url = [NSURL fileURLWithPath:path];
+        
+        STKDataSource* dataSource = [STKAudioPlayer dataSourceFromURL:url];
+        [audioPlayer queueDataSource:dataSource withQueueItemId:[[SampleQueueId alloc] initWithUrl:url andCount:0]];
+    }
 }
 
 -(void)mine {
@@ -137,6 +152,9 @@ typedef enum {
 
 -(void) audioPlayer:(STKAudioPlayer*)aAudioPlayer didStartPlayingQueueItemId:(NSObject*)queueItemId
 {
+    if (!playMusic) {
+        return;
+    }
     if (musicMode == MusicModeIntro) {
 //        NSString* path = [[NSBundle mainBundle] pathForResource:@"Level1" ofType:@"mp3"];
 //        NSURL* url = [NSURL fileURLWithPath:path];
