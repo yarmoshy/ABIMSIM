@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -11,15 +11,27 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view alpha="0.10000000000000007" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dHm-rb-9KP">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="UpgradesBackground" translatesAutoresizingMaskIntoConstraints="NO" id="FdE-VK-S8r">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                </imageView>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="ROn-Yt-dQR">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <connections>
+                        <outlet property="dataSource" destination="iN0-l3-epB" id="xi6-Dl-hDB"/>
+                        <outlet property="delegate" destination="iN0-l3-epB" id="FfZ-uX-Cex"/>
+                    </connections>
+                </tableView>
+                <view alpha="0.65000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dHm-rb-9KP">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="72"/>
-                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" red="0.066666666666666666" green="0.031372549019607843" blue="0.14117647058823529" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="72" id="Xdy-gE-vZH"/>
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eVw-28-GZV">
-                    <rect key="frame" x="15" y="15.5" width="40" height="40"/>
+                    <rect key="frame" x="15" y="16" width="40" height="40"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="40" id="bFQ-lt-sqL"/>
                         <constraint firstAttribute="height" constant="40" id="zZy-dn-XIW"/>
@@ -34,15 +46,6 @@
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="UpgradesHeaderTitle" translatesAutoresizingMaskIntoConstraints="NO" id="qOY-HB-JBK">
                     <rect key="frame" x="109" y="22" width="102" height="27"/>
                 </imageView>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="ROn-Yt-dQR">
-                    <rect key="frame" x="0.0" y="72" width="320" height="496"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    <connections>
-                        <outlet property="dataSource" destination="iN0-l3-epB" id="xi6-Dl-hDB"/>
-                        <outlet property="delegate" destination="iN0-l3-epB" id="FfZ-uX-Cex"/>
-                    </connections>
-                </tableView>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
@@ -55,8 +58,8 @@
                 <constraint firstAttribute="bottom" secondItem="ROn-Yt-dQR" secondAttribute="bottom" id="TtU-yn-nBC"/>
                 <constraint firstItem="ROn-Yt-dQR" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="VSR-u0-9FZ"/>
                 <constraint firstAttribute="trailing" secondItem="dHm-rb-9KP" secondAttribute="trailing" id="eFj-G8-VRM"/>
+                <constraint firstItem="ROn-Yt-dQR" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="huQ-8g-Rre"/>
                 <constraint firstItem="eVw-28-GZV" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="san-GG-qD7"/>
-                <constraint firstItem="ROn-Yt-dQR" firstAttribute="top" secondItem="dHm-rb-9KP" secondAttribute="bottom" id="vLE-9p-ueG"/>
             </constraints>
             <connections>
                 <outlet property="tableView" destination="ROn-Yt-dQR" id="fpc-WS-pHa"/>
@@ -65,6 +68,7 @@
         </view>
     </objects>
     <resources>
+        <image name="UpgradesBackground" width="320" height="568"/>
         <image name="UpgradesChevron" width="15" height="23"/>
         <image name="UpgradesHeaderTitle" width="102" height="27"/>
     </resources>

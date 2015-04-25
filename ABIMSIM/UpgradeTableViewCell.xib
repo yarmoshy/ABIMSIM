@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -52,7 +52,7 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100 XP" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="97p-kL-Kba">
-                                <rect key="frame" x="-2" y="25" width="40" height="22"/>
+                                <rect key="frame" x="0.0" y="25" width="40" height="22"/>
                                 <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="18"/>
                                 <color key="textColor" red="0.82745098039215681" green="0.047058823529411764" blue="0.37254901960784315" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -66,7 +66,7 @@
                             <constraint firstAttribute="trailing" secondItem="2br-85-ChM" secondAttribute="trailing" id="L3t-6x-tBo"/>
                             <constraint firstItem="2br-85-ChM" firstAttribute="leading" secondItem="f2j-Ii-iGG" secondAttribute="leading" id="Lsc-ji-H71"/>
                             <constraint firstItem="0jF-jQ-4ZY" firstAttribute="top" secondItem="2br-85-ChM" secondAttribute="bottom" constant="3" id="MUg-LP-Ra0"/>
-                            <constraint firstItem="97p-kL-Kba" firstAttribute="leading" secondItem="f2j-Ii-iGG" secondAttribute="leading" constant="-2" id="V1m-de-zJM"/>
+                            <constraint firstItem="97p-kL-Kba" firstAttribute="leading" secondItem="f2j-Ii-iGG" secondAttribute="leading" id="V1m-de-zJM"/>
                             <constraint firstAttribute="width" constant="150" id="o5k-1h-4yy"/>
                             <constraint firstItem="2br-85-ChM" firstAttribute="top" secondItem="f2j-Ii-iGG" secondAttribute="top" id="spJ-wF-WWP"/>
                         </constraints>

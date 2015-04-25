@@ -8,15 +8,19 @@
 
 #import "UpgradesView.h"
 
-#define kTypeCellHeight 40
+#define kTypeCellHeight 55
 
 @implementation UpgradesView {
     long shieldOccurance, shieldDurability, shieldOnStart, mineOccurance, mineBlastSpeed;
+    NSNumberFormatter *formatter;
+
     BOOL animating;
 }
 
 -(id)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {
+        formatter  = [NSNumberFormatter new];
+        [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
     }
     return self;
 }
@@ -60,19 +64,31 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
-        return 50;
+        return 136;
+    }
+    if (indexPath.section == 0) {
+        return 50+ 72;
     }
     if (indexPath.section > 0 && indexPath.row == 0) {
         return kTypeCellHeight;
     }
-    return 122;
+    if (indexPath.section == 1 && indexPath.row == [self tableView:tableView numberOfRowsInSection:indexPath.section]-1) {
+        return 117;
+    }
+    return 120;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 0) {
+        return 136;
+    }
+    if (indexPath.section == 0) {
+        return 50+ 72;
+    }
     if (indexPath.section > 0 && indexPath.row == 0) {
         return kTypeCellHeight;
     }
-    return 122;
+    return 120;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
@@ -92,13 +108,13 @@
         xpCell.backgroundColor = xpCell.contentView.backgroundColor = [UIColor clearColor];
         
         UIImageView *youHaveImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"YouHaveTitle"]];
-        youHaveImageView.center = CGPointMake(tableView.frame.size.width/2, 10 + youHaveImageView.frame.size.height/2);
+        youHaveImageView.center = CGPointMake(tableView.frame.size.width/2, 97 + youHaveImageView.frame.size.height/2);
         [xpCell.contentView addSubview:youHaveImageView];
         
         UILabel *xpLabel = [[UILabel alloc] init];
         xpLabel.font = [UIFont fontWithName:@"Futura-CondensedMedium" size:25];
         xpLabel.textColor = [UIColor colorWithRed:211.f/255.f green:12.f/255.f blue:95.f/255.f alpha:1];
-        xpLabel.text = [NSString stringWithFormat:@"%ld XP",(long)[ABIMSIMDefaults integerForKey:kUserDuckets]];
+        xpLabel.text = [NSString stringWithFormat:@"%@ XP",[formatter stringFromNumber:[NSNumber numberWithInteger:[ABIMSIMDefaults integerForKey:kUserDuckets]]]];
         [xpLabel sizeToFit];
         xpLabel.center = CGPointMake(youHaveImageView.center.x, youHaveImageView.center.y + youHaveImageView.frame.size.height/2 + xpLabel.frame.size.height/2);
         [xpCell.contentView addSubview:xpLabel];
@@ -125,7 +141,7 @@
             } else {
                 upgradeIconImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"MineIcon"]];
             }
-            upgradeIconImage.frame = CGRectMake(15, 5, 30, 30);
+            upgradeIconImage.frame = CGRectMake(15, 12.5, 30, 30);
             [typeCell.contentView addSubview:upgradeIconImage];
             
             UIImageView *upgradeTypeImage;
@@ -264,7 +280,7 @@
     cell.descriptionLabel.text = @"Your ship will start with a shield at the beginning of each game.";
     if (shieldOnStart > 0) {
         cell.upgradeLabel.alpha = 0;
-        cell.xpRequiredLabel.text = @"";
+        cell.xpRequiredLabel.text = @"UPGRADED";
         cell.upgradeButton.enabled = NO;
         cell.ringImageView.image = [UIImage imageNamed:@"SolidRing_Full"];
     } else if ([ABIMSIMDefaults integerForKey:kUserDuckets] < 100) {
@@ -286,7 +302,7 @@
     if (shieldOccurance == 10) {
         cell.upgradeLabel.alpha = 0;
         cell.upgradeButton.enabled = NO;
-        cell.xpRequiredLabel.text = @"";
+        cell.xpRequiredLabel.text = @"FULLY UPGRADED";
     } else if ([ABIMSIMDefaults integerForKey:kUserDuckets] < (shieldOccurance+1)*10) {
         cell.upgradeLabel.alpha = disabledAlpha;
         cell.upgradeButton.enabled = NO;
@@ -299,11 +315,35 @@
 -(void)configureShieldStrengthCell:(UpgradeTableViewCell*)cell {
     cell.cellType = UpgradeTableViewCellTypeShieldStrength;
     cell.upgradeTypeImageView.image = [UIImage imageNamed:@"ShieldStrengthText"];
-    cell.xpRequiredLabel.text = [NSString stringWithFormat:@"%ld XP",(shieldDurability+1)*100];
-    cell.ringImageView.image = [UIImage imageNamed:@"SolidRing_Empty"];
-    cell.unlimitedUpgradesHeightConstraint.constant = 10;
+    int shipShieldStrengthCost = (int)(shieldDurability+1)*100;
+    switch (shipShieldStrengthCost) {
+        case 600:
+            shipShieldStrengthCost = 1000;
+            break;
+        case 700:
+            shipShieldStrengthCost = 2000;
+            break;
+        case 800:
+            shipShieldStrengthCost = 4000;
+            break;
+        case 900:
+            shipShieldStrengthCost = 8000;
+            break;
+        case 1000:
+            shipShieldStrengthCost = 10000;
+            break;
+        default:
+            break;
+    }
+    cell.xpRequiredLabel.text = [NSString stringWithFormat:@"%@ XP",[formatter stringFromNumber:[NSNumber numberWithInteger:shipShieldStrengthCost]]];
+    cell.ringImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"Ring_10Pieces_%ld", shieldDurability]];
+    cell.unlimitedUpgradesHeightConstraint.constant = 0;
     cell.descriptionLabel.text = @"The higher your upgrade, the more hits it will take to pop your shield.";
-    if ([ABIMSIMDefaults integerForKey:kUserDuckets] < (shieldDurability+1)*100) {
+    if (shieldDurability == 10) {
+        cell.upgradeLabel.alpha = 0;
+        cell.upgradeButton.enabled = NO;
+        cell.xpRequiredLabel.text = @"FULLY UPGRADED";
+    } else if ([ABIMSIMDefaults integerForKey:kUserDuckets] < shipShieldStrengthCost) {
         cell.upgradeLabel.alpha = disabledAlpha;
         cell.upgradeButton.enabled = NO;
     } else {
@@ -337,7 +377,7 @@
     cell.descriptionLabel.text = @"The higher your upgrade, the more often the mines will become available.";
     if (mineOccurance == 10) {
         cell.upgradeLabel.alpha = 0;
-        cell.xpRequiredLabel.text = @"";
+        cell.xpRequiredLabel.text = @"FULLY UPGRADED";
         cell.upgradeButton.enabled = NO;
     } else if ([ABIMSIMDefaults integerForKey:kUserDuckets] < (mineOccurance+1)*10) {
         cell.upgradeLabel.alpha = disabledAlpha;
@@ -357,7 +397,7 @@
     cell.descriptionLabel.text = @"The high your upgrade, the faster the mine will explode and clear out obstacles.";
     if (mineBlastSpeed == 5) {
         cell.upgradeLabel.alpha = 0;
-        cell.xpRequiredLabel.text = @"";
+        cell.xpRequiredLabel.text = @"FULLY UPGRADED";
         cell.upgradeButton.enabled = NO;
     } else if ([ABIMSIMDefaults integerForKey:kUserDuckets] < (mineBlastSpeed+1)*20) {
         cell.upgradeLabel.alpha = disabledAlpha;
@@ -373,7 +413,7 @@
         return;
     }
     BOOL unlock = NO;
-    BOOL delay = NO;
+//    BOOL delay = NO;
     switch (cell.cellType) {
         case UpgradeTableViewCellTypeMineBlastSpeed: {
             long newValue = mineBlastSpeed+1;
@@ -394,9 +434,8 @@
         }
             break;
         case UpgradeTableViewCellTypeShieldStrength: {
-            delay = YES;
             long newValue = shieldDurability+1;
-            cell.ringImageView.image = [UIImage imageNamed:@"SolidRing_Full"];
+            cell.ringImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"Ring_10Pieces_%ld",newValue]];
             [ABIMSIMDefaults setInteger:newValue forKey:kShieldDurabilityLevel];
         }
             break;
@@ -423,7 +462,7 @@
         default:
             break;
     }
-    int ducketCost = [[cell.xpRequiredLabel.text substringToIndex:[cell.xpRequiredLabel.text rangeOfString:@" XP"].location] intValue];
+    int ducketCost = [[[cell.xpRequiredLabel.text substringToIndex:[cell.xpRequiredLabel.text rangeOfString:@" XP"].location] stringByReplacingOccurrencesOfString:@"," withString:@""] intValue];
     [ABIMSIMDefaults setInteger:[ABIMSIMDefaults integerForKey:kUserDuckets] - ducketCost forKey:kUserDuckets];
     [ABIMSIMDefaults synchronize];
     if (unlock) {
@@ -460,13 +499,13 @@
             });
         });
     } else {
-        if (delay) {
-            animating = YES;
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [self.tableView reloadData];
-                animating = NO;
-            });
-        } else
+//        if (delay) {
+//            animating = YES;
+//            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//                [self.tableView reloadData];
+//                animating = NO;
+//            });
+//        } else
             [self.tableView reloadData];
     }
 }

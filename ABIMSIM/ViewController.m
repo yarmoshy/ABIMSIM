@@ -68,9 +68,7 @@
     self.scene.scaleMode = SKSceneScaleModeAspectFill;
     self.scene.viewController = self;
     // Present the scene.
-    [skView presentScene:self.scene];
-    [[AudioController sharedController] playerDeath];
-    
+    [skView presentScene:self.scene];    
 }
 
 - (BOOL)prefersStatusBarHidden {
