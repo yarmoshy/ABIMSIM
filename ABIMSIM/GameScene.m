@@ -573,9 +573,13 @@ CGFloat DegreesToRadians(CGFloat degrees)
         }
     }
     if (explodedMine) {
-        SKSpriteNode *explodingRing = (SKSpriteNode*)[explodingMine childNodeWithName:powerUpSpaceMineExplodeRingName];
-        [explodingRing removeFromParent];
-        [explodedMine removeFromParent];
+        __block SKSpriteNode *mine = explodedMine;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            SKSpriteNode *explodingRing = (SKSpriteNode*)[explodingMine childNodeWithName:powerUpSpaceMineExplodeRingName];
+            [explodingRing removeFromParent];
+            [mine removeFromParent];
+        });
+        explodedMine = nil;
     }
     if (self.transitioningToMenu) {
         self.transitioningToMenu = NO;
@@ -1766,10 +1770,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     }];
     SKAction *sequenceAction = [SKAction sequence:@[blockAction, expandRingAction]];
     SKAction *animationAction = [SKAction customActionWithDuration:0 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
-        [[node childNodeWithName:powerUpSpaceMineExplodeRingName] runAction:sequenceAction completion:^{
-//            [node removeFromParent];
-            node.name = removedThisSprite;
-        }];
+        [[node childNodeWithName:powerUpSpaceMineExplodeRingName] runAction:sequenceAction];
     }];
     sprite.userData[powerUpSpaceMineExplosionRingAnimation] = animationAction;
 
