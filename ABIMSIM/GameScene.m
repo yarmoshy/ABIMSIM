@@ -106,6 +106,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
 -(id)initWithSize:(CGSize)size {
     if (self = [super initWithSize:size]) {
         /* Setup your scene here */
+        self.initialPause = YES;
         walkthroughSeen = [ABIMSIMDefaults boolForKey:kWalkthroughSeen];
         
         shieldUpSoundAction = [SKAction playSoundFileNamed:@"activateShieldTrimmed.caf" waitForCompletion:NO];
@@ -280,17 +281,33 @@ CGFloat DegreesToRadians(CGFloat degrees)
         [self generateInitialLevelsAndShowSprites:NO];
         safeToTransition = @YES;
         shipWarping = YES;
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pause) name:UIApplicationWillResignActiveNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActive) name:UIApplicationWillResignActiveNotification object:nil];
 
     }
     return self;
+}
+
+-(void)applicationWillResignActive {
+    if (self.viewController.mainMenuView.alpha == 0 &&
+        self.viewController.pausedView.alpha == 0 &&
+        self.viewController.gameOverView.alpha == 0 &&
+        self.viewController.upgradesView.alpha == 0 &&
+        !self.initialPause) {
+        [self pause];
+    }
+}
+
+-(void)applicationDidBecomeActive {
+    if (self.viewController.pausedView.alpha != 0) {
+        self.paused = YES;
+    }
 }
 
 -(void)transitionFromMainMenu {
     self.paused = NO;
     [[AudioController sharedController] gameplay];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pause) name:UIApplicationDidBecomeActiveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive) name:UIApplicationDidBecomeActiveNotification object:nil];
     self.currentLevel = 0;
     [self transitionStars];
     self.currentLevel = 1;
@@ -352,12 +369,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
     self.paused = YES;
     flickRecognizer.enabled = NO;
     [self.viewController showPausedView];
-}
-
--(void)upgradeTapped:(id)sender {
-    UpgradeScene *us = [[UpgradeScene alloc] initWithSize:self.size];
-    us.viewController = self.viewController;
-    [self.view presentScene:us transition:[SKTransition pushWithDirection:SKTransitionDirectionLeft duration:1]];
 }
 
 -(void)update:(CFTimeInterval)currentTime {
