@@ -39,7 +39,7 @@ typedef enum {
     if (self = [super init]) {
         NSError* error;
         
-        [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:&error];
+        [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback withOptions:AVAudioSessionCategoryOptionMixWithOthers error:&error];
         [[AVAudioSession sharedInstance] setActive:YES error:&error];
         
         Float32 bufferLength = 0.1;
@@ -56,12 +56,6 @@ typedef enum {
 //        
 //        STKDataSource* dataSource = [STKAudioPlayer dataSourceFromURL:url];
 //        [audioPlayer queueDataSource:dataSource withQueueItemId:[[SampleQueueId alloc] initWithUrl:url andCount:0]];
-
-        AVAudioSession *session = [AVAudioSession sharedInstance];
-        NSError *setCategoryError = nil;
-        [session setCategory:AVAudioSessionCategoryPlayback
-                 withOptions:AVAudioSessionCategoryOptionMixWithOthers
-                       error:&setCategoryError];
         
         NSError __autoreleasing *errorMine;
         NSString *filePath = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"explosionMineTrimmed.caf"];
