@@ -916,20 +916,11 @@ CGFloat DegreesToRadians(CGFloat degrees)
                 if (hasShield) {
                     shieldHitPoints--;
                     if (shieldHitPoints > 0) {
-                        NSString *imageName = @"ShipShield_Impact";
-                        SKSpriteNode *impactSprite = [SKSpriteNode spriteNodeWithImageNamed:imageName];
-                        [[firstBody.node childNodeWithName:shipShieldSpriteName] addChild:impactSprite];
-                        SKAction *fadeAway = [SKAction fadeAlphaTo:0 duration:0.5];
-                        SKAction *remove = [SKAction customActionWithDuration:0 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
-                            node.name = removedThisSprite;
-                        }];
-                        SKAction *sequence = [SKAction sequence:@[fadeAway,remove]];
-                        [impactSprite runAction:sequence];
                         CGPoint p1 = firstBody.node.position;
                         CGPoint p2 = secondBody.node.position;
-                        
                         CGFloat f = [self pointPairToBearingDegrees:p1 secondPoint:p2] - 90;
-                        impactSprite.zRotation = DegreesToRadians(f);
+                        [firstBody.node childNodeWithName:shipShieldImpactSpriteName].zRotation = DegreesToRadians(f);
+                        [[firstBody.node childNodeWithName:shipShieldImpactSpriteName] runAction:firstBody.node.userData[shipShieldImpactAnimation]];
                     }
                 } else {
                     [self sendAchievementWithIdentifier:@"setTheControlsForTheHeartOfTheSun"];
@@ -1035,20 +1026,11 @@ CGFloat DegreesToRadians(CGFloat degrees)
         if (hasShield) {
             shieldHitPoints--;
             if (shieldHitPoints > 0) {
-                NSString *imageName = @"ShipShield_Impact";
-                SKSpriteNode *impactSprite = [SKSpriteNode spriteNodeWithImageNamed:imageName];
-                [[firstBody.node childNodeWithName:shipShieldSpriteName] addChild:impactSprite];
-                SKAction *fadeAway = [SKAction fadeAlphaTo:0 duration:0.5];
-                SKAction *remove = [SKAction customActionWithDuration:0 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
-                    node.name = removedThisSprite;
-                }];
-                SKAction *sequence = [SKAction sequence:@[fadeAway,remove]];
-                [impactSprite runAction:sequence];
                 CGPoint p1 = firstBody.node.position;
                 CGPoint p2 = secondBody.node.position;
-                
                 CGFloat f = [self pointPairToBearingDegrees:p1 secondPoint:p2] - 90;
-                impactSprite.zRotation = DegreesToRadians(f);
+                [firstBody.node childNodeWithName:shipShieldImpactSpriteName].zRotation = DegreesToRadians(f);
+                [[firstBody.node childNodeWithName:shipShieldImpactSpriteName] runAction:firstBody.node.userData[shipShieldImpactAnimation]];
             }
         } else {
             shipHitPoints--;
@@ -1102,10 +1084,16 @@ CGFloat DegreesToRadians(CGFloat degrees)
     shipShieldImage.name = shipShieldSpriteName;
     shipShieldImage.alpha = 0;
     shipShieldImage.position = CGPointMake(0, 5);
+    SKSpriteNode *impactSprite = [SKSpriteNode spriteNodeWithImageNamed:@"ShipShield_Impact"];
+    impactSprite.name = shipShieldImpactSpriteName;
+    impactSprite.alpha = 0;
+    impactSprite.position = CGPointMake(0, 5);
+    
     SKSpriteNode *ship = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:shipShieldImage.size];
     [ship addChild:shipImage];
     [ship addChild:shipThruster];
     [ship addChild:shipShieldImage];
+    [ship addChild:impactSprite];
     ship.name = shipCategoryName;
     ship.position = CGPointMake(self.frame.size.width/2, -kExtraSpaceOffScreen + ship.size.height/2);
     ship.zPosition = 1;
@@ -1134,6 +1122,11 @@ CGFloat DegreesToRadians(CGFloat degrees)
     SKAction *sizeAndFadeGroupAction = [SKAction group:@[thrusterSizeSequenceAction,thrusterFadeSequenceAction]];
     SKAction *thrusterSequence = [SKAction sequence:@[thrusterSetup,sizeAndFadeGroupAction]];
     ship.userData[shipThrusterAnimation] = thrusterSequence;
+    
+    SKAction *showImpact = [SKAction fadeAlphaTo:1 duration:0.1];
+    SKAction *fadeAway = [SKAction fadeAlphaTo:0 duration:0.5];
+    SKAction *impactSequence = [SKAction sequence:@[showImpact,fadeAway]];
+    ship.userData[shipShieldImpactAnimation] = impactSequence;
 
 //    shipThrusterAnimation
 //    NSMutableArray *shipTextures = [NSMutableArray arrayWithCapacity:60];
