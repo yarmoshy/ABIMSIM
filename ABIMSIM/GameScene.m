@@ -374,6 +374,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
     if (shieldHitPoints <= 0 && hasShield) {
         hasShield = NO;
         [self updateShipPhysics];
+    } else if (shieldHitPoints > 0 && !hasShield) {
+        hasShield = YES;
+        [self updateShipPhysics];
     }
     
     if (shipSprite.physicsBody.velocity.dx!=0 || shipSprite.physicsBody.velocity.dy!=0)
@@ -904,41 +907,30 @@ CGFloat DegreesToRadians(CGFloat degrees)
         }
         if (firstBody.categoryBitMask == shipCategory && secondBody.categoryBitMask == powerUpShieldCategory) {
             secondBody.node.name = removedThisSprite;
-            hasShield = YES;
             shieldHitPoints = 1 + [ABIMSIMDefaults integerForKey:kShieldDurabilityLevel];
-//            shieldFireHitPoints = [ABIMSIMDefaults integerForKey:kShieldFireDurabilityLevel];
-            [self updateShipPhysics];
         }
 
-        if ([firstBody.node.name isEqualToString:sunObjectSpriteName]) {
-            if (secondBody.categoryBitMask == shipCategory) {
-                [self checkHitAchievement];
-                if (hasShield) {
-//                    if (shieldFireHitPoints > 0) {
-//                        shieldFireHitPoints--;
-//                    } else {
-//                        shieldHitPoints = 0;
-//                        hasShield = NO;
-//                        [self updateShipPhysics];
-//                    }
-                    shieldHitPoints--;
-                    hasShield = shieldHitPoints > 0;
-                    [self updateShipPhysics];
-                } else {
-                    [self sendAchievementWithIdentifier:@"setTheControlsForTheHeartOfTheSun"];
-                    [self killShipAndStartOver];
-                }
-            } else {
-                secondBody.node.name = removedThisSprite;
-            }
-        }
         if ([secondBody.node.name isEqualToString:sunObjectSpriteName]) {
             if (firstBody.categoryBitMask == shipCategory) {
                 [self checkHitAchievement];
                 if (hasShield) {
                     shieldHitPoints--;
-                    hasShield = shieldHitPoints > 0;
-                    [self updateShipPhysics];
+                    if (shieldHitPoints > 0) {
+                        NSString *imageName = @"ShipShield_Impact";
+                        SKSpriteNode *impactSprite = [SKSpriteNode spriteNodeWithImageNamed:imageName];
+                        [[firstBody.node childNodeWithName:shipShieldSpriteName] addChild:impactSprite];
+                        SKAction *fadeAway = [SKAction fadeAlphaTo:0 duration:0.5];
+                        SKAction *remove = [SKAction customActionWithDuration:0 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
+                            node.name = removedThisSprite;
+                        }];
+                        SKAction *sequence = [SKAction sequence:@[fadeAway,remove]];
+                        [impactSprite runAction:sequence];
+                        CGPoint p1 = firstBody.node.position;
+                        CGPoint p2 = secondBody.node.position;
+                        
+                        CGFloat f = [self pointPairToBearingDegrees:p1 secondPoint:p2] - 90;
+                        impactSprite.zRotation = DegreesToRadians(f);
+                    }
                 } else {
                     [self sendAchievementWithIdentifier:@"setTheControlsForTheHeartOfTheSun"];
                     [self killShipAndStartOver];
@@ -1057,7 +1049,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
                 
                 CGFloat f = [self pointPairToBearingDegrees:p1 secondPoint:p2] - 90;
                 impactSprite.zRotation = DegreesToRadians(f);
-
             }
         } else {
             shipHitPoints--;
