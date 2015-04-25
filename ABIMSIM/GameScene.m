@@ -2288,10 +2288,12 @@ CGFloat DegreesToRadians(CGFloat degrees)
                     planet.physicsBody.contactTestBitMask = planetCategory;
                     if (forceSun) {
                         planet.physicsBody.contactTestBitMask = shipCategory | asteroidCategory;
-                        planet.zRotation = arc4random() % 360;
+                        if ([planet.userData[planetFlavorNumber] isEqual:@(4)]) {
+                            planet.zRotation = arc4random() % 360;
+                        }
+
                     }
                 }
-//                planet.physicsBody.mass = 100000;
                 planet.physicsBody.dynamic = NO;
                 planet.physicsBody.collisionBitMask = shipCategory | asteroidCategory | asteroidInShieldCategory | asteroidShieldCategory;
                 planet.physicsBody.allowsRotation = NO;
@@ -2572,7 +2574,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         hoverAction = [SKAction repeatActionForever:[SKAction followPath:hoverPath.CGPath asOffset:YES orientToPath:NO duration:30]];
     }
     
-//    [sprite runAction:hoverAction];
+    [sprite runAction:hoverAction];
     [self randomizeSprite:sprite];
     sprite.position = CGPointMake(0, sprite.position.y);
     [self adjustGiantPlanet:sprite];
