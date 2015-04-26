@@ -11,6 +11,7 @@
 		B405AA281AEC31E00053F794 /* Moki-Lean.otf in Resources */ = {isa = PBXBuildFile; fileRef = B405AA261AEC31E00053F794 /* Moki-Lean.otf */; };
 		B405AA2D1AEC3E8E0053F794 /* Background2.atlas in Resources */ = {isa = PBXBuildFile; fileRef = B405AA2C1AEC3E8E0053F794 /* Background2.atlas */; };
 		B405AA2F1AED54980053F794 /* gamePlay.caf in Resources */ = {isa = PBXBuildFile; fileRef = B405AA2E1AED54980053F794 /* gamePlay.caf */; };
+		B405AA331AED5F990053F794 /* asteroidSun.caf in Resources */ = {isa = PBXBuildFile; fileRef = B405AA321AED5F990053F794 /* asteroidSun.caf */; };
 		B407A22D1AD6358B00C87AC7 /* Planet_5_0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B407A2281AD6358B00C87AC7 /* Planet_5_0@2x.png */; };
 		B407A22E1AD6358B00C87AC7 /* Planet_5_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B407A2291AD6358B00C87AC7 /* Planet_5_1@2x.png */; };
 		B407A22F1AD6358B00C87AC7 /* Planet_5_2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B407A22A1AD6358B00C87AC7 /* Planet_5_2@2x.png */; };
@@ -154,6 +155,7 @@
 		B405AA261AEC31E00053F794 /* Moki-Lean.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Moki-Lean.otf"; sourceTree = "<group>"; };
 		B405AA2C1AEC3E8E0053F794 /* Background2.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Background2.atlas; sourceTree = "<group>"; };
 		B405AA2E1AED54980053F794 /* gamePlay.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = gamePlay.caf; sourceTree = "<group>"; };
+		B405AA321AED5F990053F794 /* asteroidSun.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = asteroidSun.caf; sourceTree = "<group>"; };
 		B407A2281AD6358B00C87AC7 /* Planet_5_0@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_5_0@2x.png"; sourceTree = "<group>"; };
 		B407A2291AD6358B00C87AC7 /* Planet_5_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_5_1@2x.png"; sourceTree = "<group>"; };
 		B407A22A1AD6358B00C87AC7 /* Planet_5_2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_5_2@2x.png"; sourceTree = "<group>"; };
@@ -415,6 +417,7 @@
 		B44730081A714E7C0063B5EA /* Music */ = {
 			isa = PBXGroup;
 			children = (
+				B405AA321AED5F990053F794 /* asteroidSun.caf */,
 				B49792F71A86F632005174C1 /* activateShieldTrimmed.caf */,
 				B49792F91A86F638005174C1 /* deactivateShieldTrimmed.caf */,
 				B49792F11A86E617005174C1 /* explosionMineTrimmed.caf */,
@@ -826,6 +829,7 @@
 				B4467178192D906400B4A8C7 /* AsteroidShield_Pop_0@2x.png in Resources */,
 				B4D4B617191FFF4F00834942 /* Planet_0_0@2x.png in Resources */,
 				B4D4B61B191FFF4F00834942 /* Planet_1_0@2x.png in Resources */,
+				B405AA331AED5F990053F794 /* asteroidSun.caf in Resources */,
 				B49792DD1A86CA24005174C1 /* Level1.mp3 in Resources */,
 				B47E22D018DBA7E200F42EBB /* Asteroid_3@2x.png in Resources */,
 				B4E221CD192EB356003947B7 /* ShieldPowerUp_Animated@2x.png in Resources */,
