@@ -48,7 +48,6 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet UIView *buttonContainerView;
 
 @property (weak, nonatomic) IBOutlet UIButton *hamburgerButton;
-@property (weak, nonatomic) IBOutlet UIButton *creditsButton;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *hamburgerLeadingConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *hamburgerBottomConstraint;

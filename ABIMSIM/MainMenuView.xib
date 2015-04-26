@@ -168,19 +168,6 @@
                         <action selector="hamburgerTapped:" destination="tyn-rH-lKS" eventType="touchUpInside" id="7zc-50-O0v"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="bottom" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MOz-kh-Zdl" userLabel="CreditsButton">
-                    <rect key="frame" x="270" y="536" width="50" height="32"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="50" id="88S-lp-C0X"/>
-                        <constraint firstAttribute="height" constant="32" id="kTZ-UM-See"/>
-                    </constraints>
-                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="10" maxY="10"/>
-                    <state key="normal" image="CreditsButton_0">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <state key="highlighted" image="CreditsButton_1"/>
-                </button>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
@@ -193,14 +180,11 @@
                 <constraint firstAttribute="centerX" secondItem="lUf-dq-MXE" secondAttribute="centerX" constant="-6.5" id="dG4-LN-yWA"/>
                 <constraint firstItem="lUf-dq-MXE" firstAttribute="top" secondItem="hQe-4c-cCB" secondAttribute="top" id="fEC-lG-GhE"/>
                 <constraint firstAttribute="bottom" secondItem="Bim-RU-DVf" secondAttribute="bottom" constant="10" id="nAs-Av-AGJ"/>
-                <constraint firstAttribute="trailing" secondItem="MOz-kh-Zdl" secondAttribute="trailing" id="oXs-Iw-OpY"/>
-                <constraint firstAttribute="bottom" secondItem="MOz-kh-Zdl" secondAttribute="bottom" id="s1z-SK-Kpv"/>
                 <constraint firstItem="Yua-2N-2Jd" firstAttribute="leading" secondItem="tyn-rH-lKS" secondAttribute="leading" id="x34-aP-oD9"/>
                 <constraint firstItem="Yua-2N-2Jd" firstAttribute="top" secondItem="tyn-rH-lKS" secondAttribute="top" constant="32" id="zIw-aB-HdS"/>
             </constraints>
             <connections>
                 <outlet property="buttonContainerView" destination="lUf-dq-MXE" id="nxl-wp-Zd7"/>
-                <outlet property="creditsButton" destination="MOz-kh-Zdl" id="bAf-IJ-jct"/>
                 <outlet property="hamburgerBottomConstraint" destination="nAs-Av-AGJ" id="k0H-uU-n5F"/>
                 <outlet property="hamburgerButton" destination="Bim-RU-DVf" id="LnM-hJ-cqh"/>
                 <outlet property="hamburgerLeadingConstraint" destination="AyD-6L-7Da" id="4rs-Yj-Ojv"/>
@@ -227,8 +211,6 @@
         </view>
     </objects>
     <resources>
-        <image name="CreditsButton_0" width="33" height="10"/>
-        <image name="CreditsButton_1" width="33" height="10"/>
         <image name="HS_0" width="76" height="76"/>
         <image name="HS_1" width="95" height="96"/>
         <image name="HS_2" width="95" height="96"/>

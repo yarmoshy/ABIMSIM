@@ -31,7 +31,7 @@
     [hamburgerToXImages enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         [hamburgerToOriginalImages addObject:obj];
     }];
-    self.playButton.exclusiveTouch = self.upgradeButton.exclusiveTouch = self.highScoreButton.exclusiveTouch = self.creditsButton.exclusiveTouch = self.hamburgerButton.exclusiveTouch = YES;
+    self.playButton.exclusiveTouch = self.upgradeButton.exclusiveTouch = self.highScoreButton.exclusiveTouch = self.hamburgerButton.exclusiveTouch = YES;
 }
 
 #pragma mark - Play
@@ -170,7 +170,7 @@
 }
 
 -(void)configureButtonsEnabled:(BOOL)enabled {
-    self.playButton.userInteractionEnabled = self.highScoreButton.userInteractionEnabled = self.upgradeButton.userInteractionEnabled = self.hamburgerButton.userInteractionEnabled = self.creditsButton.userInteractionEnabled = enabled;
+    self.playButton.userInteractionEnabled = self.highScoreButton.userInteractionEnabled = self.upgradeButton.userInteractionEnabled = self.hamburgerButton.userInteractionEnabled = enabled;
 }
 
 /*

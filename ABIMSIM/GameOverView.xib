@@ -157,7 +157,7 @@
                             <state key="normal" image="HighScoresText_0">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
-                            <state key="selected" image="HighScoresText_2"/>
+                            <state key="selected" image="HighScoresText_1"/>
                             <state key="highlighted" image="HighScoresText_1"/>
                             <connections>
                                 <action selector="ggMainMenuDeselect:" destination="HfH-Pa-XmW" eventType="touchDragExit" id="lwa-m0-HC7"/>
@@ -388,7 +388,6 @@
         <image name="HS_3" width="104" height="104"/>
         <image name="HighScoresText_0" width="54" height="38"/>
         <image name="HighScoresText_1" width="55" height="39"/>
-        <image name="HighScoresText_2" width="174" height="41"/>
         <image name="HorizontalDivider" width="46" height="1"/>
         <image name="LargeParsecs" width="129" height="23"/>
         <image name="LargeXP" width="40" height="22"/>
