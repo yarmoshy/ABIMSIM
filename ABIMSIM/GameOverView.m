@@ -435,7 +435,7 @@
         [self.superview layoutIfNeeded];
     } completion:^(BOOL finished) {
         if (finished) {
-            [UIView animateWithDuration:0.5 animations:^{
+            [UIView animateWithDuration:0.5 delay:0.25 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
                 self.rectangleImage.alpha = 1;
                 self.rectangleSocialImage.alpha = 1;
                 self.smallParsecsLabel.alpha = 1;

@@ -383,6 +383,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
             }
         }];
     } else {
+        flickRecognizer.enabled = YES;
         shipSprite.physicsBody.velocity = CGVectorMake(0, MAX_VELOCITY);
     }
 
