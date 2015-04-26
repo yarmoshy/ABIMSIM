@@ -131,7 +131,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
         }];
         asteroidSunDeathAction = customAction;
         
-        changeColorAction = [SKAction colorizeWithColor:[UIColor greenColor] colorBlendFactor:1 duration:0.25];
+        changeColorAction = [SKAction colorizeWithColor:[UIColor greenColor] colorBlendFactor:1 duration:0.1];
+        fadeOut = [SKAction fadeAlphaTo:0 duration:0.15];
         groupAction = [SKAction group:@[changeColorAction, fadeOut]];
         customAction = [SKAction customActionWithDuration:0 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
             [node runAction:groupAction completion:^{
@@ -551,52 +552,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
             explodingRing.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:explodingRing.size.width/2];
             explodingRing.physicsBody.dynamic = NO;
             explodingRing.physicsBody.categoryBitMask = powerUpSpaceMineExplodingRingCategory;
-            explodingRing.physicsBody.contactTestBitMask = asteroidCategory;
-            explodingRing.physicsBody.collisionBitMask = asteroidCategory ;
-            
-            for (SKSpriteNode *node in currentSpriteArray) {
-                if ([node.name isEqualToString:asteroidShieldCategoryName]) {
-                    CGPoint ringPos = explodingRing.parent.position;
-                    CGPoint astShPos = node.position;
-                    float distance = sqrtf(powf(ringPos.x-astShPos.x, 2)+powf(ringPos.y-astShPos.y, 2));
-                    if (distance < (explodingRing.size.width/2.f) + (node.size.width/2.f)) {
-                        possibleBubblesPopped++;
-                        NSString *imageName = @"";
-                        float scale = 0;
-                        float duration = 0.5;
-                        if ([node.userData[planetNumber] intValue] == asteroidShield0) {
-                            imageName = @"AsteroidShield_Pop_0";
-                            scale = 0.625;
-                        } else {
-                            imageName = @"AsteroidShield_Pop_1";
-                            scale = 0.65;
-                        }
-                        SKSpriteNode *explosionSprite = [SKSpriteNode spriteNodeWithImageNamed:imageName];
-                        explosionSprite.position = node.position;
-                        [explosionSprite setScale:scale];
-                        explosionSprite.zPosition = 10;
-                        [self addChild:explosionSprite];
-                        SKAction *fadeAction = [SKAction fadeAlphaTo:0 duration:0.5];
-                        SKAction *scaleAction = [SKAction scaleTo:1 duration:duration];
-                        SKAction *groupAction = [SKAction group:@[fadeAction, scaleAction]];
-                        [explosionSprite runAction:[SKAction sequence:@[groupAction, [SKAction customActionWithDuration:0 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
-                            node.name = removedThisSprite;
-                        }]]]];
-                        node.name = removedThisSprite;
-                        for (SKSpriteNode *asteroid in [self children]) {
-                            if ([asteroid.name isEqual:asteroidInShieldCategoryName] &&
-                                [asteroid.userData[asteroidShieldTag] intValue] == [node.userData[asteroidShieldTag] intValue]) {
-                                asteroid.physicsBody.categoryBitMask = asteroidCategory;
-                                asteroid.physicsBody.collisionBitMask = borderCategory | secondaryBorderCategory | shipCategory | asteroidCategory | planetCategory | asteroidShieldCategory | powerUpSpaceMineExplodingRingCategory;
-                                asteroid.physicsBody.contactTestBitMask = goalCategory | shipCategory | asteroidShieldCategory;
-                                asteroid.zRotation = DegreesToRadians(arc4random() % 360);
-                                float velocity = MAX_VELOCITY;
-                                asteroid.physicsBody.velocity = CGVectorMake(velocity * cosf(asteroid.zRotation), velocity * -sinf(asteroid.zRotation));
-                            }
-                        }
-                    }
-                }
-            }
+            explodingRing.physicsBody.contactTestBitMask = asteroidCategory | asteroidInShieldCategory;
         }
     }
     if (explodedMine) {
@@ -850,7 +806,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
             firstBody = contact.bodyB;
             secondBody = contact.bodyA;
         }
-        if (firstBody.categoryBitMask == asteroidCategory && secondBody.categoryBitMask == powerUpSpaceMineExplodingRingCategory) {
+        if ((firstBody.categoryBitMask == asteroidCategory || firstBody.categoryBitMask == asteroidInShieldCategory) && secondBody.categoryBitMask == powerUpSpaceMineExplodingRingCategory) {
+            [firstBody.node runAction:asteroidMineDeathAction];
             if (firstBody.node.userData[orbitJoint]) {
                 [self.physicsWorld removeJoint:firstBody.node.userData[orbitJoint]];
             }
@@ -913,8 +870,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
                 if ([asteroid.name isEqual:asteroidInShieldCategoryName] &&
                     [asteroid.userData[asteroidShieldTag] intValue] == [secondBody.node.userData[asteroidShieldTag] intValue]) {
                     asteroid.physicsBody.categoryBitMask = asteroidCategory;
-                    asteroid.physicsBody.collisionBitMask = borderCategory | secondaryBorderCategory | shipCategory | asteroidCategory | planetCategory | asteroidShieldCategory | powerUpSpaceMineExplodingRingCategory;
-                    asteroid.physicsBody.contactTestBitMask = goalCategory | shipCategory | asteroidShieldCategory;
+                    asteroid.physicsBody.collisionBitMask = borderCategory | secondaryBorderCategory | shipCategory | asteroidCategory | planetCategory | asteroidShieldCategory;
+                    asteroid.physicsBody.contactTestBitMask = goalCategory | shipCategory | asteroidShieldCategory | powerUpSpaceMineExplodingRingCategory;
                     asteroid.zRotation = DegreesToRadians(arc4random() % 360);
                     float velocity = MAX_VELOCITY;
                     asteroid.physicsBody.velocity = CGVectorMake(velocity * cosf(asteroid.zRotation), velocity * -sinf(asteroid.zRotation));
@@ -1483,7 +1440,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         for (SKSpriteNode *planet in planets) {
             if ([planet isKindOfClass:[BlackHole class]]) {
                 for (SKSpriteNode *sprite in asteroids) {
-                    sprite.physicsBody.collisionBitMask = shipCategory | asteroidCategory | asteroidInShieldCategory | planetCategory | asteroidShieldCategory | powerUpSpaceMineExplodingRingCategory;
+                    sprite.physicsBody.collisionBitMask = shipCategory | asteroidCategory | asteroidInShieldCategory | planetCategory | asteroidShieldCategory;
                 }
                 break;
             }
@@ -2033,8 +1990,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
         sprite.physicsBody.linearDamping = 0.0f;
         sprite.physicsBody.dynamic = YES;
         sprite.physicsBody.categoryBitMask = asteroidCategory;
-        sprite.physicsBody.collisionBitMask = borderCategory | secondaryBorderCategory | shipCategory | asteroidCategory | asteroidInShieldCategory | planetCategory | asteroidShieldCategory | powerUpSpaceMineExplodingRingCategory;
-        sprite.physicsBody.contactTestBitMask = goalCategory | shipCategory | asteroidShieldCategory;
+        sprite.physicsBody.collisionBitMask = borderCategory | secondaryBorderCategory | shipCategory | asteroidCategory | asteroidInShieldCategory | planetCategory | asteroidShieldCategory;
+        sprite.physicsBody.contactTestBitMask = goalCategory | shipCategory | asteroidShieldCategory | powerUpSpaceMineExplodingRingCategory;
         sprite.physicsBody.mass = sprite.size.width;
         sprite.name = asteroidCategoryName;
         sprite.physicsBody.allowsRotation = YES;
@@ -2046,8 +2003,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
     if ([sprite.userData valueForKey:asteroidShieldTag]) {
         sprite.name = asteroidCategoryName;
         sprite.physicsBody.categoryBitMask = asteroidCategory;
-        sprite.physicsBody.collisionBitMask = borderCategory | secondaryBorderCategory | shipCategory | asteroidCategory | asteroidInShieldCategory | planetCategory | asteroidShieldCategory | powerUpSpaceMineExplodingRingCategory;
-        sprite.physicsBody.contactTestBitMask = goalCategory | shipCategory | asteroidShieldCategory;
+        sprite.physicsBody.collisionBitMask = borderCategory | secondaryBorderCategory | shipCategory | asteroidCategory | asteroidInShieldCategory | planetCategory | asteroidShieldCategory;
+        sprite.physicsBody.contactTestBitMask = goalCategory | shipCategory | asteroidShieldCategory | powerUpSpaceMineExplodingRingCategory;
         sprite.zPosition = 1;
         [sprite.userData removeObjectForKey:asteroidShieldTag];
     }
@@ -2669,7 +2626,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
     sprite.physicsBody.linearDamping = 0.0f;
     sprite.physicsBody.dynamic = YES;
     sprite.physicsBody.categoryBitMask = asteroidCategory;
-    sprite.physicsBody.collisionBitMask = shipCategory | asteroidCategory | planetCategory | powerUpSpaceMineExplodingRingCategory;
+    sprite.physicsBody.collisionBitMask = shipCategory | asteroidCategory | planetCategory;
+    sprite.physicsBody.contactTestBitMask = powerUpSpaceMineExplodingRingCategory;
     sprite.physicsBody.mass = sprite.size.width;
     sprite.name = asteroidCategoryName;
     sprite.physicsBody.allowsRotation = YES;
