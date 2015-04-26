@@ -365,7 +365,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         self.initialPause = YES;
         flickRecognizer.enabled = YES;
     }];
-    SKAction *move = [SKAction moveTo:CGPointMake(self.frame.size.width/2, self.frame.size.height/2 + ((SKSpriteNode*)[self childNodeWithName:directionsSpriteName]).size.height) duration:0.5];
+    SKAction *move = [SKAction moveTo:CGPointMake(self.frame.size.width/2, self.frame.size.height/2) duration:0.5];
     SKAction *alphaIn = [SKAction fadeAlphaTo:1 duration:0.5];
     SKAction *group = [SKAction group:@[move, alphaIn]];
     [[self childNodeWithName:directionsSpriteName] runAction:group completion:^{
@@ -441,13 +441,13 @@ CGFloat DegreesToRadians(CGFloat degrees)
     if (!walkthroughSeen) {
         if (self.currentLevel == 2) {
             SKSpriteNode *directions = [SKSpriteNode spriteNodeWithImageNamed:@"Instructions_Screen2"];
-            directions.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2 + directions.size.height * 2);
+            directions.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2 + directions.size.height);
             [self addChild:directions];
             directions.alpha = 0;
             directions.zPosition = 100;
             directions.name = directionsSpriteName;
 
-            SKAction *move = [SKAction moveTo:CGPointMake(self.frame.size.width/2, self.frame.size.height/2 + ((SKSpriteNode*)[self childNodeWithName:directionsSpriteName]).size.height/2) duration:0.5];
+            SKAction *move = [SKAction moveTo:CGPointMake(self.frame.size.width/2, self.frame.size.height/2) duration:0.5];
             SKAction *alphaIn = [SKAction fadeAlphaTo:1 duration:0.5];
             SKAction *group = [SKAction group:@[move, alphaIn]];
             [[self childNodeWithName:directionsSpriteName] runAction:group completion:^{
@@ -1615,7 +1615,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     }
     if (self.currentLevel == 1 && !self.reset) {
         SKSpriteNode *directions = [SKSpriteNode spriteNodeWithImageNamed:@"Instructions_Screen1"];
-        directions.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2 + directions.size.height * 2);
+        directions.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2 + directions.size.height);
         [self addChild:directions];
         directions.alpha = 0;
         directions.zPosition = 100;
