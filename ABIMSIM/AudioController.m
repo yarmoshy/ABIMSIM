@@ -116,7 +116,7 @@ typedef enum {
     musicMode = MusicModeGame;
     [audioPlayer clearQueue];
     if (playMusic) {
-        NSString* path = [[NSBundle mainBundle] pathForResource:@"parsecsGameplayMusic" ofType:@"mp3"];
+        NSString* path = [[NSBundle mainBundle] pathForResource:@"gamePlay" ofType:@"caf"];
         NSURL* url = [NSURL fileURLWithPath:path];
         
         STKDataSource* dataSource = [STKAudioPlayer dataSourceFromURL:url];
@@ -156,7 +156,7 @@ typedef enum {
 //        STKDataSource* dataSource = [STKAudioPlayer dataSourceFromURL:url];
 //        [audioPlayer queueDataSource:dataSource withQueueItemId:[[SampleQueueId alloc] initWithUrl:url andCount:0]];
     } else if (musicMode == MusicModeGame) {
-        NSString* path = [[NSBundle mainBundle] pathForResource:@"parsecsGameplayMusic" ofType:@"mp3"];
+        NSString* path = [[NSBundle mainBundle] pathForResource:@"gamePlay" ofType:@"caf"];
         NSURL* url = [NSURL fileURLWithPath:path];
         
         STKDataSource* dataSource = [STKAudioPlayer dataSourceFromURL:url];

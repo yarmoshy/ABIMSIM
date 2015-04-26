@@ -10,6 +10,7 @@
 		B400F410191AFCA100A483E2 /* UpgradeScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B400F40F191AFCA100A483E2 /* UpgradeScene.m */; };
 		B405AA281AEC31E00053F794 /* Moki-Lean.otf in Resources */ = {isa = PBXBuildFile; fileRef = B405AA261AEC31E00053F794 /* Moki-Lean.otf */; };
 		B405AA2D1AEC3E8E0053F794 /* Background2.atlas in Resources */ = {isa = PBXBuildFile; fileRef = B405AA2C1AEC3E8E0053F794 /* Background2.atlas */; };
+		B405AA2F1AED54980053F794 /* gamePlay.caf in Resources */ = {isa = PBXBuildFile; fileRef = B405AA2E1AED54980053F794 /* gamePlay.caf */; };
 		B407A22D1AD6358B00C87AC7 /* Planet_5_0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B407A2281AD6358B00C87AC7 /* Planet_5_0@2x.png */; };
 		B407A22E1AD6358B00C87AC7 /* Planet_5_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B407A2291AD6358B00C87AC7 /* Planet_5_1@2x.png */; };
 		B407A22F1AD6358B00C87AC7 /* Planet_5_2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B407A22A1AD6358B00C87AC7 /* Planet_5_2@2x.png */; };
@@ -92,7 +93,6 @@
 		B49792D71A86C999005174C1 /* STKHTTPDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = B49792CB1A86C999005174C1 /* STKHTTPDataSource.m */; };
 		B49792D81A86C999005174C1 /* STKLocalFileDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = B49792CD1A86C999005174C1 /* STKLocalFileDataSource.m */; };
 		B49792D91A86C999005174C1 /* STKQueueEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = B49792CF1A86C999005174C1 /* STKQueueEntry.m */; };
-		B49792DB1A86CA19005174C1 /* parsecsGameplayMusic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B49792DA1A86CA19005174C1 /* parsecsGameplayMusic.mp3 */; };
 		B49792DD1A86CA24005174C1 /* Level1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B49792DC1A86CA24005174C1 /* Level1.mp3 */; };
 		B49792E01A86CA5F005174C1 /* SampleQueueId.m in Sources */ = {isa = PBXBuildFile; fileRef = B49792DF1A86CA5F005174C1 /* SampleQueueId.m */; };
 		B49792EE1A86E3AC005174C1 /* explosionTrimmed.caf in Resources */ = {isa = PBXBuildFile; fileRef = B49792ED1A86E3AC005174C1 /* explosionTrimmed.caf */; };
@@ -153,6 +153,7 @@
 		B400F40F191AFCA100A483E2 /* UpgradeScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpgradeScene.m; sourceTree = "<group>"; };
 		B405AA261AEC31E00053F794 /* Moki-Lean.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Moki-Lean.otf"; sourceTree = "<group>"; };
 		B405AA2C1AEC3E8E0053F794 /* Background2.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Background2.atlas; sourceTree = "<group>"; };
+		B405AA2E1AED54980053F794 /* gamePlay.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = gamePlay.caf; sourceTree = "<group>"; };
 		B407A2281AD6358B00C87AC7 /* Planet_5_0@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_5_0@2x.png"; sourceTree = "<group>"; };
 		B407A2291AD6358B00C87AC7 /* Planet_5_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_5_1@2x.png"; sourceTree = "<group>"; };
 		B407A22A1AD6358B00C87AC7 /* Planet_5_2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_5_2@2x.png"; sourceTree = "<group>"; };
@@ -266,7 +267,6 @@
 		B49792CE1A86C999005174C1 /* STKQueueEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STKQueueEntry.h; sourceTree = "<group>"; };
 		B49792CF1A86C999005174C1 /* STKQueueEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STKQueueEntry.m; sourceTree = "<group>"; };
 		B49792D01A86C999005174C1 /* StreamingKit-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "StreamingKit-Prefix.pch"; sourceTree = "<group>"; };
-		B49792DA1A86CA19005174C1 /* parsecsGameplayMusic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = parsecsGameplayMusic.mp3; sourceTree = "<group>"; };
 		B49792DC1A86CA24005174C1 /* Level1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Level1.mp3; sourceTree = "<group>"; };
 		B49792DE1A86CA5F005174C1 /* SampleQueueId.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleQueueId.h; sourceTree = "<group>"; };
 		B49792DF1A86CA5F005174C1 /* SampleQueueId.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleQueueId.m; sourceTree = "<group>"; };
@@ -419,7 +419,7 @@
 				B49792F91A86F638005174C1 /* deactivateShieldTrimmed.caf */,
 				B49792F11A86E617005174C1 /* explosionMineTrimmed.caf */,
 				B49792ED1A86E3AC005174C1 /* explosionTrimmed.caf */,
-				B49792DA1A86CA19005174C1 /* parsecsGameplayMusic.mp3 */,
+				B405AA2E1AED54980053F794 /* gamePlay.caf */,
 				B49792DC1A86CA24005174C1 /* Level1.mp3 */,
 			);
 			name = Music;
@@ -787,10 +787,10 @@
 				B46363A71979EBA2007B657C /* SpaceMine_Friendly_3@2x.png in Resources */,
 				B47E22CE18DBA7E200F42EBB /* Asteroid_1@2x.png in Resources */,
 				B47E22D118DBA7E200F42EBB /* Asteroid_4@2x.png in Resources */,
+				B405AA2F1AED54980053F794 /* gamePlay.caf in Resources */,
 				B4E221CF192EB356003947B7 /* ShipShield_Impact@2x.png in Resources */,
 				B4D4B623191FFF4F00834942 /* Planet_3_0@2x.png in Resources */,
 				B4D0732E19785F620028840D /* SpaceMine_CenterGlow_0@2x.png in Resources */,
-				B49792DB1A86CA19005174C1 /* parsecsGameplayMusic.mp3 in Resources */,
 				B49792F21A86E617005174C1 /* explosionMineTrimmed.caf in Resources */,
 				B4557ED71AC0EF57004E097E /* PausedView.xib in Resources */,
 				B4D4B629191FFF4F00834942 /* Planet_4_0@2x.png in Resources */,
