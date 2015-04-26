@@ -144,6 +144,9 @@
             [ABIMSIMDefaults setInteger:0 forKey:kMineOccuranceLevel];
             [ABIMSIMDefaults setInteger:0 forKey:kMineBlastSpeedLevel];
             [ABIMSIMDefaults setInteger:0 forKey:kUserDuckets];
+            [ABIMSIMDefaults setBool:NO forKey:kWalkthroughSeen];
+            [ABIMSIMDefaults synchronize];
+            [self.delegate settingsDidReset];
         } else {
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
         }

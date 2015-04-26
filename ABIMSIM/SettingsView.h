@@ -13,6 +13,7 @@
 @protocol SettingsViewDelegate
 
 - (void)presentViewController:(UIViewController *)viewControllerToPresent animated: (BOOL)flag completion:(void (^)(void))completion;
+- (void)settingsDidReset;
 
 @end
 

@@ -514,7 +514,7 @@
 #pragma mark - UI Helpers
 
 -(void)configureButtonsEnabled:(BOOL)enabled {
-    self.ggPlayButton.userInteractionEnabled = self.ggMainMenuButton.userInteractionEnabled = self.ggUpgradeButton.userInteractionEnabled = enabled;
+    self.ggPlayButton.userInteractionEnabled = self.ggMainMenuButton.userInteractionEnabled = self.ggUpgradeButton.userInteractionEnabled = self.quitButton.enabled = enabled;
 }
 
 

@@ -132,6 +132,16 @@
 
 #pragma mark - Settings
 
+-(void)settingsDidReset {
+    self.scene = [GameScene sceneWithSize:self.view.bounds.size];
+    self.scene.gameOver = NO;
+    self.scene.size = self.view.bounds.size;
+    self.scene.scaleMode = SKSceneScaleModeAspectFill;
+    self.scene.viewController = self;
+    // Present the scene.
+    [(SKView*)self.view presentScene:self.scene];
+}
+
 -(void)showSettings {
     [self.settingsView showSettings];
 }

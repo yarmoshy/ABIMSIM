@@ -111,9 +111,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
 -(id)initWithSize:(CGSize)size {
     if (self = [super initWithSize:size]) {
         /* Setup your scene here */
-        self.initialPause = YES;
         walkthroughSeen = [ABIMSIMDefaults boolForKey:kWalkthroughSeen];
-        
+        self.initialPause = !walkthroughSeen;
+
         shieldUpSoundAction = [SKAction playSoundFileNamed:@"activateShieldTrimmed.caf" waitForCompletion:NO];
         shieldDownSoundAction = [SKAction playSoundFileNamed:@"deactivateShieldTrimmed.caf" waitForCompletion:NO];
         shieldHitSoundAction = [SKAction playSoundFileNamed:@"deactivateShieldTrimmed.caf" waitForCompletion:NO];
@@ -360,27 +360,31 @@ CGFloat DegreesToRadians(CGFloat degrees)
     [self childNodeWithName:levelParsecsNodeName].hidden = NO;
     [self childNodeWithName:levelParsecsNodeName].alpha = 0;
 
-    [[self childNodeWithName:shipCategoryName] runAction:[SKAction moveTo:CGPointMake(self.frame.size.width/2, ((SKSpriteNode*)[self childNodeWithName:shipCategoryName]).size.height*2) duration:0.5] completion:^{
-        self.paused = NO;
-        self.initialPause = YES;
-        flickRecognizer.enabled = YES;
-    }];
-    SKAction *move = [SKAction moveTo:CGPointMake(self.frame.size.width/2, self.frame.size.height/2) duration:0.5];
-    SKAction *alphaIn = [SKAction fadeAlphaTo:1 duration:0.5];
-    SKAction *group = [SKAction group:@[move, alphaIn]];
-    [[self childNodeWithName:directionsSpriteName] runAction:group completion:^{
-        for (SKSpriteNode *direction in [self children]) {
-            if ([direction.name isEqualToString:directionsSecondarySpriteName]) {
-                [direction runAction:[SKAction sequence:@[[SKAction waitForDuration:0.5],alphaIn]]];
-            } else if ([direction.name isEqualToString:directionsSecondaryBlinkingSpriteName]) {
-                SKAction *wait = [SKAction waitForDuration:0.5];
-                SKAction *alphaIn = [SKAction fadeAlphaTo:1 duration:1];
-                SKAction *alphaOut = [SKAction fadeAlphaTo:0 duration:1];
-                SKAction *sequence = [SKAction sequence:@[alphaIn, alphaOut, [SKAction waitForDuration:0.5]]];
-                [direction runAction:[SKAction sequence:@[wait,[SKAction repeatActionForever:sequence]]]];
+    if (!walkthroughSeen) {
+        [[self childNodeWithName:shipCategoryName] runAction:[SKAction moveTo:CGPointMake(self.frame.size.width/2, ((SKSpriteNode*)[self childNodeWithName:shipCategoryName]).size.height*2) duration:0.5] completion:^{
+            self.paused = NO;
+            self.initialPause = YES;
+            flickRecognizer.enabled = YES;
+        }];
+        SKAction *move = [SKAction moveTo:CGPointMake(self.frame.size.width/2, self.frame.size.height/2) duration:0.5];
+        SKAction *alphaIn = [SKAction fadeAlphaTo:1 duration:0.5];
+        SKAction *group = [SKAction group:@[move, alphaIn]];
+        [[self childNodeWithName:directionsSpriteName] runAction:group completion:^{
+            for (SKSpriteNode *direction in [self children]) {
+                if ([direction.name isEqualToString:directionsSecondarySpriteName]) {
+                    [direction runAction:[SKAction sequence:@[[SKAction waitForDuration:0.5],alphaIn]]];
+                } else if ([direction.name isEqualToString:directionsSecondaryBlinkingSpriteName]) {
+                    SKAction *wait = [SKAction waitForDuration:0.5];
+                    SKAction *alphaIn = [SKAction fadeAlphaTo:1 duration:1];
+                    SKAction *alphaOut = [SKAction fadeAlphaTo:0 duration:1];
+                    SKAction *sequence = [SKAction sequence:@[alphaIn, alphaOut, [SKAction waitForDuration:0.5]]];
+                    [direction runAction:[SKAction sequence:@[wait,[SKAction repeatActionForever:sequence]]]];
+                }
             }
-        }
-    }];
+        }];
+    } else {
+        shipSprite.physicsBody.velocity = CGVectorMake(0, MAX_VELOCITY);
+    }
 
     [UIView animateWithDuration:0.25 delay:0 options:0 animations:^{
         self.viewController.pauseButton.alpha = 0.7;
@@ -1613,7 +1617,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
             [sprite runAction:sprite.userData[powerUpSpaceMineRotationAnimation]];
         }
     }
-    if (self.currentLevel == 1 && !self.reset) {
+    if (self.currentLevel == 1 && !self.reset && !walkthroughSeen) {
         SKSpriteNode *directions = [SKSpriteNode spriteNodeWithImageNamed:@"Instructions_Screen1"];
         directions.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2 + directions.size.height);
         [self addChild:directions];
