@@ -50,7 +50,7 @@
     }];
 }
 
-#pragma mark - Game Over Main Menu Button
+#pragma mark -High Scores Main Menu Button
 
 -(void)animateGGMainMenuButtonSelect:(void(^)(void))completionBlock {
     [self animateFancySelectWithRing1:self.ggMMRing0 ring2:self.ggMMRing1 ring3:self.ggMMRing2 ring4:self.ggMMRing3 andCompletion:completionBlock];
@@ -71,7 +71,7 @@
 - (IBAction)ggMainMenuTouchUpInside:(id)sender {
     [self configureButtonsEnabled:NO];
     [self animateGGMainMenuButtonDeselect:^{
-        [self.delegate gameOverViewDidSelectButtonType:GameOverViewButtonTypeMainMenu];
+        [self.delegate gameOverViewDidSelectButtonType:GameOverViewButtonTypeHighScores];
     }];
 }
 
@@ -94,20 +94,80 @@
 }
 
 - (IBAction)ggUpgradeTouchUpInside:(id)sender {
+    [self configureButtonsEnabled:NO];
     [self animateGGUpgradesButtonDeselect:^{
         [self.delegate gameOverViewDidSelectButtonType:GameOverViewButtonTypeUpgrades];
     }];
 }
 
+#pragma mark - Social
+
+- (IBAction)facebookTapped:(id)sender {
+    if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
+        SLComposeViewController *composeController = [SLComposeViewController
+                                                      composeViewControllerForServiceType:SLServiceTypeFacebook];
+        NSString *text = [NSString stringWithFormat:@"I just travelled %d parsecs through space! Think you can beat me? Check it out: http://bit.ly/parsecs", self.delegate.scene.currentLevel];
+        [composeController setInitialText:text];
+        [composeController addURL: [NSURL URLWithString:
+                                    @"http://bit.ly/parsecs"]];
+        
+        [self.delegate presentViewController:composeController
+                                    animated:YES completion:nil];
+    } else {
+        UIAlertView *alert;
+        if ([UIDevice currentDevice].systemVersion.integerValue >= 8) {
+            alert = [[UIAlertView alloc] initWithTitle:@"Facebook Unavailable" message:@"There are no Facebook accounts configured. You can add or create a Facebook account in Settings." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Settings", nil];
+            
+        } else {
+            alert = [[UIAlertView alloc] initWithTitle:@"Twitter Unavailable" message:@"There are no Facebook accounts configured. You can add or create a Facebook account in Settings." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles: nil];
+        }
+        [alert show];
+    }
+}
+
+- (IBAction)twitterTapped:(id)sender {
+    if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]) {
+        SLComposeViewController *composeController = [SLComposeViewController
+                                                      composeViewControllerForServiceType:SLServiceTypeTwitter];
+        NSString *text = [NSString stringWithFormat:@"I just travelled %d parsecs through space! Think you can beat me? Check it out: http://bit.ly/parsecs", self.delegate.scene.currentLevel];
+        [composeController setInitialText:text];
+        [composeController addURL: [NSURL URLWithString:
+                                    @"http://bit.ly/parsecs"]];
+        
+        [self.delegate presentViewController:composeController
+                                    animated:YES completion:nil];
+    } else {
+        UIAlertView *alert;
+        if ([UIDevice currentDevice].systemVersion.integerValue >= 8) {
+            alert = [[UIAlertView alloc] initWithTitle:@"Twitter Unavailable" message:@"There are no Twitter accounts configured. You can add or create a Twitter account in Settings." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Settings", nil];
+            
+        } else {
+            alert = [[UIAlertView alloc] initWithTitle:@"Twitter Unavailable" message:@"There are no Twitter accounts configured. You can add or create a Twitter account in Settings." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles: nil];
+        }
+        [alert show];
+    }
+}
+
 #pragma mark - Game Over
+
+- (IBAction)quitTapped:(id)sender {
+    [self configureButtonsEnabled:NO];
+    [self.delegate gameOverViewDidSelectButtonType:GameOverViewButtonTypeMainMenu];
+}
 
 -(void)show {
     killAnimations = NO;
     self.rectangleImage.alpha = 0;
+    self.rectangleSocialImage.alpha = 0;
     self.smallParsecsLabel.alpha = 0;
     self.smallParsecsImage.alpha = 0;
     self.smallXPLabel.alpha = 0;
     self.smallXPImage.alpha = 0;
+    self.verticalDivider.alpha = 0;
+    self.horizontalDivider.alpha = 0;
+    self.facebookButton.alpha = 0;
+    self.twitterButton.alpha = 0;
+    self.quitButton.alpha = 0;
     self.gameOverButtonContainer.alpha = 0;
     
     UIImageView *blurredBackgroundImageView = ({
@@ -377,10 +437,16 @@
         if (finished) {
             [UIView animateWithDuration:0.5 animations:^{
                 self.rectangleImage.alpha = 1;
+                self.rectangleSocialImage.alpha = 1;
                 self.smallParsecsLabel.alpha = 1;
                 self.smallParsecsImage.alpha = 1;
                 self.smallXPLabel.alpha = 1;
                 self.smallXPImage.alpha = 1;
+                self.verticalDivider.alpha = 1;
+                self.horizontalDivider.alpha = 1;
+                self.facebookButton.alpha = 1;
+                self.twitterButton.alpha = 1;
+                self.quitButton.alpha = 1;
                 self.gameOverButtonContainer.alpha = 1;
             } completion:^(BOOL finished) {
                 ;

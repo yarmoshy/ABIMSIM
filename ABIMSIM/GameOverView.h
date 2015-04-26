@@ -12,7 +12,8 @@
 typedef enum {
     GameOverViewButtonTypePlay,
     GameOverViewButtonTypeMainMenu,
-    GameOverViewButtonTypeUpgrades
+    GameOverViewButtonTypeUpgrades,
+    GameOverViewButtonTypeHighScores
 } GameOverViewButtonType;
 
 @protocol GameOverViewDelegate
@@ -20,6 +21,7 @@ typedef enum {
 @property (strong, nonatomic) GameScene *scene;
 
 -(void)gameOverViewDidSelectButtonType:(GameOverViewButtonType)type;
+- (void)presentViewController:(UIViewController *)viewControllerToPresent animated: (BOOL)flag completion:(void (^)(void))completion;
 
 @end
 
@@ -55,10 +57,16 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bonusBubbleFourTopConstraint;
 
 @property (weak, nonatomic) IBOutlet UIImageView *rectangleImage;
+@property (weak, nonatomic) IBOutlet UIImageView *rectangleSocialImage;
 @property (weak, nonatomic) IBOutlet UIImageView *smallParsecsImage;
 @property (weak, nonatomic) IBOutlet UILabel *smallParsecsLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *smallXPImage;
 @property (weak, nonatomic) IBOutlet UILabel *smallXPLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *verticalDivider;
+@property (weak, nonatomic) IBOutlet UIImageView *horizontalDivider;
+@property (weak, nonatomic) IBOutlet UIButton *facebookButton;
+@property (weak, nonatomic) IBOutlet UIButton *twitterButton;
+@property (weak, nonatomic) IBOutlet UIButton *quitButton;
 
 @property (weak, nonatomic) IBOutlet UIView *gameOverButtonContainer;
 
@@ -91,6 +99,10 @@ typedef enum {
 - (IBAction)ggUpgradeSelect:(id)sender;
 - (IBAction)ggUpgradeDeselect:(id)sender;
 - (IBAction)ggUpgradeTouchUpInside:(id)sender;
+
+- (IBAction)facebookTapped:(id)sender;
+- (IBAction)twitterTapped:(id)sender;
+- (IBAction)quitTapped:(id)sender;
 
 -(void)show;
 -(void)hide;

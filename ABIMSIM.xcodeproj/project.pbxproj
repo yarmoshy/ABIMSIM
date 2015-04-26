@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		B400F410191AFCA100A483E2 /* UpgradeScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B400F40F191AFCA100A483E2 /* UpgradeScene.m */; };
 		B405AA281AEC31E00053F794 /* Moki-Lean.otf in Resources */ = {isa = PBXBuildFile; fileRef = B405AA261AEC31E00053F794 /* Moki-Lean.otf */; };
+		B405AA2D1AEC3E8E0053F794 /* Background2.atlas in Resources */ = {isa = PBXBuildFile; fileRef = B405AA2C1AEC3E8E0053F794 /* Background2.atlas */; };
 		B407A22D1AD6358B00C87AC7 /* Planet_5_0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B407A2281AD6358B00C87AC7 /* Planet_5_0@2x.png */; };
 		B407A22E1AD6358B00C87AC7 /* Planet_5_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B407A2291AD6358B00C87AC7 /* Planet_5_1@2x.png */; };
 		B407A22F1AD6358B00C87AC7 /* Planet_5_2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B407A22A1AD6358B00C87AC7 /* Planet_5_2@2x.png */; };
@@ -151,6 +152,7 @@
 		B400F40E191AFCA100A483E2 /* UpgradeScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpgradeScene.h; sourceTree = "<group>"; };
 		B400F40F191AFCA100A483E2 /* UpgradeScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpgradeScene.m; sourceTree = "<group>"; };
 		B405AA261AEC31E00053F794 /* Moki-Lean.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Moki-Lean.otf"; sourceTree = "<group>"; };
+		B405AA2C1AEC3E8E0053F794 /* Background2.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Background2.atlas; sourceTree = "<group>"; };
 		B407A2281AD6358B00C87AC7 /* Planet_5_0@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_5_0@2x.png"; sourceTree = "<group>"; };
 		B407A2291AD6358B00C87AC7 /* Planet_5_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_5_1@2x.png"; sourceTree = "<group>"; };
 		B407A22A1AD6358B00C87AC7 /* Planet_5_2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_5_2@2x.png"; sourceTree = "<group>"; };
@@ -493,6 +495,7 @@
 				B44730081A714E7C0063B5EA /* Music */,
 				E128D1F61A6DDB9600856772 /* Background0.atlas */,
 				E128D1F71A6DDB9600856772 /* Background1.atlas */,
+				B405AA2C1AEC3E8E0053F794 /* Background2.atlas */,
 				B47923DB19157805002B8467 /* Voltaire-Regular.ttf */,
 				B405AA261AEC31E00053F794 /* Moki-Lean.otf */,
 				B4E221BF192E7968003947B7 /* Ship */,
@@ -812,6 +815,7 @@
 				B43F4D0C192ABB510000ACA4 /* AsteroidShield_1@2x.png in Resources */,
 				B46363A61979EBA2007B657C /* SpaceMine_Friendly_2@2x.png in Resources */,
 				B48AA3881AD043C80054CC65 /* UpgradeTableViewCell.xib in Resources */,
+				B405AA2D1AEC3E8E0053F794 /* Background2.atlas in Resources */,
 				B472444F1ACE0441002A8B4B /* UpgradesView.xib in Resources */,
 				B407A22F1AD6358B00C87AC7 /* Planet_5_2@2x.png in Resources */,
 				B4557EC51AC0D4DD004E097E /* GameOverView.xib in Resources */,

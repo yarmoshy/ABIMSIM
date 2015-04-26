@@ -291,6 +291,8 @@
         } completion:^(BOOL finished) {
             [self showUpgradesView];
         }];
+    } else if (type == GameOverViewButtonTypeHighScores) {
+        [self showGameCenter];
     }
 }
 
