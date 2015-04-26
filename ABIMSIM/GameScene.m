@@ -85,6 +85,9 @@
     SKAction *shieldHitSoundAction;
     SKAction *spaceMineSoundAction;
     SKAction *playerDeathSoundAction;
+    SKAction *asteroidSunSoundAction;
+    SKAction *asteroidSunDeathAction;
+    SKAction *asteroidMineDeathAction;
     
     CGPoint lastShipPosition;
     
@@ -116,6 +119,26 @@ CGFloat DegreesToRadians(CGFloat degrees)
         shieldHitSoundAction = [SKAction playSoundFileNamed:@"deactivateShieldTrimmed.caf" waitForCompletion:NO];
         spaceMineSoundAction = [SKAction playSoundFileNamed:@"explosionMineTrimmed.caf" waitForCompletion:NO];
         playerDeathSoundAction = [SKAction playSoundFileNamed:@"explosionTrimmed.caf" waitForCompletion:NO];
+        asteroidSunSoundAction = [SKAction playSoundFileNamed:@"asteroidSun.caf" waitForCompletion:NO];
+        
+        SKAction *changeColorAction = [SKAction colorizeWithColor:[UIColor redColor] colorBlendFactor:1 duration:0.25];
+        SKAction *fadeOut = [SKAction fadeAlphaTo:0 duration:0.3];
+        SKAction *groupAction = [SKAction group:@[changeColorAction, fadeOut]];
+        SKAction *customAction = [SKAction customActionWithDuration:0 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
+            [node runAction:groupAction completion:^{
+                node.name = removedThisSprite;
+            }];
+        }];
+        asteroidSunDeathAction = customAction;
+        
+        changeColorAction = [SKAction colorizeWithColor:[UIColor greenColor] colorBlendFactor:1 duration:0.25];
+        groupAction = [SKAction group:@[changeColorAction, fadeOut]];
+        customAction = [SKAction customActionWithDuration:0 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
+            [node runAction:groupAction completion:^{
+                node.name = removedThisSprite;
+            }];
+        }];
+        asteroidMineDeathAction = customAction;
         
         lastTimeHit = 0;
         timesHitWithinSecond = 0;
@@ -967,7 +990,14 @@ CGFloat DegreesToRadians(CGFloat degrees)
                     [self killShipAndStartOver];
                 }
             } else {
-                firstBody.node.name = removedThisSprite;
+                if (firstBody.node.name == asteroidCategoryName) {
+                    [firstBody.node runAction:asteroidSunDeathAction];
+                } else {
+                    firstBody.node.name = removedThisSprite;
+                }
+                if ([ABIMSIMDefaults boolForKey:kSFXSetting]) {
+                    [self runAction:asteroidSunSoundAction];
+                }
             }
         }
         if ([secondBody.node.name isEqualToString:blackHoleCategoryName]) {
