@@ -82,6 +82,7 @@
     
     SKAction *shieldUpSoundAction;
     SKAction *shieldDownSoundAction;
+    SKAction *shieldHitSoundAction;
     SKAction *spaceMineSoundAction;
     SKAction *playerDeathSoundAction;
     
@@ -112,6 +113,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         
         shieldUpSoundAction = [SKAction playSoundFileNamed:@"activateShieldTrimmed.caf" waitForCompletion:NO];
         shieldDownSoundAction = [SKAction playSoundFileNamed:@"deactivateShieldTrimmed.caf" waitForCompletion:NO];
+        shieldHitSoundAction = [SKAction playSoundFileNamed:@"deactivateShieldTrimmed.caf" waitForCompletion:NO];
         spaceMineSoundAction = [SKAction playSoundFileNamed:@"explosionMineTrimmed.caf" waitForCompletion:NO];
         playerDeathSoundAction = [SKAction playSoundFileNamed:@"explosionTrimmed.caf" waitForCompletion:NO];
         
@@ -956,6 +958,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
                         CGFloat f = [self pointPairToBearingDegrees:p1 secondPoint:p2] - 90;
                         [firstBody.node childNodeWithName:shipShieldImpactSpriteName].zRotation = DegreesToRadians(f);
                         [[firstBody.node childNodeWithName:shipShieldImpactSpriteName] runAction:firstBody.node.userData[shipShieldImpactAnimation]];
+                        if ([ABIMSIMDefaults boolForKey:kSFXSetting]) {
+                            [self runAction:shieldHitSoundAction];
+                        }
                     }
                 } else {
                     [self sendAchievementWithIdentifier:@"setTheControlsForTheHeartOfTheSun"];
@@ -1066,6 +1071,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
                 CGFloat f = [self pointPairToBearingDegrees:p1 secondPoint:p2] - 90;
                 [firstBody.node childNodeWithName:shipShieldImpactSpriteName].zRotation = DegreesToRadians(f);
                 [[firstBody.node childNodeWithName:shipShieldImpactSpriteName] runAction:firstBody.node.userData[shipShieldImpactAnimation]];
+                if ([ABIMSIMDefaults boolForKey:kSFXSetting]) {
+                    [self runAction:shieldHitSoundAction];
+                }
             }
         } else {
             shipHitPoints--;
