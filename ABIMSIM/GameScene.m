@@ -83,6 +83,7 @@
     SKAction *shieldUpSoundAction;
     SKAction *shieldDownSoundAction;
     SKAction *spaceMineSoundAction;
+    SKAction *playerDeathSoundAction;
     
     CGPoint lastShipPosition;
     
@@ -112,6 +113,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         shieldUpSoundAction = [SKAction playSoundFileNamed:@"activateShieldTrimmed.caf" waitForCompletion:NO];
         shieldDownSoundAction = [SKAction playSoundFileNamed:@"deactivateShieldTrimmed.caf" waitForCompletion:NO];
         spaceMineSoundAction = [SKAction playSoundFileNamed:@"explosionMineTrimmed.caf" waitForCompletion:NO];
+        playerDeathSoundAction = [SKAction playSoundFileNamed:@"explosionTrimmed.caf" waitForCompletion:NO];
         
         lastTimeHit = 0;
         timesHitWithinSecond = 0;
@@ -1096,7 +1098,10 @@ CGFloat DegreesToRadians(CGFloat degrees)
     [self childNodeWithName:shipCategoryName].physicsBody = nil;
 
     [[AudioController sharedController] playerDeath];
-    
+    if ([ABIMSIMDefaults boolForKey:kSFXSetting]) {
+        [self runAction:playerDeathSoundAction];
+    }
+
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         self.paused = YES;
         [self.viewController showGameOverView];

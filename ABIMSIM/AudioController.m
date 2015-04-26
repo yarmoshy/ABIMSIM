@@ -16,11 +16,6 @@ typedef enum {
 } MusicMode;
 
 @implementation AudioController  {
-    AVAudioPlayer *minePlayer;
-    AVAudioPlayer *shieldUpPlayer;
-    AVAudioPlayer *shieldDownPlayer;
-    AVAudioPlayer *shipExplosion;
-
     STKAudioPlayer* audioPlayer;
     MusicMode musicMode;
     NSTimer *currentTimeTimer;
@@ -57,32 +52,6 @@ typedef enum {
 //        STKDataSource* dataSource = [STKAudioPlayer dataSourceFromURL:url];
 //        [audioPlayer queueDataSource:dataSource withQueueItemId:[[SampleQueueId alloc] initWithUrl:url andCount:0]];
         
-        NSError __autoreleasing *errorMine;
-        NSString *filePath = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"explosionMineTrimmed.caf"];
-        minePlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:filePath] fileTypeHint:@"caf" error:&errorMine];
-        minePlayer.numberOfLoops = 0;
-        minePlayer.delegate = self;
-        [minePlayer prepareToPlay];
-        
-        filePath = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"activateShieldTrimmed.caf"];
-        shieldUpPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:filePath] fileTypeHint:@"caf" error:&errorMine];
-        shieldUpPlayer.numberOfLoops = 0;
-        shieldUpPlayer.delegate = self;
-        [shieldUpPlayer prepareToPlay];
-
-        filePath = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"deactivateShieldTrimmed.caf"];
-        shieldDownPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:filePath] fileTypeHint:@"caf" error:&errorMine];
-        shieldDownPlayer.numberOfLoops = 0;
-        shieldDownPlayer.delegate = self;
-        [shieldDownPlayer prepareToPlay];
-        
-        filePath = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"explosionTrimmed.caf"];
-        shipExplosion = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:filePath] fileTypeHint:@"caf" error:&errorMine];
-        shipExplosion.numberOfLoops = 0;
-        shipExplosion.delegate = self;
-        [shipExplosion prepareToPlay];
-
-        
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(musicToggled) name:kMusicToggleChanged object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sfxToggled) name:kSFXToggleChanged object:nil];
     }
@@ -105,9 +74,6 @@ typedef enum {
 
 -(void)playerDeath {
     musicMode = MusicModeIntro;
-    if (playSoundEffect) {
-        [shipExplosion play];
-    }
     [audioPlayer stop];
     [self audioPlayer:audioPlayer didStartPlayingQueueItemId:nil];
 }
@@ -124,23 +90,6 @@ typedef enum {
     }
 }
 
--(void)mine {
-    if (playSoundEffect) {
-        [minePlayer play];
-    }
-}
-
--(void)shieldUp {
-    if (playSoundEffect) {
-        [shieldUpPlayer play];
-    }
-}
-
--(void)shieldDown {
-    if (playSoundEffect) {
-        [shieldDownPlayer play];
-    }
-}
 
 #pragma mark - STKAudioPlayerDelegate
 
@@ -184,16 +133,5 @@ typedef enum {
     
 }
 
-#pragma mark - AVAudioPlayerDelegate
-
--(void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
-    if ([player isEqual:minePlayer]) {
-        [minePlayer prepareToPlay];
-    } else if ([player isEqual:shieldUpPlayer]) {
-        [shieldUpPlayer prepareToPlay];
-    } else if ([player isEqual:shieldDownPlayer]) {
-        [shieldDownPlayer prepareToPlay];
-    }
-}
 
 @end
