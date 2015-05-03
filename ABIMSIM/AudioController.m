@@ -16,7 +16,7 @@ typedef enum {
 } MusicMode;
 
 @implementation AudioController  {
-    STKAudioPlayer* audioPlayer;
+    AVAudioPlayer *audioPlayer;
     MusicMode musicMode;
     NSTimer *currentTimeTimer;
     BOOL playSoundEffect, playMusic;
@@ -39,18 +39,15 @@ typedef enum {
         
         Float32 bufferLength = 0.1;
         [[AVAudioSession sharedInstance] setPreferredIOBufferDuration:bufferLength error:&error];
-        
-        audioPlayer = [[STKAudioPlayer alloc] initWithOptions:(STKAudioPlayerOptions){ .flushQueueOnSeek = YES, .enableVolumeMixer = YES, .equalizerBandFrequencies = {50, 100, 200, 400, 800, 1600, 2600, 16000} }];
-        audioPlayer.meteringEnabled = YES;
-        audioPlayer.volume = 1;
+        NSString* path = [[NSBundle mainBundle] pathForResource:@"gamePlay" ofType:@"caf"];
+        NSURL* url = [NSURL fileURLWithPath:path];
+
+        audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:&error];
+        audioPlayer.volume = 0.8;
         audioPlayer.delegate = self;
+        [audioPlayer prepareToPlay];
         playSoundEffect = [ABIMSIMDefaults boolForKey:kSFXSetting];
         playMusic = [ABIMSIMDefaults boolForKey:kMusicSetting];
-//        NSString* path = [[NSBundle mainBundle] pathForResource:@"Level1" ofType:@"mp3"];
-//        NSURL* url = [NSURL fileURLWithPath:path];
-//        
-//        STKDataSource* dataSource = [STKAudioPlayer dataSourceFromURL:url];
-//        [audioPlayer queueDataSource:dataSource withQueueItemId:[[SampleQueueId alloc] initWithUrl:url andCount:0]];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(musicToggled) name:kMusicToggleChanged object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sfxToggled) name:kSFXToggleChanged object:nil];
@@ -61,10 +58,13 @@ typedef enum {
 -(void)musicToggled {
     playMusic = [ABIMSIMDefaults boolForKey:kMusicSetting];
     if (!playMusic) {
-        [audioPlayer clearQueue];
         [audioPlayer stop];
+        [audioPlayer setCurrentTime:0];
+        [audioPlayer prepareToPlay];
     } else {
-        [self audioPlayer:audioPlayer didStartPlayingQueueItemId:nil];
+        if (musicMode == MusicModeGame) {
+            [audioPlayer play];
+        }
     }
 }
 
@@ -75,63 +75,29 @@ typedef enum {
 -(void)playerDeath {
     musicMode = MusicModeIntro;
     [audioPlayer stop];
-    [self audioPlayer:audioPlayer didStartPlayingQueueItemId:nil];
+    [audioPlayer setCurrentTime:0];
+    [audioPlayer prepareToPlay];
 }
 
 -(void)gameplay {
     musicMode = MusicModeGame;
-    [audioPlayer clearQueue];
     if (playMusic) {
-        NSString* path = [[NSBundle mainBundle] pathForResource:@"gamePlay" ofType:@"caf"];
-        NSURL* url = [NSURL fileURLWithPath:path];
-        
-        STKDataSource* dataSource = [STKAudioPlayer dataSourceFromURL:url];
-        [audioPlayer queueDataSource:dataSource withQueueItemId:[[SampleQueueId alloc] initWithUrl:url andCount:0]];
+        [audioPlayer play];
     }
 }
 
+#pragma mark AVAudioPlayerDelegate
 
-#pragma mark - STKAudioPlayerDelegate
-
--(void) audioPlayer:(STKAudioPlayer*)aAudioPlayer didStartPlayingQueueItemId:(NSObject*)queueItemId
-{
-    if (!playMusic) {
-        return;
-    }
-    if (musicMode == MusicModeIntro) {
-//        NSString* path = [[NSBundle mainBundle] pathForResource:@"Level1" ofType:@"mp3"];
-//        NSURL* url = [NSURL fileURLWithPath:path];
-//        
-//        STKDataSource* dataSource = [STKAudioPlayer dataSourceFromURL:url];
-//        [audioPlayer queueDataSource:dataSource withQueueItemId:[[SampleQueueId alloc] initWithUrl:url andCount:0]];
-    } else if (musicMode == MusicModeGame) {
-        NSString* path = [[NSBundle mainBundle] pathForResource:@"gamePlay" ofType:@"caf"];
-        NSURL* url = [NSURL fileURLWithPath:path];
-        
-        STKDataSource* dataSource = [STKAudioPlayer dataSourceFromURL:url];
-        [audioPlayer queueDataSource:dataSource withQueueItemId:[[SampleQueueId alloc] initWithUrl:url andCount:0]];
-    } else if (musicMode == MusicModeDeath) {
-        NSString* path = [[NSBundle mainBundle] pathForResource:@"Level1" ofType:@"mp3"];
-        NSURL* url = [NSURL fileURLWithPath:path];
-        
-        STKDataSource* dataSource = [STKAudioPlayer dataSourceFromURL:url];
-        [audioPlayer queueDataSource:dataSource withQueueItemId:[[SampleQueueId alloc] initWithUrl:url andCount:0]];
+-(void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
+    if (musicMode == MusicModeGame && playMusic) {
+        [audioPlayer play];
     }
 }
 
-
--(void) audioPlayer:(STKAudioPlayer*)audioPlayer didFinishBufferingSourceWithQueueItemId:(NSObject*)queueItemId{
-    
+-(void)audioPlayerEndInterruption:(AVAudioPlayer *)player withOptions:(NSUInteger)flags {
+    if (musicMode == MusicModeGame && playMusic) {
+        [audioPlayer play];
+    }
 }
--(void) audioPlayer:(STKAudioPlayer*)audioPlayer stateChanged:(STKAudioPlayerState)state previousState:(STKAudioPlayerState)previousState{
-    
-}
--(void) audioPlayer:(STKAudioPlayer*)audioPlayer didFinishPlayingQueueItemId:(NSObject*)queueItemId withReason:(STKAudioPlayerStopReason)stopReason andProgress:(double)progress andDuration:(double)duration{
-    
-}
--(void) audioPlayer:(STKAudioPlayer*)audioPlayer unexpectedError:(STKAudioPlayerErrorCode)errorCode{
-    
-}
-
 
 @end

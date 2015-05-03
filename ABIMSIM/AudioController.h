@@ -8,10 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import <AVFoundation/AVFoundation.h>
-#import "STKAudioPlayer.h"
-#import "SampleQueueId.h"
 
-@interface AudioController : NSObject  <STKAudioPlayerDelegate>
+@interface AudioController : NSObject  <AVAudioPlayerDelegate>
 +(AudioController*)sharedController;
 -(void)playerDeath;
 -(void)gameplay;
