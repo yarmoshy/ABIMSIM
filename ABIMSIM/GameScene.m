@@ -65,6 +65,7 @@
     SKSpriteNode *currentBackLayer;
     SKSpriteNode *background, *background2;
     SKSpriteNode *shipSprite, *currentBlackHole, *explodingMine, *explodedMine;
+    SKSpriteNode *shieldPowerUpSprite, *minePowerUpSprite;
     BOOL shipWarping;
     BOOL hasShield;
     BOOL showingSun;
@@ -144,24 +145,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
         lastTimeHit = 0;
         timesHitWithinSecond = 0;
         
-        if (!asteroidSpritesDictionary) {
-            asteroidSpritesDictionary = [NSMutableDictionary new];
-            for (int i = 0; i < 10; i++) {
-                [asteroidSpritesDictionary setObject:[NSMutableArray new] forKey:[NSString stringWithFormat:kAsteroidSpriteArrayKey,i]];
-            }
-        }
-        if (!planetSpritesDictionary) {
-            planetSpritesDictionary = [NSMutableDictionary new];
-            for (int i = 0; i < 6; i++) {
-                for (int j = 0; j < 4; j++) {
-                    [planetSpritesDictionary setObject:[NSMutableArray new] forKey:[NSString stringWithFormat:kPlanetSpriteArrayKey,i * 4 + j]];
-                }
-            }
-            for (int i = 0; i < 3; i++) {
-                [planetSpritesDictionary setObject:[NSMutableArray new] forKey:[NSString stringWithFormat:kPlanetSpriteArrayKey,(int)[planetSpritesDictionary allKeys].count]];
-            }
-        }
-        
         if (!backgroundTextures) {
             backgroundTextures = [NSMutableArray arrayWithCapacity:8];
             NSMutableArray *backgroundTextureAtlases = [NSMutableArray array];
@@ -214,6 +197,54 @@ CGFloat DegreesToRadians(CGFloat degrees)
             ;
         }];
         
+        if (!asteroidSpritesDictionary) {
+            asteroidSpritesDictionary = [NSMutableDictionary new];
+            for (int i = 0; i < 10; i++) {
+                NSMutableArray *asteroidsArray = [NSMutableArray arrayWithCapacity:10];
+                for (int j = 0; j < 10; j++) {
+                    SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithTexture:asteroidTextures[i]];
+                    sprite.physicsBody = [SKPhysicsBody bodyWithPolygonFromPath:[self pathForAsteroidNum:i withSprite:sprite]];
+                    sprite.physicsBody.friction = 0.0f;
+                    sprite.physicsBody.restitution = 1.0f;
+                    sprite.physicsBody.linearDamping = 0.0f;
+                    sprite.physicsBody.dynamic = YES;
+                    sprite.physicsBody.categoryBitMask = asteroidCategory;
+                    sprite.physicsBody.collisionBitMask = borderCategory | secondaryBorderCategory | shipCategory | asteroidCategory | asteroidInShieldCategory | planetCategory | asteroidShieldCategory;
+                    sprite.physicsBody.contactTestBitMask = goalCategory | shipCategory | asteroidShieldCategory | powerUpSpaceMineExplodingRingCategory;
+                    sprite.physicsBody.mass = sprite.size.width;
+                    sprite.name = asteroidCategoryName;
+                    sprite.physicsBody.allowsRotation = YES;
+                    sprite.colorBlendFactor = 1.0;
+                    sprite.zPosition = 1;
+                    sprite.userData = [NSMutableDictionary dictionary];
+                    sprite.userData[asteroidsIndex] = @(i);
+                    [asteroidsArray addObject:sprite];
+                }
+                [asteroidSpritesDictionary setObject:asteroidsArray forKey:[NSString stringWithFormat:kAsteroidSpriteArrayKey,i]];
+            }
+        }
+        if (!planetSpritesDictionary) {
+            planetSpritesDictionary = [NSMutableDictionary new];
+            for (int i = 0; i < 6; i++) {
+                for (int j = 0; j < 4; j++) {
+                    int planetIndex = i * 4 + j;
+                    SKTexture *planetTexture = [planetTextures objectAtIndex:planetIndex];
+                    SKSpriteNode* sprite = [SKSpriteNode spriteNodeWithTexture:planetTexture];
+                    sprite.name = planetCategoryName;
+                    sprite.userData = [NSMutableDictionary dictionary];
+                    sprite.userData[planetNumber] = @(i);
+                    sprite.userData[planetFlavorNumber] = @(j);
+                    sprite.userData[planetsIndex] = @(planetIndex);
+                    sprite.zPosition = 1;
+                    [planetSpritesDictionary setObject:@[sprite].mutableCopy forKey:[NSString stringWithFormat:kPlanetSpriteArrayKey,planetIndex]];
+                }
+            }
+            for (int i = 0; i < 3; i++) {
+                [planetSpritesDictionary setObject:[NSMutableArray new] forKey:[NSString stringWithFormat:kPlanetSpriteArrayKey,(int)[planetSpritesDictionary allKeys].count]];
+            }
+        }
+
+        
         if (!spaceMineTextures) {
             spaceMineTextures = [NSMutableArray array];
             for (int i = 0; i < 9; i++) {
@@ -253,7 +284,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
         background2.zPosition = -1;
         background2.alpha = 0;
         [self addChild:background2];
-
         
         background = [SKSpriteNode spriteNodeWithTexture:backgroundTextures[0]];
         background.anchorPoint = CGPointZero;
@@ -319,6 +349,15 @@ CGFloat DegreesToRadians(CGFloat degrees)
         [self addChild:shipSprite];
         [self updateShipPhysics];
         [self childNodeWithName:shipCategoryName].physicsBody.collisionBitMask = borderCategory | asteroidCategory | planetCategory;
+        
+        CGRect goalRect;
+        goalRect = CGRectMake(self.frame.origin.x, self.frame.size.height + kExtraSpaceOffScreen, self.frame.size.width, 15);
+        SKNode* goal = [SKNode node];
+        goal.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:goalRect];
+        goal.name = goalCategoryName;
+        goal.physicsBody.categoryBitMask = goalCategory;
+        [self addChild:goal];
+
         [self generateInitialLevelsAndShowSprites:NO];
         safeToTransition = @YES;
         shipWarping = YES;
@@ -910,7 +949,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
         if (firstBody.categoryBitMask == shipCategory && secondBody.categoryBitMask == goalCategory) {
             if ([safeToTransition isEqualToNumber:@YES]) {
                 safeToTransition = @NO;
-                secondBody.node.name = removedThisSprite;
                 [self transitionStars];
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self advanceToNextLevel];
@@ -1206,8 +1244,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
 //    [self childNodeWithName:levelParsecsNodeName].position =
     safeToTransition = @YES;
-    SKSpriteNode *goal = (SKSpriteNode*)[self childNodeWithName:goalCategoryName];
-    [goal removeFromParent];
     if (!shipSprite) {
         shipSprite = [self createShip];
         [self addChild:shipSprite];
@@ -1442,23 +1478,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
         [spriteArray addObjectsFromArray:asteroids];
         NSMutableArray *planets = [self planetsForLevel:i];
         [spriteArray addObjectsFromArray:planets];
-        for (SKSpriteNode *planet in planets) {
-            if ([planet isKindOfClass:[BlackHole class]]) {
-                for (SKSpriteNode *sprite in asteroids) {
-                    sprite.physicsBody.collisionBitMask = shipCategory | asteroidCategory | asteroidInShieldCategory | planetCategory | asteroidShieldCategory;
-                }
-                break;
-            }
-        }
         NSMutableArray *powerUps = [self powerUpsForLevel:i];
         [spriteArray addObjectsFromArray:powerUps];
-        CGRect goalRect;
-        goalRect = CGRectMake(self.frame.origin.x, self.frame.size.height + kExtraSpaceOffScreen, self.frame.size.width, 15);
-        SKNode* goal = [SKNode node];
-        goal.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:goalRect];
-        goal.name = goalCategoryName;
-        goal.physicsBody.categoryBitMask = goalCategory;
-        [spriteArray addObject:goal];
         
         [spritesArrays addObject:spriteArray];
     }
@@ -1549,15 +1570,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
     level.text = [NSString stringWithFormat:@"%d",self.currentLevel];
     [self childNodeWithName:levelParsecsNodeName].position = CGPointMake(level.position.x + level.frame.size.width + 1, 16);
     ((SKLabelNode*)[self childNodeWithName:levelParsecsNodeName]).text = @"PARSECS";
-
-    CGRect goalRect;
-    goalRect = CGRectMake(self.frame.origin.x, self.frame.size.height + kExtraSpaceOffScreen, self.frame.size.width, 1);
-    SKNode* goal = [SKNode node];
-    goal.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:goalRect];
-    goal.name = goalCategoryName;
-    goal.physicsBody.categoryBitMask = goalCategory;
-    [currentSpriteArray addObject:goal];
-
     
     [spritesArrays addObject:spritesArrays[0]];
     [spritesArrays removeObjectAtIndex:0];
@@ -1605,8 +1617,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
                 [sprite runAction:sprite.userData[blackHoleAnimation]];
             }
 
-        } else if ([sprite.name isEqual:goalCategoryName]) {
-            [self addChild:sprite];
         } else if ([sprite.name isEqual:powerUpShieldName]) {
             sprite.hidden = NO;
             [self addChild:sprite];
@@ -1725,36 +1735,42 @@ CGFloat DegreesToRadians(CGFloat degrees)
 }
 
 -(SKSpriteNode*)spaceMinePowerUp {
-    SKSpriteNode *spaceMinePowerUp = [SKSpriteNode spriteNodeWithTexture:powerUpTextures[2]];
-    spaceMinePowerUp.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:29];
-    spaceMinePowerUp.physicsBody.dynamic = NO;
-    spaceMinePowerUp.physicsBody.categoryBitMask = powerUpSpaceMineCategory;
-    spaceMinePowerUp.physicsBody.contactTestBitMask = shipCategory;
-    spaceMinePowerUp.name = powerUpSpaceMineName;
-    spaceMinePowerUp.position = CGPointMake(self.size.width/2, 100);
-    spaceMinePowerUp.zPosition = 1;
-    spaceMinePowerUp.userData = [NSMutableDictionary dictionary];
-    SKSpriteNode *glowSprite = [SKSpriteNode spriteNodeWithTexture:powerUpTextures[3]];
-    glowSprite.name = powerUpSpaceMineGlowName;
-    [spaceMinePowerUp addChild:glowSprite];
-    glowSprite.alpha = 0;
+    if (!minePowerUpSprite) {
+        minePowerUpSprite = [SKSpriteNode spriteNodeWithTexture:powerUpTextures[2]];
+        minePowerUpSprite.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:29];
+        minePowerUpSprite.physicsBody.dynamic = NO;
+        minePowerUpSprite.physicsBody.categoryBitMask = powerUpSpaceMineCategory;
+        minePowerUpSprite.physicsBody.contactTestBitMask = shipCategory;
+        minePowerUpSprite.name = powerUpSpaceMineName;
+        minePowerUpSprite.position = CGPointMake(self.size.width/2, 100);
+        minePowerUpSprite.zPosition = 1;
+        minePowerUpSprite.userData = [NSMutableDictionary dictionary];
+        SKSpriteNode *glowSprite = [SKSpriteNode spriteNodeWithTexture:powerUpTextures[3]];
+        glowSprite.name = powerUpSpaceMineGlowName;
+        [minePowerUpSprite addChild:glowSprite];
+        glowSprite.alpha = 0;
+        
+        SKAction *fadeIn = [SKAction fadeAlphaTo:1 duration:0.5];
+        SKAction *fadeOut = [SKAction fadeAlphaTo:0 duration:0.5];
+        SKAction *repeat = [SKAction repeatActionForever:[SKAction sequence:@[fadeIn,fadeOut]]];
+        
+        SKAction *animationAction = [SKAction customActionWithDuration:0 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
+            [[node childNodeWithName:powerUpSpaceMineGlowName] runAction:repeat];
+        }];
+        minePowerUpSprite.userData[powerUpSpaceMinePulseAnimation] = animationAction;
+        
+        SKAction *animation = [SKAction animateWithTextures:spaceMineTextures timePerFrame:0.1 resize:NO restore:NO];
+        SKAction *repeatAnimation = [SKAction repeatActionForever:animation];
+        minePowerUpSprite.userData[powerUpSpaceMineRotationAnimation] = repeatAnimation;
+        
+    }
+    [minePowerUpSprite removeAllChildren];
+    minePowerUpSprite.name = powerUpSpaceMineName;
+    minePowerUpSprite.alpha = 1;
+    minePowerUpSprite.position = CGPointMake(self.size.width/2, 100);
+    [self addSpaceMineExplosionRingAnimationsToSprite:minePowerUpSprite];
     
-    SKAction *fadeIn = [SKAction fadeAlphaTo:1 duration:0.5];
-    SKAction *fadeOut = [SKAction fadeAlphaTo:0 duration:0.5];
-    SKAction *repeat = [SKAction repeatActionForever:[SKAction sequence:@[fadeIn,fadeOut]]];
-    
-    SKAction *animationAction = [SKAction customActionWithDuration:0 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
-        [[node childNodeWithName:powerUpSpaceMineGlowName] runAction:repeat];
-    }];
-    spaceMinePowerUp.userData[powerUpSpaceMinePulseAnimation] = animationAction;
-    
-    SKAction *animation = [SKAction animateWithTextures:spaceMineTextures timePerFrame:0.1 resize:NO restore:NO];
-    SKAction *repeatAnimation = [SKAction repeatActionForever:animation];
-    spaceMinePowerUp.userData[powerUpSpaceMineRotationAnimation] = repeatAnimation;
-
-    [self addSpaceMineExplosionRingAnimationsToSprite:spaceMinePowerUp];
-    
-    return spaceMinePowerUp;
+    return minePowerUpSprite;
 }
 
 -(void)addSpaceMineExplosionRingAnimationsToSprite:(SKSpriteNode*)sprite {
@@ -1807,30 +1823,36 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
 
 -(SKSpriteNode*)shieldPowerUp {
-    SKSpriteNode *shieldPowerUp = [SKSpriteNode spriteNodeWithTexture:powerUpTextures[4]];
-    shieldPowerUp.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:29];
-    shieldPowerUp.physicsBody.dynamic = NO;
-    shieldPowerUp.physicsBody.categoryBitMask = powerUpShieldCategory;
-    shieldPowerUp.physicsBody.contactTestBitMask = shipCategory;
-    shieldPowerUp.name = powerUpShieldName;
-    shieldPowerUp.position = CGPointMake(self.size.width/2, 100);
-    shieldPowerUp.zPosition = 1;
-    shieldPowerUp.userData = [NSMutableDictionary dictionary];
-    SKSpriteNode *glowSprite = [SKSpriteNode spriteNodeWithTexture:powerUpTextures[5]];
-    glowSprite.name = powerUpShieldRingName;
-    [shieldPowerUp addChild:glowSprite];
-    glowSprite.alpha = 0;
+    if (!shieldPowerUpSprite) {
+        shieldPowerUpSprite  = [SKSpriteNode spriteNodeWithTexture:powerUpTextures[4]];
+        shieldPowerUpSprite.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:29];
+        shieldPowerUpSprite.physicsBody.dynamic = NO;
+        shieldPowerUpSprite.physicsBody.categoryBitMask = powerUpShieldCategory;
+        shieldPowerUpSprite.physicsBody.contactTestBitMask = shipCategory;
+        shieldPowerUpSprite.name = powerUpShieldName;
+        shieldPowerUpSprite.position = CGPointMake(self.size.width/2, 100);
+        shieldPowerUpSprite.zPosition = 1;
+        shieldPowerUpSprite.userData = [NSMutableDictionary dictionary];
+        SKSpriteNode *glowSprite = [SKSpriteNode spriteNodeWithTexture:powerUpTextures[5]];
+        glowSprite.name = powerUpShieldRingName;
+        [shieldPowerUpSprite addChild:glowSprite];
+        glowSprite.alpha = 0;
+        
+        SKAction *fadeIn = [SKAction fadeAlphaTo:1 duration:0.3];
+        SKAction *fadeOut = [SKAction fadeAlphaTo:0 duration:1.0];
+        SKAction *repeat = [SKAction repeatActionForever:[SKAction sequence:@[fadeIn,fadeOut]]];
+        
+        SKAction *animationAction = [SKAction customActionWithDuration:0 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
+            [[node childNodeWithName:powerUpShieldRingName] runAction:repeat];
+        }];
+        shieldPowerUpSprite.userData[powerUpShieldPulseAnimation] = animationAction;
+    }
+    shieldPowerUpSprite.name = powerUpShieldName;
+    shieldPowerUpSprite.position = CGPointMake(self.size.width/2, 100);
+    shieldPowerUpSprite.alpha = 1;
+
     
-    SKAction *fadeIn = [SKAction fadeAlphaTo:1 duration:0.3];
-    SKAction *fadeOut = [SKAction fadeAlphaTo:0 duration:1.0];
-    SKAction *repeat = [SKAction repeatActionForever:[SKAction sequence:@[fadeIn,fadeOut]]];
-    
-    SKAction *animationAction = [SKAction customActionWithDuration:0 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
-        [[node childNodeWithName:powerUpShieldRingName] runAction:repeat];
-    }];
-    shieldPowerUp.userData[powerUpShieldPulseAnimation] = animationAction;
-    
-    return shieldPowerUp;
+    return shieldPowerUpSprite;
 }
 
 -(void)updateShipPhysics {
@@ -1986,7 +2008,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     NSMutableArray *asteroidArray = [asteroidSpritesDictionary objectForKey:[NSString stringWithFormat:kAsteroidSpriteArrayKey, asteroidIndex]];
     if (asteroidArray.count) {
         sprite = asteroidArray[0];
-        [asteroidArray removeObject:sprite];
+        [asteroidArray removeObjectAtIndex:0];
     } else {
         sprite = [SKSpriteNode spriteNodeWithTexture:asteroidTextures[asteroidIndex]];
         sprite.physicsBody = [SKPhysicsBody bodyWithPolygonFromPath:[self pathForAsteroidNum:asteroidIndex withSprite:sprite]];
@@ -2504,7 +2526,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     NSMutableArray *planetArray = [planetSpritesDictionary objectForKey:[NSString stringWithFormat:kPlanetSpriteArrayKey, planetIndex]];
     if (planetArray.count) {
         sprite = planetArray[0];
-        [planetArray removeObject:sprite];
+        [planetArray removeObjectAtIndex:0];
         [sprite removeAllActions];
     } else {
         SKTexture *planetTexture = [planetTextures objectAtIndex:planetIndex];
@@ -2564,7 +2586,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
 -(SKSpriteNode*)randomSun {
     int planetIndex = (int)planetTextures.count-3;
-    NSMutableArray *planetArray = [asteroidSpritesDictionary objectForKey:[NSString stringWithFormat:kPlanetSpriteArrayKey, planetIndex]];
+    NSMutableArray *planetArray = [planetSpritesDictionary objectForKey:[NSString stringWithFormat:kPlanetSpriteArrayKey, planetIndex]];
     SKSpriteNode *sprite;
     if (planetArray.count) {
         sprite = planetArray[0];
