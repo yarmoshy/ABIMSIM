@@ -43,10 +43,6 @@ static NSString* directionsSecondarySpriteName = @"directionsSecondarySpriteName
 static NSString* directionsSecondaryBlinkingSpriteName = @"directionsSecondaryBlinkingSpriteName";
 
 static NSString* pauseSpriteName = @"pauseSpriteName";
-static NSString* upgradeSpriteName = @"upgradeSpriteName";
-static NSString* gameCenterSpriteName = @"gameCenterSpriteName";
-static NSString* twitterSpriteName = @"twitterSpriteName";
-static NSString* facebokSpriteName = @"facebokSpriteName";
 static NSString* asteroidShieldRing1SpriteName = @"asteroidShieldRing1SpriteName";
 static NSString* starSpriteName = @"starSpriteName";
 

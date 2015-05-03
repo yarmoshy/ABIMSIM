@@ -16,9 +16,19 @@
 
 @implementation HXColor (HexColorAddition)
 
+static NSMutableDictionary *colorsCache;
+
 + (HXColor *)colorWithHexString:(NSString *)hexString
 {
-    return [[self class] colorWithHexString:hexString alpha:1.0];
+    if (!colorsCache) {
+        colorsCache = @{}.mutableCopy;
+    }
+    if ([colorsCache valueForKey:hexString]) {
+        return [colorsCache valueForKey:hexString];
+    } else {
+        [colorsCache setObject:[[self class] colorWithHexString:hexString alpha:1.0] forKey:hexString];
+        return [colorsCache valueForKey:hexString];
+    }
 }
 
 + (HXColor *)colorWithHexString:(NSString *)hexString alpha:(CGFloat)alpha

@@ -69,6 +69,7 @@
     BOOL shipWarping;
     BOOL hasShield;
     BOOL showingSun;
+    BOOL advanceLevel;
     int possibleBubblesPopped, lastShieldLevel, lastMineLevel;
     
     NSInteger shieldHitPoints;
@@ -470,6 +471,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
         }
         return;
     }
+    if (advanceLevel) {
+        [self advanceToNextLevel];
+    }
     
     if (shieldHitPoints <= 0 && hasShield) {
         hasShield = NO;
@@ -775,13 +779,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
     CGPoint addVelocity = [recognizer velocityInView:recognizer.view];
     CGPoint newVelocity = addVelocity;
     float velocity = sqrtf(powf(newVelocity.x, 2) + powf(newVelocity.y, 2));
-    if (velocity > MAX_VELOCITY) {
-        newVelocity.x = MAX_VELOCITY * ( newVelocity.x / velocity );
-        newVelocity.y = MAX_VELOCITY * ( newVelocity.y / velocity );
-    } else if (velocity <MIN_VELOCITY ) {
-        newVelocity.x = MIN_VELOCITY * ( newVelocity.x / velocity );
-        newVelocity.y = MIN_VELOCITY * ( newVelocity.y / velocity );
-    }
+    newVelocity.x = MAX_VELOCITY * ( newVelocity.x / velocity );
+    newVelocity.y = MAX_VELOCITY * ( newVelocity.y / velocity );
     if (self.initialPause) {
         self.initialPause = NO;
         self.paused = NO;
@@ -792,47 +791,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
         [[shipSprite childNodeWithName:shipThrusterSpriteName] runAction:shipSprite.userData[shipThrusterAnimation] withKey:shipThrusterAnimation];
     }
 }
-
-
-//-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-//    /* Called when a touch begins */
-//}
-//
-//-(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-//    UITouch *touch = [touches anyObject];
-//    CGPoint location = [touch locationInNode:self];
-//    SKNode *node = [self nodeAtPoint:location];
-//    if ([node.name isEqualToString:pauseSpriteName]) {
-//        [self pauseTapped:nil];
-//    }
-//    if ([node.name isEqualToString:upgradeSpriteName]) {
-//        [self upgradeTapped:nil];
-//    }
-//    if ([node.name isEqualToString:gameCenterSpriteName]) {
-//        [self showGameCenter];
-//    }
-//    if ([node.name isEqualToString:twitterSpriteName]) {
-//        if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter])
-//        {
-//            SLComposeViewController *tweetSheetOBJ = [SLComposeViewController
-//                                                      composeViewControllerForServiceType:SLServiceTypeTwitter];
-//            [tweetSheetOBJ setInitialText:[NSString stringWithFormat:@"I'm playing ABIMSIM! Check it out! %@",appStoreLink]];
-//            [self.viewController presentViewController:tweetSheetOBJ animated:YES completion:nil];
-//        }
-//    }
-//    if ([node.name isEqualToString:facebokSpriteName]) {
-//        if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook])
-//        {
-//            SLComposeViewController *facebookSheetOBJ = [SLComposeViewController
-//                                                      composeViewControllerForServiceType:SLServiceTypeFacebook];
-//            [facebookSheetOBJ setInitialText:[NSString stringWithFormat:@"I'm playing ABIMSIM! Check it out! %@",appStoreLink]];
-//            [self.viewController presentViewController:facebookSheetOBJ animated:YES completion:nil];
-//        }
-//    }
-//}
-
-
-
 
 #pragma mark - Collisions and Contacts
 
@@ -852,9 +810,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
         }
         if ((firstBody.categoryBitMask == asteroidCategory || firstBody.categoryBitMask == asteroidInShieldCategory) && secondBody.categoryBitMask == powerUpSpaceMineExplodingRingCategory) {
             [firstBody.node runAction:asteroidMineDeathAction];
-            if (firstBody.node.userData[orbitJoint]) {
-                [self.physicsWorld removeJoint:firstBody.node.userData[orbitJoint]];
-            }
         }
 
         if ((firstBody.categoryBitMask == asteroidCategory || firstBody.categoryBitMask == asteroidInShieldCategory) && secondBody.categoryBitMask == asteroidShieldCategory) {
@@ -950,10 +905,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
             if ([safeToTransition isEqualToNumber:@YES]) {
                 safeToTransition = @NO;
                 [self transitionStars];
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self advanceToNextLevel];
-                });
-
+                advanceLevel = YES;
             }
         }
         if (firstBody.categoryBitMask == shipCategory && secondBody.categoryBitMask == planetCategory) {
@@ -1112,7 +1064,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
             }
         }
     }
-
 }
 
 -(void)killShipAndStartOver {
@@ -1307,11 +1258,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
         for (int i = 0; i < 12; i++) {
             SKSpriteNode *star = [SKSpriteNode spriteNodeWithImageNamed:@"LargeStar"];
             star.alpha = 0.4;
-//            star.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:15];
-//            star.physicsBody.dynamic = NO;
-//            star.physicsBody.categoryBitMask = starCategory;
-//            star.physicsBody.collisionBitMask = 0;
-//            star.physicsBody.contactTestBitMask = blackHoleCategory;
             star.name = starSpriteName;
             [starSprites addObject:star];
             float x = arc4random() % (int)self.frame.size.width * 1;
@@ -1364,11 +1310,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
         for (int i = 0; i < 12; i++) {
             SKSpriteNode *star = [SKSpriteNode spriteNodeWithImageNamed:@"LargeStar"];
             star.alpha = 0.4;
-//            star.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:15];
-//            star.physicsBody.dynamic = NO;
-//            star.physicsBody.categoryBitMask = starCategory;
-//            star.physicsBody.collisionBitMask = 0;
-//            star.physicsBody.contactTestBitMask = blackHoleCategory;
             star.name = starSpriteName;
             [starSprites addObject:star];
             [star setScale:0];
@@ -1433,12 +1374,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
                 star.physicsBody = nil;
                 star.position = CGPointMake(x, y);
                 [star runAction:[SKAction scaleTo:scale duration:0.5] completion:^{
-//                    star.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:15];
-//                    star.physicsBody.dynamic = NO;
-//                    star.physicsBody.categoryBitMask = starCategory;
-//                    star.physicsBody.collisionBitMask = 0;
-//                    star.physicsBody.contactTestBitMask = blackHoleCategory;
-                    star.name = starSpriteName;
+                star.name = starSpriteName;
                 }];
             } else {
                 SKAction *spawnAction = [SKAction group:@[[SKAction moveByX:0 y:yVelocity * 0.125 duration:0.5],
@@ -1579,6 +1515,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     [self childNodeWithName:shipCategoryName].physicsBody.collisionBitMask = borderCategory | asteroidCategory | planetCategory;
     [self childNodeWithName:shipCategoryName].position = CGPointMake([self childNodeWithName:shipCategoryName].position.x, -kExtraSpaceOffScreen + ((SKSpriteNode*)[self childNodeWithName:shipCategoryName]).size.height/2);
     shipWarping = YES;
+    advanceLevel = NO;
 }
 
 -(void)showCurrentSprites {
@@ -1666,18 +1603,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
     while ([self childNodeWithName:directionsSecondaryBlinkingSpriteName]) {
         [[self childNodeWithName:directionsSecondaryBlinkingSpriteName] removeFromParent];
     }
-    while ([self childNodeWithName:upgradeSpriteName]) {
-        [[self childNodeWithName:upgradeSpriteName] removeFromParent];
-    }
-    while ([self childNodeWithName:gameCenterSpriteName]) {
-        [[self childNodeWithName:gameCenterSpriteName] removeFromParent];
-    }
-    while ([self childNodeWithName:facebokSpriteName]) {
-        [[self childNodeWithName:facebokSpriteName] removeFromParent];
-    }
-    while ([self childNodeWithName:twitterSpriteName]) {
-        [[self childNodeWithName:twitterSpriteName] removeFromParent];
-    }
 }
 
 -(SKSpriteNode*)randomizeSprite:(SKSpriteNode*)sprite {
@@ -1688,6 +1613,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
     if ([sprite.name isEqualToString:asteroidCategoryName]) {
         sprite.zRotation = DegreesToRadians(arc4random() % 360);
         float velocity = arc4random() % (MAX_VELOCITY/2);
+        if (velocity < 10.f) {
+            velocity = 10.f;
+        }
         sprite.physicsBody.velocity = CGVectorMake(velocity * cosf(sprite.zRotation), velocity * -sinf(sprite.zRotation));
     }
     return sprite;
@@ -1917,7 +1845,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
         [self randomizeSprite:asteroid];
         if (level == 1) {
             asteroid.position = CGPointMake(asteroid.position.x, self.frame.size.height/4 * 3);
-            asteroid.physicsBody.velocity = CGVectorMake(0, 0);
+            if (![ABIMSIMDefaults boolForKey:kWalkthroughSeen]) {
+                asteroid.physicsBody.velocity = CGVectorMake(0, 0);
+            }
         }
         asteroid.hidden = YES;
         [asteroids addObject:asteroid];
