@@ -1745,10 +1745,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
         minePowerUpSprite.position = CGPointMake(self.size.width/2, 100);
         minePowerUpSprite.zPosition = 1;
         minePowerUpSprite.userData = [NSMutableDictionary dictionary];
-        SKSpriteNode *glowSprite = [SKSpriteNode spriteNodeWithTexture:powerUpTextures[3]];
-        glowSprite.name = powerUpSpaceMineGlowName;
-        [minePowerUpSprite addChild:glowSprite];
-        glowSprite.alpha = 0;
         
         SKAction *fadeIn = [SKAction fadeAlphaTo:1 duration:0.5];
         SKAction *fadeOut = [SKAction fadeAlphaTo:0 duration:0.5];
@@ -1765,6 +1761,10 @@ CGFloat DegreesToRadians(CGFloat degrees)
         
     }
     [minePowerUpSprite removeAllChildren];
+    SKSpriteNode *glowSprite = [SKSpriteNode spriteNodeWithTexture:powerUpTextures[3]];
+    glowSprite.name = powerUpSpaceMineGlowName;
+    [minePowerUpSprite addChild:glowSprite];
+    glowSprite.alpha = 0;
     minePowerUpSprite.name = powerUpSpaceMineName;
     minePowerUpSprite.alpha = 1;
     minePowerUpSprite.position = CGPointMake(self.size.width/2, 100);
