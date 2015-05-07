@@ -206,7 +206,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
                     sprite.physicsBody.linearDamping = 0.0f;
                     sprite.physicsBody.dynamic = YES;
                     sprite.physicsBody.categoryBitMask = asteroidCategory;
-                    sprite.physicsBody.collisionBitMask = borderCategory | secondaryBorderCategory | shipCategory | asteroidCategory | asteroidInShieldCategory | planetCategory | asteroidShieldCategory;
+                    sprite.physicsBody.collisionBitMask = borderCategory | secondaryBorderCategory | shipCategory | asteroidCategory | asteroidInShieldCategory | planetCategory | planetRingCategory | asteroidShieldCategory;
                     sprite.physicsBody.contactTestBitMask = goalCategory | shipCategory | asteroidShieldCategory | powerUpSpaceMineExplodingRingCategory;
                     sprite.physicsBody.mass = sprite.size.width;
                     sprite.name = asteroidCategoryName;
@@ -350,7 +350,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
         [self addChild:shipSprite];
         [self updateShipPhysics];
-        [self childNodeWithName:shipCategoryName].physicsBody.collisionBitMask = borderCategory | asteroidCategory | planetCategory;
+        [self childNodeWithName:shipCategoryName].physicsBody.collisionBitMask = borderCategory | asteroidCategory | planetCategory | planetRingCategory;
         
         CGRect goalRect;
         goalRect = CGRectMake(self.frame.origin.x, self.frame.size.height + kExtraSpaceOffScreen, self.frame.size.width, 15);
@@ -528,7 +528,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     /* Called before each frame is rendered */
     if (shipWarping && shipSprite.position.y > shipSprite.frame.size.height/2) {
         shipWarping = NO;
-        shipSprite.physicsBody.collisionBitMask = borderCategory | secondaryBorderCategory | asteroidCategory | planetCategory;
+        shipSprite.physicsBody.collisionBitMask = borderCategory | secondaryBorderCategory | asteroidCategory | planetCategory | planetRingCategory;
     }
     if (shipSprite) {
         float yPercentageFromCenter = (shipSprite.position.y - (self.view.frame.size.height/2.0))  / (self.view.frame.size.height / 2.0);
@@ -882,7 +882,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
                 if ([asteroid.name isEqual:asteroidInShieldCategoryName] &&
                     [asteroid.userData[asteroidShieldTag] intValue] == [secondBody.node.userData[asteroidShieldTag] intValue]) {
                     asteroid.physicsBody.categoryBitMask = asteroidCategory;
-                    asteroid.physicsBody.collisionBitMask = borderCategory | secondaryBorderCategory | shipCategory | asteroidCategory | planetCategory | asteroidShieldCategory;
+                    asteroid.physicsBody.collisionBitMask = borderCategory | secondaryBorderCategory | shipCategory | asteroidCategory | planetCategory | planetRingCategory | asteroidShieldCategory;
                     asteroid.physicsBody.contactTestBitMask = goalCategory | shipCategory | asteroidShieldCategory | powerUpSpaceMineExplodingRingCategory;
                     asteroid.zRotation = DegreesToRadians(arc4random() % 360);
                     float velocity = MAX_VELOCITY;
@@ -1187,7 +1187,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     [self updateShipPhysics];
     shipSprite.physicsBody.velocity = CGVectorMake(0, MAX_VELOCITY);
     
-    shipSprite.physicsBody.collisionBitMask = borderCategory | asteroidCategory | planetCategory;
+    shipSprite.physicsBody.collisionBitMask = borderCategory | asteroidCategory | planetCategory | planetRingCategory;
     shipSprite.position = CGPointMake(self.frame.size.width/2, -kExtraSpaceOffScreen + shipSprite.size.height/2);
 
     for (NSMutableArray *sprites in spritesArrays) {
@@ -1523,7 +1523,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     currentSpriteArray = spritesArrays[0];
     [self showCurrentSprites];
     safeToTransition = @YES;
-    [self childNodeWithName:shipCategoryName].physicsBody.collisionBitMask = borderCategory | asteroidCategory | planetCategory;
+    [self childNodeWithName:shipCategoryName].physicsBody.collisionBitMask = borderCategory | asteroidCategory | planetCategory | planetRingCategory;
     [self childNodeWithName:shipCategoryName].position = CGPointMake([self childNodeWithName:shipCategoryName].position.x, -kExtraSpaceOffScreen + ((SKSpriteNode*)[self childNodeWithName:shipCategoryName]).size.height/2);
     shipWarping = YES;
     advanceLevel = NO;
@@ -1838,7 +1838,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     ship.physicsBody.linearDamping = 0.0f;
     ship.physicsBody.allowsRotation = NO;
     ship.physicsBody.categoryBitMask = shipCategory;
-    ship.physicsBody.collisionBitMask = borderCategory | secondaryBorderCategory | asteroidCategory | planetCategory;
+    ship.physicsBody.collisionBitMask = borderCategory | secondaryBorderCategory | asteroidCategory | planetCategory | planetRingCategory;
     ship.physicsBody.contactTestBitMask = goalCategory | asteroidCategory | planetCategory | powerUpShieldCategory | powerUpSpaceMineCategory | asteroidShieldCategory;
     ship.physicsBody.mass = width;
     ship.physicsBody.velocity = velocity;
@@ -1960,7 +1960,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         sprite.physicsBody.linearDamping = 0.0f;
         sprite.physicsBody.dynamic = YES;
         sprite.physicsBody.categoryBitMask = asteroidCategory;
-        sprite.physicsBody.collisionBitMask = borderCategory | secondaryBorderCategory | shipCategory | asteroidCategory | asteroidInShieldCategory | planetCategory | asteroidShieldCategory;
+        sprite.physicsBody.collisionBitMask = borderCategory | secondaryBorderCategory | shipCategory | asteroidCategory | asteroidInShieldCategory | planetCategory | planetRingCategory | asteroidShieldCategory;
         sprite.physicsBody.contactTestBitMask = goalCategory | shipCategory | asteroidShieldCategory | powerUpSpaceMineExplodingRingCategory;
         sprite.physicsBody.mass = sprite.size.width;
         sprite.name = asteroidCategoryName;
@@ -1973,7 +1973,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     if ([sprite.userData valueForKey:asteroidShieldTag]) {
         sprite.name = asteroidCategoryName;
         sprite.physicsBody.categoryBitMask = asteroidCategory;
-        sprite.physicsBody.collisionBitMask = borderCategory | secondaryBorderCategory | shipCategory | asteroidCategory | asteroidInShieldCategory | planetCategory | asteroidShieldCategory;
+        sprite.physicsBody.collisionBitMask = borderCategory | secondaryBorderCategory | shipCategory | asteroidCategory | asteroidInShieldCategory | planetCategory | planetRingCategory | asteroidShieldCategory;
         sprite.physicsBody.contactTestBitMask = goalCategory | shipCategory | asteroidShieldCategory | powerUpSpaceMineExplodingRingCategory;
         sprite.zPosition = 1;
         [sprite.userData removeObjectForKey:asteroidShieldTag];
@@ -2351,7 +2351,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         SKSpriteNode *extraBodySprite = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:planet.size];
         extraBodySprite.physicsBody = [SKPhysicsBody bodyWithPolygonFromPath:[self pathForRingWithPlanetNum:[planet.userData[planetNumber] intValue] withSprite:planet]];
         extraBodySprite.physicsBody.dynamic = NO;
-        extraBodySprite.physicsBody.categoryBitMask = planetCategory;
+        extraBodySprite.physicsBody.categoryBitMask = planetRingCategory;
         extraBodySprite.physicsBody.collisionBitMask = shipCategory | asteroidCategory;
         extraBodySprite.physicsBody.allowsRotation = NO;
 //        extraBodySprite.physicsBody.mass = 100000;
@@ -2596,7 +2596,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     sprite.physicsBody.linearDamping = 0.0f;
     sprite.physicsBody.dynamic = YES;
     sprite.physicsBody.categoryBitMask = asteroidCategory;
-    sprite.physicsBody.collisionBitMask = shipCategory | asteroidCategory | planetCategory;
+    sprite.physicsBody.collisionBitMask = shipCategory | asteroidCategory | planetCategory | planetRingCategory;
     sprite.physicsBody.contactTestBitMask = powerUpSpaceMineExplodingRingCategory;
     sprite.physicsBody.mass = sprite.size.width;
     sprite.name = asteroidCategoryName;
@@ -2735,8 +2735,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
             CGPathCloseSubpath(path2);
             extraBodySprite.physicsBody = [SKPhysicsBody bodyWithPolygonFromPath:path2];
             extraBodySprite.physicsBody.dynamic = NO;
-            extraBodySprite.physicsBody.categoryBitMask = planetCategory;
-            extraBodySprite.physicsBody.collisionBitMask = shipCategory | asteroidCategory | planetCategory;
+            extraBodySprite.physicsBody.categoryBitMask = planetRingCategory;
+            extraBodySprite.physicsBody.collisionBitMask = shipCategory | asteroidCategory | planetCategory | planetRingCategory;
             extraBodySprite.physicsBody.allowsRotation = NO;
             [sprite addChild:extraBodySprite];
 

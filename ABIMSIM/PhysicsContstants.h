@@ -55,10 +55,11 @@ static const uint32_t planetCategory = 0x1 << 5;
 static const uint32_t asteroidShieldCategory = 0x1 << 6;
 static const uint32_t starCategory = 0x1 << 7;
 static const uint32_t blackHoleCategory = 0x1 << 8;
-static const uint32_t goalCategory = 0x1 << 9;
-static const uint32_t powerUpShieldCategory = 0x1 << 10;
-static const uint32_t powerUpSpaceMineCategory = 0x1 << 11;
-static const uint32_t powerUpSpaceMineExplodingRingCategory = 0x1 << 12;
+static const uint32_t planetRingCategory = 0x1 << 9;
+static const uint32_t goalCategory = 0x1 << 10;
+static const uint32_t powerUpShieldCategory = 0x1 << 11;
+static const uint32_t powerUpSpaceMineCategory = 0x1 << 12;
+static const uint32_t powerUpSpaceMineExplodingRingCategory = 0x1 << 13;
 
 #endif
 
