@@ -16,6 +16,7 @@
 		B407A22E1AD6358B00C87AC7 /* Planet_5_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B407A2291AD6358B00C87AC7 /* Planet_5_1@2x.png */; };
 		B407A22F1AD6358B00C87AC7 /* Planet_5_2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B407A22A1AD6358B00C87AC7 /* Planet_5_2@2x.png */; };
 		B407A2301AD6358B00C87AC7 /* Planet_5_3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B407A22B1AD6358B00C87AC7 /* Planet_5_3@2x.png */; };
+		B43358611AF834FF00DB6444 /* SKNode+Removed.m in Sources */ = {isa = PBXBuildFile; fileRef = B43358601AF834FF00DB6444 /* SKNode+Removed.m */; };
 		B43F4D0C192ABB510000ACA4 /* AsteroidShield_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B43F4D0B192ABB510000ACA4 /* AsteroidShield_1@2x.png */; };
 		B43F4D0E192ABB560000ACA4 /* AsteroidShield_Ring_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B43F4D0D192ABB560000ACA4 /* AsteroidShield_Ring_1@2x.png */; };
 		B43F4D12192ABB6C0000ACA4 /* AsteroidShield_0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B43F4D11192ABB6C0000ACA4 /* AsteroidShield_0@2x.png */; };
@@ -150,6 +151,8 @@
 		B407A2291AD6358B00C87AC7 /* Planet_5_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_5_1@2x.png"; sourceTree = "<group>"; };
 		B407A22A1AD6358B00C87AC7 /* Planet_5_2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_5_2@2x.png"; sourceTree = "<group>"; };
 		B407A22B1AD6358B00C87AC7 /* Planet_5_3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_5_3@2x.png"; sourceTree = "<group>"; };
+		B433585F1AF834FF00DB6444 /* SKNode+Removed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SKNode+Removed.h"; sourceTree = "<group>"; };
+		B43358601AF834FF00DB6444 /* SKNode+Removed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKNode+Removed.m"; sourceTree = "<group>"; };
 		B43F4D0B192ABB510000ACA4 /* AsteroidShield_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AsteroidShield_1@2x.png"; sourceTree = "<group>"; };
 		B43F4D0D192ABB560000ACA4 /* AsteroidShield_Ring_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AsteroidShield_Ring_1@2x.png"; sourceTree = "<group>"; };
 		B43F4D11192ABB6C0000ACA4 /* AsteroidShield_0@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AsteroidShield_0@2x.png"; sourceTree = "<group>"; };
@@ -435,6 +438,8 @@
 				B4557ECE1AC0DE55004E097E /* SKScene+Unarchive.m */,
 				B4557ED01AC0E8A3004E097E /* UIView+Fancy.h */,
 				B4557ED11AC0E8A3004E097E /* UIView+Fancy.m */,
+				B433585F1AF834FF00DB6444 /* SKNode+Removed.h */,
+				B43358601AF834FF00DB6444 /* SKNode+Removed.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -846,6 +851,7 @@
 				B4557ECF1AC0DE55004E097E /* SKScene+Unarchive.m in Sources */,
 				B4557ED51AC0EF47004E097E /* PausedView.m in Sources */,
 				B4557EDE1AC37C5A004E097E /* SettingsView.m in Sources */,
+				B43358611AF834FF00DB6444 /* SKNode+Removed.m in Sources */,
 				E1D4EDF61A5B5E5900676C17 /* DCRoundSwitchKnobLayer.m in Sources */,
 				B4557EC31AC0D4C8004E097E /* GameOverView.m in Sources */,
 				E1D4EDF51A5B5E5900676C17 /* DCRoundSwitch.m in Sources */,
@@ -997,7 +1003,7 @@
 				GCC_PREFIX_HEADER = "ABIMSIM/ABIMSIM-Prefix.pch";
 				INFOPLIST_FILE = "ABIMSIM/ABIMSIM-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "afb64de8-9ca0-47d4-99fa-7fd5b7a6e0b3";
+				PROVISIONING_PROFILE = "165f1c72-30f3-4b97-b939-d4d306abdf4c";
 				SPRITEKIT_TEXTURE_ATLAS_OUTPUT = YES;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1018,7 +1024,7 @@
 				GCC_PREFIX_HEADER = "ABIMSIM/ABIMSIM-Prefix.pch";
 				INFOPLIST_FILE = "ABIMSIM/ABIMSIM-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "afb64de8-9ca0-47d4-99fa-7fd5b7a6e0b3";
+				PROVISIONING_PROFILE = "165f1c72-30f3-4b97-b939-d4d306abdf4c";
 				SPRITEKIT_TEXTURE_ATLAS_OUTPUT = YES;
 				WRAPPER_EXTENSION = app;
 			};

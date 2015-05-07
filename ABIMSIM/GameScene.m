@@ -51,6 +51,7 @@
 #import "PhysicsContstants.h"
 #import "SpriteUserDataConstants.h"
 #import "BlackHole.h"
+#import "SKNode+Removed.h"
 
 @implementation GameScene  {
     NSMutableArray *spritesArrays;
@@ -90,7 +91,7 @@
     SKAction *asteroidSunSoundAction;
     SKAction *asteroidSunDeathAction;
     SKAction *asteroidMineDeathAction;
-    
+    SKAction *blackholeDeathAction;
     CGPoint lastShipPosition;
     
 }
@@ -126,22 +127,17 @@ CGFloat DegreesToRadians(CGFloat degrees)
         SKAction *changeColorAction = [SKAction colorizeWithColor:[UIColor redColor] colorBlendFactor:1 duration:0.25];
         SKAction *fadeOut = [SKAction fadeAlphaTo:0 duration:0.3];
         SKAction *groupAction = [SKAction group:@[changeColorAction, fadeOut]];
-        SKAction *customAction = [SKAction customActionWithDuration:0 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
-            [node runAction:groupAction completion:^{
-                node.name = removedThisSprite;
-            }];
-        }];
-        asteroidSunDeathAction = customAction;
+        asteroidSunDeathAction = groupAction;
         
         changeColorAction = [SKAction colorizeWithColor:[UIColor greenColor] colorBlendFactor:1 duration:0.1];
         fadeOut = [SKAction fadeAlphaTo:0 duration:0.15];
         groupAction = [SKAction group:@[changeColorAction, fadeOut]];
-        customAction = [SKAction customActionWithDuration:0 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
-            [node runAction:groupAction completion:^{
-                node.name = removedThisSprite;
-            }];
-        }];
-        asteroidMineDeathAction = customAction;
+        asteroidMineDeathAction = groupAction;
+        
+        float duration = 0.25;
+        blackholeDeathAction = [SKAction group:@[[SKAction moveTo:CGPointZero duration:duration],
+                                                  [SKAction scaleTo:0 duration:duration]]];
+
         
         lastTimeHit = 0;
         timesHitWithinSecond = 0;
@@ -200,7 +196,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         
         if (!asteroidSpritesDictionary) {
             asteroidSpritesDictionary = [NSMutableDictionary new];
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 12; i++) {
                 NSMutableArray *asteroidsArray = [NSMutableArray arrayWithCapacity:10];
                 for (int j = 0; j < 10; j++) {
                     SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithTexture:asteroidTextures[i]];
@@ -231,7 +227,12 @@ CGFloat DegreesToRadians(CGFloat degrees)
                     int planetIndex = i * 4 + j;
                     SKTexture *planetTexture = [planetTextures objectAtIndex:planetIndex];
                     SKSpriteNode* sprite = [SKSpriteNode spriteNodeWithTexture:planetTexture];
-                    sprite.name = planetCategoryName;
+                    if (j == 3) {
+                        sprite.name = sunObjectSpriteName;
+                    } else {
+                        sprite.name = planetCategoryName;
+                    }
+
                     sprite.userData = [NSMutableDictionary dictionary];
                     sprite.userData[planetNumber] = @(i);
                     sprite.userData[planetFlavorNumber] = @(j);
@@ -509,8 +510,14 @@ CGFloat DegreesToRadians(CGFloat degrees)
     }
 
     for (SKSpriteNode *sprite in self.children) {
-        if ([sprite.name isEqualToString:removedThisSprite]) {
+        if ([sprite.remove boolValue]) {
             [sprite removeFromParent];
+            sprite.remove = @NO;
+            sprite.alpha = 1;
+            sprite.xScale = sprite.yScale = 1;
+            for (SKSpriteNode *child in sprite.children) {
+                child.xScale = child.yScale = 1;
+            }
         }
     }
     
@@ -544,9 +551,15 @@ CGFloat DegreesToRadians(CGFloat degrees)
     }
     if (currentBlackHole) {
         for (SKSpriteNode *sprite in currentBlackHole.children) {
-            if ([sprite.name isEqualToString:removedThisSprite]) {
+            if ([sprite.remove boolValue]) {
                 if (sprite.size.width < 5) {
                     [sprite removeFromParent];
+                    sprite.remove = @NO;
+                    sprite.alpha = 1;
+                    sprite.xScale = sprite.yScale = 1;
+                    for (SKSpriteNode *child in sprite.children) {
+                        child.xScale = child.yScale = 1;
+                    }
                 }
             }
         }
@@ -809,7 +822,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
             secondBody = contact.bodyA;
         }
         if ((firstBody.categoryBitMask == asteroidCategory || firstBody.categoryBitMask == asteroidInShieldCategory) && secondBody.categoryBitMask == powerUpSpaceMineExplodingRingCategory) {
-            [firstBody.node runAction:asteroidMineDeathAction];
+            [firstBody.node runAction:asteroidMineDeathAction completion:^{
+                firstBody.node.remove = @YES;
+            }];
         }
 
         if ((firstBody.categoryBitMask == asteroidCategory || firstBody.categoryBitMask == asteroidInShieldCategory) && secondBody.categoryBitMask == asteroidShieldCategory) {
@@ -822,11 +837,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
             SKSpriteNode *impactSprite = [SKSpriteNode spriteNodeWithImageNamed:imageName];
             [secondBody.node addChild:impactSprite];
             SKAction *fadeAway = [SKAction fadeAlphaTo:0 duration:0.5];
-            SKAction *remove = [SKAction customActionWithDuration:0 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
-                node.name = removedThisSprite;
+            [impactSprite runAction:fadeAway completion:^{
+                impactSprite.remove = @YES;
             }];
-            SKAction *sequence = [SKAction sequence:@[fadeAway,remove]];
-            [impactSprite runAction:sequence];
             CGPoint p1 = secondBody.node.position;
             CGPoint p2 = firstBody.node.position;
             
@@ -861,10 +874,10 @@ CGFloat DegreesToRadians(CGFloat degrees)
             SKAction *fadeAction = [SKAction fadeAlphaTo:0 duration:0.5];
             SKAction *scaleAction = [SKAction scaleTo:1 duration:duration];
             SKAction *groupAction = [SKAction group:@[fadeAction, scaleAction]];
-            [explosionSprite runAction:[SKAction sequence:@[groupAction, [SKAction customActionWithDuration:0 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
-                node.name = removedThisSprite;
-            }]]]];
-            nodeToUse.name = removedThisSprite;
+            [explosionSprite runAction:groupAction completion:^{
+                explosionSprite.remove = @YES;
+            }];
+            nodeToUse.remove = @YES;
             for (SKSpriteNode *asteroid in [self children]) {
                 if ([asteroid.name isEqual:asteroidInShieldCategoryName] &&
                     [asteroid.userData[asteroidShieldTag] intValue] == [secondBody.node.userData[asteroidShieldTag] intValue]) {
@@ -874,6 +887,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
                     asteroid.zRotation = DegreesToRadians(arc4random() % 360);
                     float velocity = MAX_VELOCITY;
                     asteroid.physicsBody.velocity = CGVectorMake(velocity * cosf(asteroid.zRotation), velocity * -sinf(asteroid.zRotation));
+                    asteroid.name = asteroidCategoryName;
+                    [asteroid.userData removeObjectForKey:asteroidShieldTag];
                 }
             }
             return;
@@ -914,11 +929,11 @@ CGFloat DegreesToRadians(CGFloat degrees)
             [self checkPlanetHitAchievement:planetNum];
         }
         if (firstBody.categoryBitMask == asteroidCategory && secondBody.categoryBitMask == goalCategory) {
-            firstBody.node.name = removedThisSprite;
+            firstBody.node.remove = @YES;
         }
         if (firstBody.categoryBitMask == shipCategory && secondBody.categoryBitMask == powerUpShieldCategory) {
             hasShield = NO;
-            secondBody.node.name = removedThisSprite;
+            secondBody.node.remove = @YES;
             shieldHitPoints = 1 + [ABIMSIMDefaults integerForKey:kShieldDurabilityLevel];
         }
 
@@ -943,9 +958,11 @@ CGFloat DegreesToRadians(CGFloat degrees)
                 }
             } else {
                 if (firstBody.node.name == asteroidCategoryName) {
-                    [firstBody.node runAction:asteroidSunDeathAction];
+                    [firstBody.node runAction:asteroidSunDeathAction completion:^{
+                        firstBody.node.remove = @YES;
+                    }];
                 } else {
-                    firstBody.node.name = removedThisSprite;
+                    firstBody.node.remove = @YES;
                 }
                 if ([ABIMSIMDefaults boolForKey:kSFXSetting]) {
                     [self runAction:asteroidSunSoundAction];
@@ -955,32 +972,16 @@ CGFloat DegreesToRadians(CGFloat degrees)
         if ([secondBody.node.name isEqualToString:blackHoleCategoryName]) {
             CGPoint p1 = [self childNodeWithName:blackHoleCategoryName].position;
             CGPoint p2 = firstBody.node.position;
-            if ([firstBody.node.name isEqualToString:starSpriteName]) {
-                if ([firstBody.node.parent isEqual:starFrontLayer]) {
-                    p2.y += starFrontLayer.position.y;
-                } else {
-                    p2.y += starBackLayer.position.y;
-                }
-            }
-
             if ([firstBody.node.name isEqualToString:shipCategoryName]) {
-                firstBody.node.name = @"dyingShip";
                 shipSprite = nil;
-            } else if ([firstBody.node.name isEqualToString:starSpriteName]) {
-                firstBody.node.name = @"dyingStar";
-            } else {
-                firstBody.node.name = @"dying";
             }
             CGFloat r = DegreesToRadians([self pointPairToBearingDegrees:p1 secondPoint:p2]);
             float distance = sqrtf(powf(p1.x - p2.x,2) + powf(p1.y - p2.y, 2));
             SKSpriteNode *shipShieldImage;
             SKSpriteNode *shipImage;
-            if ([firstBody.node.name isEqualToString:@"dyingShip"]) {
-                shipShieldImage = (SKSpriteNode*)[[self childNodeWithName:@"dyingShip"] childNodeWithName:shipShieldSpriteName];
-                shipImage = (SKSpriteNode*)[[self childNodeWithName:@"dyingShip"] childNodeWithName:shipImageSpriteName];
-
-                shipShieldImage.name = @"dying";
-                shipImage.name = @"dyingShip";
+            if ([firstBody.node.name isEqualToString:shipCategoryName]) {
+                shipShieldImage = (SKSpriteNode*)[[self childNodeWithName:shipCategoryName] childNodeWithName:shipShieldSpriteName];
+                shipImage = (SKSpriteNode*)[[self childNodeWithName:shipCategoryName] childNodeWithName:shipImageSpriteName];
 
                 [shipShieldImage removeFromParent];
                 [shipImage removeFromParent];
@@ -992,42 +993,23 @@ CGFloat DegreesToRadians(CGFloat degrees)
                 firstBody.node.position = CGPointMake(distance*cosf(r), distance*sinf(r));
             }
             if (firstBody.node) {
-                if ([firstBody.node.name isEqualToString:@"dyingShip"]) {
+                if ([firstBody.node.name isEqualToString:shipCategoryName]) {
                     [secondBody.node addChild:shipShieldImage];
                     [secondBody.node addChild:shipImage];
                 } else {
                    [secondBody.node addChild:firstBody.node];
                 }
             }
-            float duration = 0.25;
-            SKAction *deathAction =[SKAction sequence:@[[SKAction group:@[[SKAction moveTo:CGPointZero duration:duration],[SKAction scaleTo:0 duration:duration]]], [SKAction customActionWithDuration:0 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
-                if (![node.name isEqualToString:@"dyingStar"]) {
-                    if ([node.name isEqualToString:@"dyingShip"]) {
-                        [self sendAchievementWithIdentifier:@"blackHole"];
-                        [self killShipAndStartOver];
-                    } else {
-                        node.name = removedThisSprite;
-                    }
-                } else {
-                    node.name = starSpriteName;
-                }
-            }]]];
-            for (SKSpriteNode *child in firstBody.node.children) {
-                [child runAction:deathAction];
-            }
-            if ([firstBody.node.name isEqualToString:@"dyingShip"]) {
-                [shipShieldImage runAction:deathAction];
-                [shipImage runAction:deathAction];
-                firstBody.node.name = shipCategoryName;
+            if ([firstBody.node.name isEqualToString:shipCategoryName]) {
+                [shipShieldImage runAction:blackholeDeathAction completion:^{
+                    [self sendAchievementWithIdentifier:@"blackHole"];
+                    [self killShipAndStartOver];
+                }];
+                [shipImage runAction:blackholeDeathAction];
             } else {
-                [firstBody.node runAction:deathAction];
+                [firstBody.node runAction:blackholeDeathAction];
             }
-
-            if (![firstBody.node.name isEqualToString:@"dyingStar"] &&
-                ![firstBody.node.name isEqualToString:starSpriteName]) {
-                    firstBody.node.name = removedThisSprite;
-            }
-
+            firstBody.node.remove = @YES;
         }
 
     }
@@ -1125,19 +1107,19 @@ CGFloat DegreesToRadians(CGFloat degrees)
     ship.position = CGPointMake(self.frame.size.width/2, -kExtraSpaceOffScreen + ship.size.height/2);
     ship.zPosition = 1;
     ship.userData = [NSMutableDictionary dictionary];
-    SKAction *shieldSetup = [SKAction customActionWithDuration:0 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
-        [node removeActionForKey:shipThrusterAnimation];
-        node.alpha = 1;
-        node.scale = 0.71;
+    SKAction *shieldSetup = [SKAction runBlock:^{
+        [ship removeActionForKey:shipThrusterAnimation];
+        shipShieldImage.alpha = 1;
+        shipShieldImage.scale = 0.71;
     }];
     SKAction *growAction = [SKAction scaleTo:1.1 duration:0.3];
     SKAction *snapBack = [SKAction scaleTo:1.0 duration:0.1];
     SKAction *sequence = [SKAction sequence:@[shieldSetup,growAction,snapBack]];
     ship.userData[shipShieldOnAnimation] = sequence;
     
-    SKAction *thrusterSetup = [SKAction customActionWithDuration:0 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
-        node.alpha = 0;
-        node.scale = 0.71;
+    SKAction *thrusterSetup = [SKAction runBlock:^{
+        shipThruster.alpha = 0;
+        shipThruster.scale = 0.71;
     }];
     SKAction *thrusterGrowAction = [SKAction scaleTo:1.1 duration:0.1];
     SKAction *thrusterSnapBack = [SKAction scaleTo:1.0 duration:0.1];
@@ -1211,6 +1193,22 @@ CGFloat DegreesToRadians(CGFloat degrees)
     for (NSMutableArray *sprites in spritesArrays) {
         for (SKSpriteNode *sprite in sprites) {
             [sprite removeFromParent];
+            if ([sprite.name isEqual:asteroidCategoryName] ||
+                [sprite.name isEqual:asteroidInShieldCategoryName]) {
+                SKSpriteNode *asteroid = sprite;
+                NSMutableArray *asteroidArray = [asteroidSpritesDictionary objectForKey:[NSString stringWithFormat:kAsteroidSpriteArrayKey, [asteroid.userData[asteroidsIndex] intValue]]];
+                [asteroidArray addObject:asteroid];
+                [asteroidSpritesDictionary setObject:asteroidArray forKey:[NSString stringWithFormat:kAsteroidSpriteArrayKey, [asteroid.userData[asteroidsIndex] intValue]]];
+            }
+            if ([sprite.name isEqual:planetCategoryName] ||
+                [sprite.name isEqual:sunObjectSpriteName] ||
+                [sprite.name isEqual:asteroidShieldCategoryName]) {
+                SKSpriteNode *planet = sprite;
+                NSMutableArray *planetArray = [planetSpritesDictionary objectForKey:[NSString stringWithFormat:kPlanetSpriteArrayKey, [planet.userData[planetsIndex] intValue]]];
+                [planetArray addObject:planet];
+                [planetSpritesDictionary setObject:planetArray forKey:[NSString stringWithFormat:kPlanetSpriteArrayKey, [planet.userData[planetsIndex] intValue]]];
+            }
+
         }
         [sprites removeAllObjects];
     }
@@ -1430,30 +1428,43 @@ CGFloat DegreesToRadians(CGFloat degrees)
         if ([[currentSpriteArray[i] name] isEqual:asteroidCategoryName] ||
             [[currentSpriteArray[i] name] isEqual:asteroidInShieldCategoryName]) {
             [currentSpriteArray[i] removeFromParent];
+            SKSpriteNode *asteroid = currentSpriteArray[i];
+            NSMutableArray *asteroidArray = [asteroidSpritesDictionary objectForKey:[NSString stringWithFormat:kAsteroidSpriteArrayKey, [asteroid.userData[asteroidsIndex] intValue]]];
+            [asteroidArray addObject:asteroid];
+            [asteroidSpritesDictionary setObject:asteroidArray forKey:[NSString stringWithFormat:kAsteroidSpriteArrayKey, [asteroid.userData[asteroidsIndex] intValue]]];
         }
         if ([[currentSpriteArray[i] name] isEqual:planetCategoryName] ||
             [[currentSpriteArray[i] name] isEqual:sunObjectSpriteName] ||
             [[currentSpriteArray[i] name] isEqual:asteroidShieldCategoryName] ||
-            [[currentSpriteArray[i] name] isEqual:blackHoleCategoryName]  ) {
+            [[currentSpriteArray[i] name] isEqual:blackHoleCategoryName]) {
             [currentSpriteArray[i] removeFromParent];
             for (SKSpriteNode *moon in ((SKSpriteNode*)currentSpriteArray[i]).userData[moonsArray]) {
                 [moon removeFromParent];
+            }
+            if (![[currentSpriteArray[i] name] isEqual:blackHoleCategoryName]) {
+                SKSpriteNode *planet = currentSpriteArray[i];
+                NSMutableArray *planetArray = [planetSpritesDictionary objectForKey:[NSString stringWithFormat:kPlanetSpriteArrayKey, [planet.userData[planetsIndex] intValue]]];
+                [planetArray addObject:planet];
+                [planetSpritesDictionary setObject:planetArray forKey:[NSString stringWithFormat:kPlanetSpriteArrayKey, [planet.userData[planetsIndex] intValue]]];
             }
         }
         if ([[currentSpriteArray[i] name] isEqual:powerUpSpaceMineName] ||
             [[currentSpriteArray[i] name] isEqual:powerUpShieldName]) {
             [currentSpriteArray[i] removeFromParent];
         }
-        if ([[currentSpriteArray[i] name] isEqual:asteroidCategoryName]) {
-            SKSpriteNode *asteroid = currentSpriteArray[i];
-            NSMutableArray *asteroidArray = [asteroidSpritesDictionary objectForKey:[NSString stringWithFormat:kAsteroidSpriteArrayKey, [asteroid.userData[asteroidsIndex] intValue]]];
-            [asteroidArray addObject:asteroid];
-        }
-        if ([[currentSpriteArray[i] name] isEqual:planetCategoryName]) {
-            SKSpriteNode *planet = currentSpriteArray[i];
-            NSMutableArray *planetArray = [planetSpritesDictionary objectForKey:[NSString stringWithFormat:kPlanetSpriteArrayKey, [planet.userData[planetsIndex] intValue]]];
-            [planetArray addObject:planet];
-        }
+//        if ([[currentSpriteArray[i] name] isEqual:asteroidCategoryName] ||
+//            [[currentSpriteArray[i] name] isEqual:asteroidInShieldCategoryName]) {
+//            SKSpriteNode *asteroid = currentSpriteArray[i];
+//            NSMutableArray *asteroidArray = [asteroidSpritesDictionary objectForKey:[NSString stringWithFormat:kAsteroidSpriteArrayKey, [asteroid.userData[asteroidsIndex] intValue]]];
+//            [asteroidArray addObject:asteroid];
+//            [asteroidSpritesDictionary setObject:asteroidArray forKey:[NSString stringWithFormat:kAsteroidSpriteArrayKey, [asteroid.userData[asteroidsIndex] intValue]]];
+//        }
+//        if ([[currentSpriteArray[i] name] isEqual:planetCategoryName]) {
+//            SKSpriteNode *planet = currentSpriteArray[i];
+//            NSMutableArray *planetArray = [planetSpritesDictionary objectForKey:[NSString stringWithFormat:kPlanetSpriteArrayKey, [planet.userData[planetsIndex] intValue]]];
+//            [planetArray addObject:planet];
+//            [planetSpritesDictionary setObject:planetArray forKey:[NSString stringWithFormat:kPlanetSpriteArrayKey, [planet.userData[planetsIndex] intValue]]];
+//        }
 
     }
     [currentSpriteArray removeAllObjects];
@@ -1528,6 +1539,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         if ([sprite.name isEqual:asteroidCategoryName] ||
             [sprite.name isEqual:asteroidInShieldCategoryName]) {
             sprite.hidden = NO;
+            [sprite removeAllActions];
             [self addChild:sprite];
         } else if ([sprite.name isEqual:planetCategoryName] ||
                    [sprite.name isEqual:sunObjectSpriteName] ||
@@ -1543,6 +1555,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
             [self addChild:sprite];
             for (SKSpriteNode *moon in sprite.userData[moonsArray]) {
                 moon.hidden = NO;
+                [moon removeAllActions];
                 [self addChild:moon];
                 [self.physicsWorld addJoint:moon.userData[orbitJoint]];
                 moon.physicsBody.angularVelocity = 100;
@@ -1677,9 +1690,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
         SKAction *fadeIn = [SKAction fadeAlphaTo:1 duration:0.5];
         SKAction *fadeOut = [SKAction fadeAlphaTo:0 duration:0.5];
         SKAction *repeat = [SKAction repeatActionForever:[SKAction sequence:@[fadeIn,fadeOut]]];
-        
-        SKAction *animationAction = [SKAction customActionWithDuration:0 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
-            [[node childNodeWithName:powerUpSpaceMineGlowName] runAction:repeat];
+        SKAction *animationAction = [SKAction runBlock:^{
+            [[minePowerUpSprite childNodeWithName:powerUpSpaceMineGlowName] runAction:repeat];
         }];
         minePowerUpSprite.userData[powerUpSpaceMinePulseAnimation] = animationAction;
         
@@ -1713,13 +1725,13 @@ CGFloat DegreesToRadians(CGFloat degrees)
     ring1.alpha = 0;
     [ring1 setScale:scale];
     SKAction *expandRingAction = [SKAction scaleTo:1.25 duration:duration];
-    SKAction *blockAction = [SKAction customActionWithDuration:0 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
-        [node setScale:scale];
-        [node setAlpha:1];
+    SKAction *blockAction = [SKAction runBlock:^{
+        [ring1 setScale:scale];
+        [ring1 setAlpha:1];
     }];
     SKAction *sequenceAction = [SKAction sequence:@[blockAction, expandRingAction]];
-    SKAction *animationAction = [SKAction customActionWithDuration:0 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
-        [[node childNodeWithName:powerUpSpaceMineExplodeRingName] runAction:sequenceAction];
+    SKAction *animationAction = [SKAction runBlock:^{
+        [ring1 runAction:sequenceAction];
     }];
     sprite.userData[powerUpSpaceMineExplosionRingAnimation] = animationAction;
 
@@ -1732,19 +1744,19 @@ CGFloat DegreesToRadians(CGFloat degrees)
     SKAction *expandRingActionB = [SKAction scaleTo:1 duration:duration/2.f];
     SKAction *alphaInRingActionB = [SKAction fadeAlphaTo:1 duration:duration/2.f];
     SKAction *alphaOutRingActionB = [SKAction fadeAlphaTo:0 duration:duration];
-    SKAction *removeImageAction = [SKAction customActionWithDuration:0.1 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
+    SKAction *removeImageAction = [SKAction runBlock:^{
         [sprite setTexture:nil];
     }];
     SKAction *groupActionB = [SKAction group:@[expandRingActionB,alphaInRingActionB]];
     SKAction *groupActionC = [SKAction group:@[alphaOutRingActionB,removeImageAction]];
     SKAction *sequenceActionB = [SKAction sequence:@[groupActionB, groupActionC]];
-    SKAction *blockActionB = [SKAction customActionWithDuration:0 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
-        [node setScale:scale];
-        [node setAlpha:0];
+    SKAction *blockActionB = [SKAction runBlock:^{
+        [largeGlow setScale:scale];
+        [largeGlow setAlpha:0];
     }];
     SKAction *sequenceActionC = [SKAction sequence:@[blockActionB, sequenceActionB]];
-    SKAction *animationActionB = [SKAction customActionWithDuration:0 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
-        [[node childNodeWithName:powerUpSpaceMineExplodeGlowName] runAction:sequenceActionC];
+    SKAction *animationActionB = [SKAction runBlock:^{
+        [largeGlow runAction:sequenceActionC];
     }];
     sprite.userData[powerUpSpaceMineExplosionGlowAnimation] = animationActionB;
 }
@@ -1770,8 +1782,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
         SKAction *fadeOut = [SKAction fadeAlphaTo:0 duration:1.0];
         SKAction *repeat = [SKAction repeatActionForever:[SKAction sequence:@[fadeIn,fadeOut]]];
         
-        SKAction *animationAction = [SKAction customActionWithDuration:0 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
-            [[node childNodeWithName:powerUpShieldRingName] runAction:repeat];
+        SKAction *animationAction = [SKAction runBlock:^{
+            [glowSprite runAction:repeat];
         }];
         shieldPowerUpSprite.userData[powerUpShieldPulseAnimation] = animationAction;
     }
@@ -1814,8 +1826,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
             SKAction *fadeAction = [SKAction fadeAlphaTo:0 duration:0.5];
             SKAction *scaleAction = [SKAction scaleTo:1 duration:duration];
             SKAction *groupAction = [SKAction group:@[fadeAction, scaleAction]];
-            [explosionSprite runAction:[SKAction sequence:@[groupAction, [SKAction customActionWithDuration:0 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
-                [node removeFromParent];
+            [explosionSprite runAction:[SKAction sequence:@[groupAction, [SKAction runBlock:^{
+                [explosionSprite removeFromParent];
             }]]]];
         }
         [ship childNodeWithName:shipShieldSpriteName].alpha = 0;
@@ -1938,6 +1950,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     NSMutableArray *asteroidArray = [asteroidSpritesDictionary objectForKey:[NSString stringWithFormat:kAsteroidSpriteArrayKey, asteroidIndex]];
     if (asteroidArray.count) {
         sprite = asteroidArray[0];
+        sprite.alpha = 1;
         [asteroidArray removeObjectAtIndex:0];
     } else {
         sprite = [SKSpriteNode spriteNodeWithTexture:asteroidTextures[asteroidIndex]];
@@ -2367,14 +2380,14 @@ CGFloat DegreesToRadians(CGFloat degrees)
     SKAction *expandRingAction = [SKAction scaleTo:1 duration:duration];
     SKAction *alphaOutRingAction = [SKAction fadeAlphaTo:0 duration:duration];
     SKAction *groupAction = [SKAction group:@[expandRingAction,alphaOutRingAction,[SKAction waitForDuration:(duration+0.1)]]];
-    SKAction *blockAction = [SKAction customActionWithDuration:0 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
-        [node setScale:scale];
-        [node setAlpha:1];
+    SKAction *blockAction = [SKAction runBlock:^{
+        [sprite setScale:scale];
+        [sprite setAlpha:1];
     }];
     SKAction *sequenceAction = [SKAction sequence:@[blockAction, groupAction]];
     SKAction *repeatAction = [SKAction repeatActionForever:sequenceAction];
-    SKAction *animationAction = [SKAction customActionWithDuration:0 actionBlock:^(SKNode *node, CGFloat elapsedTime) {
-        [[node childNodeWithName:asteroidShieldRing1SpriteName] runAction:repeatAction];
+    SKAction *animationAction = [SKAction runBlock:^{
+        [[sprite childNodeWithName:asteroidShieldRing1SpriteName] runAction:repeatAction];
     }];
     sprite.userData[asteroidShieldPulseAnimationAction] = animationAction;
 }
@@ -2589,7 +2602,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
     sprite.name = asteroidCategoryName;
     sprite.physicsBody.allowsRotation = YES;
     sprite.colorBlendFactor = 1.0;
-    sprite.name = asteroidCategoryName;
     sprite.userData = [NSMutableDictionary dictionary];
     sprite.hidden = YES;
     sprite.zPosition = 1;
