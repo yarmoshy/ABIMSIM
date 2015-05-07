@@ -2381,8 +2381,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
     SKAction *alphaOutRingAction = [SKAction fadeAlphaTo:0 duration:duration];
     SKAction *groupAction = [SKAction group:@[expandRingAction,alphaOutRingAction,[SKAction waitForDuration:(duration+0.1)]]];
     SKAction *blockAction = [SKAction runBlock:^{
-        [sprite setScale:scale];
-        [sprite setAlpha:1];
+        [ring1 setScale:scale];
+        [ring1 setAlpha:1];
     }];
     SKAction *sequenceAction = [SKAction sequence:@[blockAction, groupAction]];
     SKAction *repeatAction = [SKAction repeatActionForever:sequenceAction];
