@@ -30,21 +30,26 @@
     
     UINib * upgradesViewNib = [UINib nibWithNibName:@"UpgradesView" bundle:nil];
     self.upgradesView = [upgradesViewNib instantiateWithOwner:self options:nil][0];
+    self.upgradesView.frame = self.view.frame;
     self.upgradesView.delegate = self;
     [self.view addSubview:self.upgradesView];
     
     UINib * mainMenuNib = [UINib nibWithNibName:@"MainMenuView" bundle:nil];
     self.mainMenuView = [mainMenuNib instantiateWithOwner:self options:nil][0];
+    self.mainMenuView.frame = self.view.frame;
     self.mainMenuView.delegate = self;
     [self.view addSubview:self.mainMenuView];
+    [self.mainMenuView layoutIfNeeded];
     
     UINib * gameOverViewNib = [UINib nibWithNibName:@"GameOverView" bundle:nil];
     self.gameOverView = [gameOverViewNib instantiateWithOwner:self options:nil][0];
+    self.gameOverView.frame = self.view.frame;
     self.gameOverView.delegate = self;
     [self.view insertSubview:self.gameOverView atIndex:1];
 
     UINib * pausedViewNib = [UINib nibWithNibName:@"PausedView" bundle:nil];
     self.pausedView = [pausedViewNib instantiateWithOwner:self options:nil][0];
+    self.pausedView.frame = self.view.frame;
     self.pausedView.delegate = self;
     [self.view insertSubview:self.pausedView atIndex:2];
 
