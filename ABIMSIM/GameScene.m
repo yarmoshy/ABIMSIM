@@ -800,10 +800,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
         self.paused = NO;
         [self removeOverlayChildren];
         self.viewController.pauseButton.hidden = NO;
-        [UIView animateWithDuration:0.25 delay:0 options:0 animations:^{
+        [UIView animateWithDuration:0.25 animations:^{
             self.viewController.pauseButton.alpha = 0.7;
-        } completion:^(BOOL finished) {
-            ;
         }];
     }
     pendingVelocity = newVelocity;
@@ -1164,6 +1162,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         [explosionSprite setAlpha:0];
         flickRecognizer.enabled = NO;
         ship.physicsBody.collisionBitMask = 0;
+        ship.physicsBody.contactTestBitMask = 0;
     }];
     SKAction *removeShipPhysicsBodyAction = [SKAction runBlock:^{
         flickRecognizer.enabled = YES;
