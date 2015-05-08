@@ -941,6 +941,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
                 [self checkHitAchievement];
                 if (hasShield) {
                     shieldHitPoints--;
+                    [self updateShipShield];
                     if (shieldHitPoints > 0) {
                         CGPoint p1 = firstBody.node.position;
                         CGPoint p2 = secondBody.node.position;
@@ -1028,6 +1029,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         [self checkHitAchievement];
         if (hasShield) {
             shieldHitPoints--;
+            [self updateShipShield];
             if (shieldHitPoints > 0) {
                 CGPoint p1 = firstBody.node.position;
                 CGPoint p2 = secondBody.node.position;
@@ -1846,6 +1848,16 @@ CGFloat DegreesToRadians(CGFloat degrees)
     ship.physicsBody.velocity = velocity;
 }
 
+-(void)updateShipShield {
+    if (shieldHitPoints <= 0) {
+        [[self childNodeWithName:shipCategoryName] childNodeWithName:shipShieldSpriteName].alpha = 1;
+        return;
+    }
+    float minAlpha = 0.5;
+    float currentShieldPercentage = ((shieldHitPoints - 1) * 1.0f) / (0.0f + [ABIMSIMDefaults integerForKey:kShieldDurabilityLevel]);
+    float alpha = minAlpha + 0.5 * currentShieldPercentage;
+    [[self childNodeWithName:shipCategoryName] childNodeWithName:shipShieldSpriteName].alpha = alpha;
+}
 #pragma mark - Asteroids
 
 -(NSMutableArray*)asteroidsForLevel:(int)level {
