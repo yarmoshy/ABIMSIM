@@ -429,7 +429,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
     }
 
     [UIView animateWithDuration:0.25 delay:0 options:0 animations:^{
-        self.viewController.pauseButton.alpha = 0.7;
+        if ([ABIMSIMDefaults boolForKey:kWalkthroughSeen]) {
+            self.viewController.pauseButton.alpha = 0.7;
+        }
         [self childNodeWithName:levelNodeName].alpha = 0.7;
         [self childNodeWithName:levelParsecsNodeName].alpha = 0.7;
     } completion:^(BOOL finished) {
@@ -797,6 +799,12 @@ CGFloat DegreesToRadians(CGFloat degrees)
         self.initialPause = NO;
         self.paused = NO;
         [self removeOverlayChildren];
+        self.viewController.pauseButton.hidden = NO;
+        [UIView animateWithDuration:0.25 delay:0 options:0 animations:^{
+            self.viewController.pauseButton.alpha = 0.7;
+        } completion:^(BOOL finished) {
+            ;
+        }];
     }
     pendingVelocity = newVelocity;
     if (shipSprite.physicsBody) {
@@ -1155,6 +1163,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         [explosionSprite setScale:0.4];
         [explosionSprite setAlpha:0];
         flickRecognizer.enabled = NO;
+        ship.physicsBody.collisionBitMask = 0;
     }];
     SKAction *removeShipPhysicsBodyAction = [SKAction runBlock:^{
         flickRecognizer.enabled = YES;
