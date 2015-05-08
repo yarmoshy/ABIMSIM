@@ -92,7 +92,7 @@
     SKAction *asteroidSunDeathAction;
     SKAction *asteroidMineDeathAction;
     SKAction *blackholeDeathAction;
-    CGPoint lastShipPosition;
+    CGPoint lastShipPosition, pendingVelocity;
     
 }
 
@@ -472,6 +472,10 @@ CGFloat DegreesToRadians(CGFloat degrees)
         }
         return;
     }
+    if (pendingVelocity.x || pendingVelocity.y) {
+        shipSprite.physicsBody.velocity = CGVectorMake(pendingVelocity.x, -pendingVelocity.y);
+        pendingVelocity = CGPointZero;
+    }
     if (advanceLevel) {
         [self advanceToNextLevel];
     }
@@ -799,7 +803,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         self.paused = NO;
         [self removeOverlayChildren];
     }
-    shipSprite.physicsBody.velocity = CGVectorMake(newVelocity.x, -newVelocity.y);
+    pendingVelocity = newVelocity;
     if (shipSprite.physicsBody) {
         [[shipSprite childNodeWithName:shipThrusterSpriteName] runAction:shipSprite.userData[shipThrusterAnimation] withKey:shipThrusterAnimation];
     }
