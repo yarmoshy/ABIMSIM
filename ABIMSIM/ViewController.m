@@ -282,8 +282,9 @@
         
         [UIView animateKeyframesWithDuration:0.5 delay:0 options:0 animations:^{
             self.gameOverView.alpha = 0;
+            [self.gameOverView.superview viewWithTag:kBlurBackgroundViewTag].alpha = 0;
         } completion:^(BOOL finished) {
-            [[self.gameOverView viewWithTag:kBlurBackgroundViewTag] removeFromSuperview];
+            [[self.gameOverView.superview viewWithTag:kBlurBackgroundViewTag] removeFromSuperview];
             [UIView animateKeyframesWithDuration:0.5 delay:0 options:0 animations:^{
                 self.mainMenuView.alpha = 1;
             } completion:^(BOOL finished) {
@@ -295,7 +296,6 @@
         [self hideGameOverView];
     } else if (type == GameOverViewButtonTypeUpgrades) {
         showingUpgradesFromGameOver = YES;
-        [self.view insertSubview:[self.gameOverView viewWithTag:kBlurBackgroundViewTag] belowSubview:self.gameOverView];
         [UIView animateKeyframesWithDuration:0.5 delay:0 options:0 animations:^{
             self.gameOverView.alpha = 0;
         } completion:^(BOOL finished) {
@@ -339,7 +339,6 @@
             [UIView animateKeyframesWithDuration:0.5 delay:0 options:0 animations:^{
                 self.gameOverView.alpha = 1;
             } completion:^(BOOL finished) {
-                [self.gameOverView insertSubview:[self.view viewWithTag:kBlurBackgroundViewTag] atIndex:0];
                 [self configureButtonsEnabled:YES];
             }];
         }];

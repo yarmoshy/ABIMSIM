@@ -50,7 +50,7 @@
     }];
 }
 
-#pragma mark -High Scores Main Menu Button
+#pragma mark High Scores Main Menu Button
 
 -(void)animateGGMainMenuButtonSelect:(void(^)(void))completionBlock {
     [self animateFancySelectWithRing1:self.ggMMRing0 ring2:self.ggMMRing1 ring3:self.ggMMRing2 ring4:self.ggMMRing3 andCompletion:completionBlock];
@@ -75,7 +75,7 @@
     }];
 }
 
-#pragma mark - Game Over Upgrade Button
+#pragma mark Game Over Upgrade Button
 
 -(void)animateGGUpgradesButtonSelect:(void(^)(void))completionBlock {
     [self animateFancySelectWithRing1:self.ggUpgradeRing0 ring2:self.ggUpgradeRing1 ring3:self.ggUpgradeRing2 ring4:self.ggUpgradeRing3 andCompletion:completionBlock];
@@ -170,6 +170,9 @@
     self.quitButton.alpha = 0;
     self.gameOverButtonContainer.alpha = 0;
     
+    while ([self.superview viewWithTag:kBlurBackgroundViewTag]) {
+        [[self.superview viewWithTag:kBlurBackgroundViewTag] removeFromSuperview];
+    }
     UIImageView *blurredBackgroundImageView = ({
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.superview.bounds];
         imageView.contentMode = UIViewContentModeBottom;
@@ -179,6 +182,7 @@
     });
     blurredBackgroundImageView.tag = kBlurBackgroundViewTag;
     blurredBackgroundImageView.frame = CGRectMake(blurredBackgroundImageView.frame.origin.x, 0, blurredBackgroundImageView.frame.size.width, blurredBackgroundImageView.frame.size.height);
+    blurredBackgroundImageView.alpha = 0;
     UIImage *screenShot = [self.superview imageFromScreenShot];
     
     UIColor *blurTintColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:.3];
@@ -191,8 +195,7 @@
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
         [self addGestureRecognizer:tap];
     }
-    
-    [self insertSubview:blurredBackgroundImageView atIndex:0];
+    [self.superview insertSubview:blurredBackgroundImageView belowSubview:self];
     self.backgroundColor = [UIColor clearColor];
     self.largeParsecsLabelYAlignmentConstraint.constant = -30;
     self.largeParsecsLabel.text = @"0";
@@ -203,6 +206,7 @@
     currentPoints = 0;
     [UIView animateWithDuration:0.5 delay:0 options:0 animations:^{
         self.alpha = 1;
+        blurredBackgroundImageView.alpha = 1;
     } completion:^(BOOL finished) {
         if (finished && !killAnimations) {
             [UIView animateWithDuration:0.5 delay:0 options:0 animations:^{
@@ -213,16 +217,18 @@
             } completion:^(BOOL finished) {
                 if (finished && !killAnimations) {
                     [self animatePointDifference:self.delegate.scene.currentLevel withIncrementingLabel:self.largeParsecsLabel andCompletionBlock:^{
-                        [UIView animateWithDuration:0.5 delay:0.5 options:0 animations:^{
-                            self.largeParsecsImage.alpha = 0;
-                            self.largeParsecsLabel.alpha = 0;
-                            self.largeParsecsLabelYAlignmentConstraint.constant = -30;
-                            [self layoutIfNeeded];
-                        } completion:^(BOOL finished) {
-                            if (finished && !killAnimations) {
-                                [self animateBonuses];
-                            }
-                        }];
+                        if (!killAnimations) {
+                            [UIView animateWithDuration:0.5 delay:0.5 options:0 animations:^{
+                                self.largeParsecsImage.alpha = 0;
+                                self.largeParsecsLabel.alpha = 0;
+                                self.largeParsecsLabelYAlignmentConstraint.constant = -30;
+                                [self layoutIfNeeded];
+                            } completion:^(BOOL finished) {
+                                if (finished && !killAnimations) {
+                                    [self animateBonuses];
+                                }
+                            }];
+                        }
                     }];
                 }
             }];
@@ -496,8 +502,9 @@
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [UIView animateWithDuration:0.5 animations:^{
             self.alpha = 0;
+            [self.superview viewWithTag:kBlurBackgroundViewTag].alpha = 0;
         } completion:^(BOOL finished) {
-            [[self viewWithTag:kBlurBackgroundViewTag] removeFromSuperview];
+            [[self.superview viewWithTag:kBlurBackgroundViewTag] removeFromSuperview];
             [self configureButtonsEnabled:YES];
         }];
     });
