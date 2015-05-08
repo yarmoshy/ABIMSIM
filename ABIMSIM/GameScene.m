@@ -582,11 +582,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
     }
 
     for (SKSpriteNode *asteroid in currentSpriteArray) {
-        if ([asteroid.name isEqualToString:planetCategoryName]) {
-            for (SKSpriteNode *child in asteroid.children) {
-                child.position = CGPointZero;
-            }
-        }
         if (![asteroid.name isEqualToString:asteroidCategoryName] &&
             ![asteroid.name isEqualToString:asteroidInShieldCategoryName]) {
             continue;
@@ -1534,12 +1529,14 @@ CGFloat DegreesToRadians(CGFloat degrees)
             }
             sprite.hidden = NO;
             [self addChild:sprite];
-            for (SKSpriteNode *moon in sprite.userData[moonsArray]) {
-                moon.hidden = NO;
-                [moon removeAllActions];
-                [self addChild:moon];
-                [self.physicsWorld addJoint:moon.userData[orbitJoint]];
-                moon.physicsBody.angularVelocity = 100;
+            if (sprite.position.y < self.frame.size.height - sprite.size.height/2 - 10) {
+                for (SKSpriteNode *moon in sprite.userData[moonsArray]) {
+                    moon.hidden = NO;
+                    [moon removeAllActions];
+                    [self addChild:moon];
+                    [self.physicsWorld addJoint:moon.userData[orbitJoint]];
+                    moon.physicsBody.angularVelocity = 100;
+                }
             }
             if ([sprite.name isEqual:asteroidShieldCategoryName]) {
                 [sprite runAction:sprite.userData[asteroidShieldPulseAnimationAction]];
