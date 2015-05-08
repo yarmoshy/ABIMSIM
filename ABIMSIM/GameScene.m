@@ -1137,14 +1137,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
     SKAction *impactSequence = [SKAction sequence:@[showImpact,fadeAway]];
     ship.userData[shipShieldImpactAnimation] = impactSequence;
 
-//    shipThrusterAnimation
-//    NSMutableArray *shipTextures = [NSMutableArray arrayWithCapacity:60];
-//    for (int i = 0; i < 60; i++) {
-//        NSString *assetName = [NSString stringWithFormat:@"Ship_%.3d",i];
-//        [shipTextures addObject:[SKTexture textureWithImageNamed:assetName]];
-//    }
-//    SKAction *animationAction = [SKAction animateWithTextures:shipTextures timePerFrame:0.05];
-//    [shipImage runAction:[SKAction repeatActionForever:animationAction]];
     return ship;
 }
 
@@ -1175,7 +1167,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
     [self childNodeWithName:levelParsecsNodeName].position = CGPointMake(level.position.x + level.frame.size.width + 1, 16);
     ((SKLabelNode*)[self childNodeWithName:levelParsecsNodeName]).text = @"PARSEC";
 
-//    [self childNodeWithName:levelParsecsNodeName].position =
     safeToTransition = @YES;
     if (!shipSprite) {
         shipSprite = [self createShip];
@@ -1452,20 +1443,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
             [[currentSpriteArray[i] name] isEqual:powerUpShieldName]) {
             [currentSpriteArray[i] removeFromParent];
         }
-//        if ([[currentSpriteArray[i] name] isEqual:asteroidCategoryName] ||
-//            [[currentSpriteArray[i] name] isEqual:asteroidInShieldCategoryName]) {
-//            SKSpriteNode *asteroid = currentSpriteArray[i];
-//            NSMutableArray *asteroidArray = [asteroidSpritesDictionary objectForKey:[NSString stringWithFormat:kAsteroidSpriteArrayKey, [asteroid.userData[asteroidsIndex] intValue]]];
-//            [asteroidArray addObject:asteroid];
-//            [asteroidSpritesDictionary setObject:asteroidArray forKey:[NSString stringWithFormat:kAsteroidSpriteArrayKey, [asteroid.userData[asteroidsIndex] intValue]]];
-//        }
-//        if ([[currentSpriteArray[i] name] isEqual:planetCategoryName]) {
-//            SKSpriteNode *planet = currentSpriteArray[i];
-//            NSMutableArray *planetArray = [planetSpritesDictionary objectForKey:[NSString stringWithFormat:kPlanetSpriteArrayKey, [planet.userData[planetsIndex] intValue]]];
-//            [planetArray addObject:planet];
-//            [planetSpritesDictionary setObject:planetArray forKey:[NSString stringWithFormat:kPlanetSpriteArrayKey, [planet.userData[planetsIndex] intValue]]];
-//        }
-
     }
     [currentSpriteArray removeAllObjects];
     
@@ -1639,7 +1616,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
 -(SKSpriteNode*)blackHole {
     return [BlackHole blackHole];
 }
-
 
 #pragma mark - Power Ups
 
