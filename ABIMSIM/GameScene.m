@@ -1603,9 +1603,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
     if ([sprite.name isEqualToString:asteroidCategoryName]) {
         sprite.zRotation = DegreesToRadians(arc4random() % 360);
         float velocity = arc4random() % (MAX_VELOCITY/2);
-        if (velocity < 10.f) {
-            velocity = 10.f;
-        }
+        if (velocity < 20.f) {
+            velocity = 20.f;
+        } 
         sprite.physicsBody.velocity = CGVectorMake(velocity * cosf(sprite.zRotation), velocity * -sinf(sprite.zRotation));
     }
     return sprite;
