@@ -1065,7 +1065,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     [[self childNodeWithName:shipCategoryName] childNodeWithName:shipShieldSpriteName].hidden = YES;
     [[self childNodeWithName:shipCategoryName] childNodeWithName:shipImageSpriteName].hidden = YES;
     [[self childNodeWithName:shipCategoryName] childNodeWithName:shipThrusterSpriteName].hidden = YES;
-    [self childNodeWithName:shipCategoryName].physicsBody = nil;
+    [[[self childNodeWithName:shipCategoryName] childNodeWithName:shipExplosionSpriteName] runAction:[self childNodeWithName:shipCategoryName].userData[shipExplosionAnimation]];
 
     [[AudioController sharedController] playerDeath];
     if ([ABIMSIMDefaults boolForKey:kSFXSetting]) {
@@ -1096,12 +1096,19 @@ CGFloat DegreesToRadians(CGFloat degrees)
     impactSprite.name = shipShieldImpactSpriteName;
     impactSprite.alpha = 0;
     impactSprite.position = CGPointMake(0, 5);
+    SKSpriteNode *explosionSprite = [SKSpriteNode spriteNodeWithImageNamed:@"ShipExplosion"];
+    explosionSprite.name = shipExplosionSpriteName;
+    explosionSprite.position = CGPointMake(0, 0);
+    explosionSprite.alpha = 1;
+    [explosionSprite setScale:0.1];
     
     SKSpriteNode *ship = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:shipShieldImage.size];
     [ship addChild:shipImage];
     [ship addChild:shipThruster];
     [ship addChild:shipShieldImage];
     [ship addChild:impactSprite];
+    [ship addChild:explosionSprite];
+
     ship.name = shipCategoryName;
     ship.position = CGPointMake(self.frame.size.width/2, -kExtraSpaceOffScreen + ship.size.height/2);
     ship.zPosition = 1;
@@ -1135,6 +1142,24 @@ CGFloat DegreesToRadians(CGFloat degrees)
     SKAction *fadeAway = [SKAction fadeAlphaTo:0 duration:0.5];
     SKAction *impactSequence = [SKAction sequence:@[showImpact,fadeAway]];
     ship.userData[shipShieldImpactAnimation] = impactSequence;
+    
+    SKAction *explFadeAction = [SKAction fadeAlphaTo:1 duration:0.1];
+    SKAction *explScaleAction = [SKAction scaleTo:0.75 duration:0.1];
+    SKAction *explFadeOutAction = [SKAction fadeAlphaTo:0 duration:0.25];
+    SKAction *explScaleDown = [SKAction scaleTo:1 duration:0.25];
+    SKAction *explGroupAction = [SKAction group:@[explFadeAction, explScaleAction]];
+    SKAction *explGroupAction2 = [SKAction group:@[explFadeOutAction, explScaleDown]];
+    SKAction *explSetup = [SKAction runBlock:^{
+        [explosionSprite setScale:0.4];
+        [explosionSprite setAlpha:0];
+        flickRecognizer.enabled = NO;
+    }];
+    SKAction *removeShipPhysicsBodyAction = [SKAction runBlock:^{
+        flickRecognizer.enabled = YES;
+        ship.physicsBody = nil;
+    }];
+    SKAction *explSequence = [SKAction sequence:@[explSetup, explGroupAction, explGroupAction2, removeShipPhysicsBodyAction]];
+    ship.userData[shipExplosionAnimation] = explSequence;
 
     return ship;
 }

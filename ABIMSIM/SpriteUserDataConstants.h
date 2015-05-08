@@ -28,7 +28,9 @@
 #define shipThrusterAnimation @"shipThrusterAnimation"
 #define shipShieldPopAnimation @"shipShieldPopAnimation"
 #define shipShieldImpactAnimation @"shipShieldImpactAnimation"
+#define shipExplosionAnimation @"shipExplosionAnimation"
 #define shipThrusterAnimation @"shipThrusterAnimation"
+
 #define blackHoleAnimation @"blackHoleAnimation"
 
 #endif

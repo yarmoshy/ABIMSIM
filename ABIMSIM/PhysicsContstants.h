@@ -37,6 +37,8 @@ static NSString* shipImageSpriteName = @"shipImageSprite";
 static NSString* shipThrusterSpriteName = @"shipThrusterSpriteName";
 static NSString* shipShieldSpriteName = @"shipShieldSprite";
 static NSString* shipShieldImpactSpriteName = @"shipShieldImpactSprite";
+static NSString* shipExplosionSpriteName = @"shipExplosionSpriteName";
+
 static NSString* sunObjectSpriteName = @"sunObjectSpriteName";
 static NSString* directionsSpriteName = @"directionsSpriteName";
 static NSString* directionsSecondarySpriteName = @"directionsSecondarySpriteName";
