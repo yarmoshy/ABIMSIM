@@ -95,6 +95,8 @@
 		B4D0732E19785F620028840D /* SpaceMine_CenterGlow_0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4D0732A19785F620028840D /* SpaceMine_CenterGlow_0@2x.png */; };
 		B4D0732F19785F620028840D /* SpaceMine_ExplodingRing_0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4D0732B19785F620028840D /* SpaceMine_ExplodingRing_0@2x.png */; };
 		B4D0733019785F620028840D /* SpaceMine_LargeGlow_0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4D0732C19785F620028840D /* SpaceMine_LargeGlow_0@2x.png */; };
+		B4D42E801AFEA10D00248BE8 /* ShipShield_Impact@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4D42E7F1AFEA10D00248BE8 /* ShipShield_Impact@2x.png */; };
+		B4D42E821AFEA11800248BE8 /* ShipShieldHit@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4D42E811AFEA11800248BE8 /* ShipShieldHit@2x.png */; };
 		B4D4B617191FFF4F00834942 /* Planet_0_0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4D4B603191FFF4F00834942 /* Planet_0_0@2x.png */; };
 		B4D4B618191FFF4F00834942 /* Planet_0_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4D4B604191FFF4F00834942 /* Planet_0_1@2x.png */; };
 		B4D4B619191FFF4F00834942 /* Planet_0_2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4D4B605191FFF4F00834942 /* Planet_0_2@2x.png */; };
@@ -118,7 +120,6 @@
 		B4DAAF74193F54A200BE03C9 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4DAAF73193F54A200BE03C9 /* Crashlytics.framework */; };
 		B4E221CD192EB356003947B7 /* ShieldPowerUp_Animated@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4E221C9192EB356003947B7 /* ShieldPowerUp_Animated@2x.png */; };
 		B4E221CE192EB356003947B7 /* ShieldPowerUp@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4E221CA192EB356003947B7 /* ShieldPowerUp@2x.png */; };
-		B4E221CF192EB356003947B7 /* ShipShield_Impact@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4E221CB192EB356003947B7 /* ShipShield_Impact@2x.png */; };
 		B4E221D0192EB356003947B7 /* ShipShield@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4E221CC192EB356003947B7 /* ShipShield@2x.png */; };
 		B4E221D2192EB3C6003947B7 /* ShipShield_Pop@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B4E221D1192EB3C6003947B7 /* ShipShield_Pop@2x.png */; };
 		E128D1F81A6DDB9600856772 /* Background0.atlas in Resources */ = {isa = PBXBuildFile; fileRef = E128D1F61A6DDB9600856772 /* Background0.atlas */; };
@@ -252,6 +253,8 @@
 		B4D0732A19785F620028840D /* SpaceMine_CenterGlow_0@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SpaceMine_CenterGlow_0@2x.png"; sourceTree = "<group>"; };
 		B4D0732B19785F620028840D /* SpaceMine_ExplodingRing_0@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SpaceMine_ExplodingRing_0@2x.png"; sourceTree = "<group>"; };
 		B4D0732C19785F620028840D /* SpaceMine_LargeGlow_0@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SpaceMine_LargeGlow_0@2x.png"; sourceTree = "<group>"; };
+		B4D42E7F1AFEA10D00248BE8 /* ShipShield_Impact@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ShipShield_Impact@2x.png"; sourceTree = "<group>"; };
+		B4D42E811AFEA11800248BE8 /* ShipShieldHit@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ShipShieldHit@2x.png"; sourceTree = "<group>"; };
 		B4D4B603191FFF4F00834942 /* Planet_0_0@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_0_0@2x.png"; sourceTree = "<group>"; };
 		B4D4B604191FFF4F00834942 /* Planet_0_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_0_1@2x.png"; sourceTree = "<group>"; };
 		B4D4B605191FFF4F00834942 /* Planet_0_2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Planet_0_2@2x.png"; sourceTree = "<group>"; };
@@ -275,7 +278,6 @@
 		B4DAAF73193F54A200BE03C9 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		B4E221C9192EB356003947B7 /* ShieldPowerUp_Animated@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ShieldPowerUp_Animated@2x.png"; sourceTree = "<group>"; };
 		B4E221CA192EB356003947B7 /* ShieldPowerUp@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ShieldPowerUp@2x.png"; sourceTree = "<group>"; };
-		B4E221CB192EB356003947B7 /* ShipShield_Impact@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ShipShield_Impact@2x.png"; sourceTree = "<group>"; };
 		B4E221CC192EB356003947B7 /* ShipShield@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ShipShield@2x.png"; sourceTree = "<group>"; };
 		B4E221D1192EB3C6003947B7 /* ShipShield_Pop@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ShipShield_Pop@2x.png"; sourceTree = "<group>"; };
 		E128D1F61A6DDB9600856772 /* Background0.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Background0.atlas; sourceTree = "<group>"; };
@@ -612,9 +614,10 @@
 			children = (
 				B4E221C9192EB356003947B7 /* ShieldPowerUp_Animated@2x.png */,
 				B4E221CA192EB356003947B7 /* ShieldPowerUp@2x.png */,
-				B4E221CB192EB356003947B7 /* ShipShield_Impact@2x.png */,
+				B4D42E7F1AFEA10D00248BE8 /* ShipShield_Impact@2x.png */,
 				B4E221D1192EB3C6003947B7 /* ShipShield_Pop@2x.png */,
 				B4E221CC192EB356003947B7 /* ShipShield@2x.png */,
+				B4D42E811AFEA11800248BE8 /* ShipShieldHit@2x.png */,
 			);
 			name = Ship;
 			sourceTree = "<group>";
@@ -736,7 +739,6 @@
 				B47E22CE18DBA7E200F42EBB /* Asteroid_1@2x.png in Resources */,
 				B47E22D118DBA7E200F42EBB /* Asteroid_4@2x.png in Resources */,
 				B405AA2F1AED54980053F794 /* gamePlay.caf in Resources */,
-				B4E221CF192EB356003947B7 /* ShipShield_Impact@2x.png in Resources */,
 				B4D4B623191FFF4F00834942 /* Planet_3_0@2x.png in Resources */,
 				B4D0732E19785F620028840D /* SpaceMine_CenterGlow_0@2x.png in Resources */,
 				B49792F21A86E617005174C1 /* explosionMineTrimmed.caf in Resources */,
@@ -755,6 +757,8 @@
 				B47E22CD18DBA7E200F42EBB /* Asteroid_0@2x.png in Resources */,
 				B46363AC1979EBA2007B657C /* SpaceMine_Friendly_8@2x.png in Resources */,
 				B47E22D818DBA7E200F42EBB /* Asteroid_11@2x.png in Resources */,
+				B4D42E821AFEA11800248BE8 /* ShipShieldHit@2x.png in Resources */,
+				B4D42E801AFEA10D00248BE8 /* ShipShield_Impact@2x.png in Resources */,
 				B45FF14718CE8708001662CD /* Images.xcassets in Resources */,
 				E128D1F91A6DDB9600856772 /* Background1.atlas in Resources */,
 				B47E22D518DBA7E200F42EBB /* Asteroid_8@2x.png in Resources */,

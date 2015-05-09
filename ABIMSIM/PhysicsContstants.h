@@ -36,6 +36,7 @@ static NSString* explodedSpaceMine = @"explodedSpaceMine";
 static NSString* shipImageSpriteName = @"shipImageSprite";
 static NSString* shipThrusterSpriteName = @"shipThrusterSpriteName";
 static NSString* shipShieldSpriteName = @"shipShieldSprite";
+static NSString* shipShieldHitSpriteName = @"shipShieldHitSprite";
 static NSString* shipShieldImpactSpriteName = @"shipShieldImpactSprite";
 static NSString* shipExplosionSpriteName = @"shipExplosionSpriteName";
 

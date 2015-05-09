@@ -960,6 +960,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
                         CGFloat f = [self pointPairToBearingDegrees:p1 secondPoint:p2] - 90;
                         [firstBody.node childNodeWithName:shipShieldImpactSpriteName].zRotation = DegreesToRadians(f);
                         [[firstBody.node childNodeWithName:shipShieldImpactSpriteName] runAction:firstBody.node.userData[shipShieldImpactAnimation]];
+                        [[firstBody.node childNodeWithName:shipShieldHitSpriteName] runAction:firstBody.node.userData[shipShieldHitAnimation]];
                         if ([ABIMSIMDefaults boolForKey:kSFXSetting]) {
                             [self runAction:shieldHitSoundAction];
                         }
@@ -1048,6 +1049,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
                 CGFloat f = [self pointPairToBearingDegrees:p1 secondPoint:p2] - 90;
                 [firstBody.node childNodeWithName:shipShieldImpactSpriteName].zRotation = DegreesToRadians(f);
                 [[firstBody.node childNodeWithName:shipShieldImpactSpriteName] runAction:firstBody.node.userData[shipShieldImpactAnimation]];
+                [[firstBody.node childNodeWithName:shipShieldHitSpriteName] runAction:firstBody.node.userData[shipShieldHitAnimation]];
                 if ([ABIMSIMDefaults boolForKey:kSFXSetting]) {
                     [self runAction:shieldHitSoundAction];
                 }
@@ -1110,6 +1112,10 @@ CGFloat DegreesToRadians(CGFloat degrees)
     shipShieldImage.name = shipShieldSpriteName;
     shipShieldImage.alpha = 0;
     shipShieldImage.position = CGPointMake(0, 5);
+    SKSpriteNode *shipShieldHitImage = [SKSpriteNode spriteNodeWithImageNamed:@"ShipShieldHit"];
+    shipShieldHitImage.name = shipShieldHitSpriteName;
+    shipShieldHitImage.alpha = 0;
+    shipShieldHitImage.position = CGPointMake(0, 5);
     SKSpriteNode *impactSprite = [SKSpriteNode spriteNodeWithImageNamed:@"ShipShield_Impact"];
     impactSprite.name = shipShieldImpactSpriteName;
     impactSprite.alpha = 0;
@@ -1124,6 +1130,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     [ship addChild:shipImage];
     [ship addChild:shipThruster];
     [ship addChild:shipShieldImage];
+    [ship addChild:shipShieldHitImage];
     [ship addChild:impactSprite];
     [ship addChild:explosionSprite];
 
@@ -1161,6 +1168,11 @@ CGFloat DegreesToRadians(CGFloat degrees)
     SKAction *impactSequence = [SKAction sequence:@[showImpact,fadeAway]];
     ship.userData[shipShieldImpactAnimation] = impactSequence;
     
+    SKAction *showShieldHit = [SKAction fadeAlphaTo:1 duration:0.01];
+    SKAction *fadeShieldHitAway = [SKAction fadeAlphaTo:0 duration:0.25];
+    SKAction *shieldHitSequence = [SKAction sequence:@[showShieldHit,fadeShieldHitAway]];
+    ship.userData[shipShieldHitAnimation] = shieldHitSequence;
+
     SKAction *explFadeAction = [SKAction fadeAlphaTo:1 duration:0.1];
     SKAction *explScaleAction = [SKAction scaleTo:0.75 duration:0.1];
     SKAction *explFadeOutAction = [SKAction fadeAlphaTo:0 duration:0.25];
