@@ -63,7 +63,10 @@ typedef enum {
         [audioPlayer prepareToPlay];
     } else {
         if (musicMode == MusicModeGame) {
-            [audioPlayer play];
+            dispatch_queue_t backgroundQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
+            dispatch_async(backgroundQueue, ^{
+                [audioPlayer play];
+            });
         }
     }
 }
@@ -82,7 +85,10 @@ typedef enum {
 -(void)gameplay {
     musicMode = MusicModeGame;
     if (playMusic) {
-        [audioPlayer play];
+        dispatch_queue_t backgroundQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
+        dispatch_async(backgroundQueue, ^{
+            [audioPlayer play];
+        });
     }
 }
 
@@ -90,13 +96,19 @@ typedef enum {
 
 -(void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
     if (musicMode == MusicModeGame && playMusic) {
-        [audioPlayer play];
+        dispatch_queue_t backgroundQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
+        dispatch_async(backgroundQueue, ^{
+            [audioPlayer play];
+        });
     }
 }
 
 -(void)audioPlayerEndInterruption:(AVAudioPlayer *)player withOptions:(NSUInteger)flags {
     if (musicMode == MusicModeGame && playMusic) {
-        [audioPlayer play];
+        dispatch_queue_t backgroundQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0);
+        dispatch_async(backgroundQueue, ^{
+            [audioPlayer play];
+        });
     }
 }
 

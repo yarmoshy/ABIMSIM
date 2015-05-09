@@ -1713,6 +1713,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         
     }
     [minePowerUpSprite removeAllChildren];
+    [minePowerUpSprite removeAllActions];
     SKSpriteNode *glowSprite = [SKSpriteNode spriteNodeWithTexture:powerUpTextures[3]];
     glowSprite.name = powerUpSpaceMineGlowName;
     [minePowerUpSprite addChild:glowSprite];
