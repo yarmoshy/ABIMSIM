@@ -92,6 +92,8 @@
     SKAction *asteroidSunDeathAction;
     SKAction *asteroidMineDeathAction;
     SKAction *blackholeDeathAction;
+    SKAction *upgradeSoundAction;
+
     CGPoint lastShipPosition, pendingVelocity;
     
 }
@@ -123,6 +125,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         spaceMineSoundAction = [SKAction playSoundFileNamed:@"explosionMineTrimmed.caf" waitForCompletion:NO];
         playerDeathSoundAction = [SKAction playSoundFileNamed:@"explosionTrimmed.caf" waitForCompletion:NO];
         asteroidSunSoundAction = [SKAction playSoundFileNamed:@"asteroidSun.caf" waitForCompletion:NO];
+        upgradeSoundAction = [SKAction playSoundFileNamed:@"upgrade.caf" waitForCompletion:NO];
         
         SKAction *changeColorAction = [SKAction colorizeWithColor:[UIColor redColor] colorBlendFactor:1 duration:0.25];
         SKAction *fadeOut = [SKAction fadeAlphaTo:0 duration:0.3];
@@ -2835,5 +2838,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     return bearingDegrees;
 }
 
-
+-(void)playUpgrade {
+    [self runAction:upgradeSoundAction];
+}
 @end

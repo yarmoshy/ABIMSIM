@@ -7,6 +7,7 @@
 //
 
 #import "UpgradesView.h"
+#import "GameScene.h"
 
 #define kTypeCellHeight 55
 
@@ -465,6 +466,7 @@
     int ducketCost = [[[cell.xpRequiredLabel.text substringToIndex:[cell.xpRequiredLabel.text rangeOfString:@" XP"].location] stringByReplacingOccurrencesOfString:@"," withString:@""] intValue];
     [ABIMSIMDefaults setInteger:[ABIMSIMDefaults integerForKey:kUserDuckets] - ducketCost forKey:kUserDuckets];
     [ABIMSIMDefaults synchronize];
+    [self.delegate.scene playUpgrade];
     if (unlock) {
         animating = YES;
         [UIView animateWithDuration:0.5 animations:^{
