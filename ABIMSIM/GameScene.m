@@ -666,37 +666,39 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
 #pragma mark - Achievements
 -(void)checkPlanetHitAchievement:(int)planetNum {
-    switch (planetNum) {
-        case 0:
-            [ABIMSIMDefaults setBool:YES forKey:kPlanet0Hit];
-            break;
-        case 1:
-            [ABIMSIMDefaults setBool:YES forKey:kPlanet1Hit];
-            break;
-        case 2:
-            [ABIMSIMDefaults setBool:YES forKey:kPlanet2Hit];
-            break;
-        case 3:
-            [ABIMSIMDefaults setBool:YES forKey:kPlanet3Hit];
-            break;
-        case 4:
-            [ABIMSIMDefaults setBool:YES forKey:kPlanet4Hit];
-            break;
-        case 5:
-            [ABIMSIMDefaults setBool:YES forKey:kPlanet5Hit];
-            break;
-        default:
-            break;
-    }
-    [ABIMSIMDefaults synchronize];
-    if ([ABIMSIMDefaults boolForKey:kPlanet0Hit] &&
-        [ABIMSIMDefaults boolForKey:kPlanet1Hit] &&
-        [ABIMSIMDefaults boolForKey:kPlanet2Hit] &&
-        [ABIMSIMDefaults boolForKey:kPlanet3Hit] &&
-        [ABIMSIMDefaults boolForKey:kPlanet4Hit] &&
-        [ABIMSIMDefaults boolForKey:kPlanet5Hit]) {
-        [self sendAchievementWithIdentifier:@"allAroundTheWorlds"];
-    }
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        switch (planetNum) {
+            case 0:
+                [ABIMSIMDefaults setBool:YES forKey:kPlanet0Hit];
+                break;
+            case 1:
+                [ABIMSIMDefaults setBool:YES forKey:kPlanet1Hit];
+                break;
+            case 2:
+                [ABIMSIMDefaults setBool:YES forKey:kPlanet2Hit];
+                break;
+            case 3:
+                [ABIMSIMDefaults setBool:YES forKey:kPlanet3Hit];
+                break;
+            case 4:
+                [ABIMSIMDefaults setBool:YES forKey:kPlanet4Hit];
+                break;
+            case 5:
+                [ABIMSIMDefaults setBool:YES forKey:kPlanet5Hit];
+                break;
+            default:
+                break;
+        }
+        [ABIMSIMDefaults synchronize];
+        if ([ABIMSIMDefaults boolForKey:kPlanet0Hit] &&
+            [ABIMSIMDefaults boolForKey:kPlanet1Hit] &&
+            [ABIMSIMDefaults boolForKey:kPlanet2Hit] &&
+            [ABIMSIMDefaults boolForKey:kPlanet3Hit] &&
+            [ABIMSIMDefaults boolForKey:kPlanet4Hit] &&
+            [ABIMSIMDefaults boolForKey:kPlanet5Hit]) {
+            [self sendAchievementWithIdentifier:@"allAroundTheWorlds"];
+        }
+    });
 }
 
 -(void)checkHitAchievement {
@@ -713,74 +715,78 @@ CGFloat DegreesToRadians(CGFloat degrees)
 }
 
 -(void)checkLevelAchievements {
-    NSString *identifier = @"";
-    switch (self.currentLevel) {
-        case 10:
-            identifier = @"learningToFly";
-            break;
-        case 20:
-            identifier = @"explorerReporting";
-            break;
-        case 30:
-            identifier = @"adventureIsOutThere";
-            break;
-        case 40:
-            identifier = @"gettinKindaHectic";
-            break;
-        case 50:
-            identifier = @"deepSpace";
-            break;
-        case 60:
-            identifier = @"toBoldyGo";
-            break;
-        case 70:
-            identifier = @"whereNoManHasGoneBefore";
-            break;
-        case 80:
-            identifier = @"acrossTheCosmos";
-            break;
-        case 90:
-            identifier = @"theObservableUniverse";
-            break;
-        case 100:
-            identifier = @"theEdgeOfSpace";
-            break;
-        default:
-            identifier = @"";
-            break;
-    }
-    if (![identifier isEqualToString:@""]) {
-        [self sendAchievementWithIdentifier:identifier];
-    }
-    if (self.currentLevel - lastLevelPanned >= 5) {
-        identifier = @"Autopilot";
-        [self sendAchievementWithIdentifier:identifier];
-    }
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        NSString *identifier = @"";
+        switch (self.currentLevel) {
+            case 10:
+                identifier = @"learningToFly";
+                break;
+            case 20:
+                identifier = @"explorerReporting";
+                break;
+            case 30:
+                identifier = @"adventureIsOutThere";
+                break;
+            case 40:
+                identifier = @"gettinKindaHectic";
+                break;
+            case 50:
+                identifier = @"deepSpace";
+                break;
+            case 60:
+                identifier = @"toBoldyGo";
+                break;
+            case 70:
+                identifier = @"whereNoManHasGoneBefore";
+                break;
+            case 80:
+                identifier = @"acrossTheCosmos";
+                break;
+            case 90:
+                identifier = @"theObservableUniverse";
+                break;
+            case 100:
+                identifier = @"theEdgeOfSpace";
+                break;
+            default:
+                identifier = @"";
+                break;
+        }
+        if (![identifier isEqualToString:@""]) {
+            [self sendAchievementWithIdentifier:identifier];
+        }
+        if (self.currentLevel - lastLevelPanned >= 5) {
+            identifier = @"Autopilot";
+            [self sendAchievementWithIdentifier:identifier];
+        }
+    });
 }
 
 -(void)sendAchievementWithIdentifier:(NSString*)identifier {
-    GKAchievement *achievement = [[GKAchievement alloc] initWithIdentifier:identifier];
-    if (achievement)
-    {
-        achievement.percentComplete = 100.0;
-        [GKAchievement reportAchievements:@[achievement] withCompletionHandler:^(NSError *error)
-         {
-             if (![ABIMSIMDefaults boolForKey:identifier]) {
-                 [GKAchievementDescription loadAchievementDescriptionsWithCompletionHandler:^(NSArray *descriptions, NSError *error) {
-                     for (GKAchievementDescription *description in descriptions) {
-                         if ([description.identifier isEqualToString:identifier]) {
-                             [ABIMSIMDefaults setBool:YES forKey:identifier];
-                             [ABIMSIMDefaults synchronize];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        GKAchievement *achievement = [[GKAchievement alloc] initWithIdentifier:identifier];
+        if (achievement)
+        {
+            achievement.percentComplete = 100.0;
+            [GKAchievement reportAchievements:@[achievement] withCompletionHandler:^(NSError *error)
+             {
+                 if (![ABIMSIMDefaults boolForKey:identifier]) {
+                     [GKAchievementDescription loadAchievementDescriptionsWithCompletionHandler:^(NSArray *descriptions, NSError *error) {
+                         for (GKAchievementDescription *description in descriptions) {
+                             if ([description.identifier isEqualToString:identifier]) {
+                                 [ABIMSIMDefaults setBool:YES forKey:identifier];
+                                 [ABIMSIMDefaults synchronize];
+                             }
                          }
+                     }];
+                     if (error != nil)
+                     {
+                         NSLog(@"Error in reporting achievements: %@", error);
                      }
-                 }];
-                 if (error != nil)
-                 {
-                     NSLog(@"Error in reporting achievements: %@", error);
                  }
-             }
-        }];
-    }
+            }];
+        }
+    });
 }
 
 #pragma mark - Touch Handling
@@ -1063,13 +1069,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
     pointsEarned += self.sunsSurvived * 3;
     [ABIMSIMDefaults setInteger:[ABIMSIMDefaults integerForKey:kUserDuckets]+pointsEarned forKey:kUserDuckets];
     [ABIMSIMDefaults synchronize];
-    GKScore *newScore = [[GKScore alloc] initWithLeaderboardIdentifier:@"distance"];
-    newScore.value = self.currentLevel;
-    [GKScore reportScores:@[newScore] withCompletionHandler:^(NSError *error) {
-        if (error) {
-            NSLog(@"Score Submit Error: %@", error);
-        }
-    }];
     [[self childNodeWithName:shipCategoryName] childNodeWithName:shipShieldSpriteName].hidden = YES;
     [[self childNodeWithName:shipCategoryName] childNodeWithName:shipImageSpriteName].hidden = YES;
     [[self childNodeWithName:shipCategoryName] childNodeWithName:shipThrusterSpriteName].hidden = YES;
@@ -1086,6 +1085,17 @@ CGFloat DegreesToRadians(CGFloat degrees)
         self.gameOver = YES;
         flickRecognizer.enabled = NO;
     });
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        GKScore *newScore = [[GKScore alloc] initWithLeaderboardIdentifier:@"distance"];
+        newScore.value = self.currentLevel;
+        [GKScore reportScores:@[newScore] withCompletionHandler:^(NSError *error) {
+            if (error) {
+                NSLog(@"Score Submit Error: %@", error);
+            }
+        }];
+    });
+
 }
 
 #pragma mark - Level generation
