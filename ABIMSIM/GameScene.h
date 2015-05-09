@@ -24,5 +24,4 @@
 
 -(void)transitionFromMainMenu;
 -(void)pause;
--(void)playUpgrade;
 @end

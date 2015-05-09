@@ -13,4 +13,5 @@
 +(AudioController*)sharedController;
 -(void)playerDeath;
 -(void)gameplay;
+-(void)upgrade;
 @end

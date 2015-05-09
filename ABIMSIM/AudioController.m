@@ -17,6 +17,7 @@ typedef enum {
 
 @implementation AudioController  {
     AVAudioPlayer *audioPlayer;
+    AVAudioPlayer *upgradePlayer;
     MusicMode musicMode;
     NSTimer *currentTimeTimer;
     BOOL playSoundEffect, playMusic;
@@ -49,6 +50,14 @@ typedef enum {
         playSoundEffect = [ABIMSIMDefaults boolForKey:kSFXSetting];
         playMusic = [ABIMSIMDefaults boolForKey:kMusicSetting];
         
+        NSError __autoreleasing *errorUpgrade;
+        NSString *filePath = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"upgrade.caf"];
+
+        upgradePlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:filePath] fileTypeHint:@"caf" error:&errorUpgrade];
+        upgradePlayer.numberOfLoops = 0;
+        upgradePlayer.delegate = self;
+        [upgradePlayer prepareToPlay];
+
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(musicToggled) name:kMusicToggleChanged object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sfxToggled) name:kSFXToggleChanged object:nil];
     }
@@ -91,6 +100,11 @@ typedef enum {
         });
     }
 }
+
+-(void)upgrade {
+    [upgradePlayer play];
+}
+
 
 #pragma mark AVAudioPlayerDelegate
 
