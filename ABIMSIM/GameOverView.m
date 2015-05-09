@@ -203,7 +203,7 @@
     
     self.largeXPLabel.text = [NSString stringWithFormat:@"%d",self.delegate.scene.currentLevel];
     self.largeXPLabelYAlignmentConstraint.constant = 40;
-    currentPoints = 0;
+    currentPoints = targetPoints = currentIncrementingLabelPoints = totalPointDifferential = 0;
     [UIView animateWithDuration:0.5 delay:0 options:0 animations:^{
         self.alpha = 1;
         blurredBackgroundImageView.alpha = 1;
