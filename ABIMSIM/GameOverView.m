@@ -151,6 +151,7 @@
 #pragma mark - Game Over
 
 - (IBAction)quitTapped:(id)sender {
+    showingGameOver = NO;
     [self configureButtonsEnabled:NO];
     [self.delegate gameOverViewDidSelectButtonType:GameOverViewButtonTypeMainMenu];
 }
