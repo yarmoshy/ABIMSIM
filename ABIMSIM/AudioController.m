@@ -104,7 +104,9 @@ typedef enum {
 }
 
 -(void)upgrade {
-    [upgradePlayer play];
+    if (playSoundEffect) {
+        [upgradePlayer play];
+    }
 }
 
 -(void)blackhole {
