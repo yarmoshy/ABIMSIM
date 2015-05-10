@@ -958,7 +958,12 @@ CGFloat DegreesToRadians(CGFloat degrees)
                     if (shieldHitPoints > 0) {
                         CGPoint p1 = firstBody.node.position;
                         CGPoint p2 = secondBody.node.position;
-                        CGFloat f = [self pointPairToBearingDegrees:p1 secondPoint:p2] - 90;
+                        CGFloat f;
+                        if (firstBody.velocity.dy >= 0 ) {
+                            f = [self pointPairToBearingDegrees:p1 secondPoint:p2] - 90;
+                        } else {
+                            f = [self pointPairToBearingDegrees:p1 secondPoint:p2] - 180;
+                        }
                         [firstBody.node childNodeWithName:shipShieldImpactSpriteName].zRotation = DegreesToRadians(f);
                         [[firstBody.node childNodeWithName:shipShieldImpactSpriteName] runAction:firstBody.node.userData[shipShieldImpactAnimation]];
                         [[firstBody.node childNodeWithName:shipShieldHitSpriteName] runAction:firstBody.node.userData[shipShieldHitAnimation]];
@@ -1047,7 +1052,12 @@ CGFloat DegreesToRadians(CGFloat degrees)
             if (shieldHitPoints > 0) {
                 CGPoint p1 = firstBody.node.position;
                 CGPoint p2 = secondBody.node.position;
-                CGFloat f = [self pointPairToBearingDegrees:p1 secondPoint:p2] - 90;
+                CGFloat f;
+                if (firstBody.velocity.dy >= 0 ) {
+                    f = [self pointPairToBearingDegrees:p1 secondPoint:p2] - 90;
+                } else {
+                    f = [self pointPairToBearingDegrees:p1 secondPoint:p2] + 90;
+                }
                 [firstBody.node childNodeWithName:shipShieldImpactSpriteName].zRotation = DegreesToRadians(f);
                 [[firstBody.node childNodeWithName:shipShieldImpactSpriteName] runAction:firstBody.node.userData[shipShieldImpactAnimation]];
                 [[firstBody.node childNodeWithName:shipShieldHitSpriteName] runAction:firstBody.node.userData[shipShieldHitAnimation]];
@@ -1164,8 +1174,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
     SKAction *thrusterSequence = [SKAction sequence:@[thrusterSetup,sizeAndFadeGroupAction]];
     ship.userData[shipThrusterAnimation] = thrusterSequence;
     
-    SKAction *showImpact = [SKAction fadeAlphaTo:1 duration:0.1];
-    SKAction *fadeAway = [SKAction fadeAlphaTo:0 duration:0.5];
+    SKAction *showImpact = [SKAction fadeAlphaTo:1 duration:0.01];
+    SKAction *fadeAway = [SKAction fadeAlphaTo:0 duration:0.25];
     SKAction *impactSequence = [SKAction sequence:@[showImpact,fadeAway]];
     ship.userData[shipShieldImpactAnimation] = impactSequence;
     
@@ -1570,6 +1580,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     showingSun = NO;
     possibleBubblesPopped = 0;
     for (SKSpriteNode *sprite in currentSpriteArray) {
+        [sprite removeAllActions];
         if ([sprite.name isEqual:asteroidCategoryName] ||
             [sprite.name isEqual:asteroidInShieldCategoryName]) {
             sprite.hidden = NO;
