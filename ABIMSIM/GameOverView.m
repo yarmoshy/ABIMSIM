@@ -46,8 +46,6 @@
             blurredBackgroundImageView.image = [screenShot applyBlurWithRadius:blurRadius tintColor:blurTintColor saturationDeltaFactor:blurSaturationDeltaFactor maskImage:nil];
             
             [self.superview insertSubview:blurredBackgroundImageView belowSubview:self];
-        } else {
-            [self.superview viewWithTag:kBlurBackgroundViewTag].alpha = 1;
         }
         killAnimations = YES;
         [self.superview.layer removeAllAnimations];
@@ -476,6 +474,7 @@
         self.bonusLabelTwo.alpha = 0;
         self.bonusLabelThree.alpha = 0;
         self.bonusLabelFour.alpha = 0;
+        [self.superview viewWithTag:kBlurBackgroundViewTag].alpha = 1;
         [self.superview layoutIfNeeded];
     } completion:^(BOOL finished) {
         if (finished) {
