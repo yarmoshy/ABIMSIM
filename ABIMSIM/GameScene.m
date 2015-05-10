@@ -103,6 +103,7 @@ static NSMutableArray *planetTextures;
 static NSMutableArray *asteroidTextures;
 static NSMutableArray *powerUpTextures;
 static NSMutableArray *spaceMineTextures;
+static NSMutableArray *impactSpriteArrays;
 static NSMutableDictionary *asteroidSpritesDictionary;
 static NSMutableDictionary *planetSpritesDictionary;
 
@@ -274,6 +275,38 @@ CGFloat DegreesToRadians(CGFloat degrees)
         [SKTexture preloadTextures:powerUpTextures withCompletionHandler:^{
             ;
         }];
+        
+        if (!impactSpriteArrays) {
+            impactSpriteArrays = [NSMutableArray arrayWithCapacity:2];
+            NSMutableArray *smallerImpactArray = [NSMutableArray arrayWithCapacity:10];
+            for (int i = 0; i < 10; i++) {
+                SKSpriteNode *impactSprite = [SKSpriteNode spriteNodeWithImageNamed:@"AsteroidShield_Impact_0"];
+                SKAction *prepair = [SKAction runBlock:^{
+                    impactSprite.alpha = 1;
+                }];
+                SKAction *fadeAway = [SKAction fadeAlphaTo:0 duration:0.5];
+                impactSprite.userData = [NSMutableDictionary dictionary];
+                impactSprite.userData[asteroidShieldImpactAnimation] = [SKAction sequence:@[prepair, fadeAway]];
+                impactSprite.userData[planetNumber] = @(asteroidShield0);
+                impactSprite.name = asteroidShieldImpactSpriteName;
+                [smallerImpactArray addObject:impactSprite];
+            }
+            [impactSpriteArrays addObject:smallerImpactArray];
+            NSMutableArray *largerImpactArray = [NSMutableArray arrayWithCapacity:10];
+            for (int i = 0; i < 10; i++) {
+                SKSpriteNode *impactSprite = [SKSpriteNode spriteNodeWithImageNamed:@"AsteroidShield_Impact_1"];
+                SKAction *prepair = [SKAction runBlock:^{
+                    impactSprite.alpha = 1;
+                }];
+                SKAction *fadeAway = [SKAction fadeAlphaTo:0 duration:0.5];
+                impactSprite.userData = [NSMutableDictionary dictionary];
+                impactSprite.userData[asteroidShieldImpactAnimation] = [SKAction sequence:@[prepair, fadeAway]];
+                impactSprite.userData[planetNumber] = @(asteroidShield1);
+                impactSprite.name = asteroidShieldImpactSpriteName;
+                [largerImpactArray addObject:impactSprite];
+            }
+            [impactSpriteArrays addObject:largerImpactArray];
+        }
         
         self.physicsWorld.gravity = CGVectorMake(0.0f, 0.0f);
         SKPhysicsBody* borderBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:CGRectMake(0, -kExtraSpaceOffScreen, size.width, size.height+kExtraSpaceOffScreen*2)];
@@ -840,17 +873,47 @@ CGFloat DegreesToRadians(CGFloat degrees)
         }
 
         if ((firstBody.categoryBitMask == asteroidCategory || firstBody.categoryBitMask == asteroidInShieldCategory) && secondBody.categoryBitMask == asteroidShieldCategory) {
-            NSString *imageName = @"";
+            NSMutableArray *impactArray;
             if ([secondBody.node.userData[planetNumber] intValue] == asteroidShield0) {
-                imageName = @"AsteroidShield_Impact_0";
+                impactArray = impactSpriteArrays[0];
             } else {
-                imageName = @"AsteroidShield_Impact_1";
+                impactArray = impactSpriteArrays[1];
             }
-            SKSpriteNode *impactSprite = [SKSpriteNode spriteNodeWithImageNamed:imageName];
+            SKSpriteNode *impactSprite;
+            if (impactArray.count) {
+                impactSprite = impactArray[0];
+                impactSprite.alpha = 1;
+                [impactArray removeObjectAtIndex:0];
+            } else {
+                NSString *imageName = @"";
+                if ([secondBody.node.userData[planetNumber] intValue] == asteroidShield0) {
+                    imageName = @"AsteroidShield_Impact_0";
+                } else {
+                    imageName = @"AsteroidShield_Impact_1";
+                }
+                impactSprite = [SKSpriteNode spriteNodeWithImageNamed:imageName];
+                SKAction *prepair = [SKAction runBlock:^{
+                    impactSprite.alpha = 1;
+                }];
+                SKAction *fadeAway = [SKAction fadeAlphaTo:0 duration:0.5];
+                impactSprite.userData = [NSMutableDictionary dictionary];
+                impactSprite.userData[asteroidShieldImpactAnimation] = [SKAction sequence:@[prepair, fadeAway]];
+                impactSprite.userData[planetNumber] = secondBody.node.userData[planetNumber];
+                impactSprite.name = asteroidShieldImpactSpriteName;
+            }
             [secondBody.node addChild:impactSprite];
-            SKAction *fadeAway = [SKAction fadeAlphaTo:0 duration:0.5];
-            [impactSprite runAction:fadeAway completion:^{
-                impactSprite.remove = @YES;
+            [impactSprite runAction:impactSprite.userData[asteroidShieldImpactAnimation] completion:^{
+                [impactSprite removeFromParent];
+                if ([impactSprite.userData[planetNumber] intValue] == asteroidShield0) {
+                    NSMutableArray *anImpactArray = impactSpriteArrays[0];
+                    [anImpactArray addObject:impactSprite];
+                    impactSpriteArrays[0] = anImpactArray;
+                } else {
+                    NSMutableArray *anImpactArray = impactSpriteArrays[1];
+                    [anImpactArray addObject:impactSprite];
+                    impactSpriteArrays[1] = anImpactArray;
+                }
+                
             }];
             CGPoint p1 = secondBody.node.position;
             CGPoint p2 = firstBody.node.position;

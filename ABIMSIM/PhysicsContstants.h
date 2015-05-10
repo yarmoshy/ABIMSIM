@@ -16,6 +16,7 @@ static NSString* removedThisSprite = @"removedThisSprite";
 static NSString* shipCategoryName = @"ship";
 static NSString* asteroidCategoryName = @"asteroid";
 static NSString* asteroidInShieldCategoryName = @"asteroidInShield";
+
 static NSString* planetCategoryName = @"planet";
 static NSString* blackHoleCategoryName = @"blackHole";
 
@@ -48,6 +49,7 @@ static NSString* directionsSecondaryBlinkingSpriteName = @"directionsSecondaryBl
 static NSString* pauseSpriteName = @"pauseSpriteName";
 static NSString* asteroidShieldRing1SpriteName = @"asteroidShieldRing1SpriteName";
 static NSString* starSpriteName = @"starSpriteName";
+static NSString* asteroidShieldImpactSpriteName = @"asteroidShieldImpactSpriteName";
 
 static const uint32_t borderCategory  = 0x1 << 0;  // 00000000000000000000000000000001
 static const uint32_t shipCategory  = 0x1 << 1;  // 00000000000000000000000000000001

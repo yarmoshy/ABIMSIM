@@ -18,6 +18,7 @@
 #define planetsIndex @"planetIndex"
 
 #define asteroidShieldPulseAnimationAction @"asteroidShieldPulseAnimationAction"
+#define asteroidShieldImpactAnimation @"asteroidShieldImpactAnimation"
 #define powerUpShieldPulseAnimation @"powerUpShieldPulseAnimation"
 #define powerUpSpaceMineRotationAnimation @"powerUpSpaceMineRotationAnimation"
 #define powerUpSpaceMinePulseAnimation @"powerUpSpaceMinePulseAnimation"
