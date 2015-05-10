@@ -18,8 +18,41 @@
 
 -(id)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive) name:UIApplicationDidBecomeActiveNotification object:nil];
     }
     return self;
+}
+
+-(void)applicationDidBecomeActive {
+    if (showingGameOver) {
+    
+        if (![self.superview viewWithTag:kBlurBackgroundViewTag]) {
+            UIImageView *blurredBackgroundImageView = ({
+                UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.superview.bounds];
+                imageView.contentMode = UIViewContentModeBottom;
+                imageView.clipsToBounds = YES;
+                imageView.backgroundColor = [UIColor clearColor];
+                imageView;
+            });
+            blurredBackgroundImageView.tag = kBlurBackgroundViewTag;
+            blurredBackgroundImageView.frame = CGRectMake(blurredBackgroundImageView.frame.origin.x, 0, blurredBackgroundImageView.frame.size.width, blurredBackgroundImageView.frame.size.height);
+            blurredBackgroundImageView.alpha = 1;
+            UIImage *screenShot = [self.superview imageFromScreenShot];
+            
+            UIColor *blurTintColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:.3];
+            float blurSaturationDeltaFactor = 0.6;
+            float blurRadius = 5;
+            
+            blurredBackgroundImageView.image = [screenShot applyBlurWithRadius:blurRadius tintColor:blurTintColor saturationDeltaFactor:blurSaturationDeltaFactor maskImage:nil];
+            
+            [self.superview insertSubview:blurredBackgroundImageView belowSubview:self];
+        } else {
+            [self.superview viewWithTag:kBlurBackgroundViewTag].alpha = 1;
+        }
+        killAnimations = YES;
+        [self.superview.layer removeAllAnimations];
+        [self showGameOverButtons];
+    }
 }
 
 -(void)didMoveToSuperview {

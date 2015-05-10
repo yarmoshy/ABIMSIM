@@ -493,6 +493,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
 }
 
 -(void)pause {
+    if ([[self childNodeWithName:shipCategoryName] childNodeWithName:shipImageSpriteName].hidden) {
+        return;
+    }
     self.paused = YES;
     flickRecognizer.enabled = NO;
     [self.viewController showPausedView];
