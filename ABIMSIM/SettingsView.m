@@ -128,7 +128,7 @@
 }
 
 - (IBAction)resetTapped:(id)sender {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"WARNING" message:@"Are you sure you want to reset all game data? This includes all upgrades and space duckets earned. This cannot be undone." delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"WARNING" message:@"Are you sure you want to reset all game data? This includes all upgrades and XP earned. This cannot be undone." delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
     alert.tag = 777;
     [alert show];
 }

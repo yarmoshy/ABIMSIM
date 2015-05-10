@@ -395,7 +395,7 @@
     cell.unlimitedUpgradesHeightConstraint.constant = 0;
     cell.xpRequiredLabel.text = [NSString stringWithFormat:@"%ld XP",(mineBlastSpeed+1)*20];
     cell.ringImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"Ring_5Pieces_%ld", mineBlastSpeed]];
-    cell.descriptionLabel.text = @"The high your upgrade, the faster the mine will explode and clear out obstacles.";
+    cell.descriptionLabel.text = @"The higher your upgrade, the faster the mine will explode and clear out obstacles.";
     if (mineBlastSpeed == 5) {
         cell.upgradeLabel.alpha = 0;
         cell.xpRequiredLabel.text = @"FULLY UPGRADED";
