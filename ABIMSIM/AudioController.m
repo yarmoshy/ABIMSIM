@@ -44,8 +44,9 @@ typedef enum {
         NSURL* url = [NSURL fileURLWithPath:path];
 
         audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:&error];
-        audioPlayer.volume = 0.8;
+        audioPlayer.volume = 0.6;
         audioPlayer.delegate = self;
+        audioPlayer.enableRate = YES;
         [audioPlayer prepareToPlay];
         playSoundEffect = [ABIMSIMDefaults boolForKey:kSFXSetting];
         playMusic = [ABIMSIMDefaults boolForKey:kMusicSetting];
@@ -89,6 +90,7 @@ typedef enum {
     [audioPlayer stop];
     [audioPlayer setCurrentTime:0];
     [audioPlayer prepareToPlay];
+    audioPlayer.rate = 1;
 }
 
 -(void)gameplay {
@@ -105,6 +107,16 @@ typedef enum {
     [upgradePlayer play];
 }
 
+-(void)blackhole {
+    if (arc4random() % 2)
+        audioPlayer.rate = 0.5;
+    else
+        audioPlayer.rate = 2;
+}
+
+-(void)endBlackhole {
+    audioPlayer.rate = 1;
+}
 
 #pragma mark AVAudioPlayerDelegate
 

@@ -1574,6 +1574,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
 }
 
 -(void)showCurrentSprites {
+    if (currentBlackHole) {
+        [[AudioController sharedController] endBlackhole];
+    }
     currentBlackHole = nil;
     explodedMine = nil;
     explodingMine = nil;
@@ -1592,6 +1595,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
                    [sprite.name isEqual:blackHoleCategoryName] ) {
             if ([sprite.name isEqual:blackHoleCategoryName]) {
                 currentBlackHole = sprite;
+                [[AudioController sharedController] blackhole];
             }
             if ([sprite.name isEqual:sunObjectSpriteName]) {
                 showingSun = YES;

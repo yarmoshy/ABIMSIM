@@ -14,4 +14,6 @@
 -(void)playerDeath;
 -(void)gameplay;
 -(void)upgrade;
+-(void)blackhole;
+-(void)endBlackhole;
 @end

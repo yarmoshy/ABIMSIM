@@ -11,7 +11,7 @@
 #import "UIView+Fancy.h"
 
 @implementation GameOverView {
-    BOOL killAnimations;
+    BOOL killAnimations, showingGameOver;
     UILabel *incrementingLabel;
     int totalPointDifferential, currentIncrementingLabelPoints, targetPoints, currentPoints;
 }
@@ -156,6 +156,10 @@
 }
 
 -(void)show {
+    if (showingGameOver) {
+        return;
+    }
+    showingGameOver = YES;
     killAnimations = NO;
     self.rectangleImage.alpha = 0;
     self.rectangleSocialImage.alpha = 0;
@@ -496,6 +500,7 @@
 }
 
 -(void)hide {
+    showingGameOver = NO;
     self.delegate.scene.reset = YES;
     self.delegate.scene.gameOver = NO;
     self.delegate.scene.paused = NO;
