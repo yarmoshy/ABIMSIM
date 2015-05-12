@@ -436,7 +436,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     [self childNodeWithName:levelParsecsNodeName].alpha = 0;
 
     if (!walkthroughSeen) {
-        [[self childNodeWithName:shipCategoryName] runAction:[SKAction moveTo:CGPointMake(self.frame.size.width/2, ((SKSpriteNode*)[self childNodeWithName:shipCategoryName]).size.height*2) duration:0.5] completion:^{
+        [[self childNodeWithName:shipCategoryName] runAction:[SKAction moveTo:CGPointMake(self.frame.size.width/2, shipSize.height*2) duration:0.5] completion:^{
             self.paused = NO;
             self.initialPause = YES;
             flickRecognizer.enabled = YES;
@@ -1639,7 +1639,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     [self showCurrentSprites];
     safeToTransition = @YES;
     [self childNodeWithName:shipCategoryName].physicsBody.collisionBitMask = borderCategory | asteroidCategory | planetCategory | planetRingCategory;
-    [self childNodeWithName:shipCategoryName].position = CGPointMake([self childNodeWithName:shipCategoryName].position.x, -kExtraSpaceOffScreen + ((SKSpriteNode*)[self childNodeWithName:shipCategoryName]).size.height/2);
+    [self childNodeWithName:shipCategoryName].position = CGPointMake([self childNodeWithName:shipCategoryName].position.x, -kExtraSpaceOffScreen + shipSize.height/2);
     shipWarping = YES;
     advanceLevel = NO;
 }
@@ -1712,13 +1712,13 @@ CGFloat DegreesToRadians(CGFloat degrees)
         directions.name = directionsSpriteName;
         
         SKSpriteNode *swipeToStart = [SKSpriteNode spriteNodeWithImageNamed:@"SwipeToStartText"];
-        swipeToStart.position = CGPointMake(self.frame.size.width/2, ((SKSpriteNode*)[self childNodeWithName:shipCategoryName]).size.height*3 - swipeToStart.size.height + 5);
+        swipeToStart.position = CGPointMake(self.frame.size.width/2, shipSize.height*3 - swipeToStart.size.height + 5);
         [self addChild:swipeToStart];
         swipeToStart.alpha = 0;
         swipeToStart.name = directionsSecondarySpriteName;
 
         SKSpriteNode *shipDashedLine = [SKSpriteNode spriteNodeWithImageNamed:@"ShipDashedLine"];
-        shipDashedLine.position = CGPointMake(self.frame.size.width/2, ((SKSpriteNode*)[self childNodeWithName:shipCategoryName]).size.height*2 + 5);
+        shipDashedLine.position = CGPointMake(self.frame.size.width/2, shipSize.height*2 + 5);
         [self addChild:shipDashedLine];
         shipDashedLine.alpha = 0;
         shipDashedLine.name = directionsSecondaryBlinkingSpriteName;
