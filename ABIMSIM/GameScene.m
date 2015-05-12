@@ -1549,6 +1549,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
 -(void)removeCurrentSprites {
     for (int i = 0; i < currentSpriteArray.count; i++) {
+        [currentSpriteArray[i] removeAllActions];
         if ([[currentSpriteArray[i] name] isEqual:asteroidCategoryName] ||
             [[currentSpriteArray[i] name] isEqual:asteroidInShieldCategoryName]) {
             [currentSpriteArray[i] removeFromParent];
@@ -1683,7 +1684,10 @@ CGFloat DegreesToRadians(CGFloat degrees)
             if ([sprite.name isEqual:blackHoleCategoryName]) {
                 [sprite runAction:sprite.userData[blackHoleAnimation]];
             }
-
+            if ([sprite.name isEqual:planetCategoryName] ||
+                [sprite.name isEqual:sunObjectSpriteName]) {
+                [sprite runAction:sprite.userData[kPlanetHoverActionKey]];
+            }
         } else if ([sprite.name isEqual:powerUpShieldName]) {
             sprite.hidden = NO;
             [self addChild:sprite];
@@ -2624,10 +2628,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
         sprite.zPosition = 1;
     }
 
-    SKAction *hoverAction;
-    if ([sprite.userData objectForKey:kPlanetHoverActionKey]) {
-        hoverAction = [sprite.userData objectForKey:kPlanetHoverActionKey];
-    } else {
+    
+    if (![sprite.userData objectForKey:kPlanetHoverActionKey]) {
         UIBezierPath *hoverPath = [UIBezierPath bezierPath];
         [hoverPath moveToPoint:sprite.position];
         [hoverPath addCurveToPoint:CGPointMake(sprite.position.x + (sprite.size.width * 0.1), sprite.position.y)
@@ -2642,10 +2644,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
         [hoverPath addCurveToPoint:sprite.position
                      controlPoint1:CGPointMake(sprite.position.x - (sprite.size.width * 0.1), sprite.position.y - sprite.size.height * 0.1)
                      controlPoint2:CGPointMake(sprite.position.x, sprite.position.y - sprite.size.height * 0.1)];
-        hoverAction = [SKAction repeatActionForever:[SKAction followPath:hoverPath.CGPath asOffset:YES orientToPath:NO duration:30]];
+        SKAction *hoverAction = [SKAction repeatActionForever:[SKAction followPath:hoverPath.CGPath asOffset:YES orientToPath:NO duration:30]];
         [sprite.userData setObject:hoverAction forKey:kPlanetHoverActionKey];
     }
-    [sprite runAction:hoverAction];
     
     [self randomizeSprite:sprite];
     if (planetNum == 5) {
@@ -2673,6 +2674,26 @@ CGFloat DegreesToRadians(CGFloat degrees)
         sprite.userData[planetsIndex] = @(planetIndex);
         sprite.zPosition = 1;
     }
+    
+    if (![sprite.userData objectForKey:kPlanetHoverActionKey]) {
+        UIBezierPath *hoverPath = [UIBezierPath bezierPath];
+        [hoverPath moveToPoint:sprite.position];
+        [hoverPath addCurveToPoint:CGPointMake(sprite.position.x + (sprite.size.width * 0.1), sprite.position.y)
+                     controlPoint1:CGPointMake(sprite.position.x, sprite.position.y + sprite.size.height * 0.1)
+                     controlPoint2:CGPointMake(sprite.position.x + (sprite.size.width * 0.1), sprite.position.y + sprite.size.height * 0.1)];
+        [hoverPath addCurveToPoint:sprite.position
+                     controlPoint1:CGPointMake(sprite.position.x + (sprite.size.width * 0.1), sprite.position.y - sprite.size.height * 0.1)
+                     controlPoint2:CGPointMake(sprite.position.x, sprite.position.y - sprite.size.height * 0.1)];
+        [hoverPath addCurveToPoint:CGPointMake(sprite.position.x - (sprite.size.width * 0.1), sprite.position.y)
+                     controlPoint1:CGPointMake(sprite.position.x, sprite.position.y + sprite.size.height * 0.1)
+                     controlPoint2:CGPointMake(sprite.position.x - (sprite.size.width * 0.1), sprite.position.y + sprite.size.height * 0.1)];
+        [hoverPath addCurveToPoint:sprite.position
+                     controlPoint1:CGPointMake(sprite.position.x - (sprite.size.width * 0.1), sprite.position.y - sprite.size.height * 0.1)
+                     controlPoint2:CGPointMake(sprite.position.x, sprite.position.y - sprite.size.height * 0.1)];
+        SKAction *hoverAction = [SKAction repeatActionForever:[SKAction followPath:hoverPath.CGPath asOffset:YES orientToPath:NO duration:30]];
+        [sprite.userData setObject:hoverAction forKey:kPlanetHoverActionKey];
+    }
+
     sprite.zRotation =0;
 
     
