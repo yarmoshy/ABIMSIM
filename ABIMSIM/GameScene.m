@@ -94,7 +94,7 @@
     SKAction *blackholeDeathAction;
 
     CGPoint lastShipPosition, pendingVelocity;
-    
+    CGSize shipSize;
 }
 
 static NSMutableArray *backgroundTextures;
@@ -1270,6 +1270,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     SKAction *explSequence = [SKAction sequence:@[explSetup, explGroupAction, explGroupAction2, removeShipPhysicsBodyAction]];
     ship.userData[shipExplosionAnimation] = explSequence;
 
+    shipSize = ship.size;
     return ship;
 }
 
@@ -1550,6 +1551,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
 -(void)removeCurrentSprites {
     for (int i = 0; i < currentSpriteArray.count; i++) {
         [currentSpriteArray[i] removeAllActions];
+        for (SKSpriteNode *child in ((SKSpriteNode*)currentSpriteArray[i]).children) {
+            [child removeAllActions];
+        }
         if ([[currentSpriteArray[i] name] isEqual:asteroidCategoryName] ||
             [[currentSpriteArray[i] name] isEqual:asteroidInShieldCategoryName]) {
             [currentSpriteArray[i] removeFromParent];
@@ -2381,8 +2385,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
         }
         BOOL addPlanet = YES;
         int attempt = 0;
-        while ((distanceA - (thisWidth/2) - (otherWidthA/2) < ((SKSpriteNode*)[self childNodeWithName:shipCategoryName]).size.width + 10) ||
-               (distanceB - (thisWidth/2) - (otherWidthB/2) < ((SKSpriteNode*)[self childNodeWithName:shipCategoryName]).size.width + 10)) {
+        while ((distanceA - (thisWidth/2) - (otherWidthA/2) < shipSize.width + 10) ||
+               (distanceB - (thisWidth/2) - (otherWidthB/2) < shipSize.width + 10)) {
             if (attempt > 200) {
                 addPlanet = NO;
                 break;
