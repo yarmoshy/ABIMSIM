@@ -1553,6 +1553,18 @@ CGFloat DegreesToRadians(CGFloat degrees)
         [currentSpriteArray[i] removeAllActions];
         for (SKSpriteNode *child in ((SKSpriteNode*)currentSpriteArray[i]).children) {
             [child removeAllActions];
+            if (child.name == asteroidShieldImpactSpriteName) {
+                [child removeFromParent];
+                if ([child.userData[planetNumber] intValue] == asteroidShield0) {
+                    NSMutableArray *anImpactArray = impactSpriteArrays[0];
+                    [anImpactArray addObject:child];
+                    impactSpriteArrays[0] = anImpactArray;
+                } else {
+                    NSMutableArray *anImpactArray = impactSpriteArrays[1];
+                    [anImpactArray addObject:child];
+                    impactSpriteArrays[1] = anImpactArray;
+                }
+            }
         }
         if ([[currentSpriteArray[i] name] isEqual:asteroidCategoryName] ||
             [[currentSpriteArray[i] name] isEqual:asteroidInShieldCategoryName]) {

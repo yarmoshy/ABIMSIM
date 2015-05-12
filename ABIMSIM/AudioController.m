@@ -110,10 +110,7 @@ typedef enum {
 }
 
 -(void)blackhole {
-    if (arc4random() % 2)
-        audioPlayer.rate = 0.5;
-    else
-        audioPlayer.rate = 2;
+    audioPlayer.rate = 0.5;
 }
 
 -(void)endBlackhole {
