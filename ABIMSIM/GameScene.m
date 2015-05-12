@@ -546,7 +546,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
                 self.paused = YES;
                 self.initialPause = YES;
             }];
-            walkthroughSeen = YES;
             [ABIMSIMDefaults setBool:YES forKey:kWalkthroughSeen];
             [ABIMSIMDefaults synchronize];
         }
@@ -1744,14 +1743,19 @@ CGFloat DegreesToRadians(CGFloat degrees)
 }
 
 -(void)removeOverlayChildren {
-    while ([self childNodeWithName:directionsSpriteName]) {
-        [[self childNodeWithName:directionsSpriteName] removeFromParent];
-    }
-    while ([self childNodeWithName:directionsSecondarySpriteName]) {
-        [[self childNodeWithName:directionsSecondarySpriteName] removeFromParent];
-    }
-    while ([self childNodeWithName:directionsSecondaryBlinkingSpriteName]) {
-        [[self childNodeWithName:directionsSecondaryBlinkingSpriteName] removeFromParent];
+    if (self.currentLevel < 3 && !walkthroughSeen) {
+        while ([self childNodeWithName:directionsSpriteName]) {
+            [[self childNodeWithName:directionsSpriteName] removeFromParent];
+        }
+        while ([self childNodeWithName:directionsSecondarySpriteName]) {
+            [[self childNodeWithName:directionsSecondarySpriteName] removeFromParent];
+        }
+        while ([self childNodeWithName:directionsSecondaryBlinkingSpriteName]) {
+            [[self childNodeWithName:directionsSecondaryBlinkingSpriteName] removeFromParent];
+        }
+        if (self.currentLevel >= 2) {
+            walkthroughSeen = YES;
+        }
     }
 }
 
