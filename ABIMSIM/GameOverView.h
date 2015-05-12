@@ -88,6 +88,8 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet UIImageView *ggUpgradeRing2;
 @property (weak, nonatomic) IBOutlet UIImageView *ggUpgradeRing3;
 
+@property (weak, nonatomic) IBOutlet UIImageView *upgradesAvailableImageView;
+
 - (IBAction)ggPlaySelect:(id)sender;
 - (IBAction)ggPlayDeselect:(id)sender;
 - (IBAction)ggPlayTouchUpInside:(id)sender;

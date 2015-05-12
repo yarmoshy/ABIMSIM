@@ -11,7 +11,7 @@
 #import "UIView+Fancy.h"
 
 @implementation GameOverView {
-    BOOL killAnimations, showingGameOver;
+    BOOL killAnimations, showingGameOver, pulsatingUpgrade;
     UILabel *incrementingLabel;
     int totalPointDifferential, currentIncrementingLabelPoints, targetPoints, currentPoints;
 }
@@ -126,6 +126,7 @@
 
 - (IBAction)ggUpgradeTouchUpInside:(id)sender {
     [self configureButtonsEnabled:NO];
+    pulsatingUpgrade = NO;
     [self animateGGUpgradesButtonDeselect:^{
         [self.delegate gameOverViewDidSelectButtonType:GameOverViewButtonTypeUpgrades];
     }];
@@ -183,6 +184,7 @@
 
 - (IBAction)quitTapped:(id)sender {
     showingGameOver = NO;
+    pulsatingUpgrade = NO;
     [self configureButtonsEnabled:NO];
     [self.delegate gameOverViewDidSelectButtonType:GameOverViewButtonTypeMainMenu];
 }
@@ -492,10 +494,99 @@
                 self.quitButton.alpha = 1;
                 self.gameOverButtonContainer.alpha = 1;
             } completion:^(BOOL finished) {
-                ;
+                [self pulsateUpgradeIfApplicable];
             }];
         }
     }];
+}
+
+-(void)pulsateUpgradeIfApplicable {
+    if ([self upgradeAvailable]) {
+        pulsatingUpgrade = YES;
+        [self pulsateUpgrade];
+    } else {
+        pulsatingUpgrade = NO;
+    }
+}
+
+-(void)pulsateUpgrade {
+    __block GameOverView* weakSelf = self;
+    if (pulsatingUpgrade) {
+        [UIView animateWithDuration:0.25 animations:^{
+            weakSelf.upgradesAvailableImageView.alpha = 1;
+        } completion:^(BOOL finished) {
+            if (finished) {
+                [UIView animateWithDuration:0.75 animations:^{
+                    weakSelf.upgradesAvailableImageView.alpha = 0;
+                } completion:^(BOOL finished) {
+                    if (finished) {
+                        [weakSelf pulsateUpgrade];
+                    }
+                }];
+            }
+        }];
+    }
+}
+
+-(void)stopPulsatingUpgrade {
+    pulsatingUpgrade = NO;
+}
+
+-(BOOL)upgradeAvailable {
+    NSInteger shieldOccurance = [ABIMSIMDefaults integerForKey:kShieldOccuranceLevel];
+    NSInteger shieldDurability = [ABIMSIMDefaults integerForKey:kShieldDurabilityLevel];
+    NSInteger shieldOnStart = [ABIMSIMDefaults integerForKey:kShieldOnStart];
+    NSInteger mineOccurance = [ABIMSIMDefaults integerForKey:kMineOccuranceLevel];
+    NSInteger mineBlastSpeed = [ABIMSIMDefaults integerForKey:kMineBlastSpeedLevel];
+    NSInteger spaceDuckets = [ABIMSIMDefaults integerForKey:kUserDuckets];
+    
+    if ((mineOccurance == 0 || shieldOccurance == 0) && spaceDuckets >= 10) {
+        return true;
+    }
+    
+    if (shieldOnStart == 0 && spaceDuckets >= 100) {
+        return true;
+    }
+
+    
+    if (shieldOccurance < 10 && spaceDuckets >= (shieldOccurance+1)*10) {
+        return true;
+    }
+
+    
+    int shipShieldStrengthCost = (int)(shieldDurability+1)*100;
+    switch (shipShieldStrengthCost) {
+        case 600:
+            shipShieldStrengthCost = 1000;
+            break;
+        case 700:
+            shipShieldStrengthCost = 2000;
+            break;
+        case 800:
+            shipShieldStrengthCost = 3000;
+            break;
+        case 900:
+            shipShieldStrengthCost = 4000;
+            break;
+        case 1000:
+            shipShieldStrengthCost = 5000;
+            break;
+        default:
+            break;
+    }
+    if (shieldDurability < 10 && spaceDuckets >= shipShieldStrengthCost) {
+        return YES;
+    }
+    
+    if (mineOccurance < 10 && spaceDuckets >= (mineOccurance+1)*10) {
+        return YES;
+    }
+    
+    if (mineBlastSpeed < 5 && spaceDuckets >= (mineBlastSpeed+1)*20) {
+        return YES;
+    }
+    
+    return false;
 }
 
 - (void)animatePointDifference:(int)pointDifference withIncrementingLabel:(UILabel*)label andCompletionBlock:(void (^)(void))completionBlock {
@@ -534,6 +625,7 @@
 
 -(void)hide {
     showingGameOver = NO;
+    pulsatingUpgrade = NO;
     self.delegate.scene.reset = YES;
     self.delegate.scene.gameOver = NO;
     self.delegate.scene.paused = NO;

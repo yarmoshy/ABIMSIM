@@ -325,13 +325,13 @@
             shipShieldStrengthCost = 2000;
             break;
         case 800:
-            shipShieldStrengthCost = 4000;
+            shipShieldStrengthCost = 3000;
             break;
         case 900:
-            shipShieldStrengthCost = 8000;
+            shipShieldStrengthCost = 4000;
             break;
         case 1000:
-            shipShieldStrengthCost = 10000;
+            shipShieldStrengthCost = 5000;
             break;
         default:
             break;
