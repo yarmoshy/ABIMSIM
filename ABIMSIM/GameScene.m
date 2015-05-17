@@ -82,6 +82,7 @@
     int lastLevelPanned;
     NSTimeInterval lastTimeHit;
     int timesHitWithinSecond;
+    int sceneHeight, sceneWidth, viewHeight;
     
     SKAction *shieldUpSoundAction;
     SKAction *shieldDownSoundAction;
@@ -116,6 +117,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
 -(id)initWithSize:(CGSize)size {
     if (self = [super initWithSize:size]) {
         /* Setup your scene here */
+        sceneHeight = self.frame.size.height;
+        sceneWidth = self.frame.size.width;
+
         walkthroughSeen = [ABIMSIMDefaults boolForKey:kWalkthroughSeen];
         self.initialPause = !walkthroughSeen;
 
@@ -387,7 +391,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         [self childNodeWithName:shipCategoryName].physicsBody.collisionBitMask = borderCategory | asteroidCategory | planetCategory | planetRingCategory;
         
         CGRect goalRect;
-        goalRect = CGRectMake(self.frame.origin.x, self.frame.size.height + kExtraSpaceOffScreen, self.frame.size.width, 15);
+        goalRect = CGRectMake(self.frame.origin.x, sceneHeight + kExtraSpaceOffScreen, sceneWidth, 15);
         SKNode* goal = [SKNode node];
         goal.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:goalRect];
         goal.name = goalCategoryName;
@@ -398,7 +402,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
         safeToTransition = @YES;
         shipWarping = YES;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActive) name:UIApplicationWillResignActiveNotification object:nil];
-
     }
     return self;
 }
@@ -436,12 +439,12 @@ CGFloat DegreesToRadians(CGFloat degrees)
     [self childNodeWithName:levelParsecsNodeName].alpha = 0;
 
     if (!walkthroughSeen) {
-        [[self childNodeWithName:shipCategoryName] runAction:[SKAction moveTo:CGPointMake(self.frame.size.width/2, shipSize.height*2) duration:0.5] completion:^{
+        [[self childNodeWithName:shipCategoryName] runAction:[SKAction moveTo:CGPointMake(sceneWidth/2, shipSize.height*2) duration:0.5] completion:^{
             self.paused = NO;
             self.initialPause = YES;
             flickRecognizer.enabled = YES;
         }];
-        SKAction *move = [SKAction moveTo:CGPointMake(self.frame.size.width/2, self.frame.size.height/2) duration:0.5];
+        SKAction *move = [SKAction moveTo:CGPointMake(sceneWidth/2, sceneHeight/2) duration:0.5];
         SKAction *alphaIn = [SKAction fadeAlphaTo:1 duration:0.5];
         SKAction *group = [SKAction group:@[move, alphaIn]];
         [[self childNodeWithName:directionsSpriteName] runAction:group completion:^{
@@ -479,6 +482,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
 -(void)didMoveToView:(SKView *)view {
     [super didMoveToView:view];
+    viewHeight = self.view.frame.size.height;
     flickRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGesture:)];
     [self.view addGestureRecognizer:flickRecognizer];
     flickRecognizer.enabled = NO;
@@ -533,13 +537,13 @@ CGFloat DegreesToRadians(CGFloat degrees)
     if (!walkthroughSeen) {
         if (self.currentLevel == 2) {
             SKSpriteNode *directions = [SKSpriteNode spriteNodeWithImageNamed:@"Instructions_Screen2"];
-            directions.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2 + directions.size.height);
+            directions.position = CGPointMake(sceneWidth/2, sceneHeight/2 + directions.size.height);
             [self addChild:directions];
             directions.alpha = 0;
             directions.zPosition = 100;
             directions.name = directionsSpriteName;
 
-            SKAction *move = [SKAction moveTo:CGPointMake(self.frame.size.width/2, self.frame.size.height/2) duration:0.5];
+            SKAction *move = [SKAction moveTo:CGPointMake(sceneWidth/2, sceneHeight/2) duration:0.5];
             SKAction *alphaIn = [SKAction fadeAlphaTo:1 duration:0.5];
             SKAction *group = [SKAction group:@[move, alphaIn]];
             [[self childNodeWithName:directionsSpriteName] runAction:group completion:^{
@@ -562,9 +566,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
         shipSprite.physicsBody.collisionBitMask = borderCategory | secondaryBorderCategory | asteroidCategory | planetCategory | planetRingCategory;
     }
     if (shipSprite) {
-        float yPercentageFromCenter = (shipSprite.position.y - (self.view.frame.size.height/2.0))  / (self.view.frame.size.height / 2.0);
-        float frontMaxY = ((self.view.frame.size.height * starFrontMovement) - self.view.frame.size.height)/2.0;
-        float backMaxY = ((self.view.frame.size.height * starBackMovement) - self.view.frame.size.height)/2.0;
+        float yPercentageFromCenter = (shipSprite.position.y - (viewHeight/2.0))  / (viewHeight / 2.0);
+        float frontMaxY = ((viewHeight * starFrontMovement) - viewHeight)/2.0;
+        float backMaxY = ((viewHeight * starBackMovement) - viewHeight)/2.0;
         float frontY = (yPercentageFromCenter * frontMaxY);
         frontY = frontY + (frontMaxY);
         float backY = (yPercentageFromCenter * backMaxY);
@@ -622,7 +626,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
             continue;
         }
         
-        if (sprite.position.y - sprite.size.height/2 > self.frame.size.height) {
+        if (sprite.position.y - sprite.size.height/2 > sceneHeight) {
             if (sprite.parent && [sprite.name isEqualToString:asteroidCategoryName]) {
                 [sprite removeFromParent];
                 sprite.remove = nil;
@@ -686,7 +690,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     float y = sinf(r);
 
     float distance = sqrtf(powf(p1.x - p2.x,2) + powf(p1.y - p2.y, 2));
-    float magnitude = (self.frame.size.height / distance);
+    float magnitude = (sceneHeight / distance);
     if (sprite.name == shipCategoryName) {
         magnitude = powf(magnitude, 4.5);
     } else {
@@ -1213,7 +1217,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     [ship addChild:explosionSprite];
 
     ship.name = shipCategoryName;
-    ship.position = CGPointMake(self.frame.size.width/2, -kExtraSpaceOffScreen + ship.size.height/2);
+    ship.position = CGPointMake(sceneWidth/2, -kExtraSpaceOffScreen + ship.size.height/2);
     ship.zPosition = 1;
     ship.userData = [NSMutableDictionary dictionary];
     SKAction *shieldSetup = [SKAction runBlock:^{
@@ -1314,7 +1318,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     shipSprite.physicsBody.velocity = CGVectorMake(0, MAX_VELOCITY);
     
     shipSprite.physicsBody.collisionBitMask = borderCategory | asteroidCategory | planetCategory | planetRingCategory;
-    shipSprite.position = CGPointMake(self.frame.size.width/2, -kExtraSpaceOffScreen + shipSprite.size.height/2);
+    shipSprite.position = CGPointMake(sceneWidth/2, -kExtraSpaceOffScreen + shipSprite.size.height/2);
 
     for (NSMutableArray *sprites in spritesArrays) {
         for (SKSpriteNode *sprite in sprites) {
@@ -1384,12 +1388,12 @@ CGFloat DegreesToRadians(CGFloat degrees)
             star.alpha = 0.4;
             star.name = starSpriteName;
             [starSprites addObject:star];
-            float x = arc4random() % (int)self.frame.size.width * 1;
+            float x = arc4random() % (int)sceneWidth * 1;
             float y;
             if (i < 6) {
-                y = arc4random() % (int)(self.frame.size.height * starBackMovement * 1);
+                y = arc4random() % (int)(sceneHeight * starBackMovement * 1);
             } else {
-                y = arc4random() % (int)(self.frame.size.height * starFrontMovement * 1);
+                y = arc4random() % (int)(sceneHeight * starFrontMovement * 1);
             }
             star.position = CGPointMake(x, y);
             int size = arc4random() % 3;
@@ -1449,12 +1453,12 @@ CGFloat DegreesToRadians(CGFloat degrees)
         int half = 0;
         BOOL shrinkBackHalf = self.currentLevel % 2 == 0;
         for (SKSpriteNode *star in starSprites) {
-            float x = arc4random() % (int)self.frame.size.width * 1;
+            float x = arc4random() % (int)sceneWidth * 1;
             float y;
             if (i < 6) {
-                y = arc4random() % (int)(self.frame.size.height * starBackMovement * 1);
+                y = arc4random() % (int)(sceneHeight * starBackMovement * 1);
             } else {
-                y = arc4random() % (int)(self.frame.size.height * starFrontMovement * 1);
+                y = arc4random() % (int)(sceneHeight * starFrontMovement * 1);
             }
             float scale = 0;
             if ((shrinkBackHalf && half == 0) ||
@@ -1693,7 +1697,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
             }
             sprite.hidden = NO;
             [self addChild:sprite];
-            if (sprite.position.y < self.frame.size.height - sprite.size.height/2 - 10) {
+            if (sprite.position.y < sceneHeight - sprite.size.height/2 - 10) {
                 for (SKSpriteNode *moon in sprite.userData[moonsArray]) {
                     moon.hidden = NO;
                     [moon removeAllActions];
@@ -1725,26 +1729,26 @@ CGFloat DegreesToRadians(CGFloat degrees)
     }
     if (self.currentLevel == 1 && !self.reset && !walkthroughSeen) {
         SKSpriteNode *directions = [SKSpriteNode spriteNodeWithImageNamed:@"Instructions_Screen1"];
-        directions.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2 + directions.size.height);
+        directions.position = CGPointMake(sceneWidth/2, sceneHeight/2 + directions.size.height);
         [self addChild:directions];
         directions.alpha = 0;
         directions.zPosition = 100;
         directions.name = directionsSpriteName;
         
         SKSpriteNode *swipeToStart = [SKSpriteNode spriteNodeWithImageNamed:@"SwipeToStartText"];
-        swipeToStart.position = CGPointMake(self.frame.size.width/2, shipSize.height*3 - swipeToStart.size.height + 5);
+        swipeToStart.position = CGPointMake(sceneWidth/2, shipSize.height*3 - swipeToStart.size.height + 5);
         [self addChild:swipeToStart];
         swipeToStart.alpha = 0;
         swipeToStart.name = directionsSecondarySpriteName;
 
         SKSpriteNode *shipDashedLine = [SKSpriteNode spriteNodeWithImageNamed:@"ShipDashedLine"];
-        shipDashedLine.position = CGPointMake(self.frame.size.width/2, shipSize.height*2 + 5);
+        shipDashedLine.position = CGPointMake(sceneWidth/2, shipSize.height*2 + 5);
         [self addChild:shipDashedLine];
         shipDashedLine.alpha = 0;
         shipDashedLine.name = directionsSecondaryBlinkingSpriteName;
 
         SKSpriteNode *goalDashedLine = [SKSpriteNode spriteNodeWithImageNamed:@"TopDashedLine"];
-        goalDashedLine.position = CGPointMake(self.frame.size.width/2, self.frame.size.height - goalDashedLine.size.height);
+        goalDashedLine.position = CGPointMake(sceneWidth/2, sceneHeight - goalDashedLine.size.height);
         [self addChild:goalDashedLine];
         goalDashedLine.alpha = 0;
         goalDashedLine.name = directionsSecondaryBlinkingSpriteName;
@@ -1769,8 +1773,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
 }
 
 -(SKSpriteNode*)randomizeSprite:(SKSpriteNode*)sprite {
-    float x = arc4random() % (int)self.frame.size.width * 1;
-    float maxHeight = self.frame.size.height - bufferZoneHeight - (sprite.size.height/2.0);
+    float x = arc4random() % (int)sceneWidth * 1;
+    float maxHeight = sceneHeight - bufferZoneHeight - (sprite.size.height/2.0);
     float y = (arc4random() % ((int)maxHeight)) + bufferZoneHeight + (sprite.size.height/2.0);
     sprite.position = CGPointMake(x, y);
     if ([sprite.name isEqualToString:asteroidCategoryName]) {
@@ -2016,7 +2020,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         SKSpriteNode *asteroid = [self randomAsteroidForLevel:level];
         [self randomizeSprite:asteroid];
         if (level == 1) {
-            asteroid.position = CGPointMake(asteroid.position.x, self.frame.size.height/4 * 3);
+            asteroid.position = CGPointMake(asteroid.position.x, sceneHeight/4 * 3);
             if (![ABIMSIMDefaults boolForKey:kWalkthroughSeen]) {
                 asteroid.physicsBody.velocity = CGVectorMake(0, 0);
             }
@@ -2758,8 +2762,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
 -(void)adjustGiantPlanet:(SKSpriteNode*)planet {
     float additionalDistance = 175;
-    if (planet.position.x > self.frame.size.width/2) {
-        [planet setPosition:CGPointMake((planet.frame.size.width/2) + self.frame.size.width - additionalDistance,planet.position.y)];
+    if (planet.position.x > sceneWidth/2) {
+        [planet setPosition:CGPointMake((planet.frame.size.width/2) + sceneWidth - additionalDistance,planet.position.y)];
     } else {
         [planet setPosition:CGPointMake((planet.frame.size.width/-2) + additionalDistance ,planet.position.y)];
     }
