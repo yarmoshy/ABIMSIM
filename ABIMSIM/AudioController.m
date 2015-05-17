@@ -88,9 +88,11 @@ typedef enum {
 -(void)playerDeath {
     musicMode = MusicModeIntro;
     [audioPlayer stop];
-    [audioPlayer setCurrentTime:0];
-    [audioPlayer prepareToPlay];
-    audioPlayer.rate = 1;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        [audioPlayer setCurrentTime:0];
+        [audioPlayer prepareToPlay];
+        audioPlayer.rate = 1;
+    });
 }
 
 -(void)gameplay {

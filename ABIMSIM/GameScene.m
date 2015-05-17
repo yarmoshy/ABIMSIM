@@ -550,21 +550,10 @@ CGFloat DegreesToRadians(CGFloat degrees)
             [ABIMSIMDefaults synchronize];
         }
     }
-
-    for (SKSpriteNode *sprite in self.children) {
-        if ([sprite.remove boolValue]) {
-            [sprite removeFromParent];
-            sprite.remove = @NO;
-            sprite.alpha = 1;
-            sprite.xScale = sprite.yScale = 1;
-            for (SKSpriteNode *child in sprite.children) {
-                child.xScale = child.yScale = 1;
-            }
-        }
-    }
     
     if (self.reset) {
         [self resetWorld];
+        return;
     }
 
     /* Called before each frame is rendered */
@@ -593,10 +582,10 @@ CGFloat DegreesToRadians(CGFloat degrees)
     }
     if (currentBlackHole) {
         for (SKSpriteNode *sprite in currentBlackHole.children) {
-            if ([sprite.remove boolValue]) {
+            if (sprite.remove) {
                 if (sprite.size.width < 5) {
                     [sprite removeFromParent];
-                    sprite.remove = @NO;
+                    sprite.remove = nil;
                     sprite.alpha = 1;
                     sprite.xScale = sprite.yScale = 1;
                     for (SKSpriteNode *child in sprite.children) {
@@ -605,9 +594,20 @@ CGFloat DegreesToRadians(CGFloat degrees)
                 }
             }
         }
-
         [self applyBlackHolePullToSprite:shipSprite];
-        for (SKSpriteNode *sprite in self.children) {
+    }
+    
+    for (SKSpriteNode *sprite in self.children) {
+        if (sprite.remove) {
+            [sprite removeFromParent];
+            sprite.remove = nil;
+            sprite.alpha = 1;
+            sprite.xScale = sprite.yScale = 1;
+            for (SKSpriteNode *child in sprite.children) {
+                child.xScale = child.yScale = 1;
+            }
+            continue;
+        } else if (currentBlackHole) {
             if ([sprite.name isEqualToString:asteroidCategoryName] ||
                 [sprite.name isEqualToString:planetCategoryName] ||
                 [sprite.name isEqualToString:asteroidShieldCategoryName] ||
@@ -617,31 +617,32 @@ CGFloat DegreesToRadians(CGFloat degrees)
                 }
             }
         }
-    }
-
-    for (SKSpriteNode *asteroid in currentSpriteArray) {
-        if (![asteroid.name isEqualToString:asteroidCategoryName] &&
-            ![asteroid.name isEqualToString:asteroidInShieldCategoryName]) {
+        if (![sprite.name isEqualToString:asteroidCategoryName] &&
+            ![sprite.name isEqualToString:asteroidInShieldCategoryName]) {
             continue;
         }
-
-        if (asteroid.position.y - asteroid.size.height/2 > self.frame.size.height) {
-            if (asteroid.parent && [asteroid.name isEqualToString:asteroidCategoryName]) {
-                [asteroid removeFromParent];
+        
+        if (sprite.position.y - sprite.size.height/2 > self.frame.size.height) {
+            if (sprite.parent && [sprite.name isEqualToString:asteroidCategoryName]) {
+                [sprite removeFromParent];
+                sprite.remove = nil;
+                sprite.alpha = 1;
+                sprite.xScale = sprite.yScale = 1;
                 continue;
             }
         }
-        if (fabs(asteroid.physicsBody.angularVelocity) > MAX_ANGULAR_VELOCITY) {
-            asteroid.physicsBody.angularDamping = 1.0f;
+        if (fabs(sprite.physicsBody.angularVelocity) > MAX_ANGULAR_VELOCITY) {
+            sprite.physicsBody.angularDamping = 1.0f;
         } else {
-            asteroid.physicsBody.angularDamping = 0.0f;
+            sprite.physicsBody.angularDamping = 0.0f;
         }
-        float speed = sqrt(asteroid.physicsBody.velocity.dx*asteroid.physicsBody.velocity.dx + asteroid.physicsBody.velocity.dy * asteroid.physicsBody.velocity.dy);
+        float speed = sqrt(sprite.physicsBody.velocity.dx*sprite.physicsBody.velocity.dx + sprite.physicsBody.velocity.dy * sprite.physicsBody.velocity.dy);
         if (speed > maxSpeed) {
-            asteroid.physicsBody.linearDamping = 0.4f;
+            sprite.physicsBody.linearDamping = 0.4f;
         } else {
-            asteroid.physicsBody.linearDamping = 0.0f;
+            sprite.physicsBody.linearDamping = 0.0f;
         }
+
     }
     
     if (explodingMine) {
@@ -670,7 +671,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
 }
 
 -(void)applyBlackHolePullToSprite:(SKSpriteNode*)sprite {
-    CGPoint p1 = [self childNodeWithName:blackHoleCategoryName].position;
+    CGPoint p1 = currentBlackHole.position;
     CGPoint p2 = sprite.position;
     if ([sprite.name isEqualToString:starSpriteName]) {
         if ([sprite.parent isEqual:starFrontLayer]) {
@@ -1140,17 +1141,15 @@ CGFloat DegreesToRadians(CGFloat degrees)
 }
 
 -(void)killShipAndStartOver {
-    int pointsEarned = self.currentLevel;
+    __block int pointsEarned = self.currentLevel;
     pointsEarned += self.currentLevel / 10;
     pointsEarned += self.bubblesPopped * 5;
     pointsEarned += self.blackHolesSurvived * 4;
     pointsEarned += self.sunsSurvived * 3;
-    [ABIMSIMDefaults setInteger:[ABIMSIMDefaults integerForKey:kUserDuckets]+pointsEarned forKey:kUserDuckets];
-    [ABIMSIMDefaults synchronize];
-    [[self childNodeWithName:shipCategoryName] childNodeWithName:shipShieldSpriteName].hidden = YES;
-    [[self childNodeWithName:shipCategoryName] childNodeWithName:shipImageSpriteName].hidden = YES;
-    [[self childNodeWithName:shipCategoryName] childNodeWithName:shipThrusterSpriteName].hidden = YES;
-    [[[self childNodeWithName:shipCategoryName] childNodeWithName:shipExplosionSpriteName] runAction:[self childNodeWithName:shipCategoryName].userData[shipExplosionAnimation]];
+    [shipSprite childNodeWithName:shipShieldSpriteName].hidden = YES;
+    [shipSprite childNodeWithName:shipImageSpriteName].hidden = YES;
+    [shipSprite childNodeWithName:shipThrusterSpriteName].hidden = YES;
+    [[shipSprite childNodeWithName:shipExplosionSpriteName] runAction:shipSprite.userData[shipExplosionAnimation]];
 
     [[AudioController sharedController] playerDeath];
     if ([ABIMSIMDefaults boolForKey:kSFXSetting]) {
@@ -1165,6 +1164,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
     });
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        [ABIMSIMDefaults setInteger:[ABIMSIMDefaults integerForKey:kUserDuckets]+pointsEarned forKey:kUserDuckets];
+        [ABIMSIMDefaults synchronize];
+
         GKScore *newScore = [[GKScore alloc] initWithLeaderboardIdentifier:@"distance"];
         newScore.value = self.currentLevel;
         [GKScore reportScores:@[newScore] withCompletionHandler:^(NSError *error) {
@@ -1613,13 +1615,17 @@ CGFloat DegreesToRadians(CGFloat degrees)
     [self removeOverlayChildren];
     [self removeCurrentSprites];
     
-    NSMutableArray *asteroids = [self asteroidsForLevel:self.currentLevel+kNumberOfLevelsToGenerate];
-    [currentSpriteArray addObjectsFromArray:asteroids];
-    NSMutableArray *planets = [self planetsForLevel:self.currentLevel+kNumberOfLevelsToGenerate];
-    [currentSpriteArray addObjectsFromArray:planets];
-    NSMutableArray *powerUps = [self powerUpsForLevel:self.currentLevel+kNumberOfLevelsToGenerate];
-    [currentSpriteArray addObjectsFromArray:powerUps];
-
+    [spritesArrays addObject:spritesArrays[0]];
+    [spritesArrays removeObjectAtIndex:0];
+    currentSpriteArray = spritesArrays[0];
+    [self showCurrentSprites];
+    safeToTransition = @YES;
+    [self childNodeWithName:shipCategoryName].physicsBody.collisionBitMask = borderCategory | asteroidCategory | planetCategory | planetRingCategory;
+    [self childNodeWithName:shipCategoryName].position = CGPointMake([self childNodeWithName:shipCategoryName].position.x, -kExtraSpaceOffScreen + ((SKSpriteNode*)[self childNodeWithName:shipCategoryName]).size.height/2);
+    shipWarping = YES;
+    advanceLevel = NO;
+    
+    
     self.currentLevel++;
     [self checkLevelAchievements];
     if (self.currentLevel % 10 == 0) {
@@ -1629,30 +1635,34 @@ CGFloat DegreesToRadians(CGFloat degrees)
         if (background.alpha == 0) {
             [background runAction:[SKAction fadeAlphaTo:1 duration:0.5]];
             [background2 runAction:[SKAction fadeAlphaTo:0 duration:0.5] completion:^{
-                [background2 setTexture:backgroundTextures[backgroundNumber]];
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+                    [background2 setTexture:backgroundTextures[backgroundNumber]];
+                });
             }];
         } else {
             [background runAction:[SKAction fadeAlphaTo:0 duration:0.5] completion:^{
-                [background setTexture:backgroundTextures[backgroundNumber]];
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+                    [background setTexture:backgroundTextures[backgroundNumber]];
+                });
             }];
             [background2 runAction:[SKAction fadeAlphaTo:1 duration:0.5]];
         }
     }
-
+    
     SKLabelNode *level = (SKLabelNode*)[self childNodeWithName:levelNodeName];
     level.text = [NSString stringWithFormat:@"%d",self.currentLevel];
     [self childNodeWithName:levelParsecsNodeName].position = CGPointMake(level.position.x + level.frame.size.width + 1, 16);
     ((SKLabelNode*)[self childNodeWithName:levelParsecsNodeName]).text = @"PARSECS";
     
-    [spritesArrays addObject:spritesArrays[0]];
-    [spritesArrays removeObjectAtIndex:0];
-    currentSpriteArray = spritesArrays[0];
-    [self showCurrentSprites];
-    safeToTransition = @YES;
-    [self childNodeWithName:shipCategoryName].physicsBody.collisionBitMask = borderCategory | asteroidCategory | planetCategory | planetRingCategory;
-    [self childNodeWithName:shipCategoryName].position = CGPointMake([self childNodeWithName:shipCategoryName].position.x, -kExtraSpaceOffScreen + shipSize.height/2);
-    shipWarping = YES;
-    advanceLevel = NO;
+    __block NSMutableArray *array = spritesArrays.lastObject;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        NSMutableArray *asteroids = [self asteroidsForLevel:self.currentLevel+kNumberOfLevelsToGenerate];
+        [array addObjectsFromArray:asteroids];
+        NSMutableArray *planets = [self planetsForLevel:self.currentLevel+kNumberOfLevelsToGenerate];
+        [array addObjectsFromArray:planets];
+        NSMutableArray *powerUps = [self powerUpsForLevel:self.currentLevel+kNumberOfLevelsToGenerate];
+        [array addObjectsFromArray:powerUps];
+    });
 }
 
 -(void)showCurrentSprites {
@@ -1669,7 +1679,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
         if ([sprite.name isEqual:asteroidCategoryName] ||
             [sprite.name isEqual:asteroidInShieldCategoryName]) {
             sprite.hidden = NO;
-            [sprite removeAllActions];
             [self addChild:sprite];
         } else if ([sprite.name isEqual:planetCategoryName] ||
                    [sprite.name isEqual:sunObjectSpriteName] ||
