@@ -161,7 +161,7 @@
     if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]) {
         SLComposeViewController *composeController = [SLComposeViewController
                                                       composeViewControllerForServiceType:SLServiceTypeTwitter];
-        NSString *text = [NSString stringWithFormat:@"I just travelled %d parsecs through space! Think you can beat me? Check it out: http://bit.ly/parsecs", self.delegate.scene.currentLevel];
+        NSString *text = [NSString stringWithFormat:@"I just travelled %d parsecs through space! Think you can beat me? Check it out!", self.delegate.scene.currentLevel];
         [composeController setInitialText:text];
         [composeController addURL: [NSURL URLWithString:
                                     @"http://bit.ly/parsecs"]];

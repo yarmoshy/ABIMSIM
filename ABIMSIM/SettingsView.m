@@ -86,7 +86,7 @@
         SLComposeViewController *composeController = [SLComposeViewController
                                                       composeViewControllerForServiceType:SLServiceTypeTwitter];
         
-        [composeController setInitialText:@"I'm exploring the farthest reaches of space playing Parsecs! Check it out: http://bit.ly/parsecs"];
+        [composeController setInitialText:@"I'm exploring the farthest reaches of space playing Parsecs! Check it out:"];
         [composeController addURL: [NSURL URLWithString:
                                     @"http://bit.ly/parsecs"]];
         
