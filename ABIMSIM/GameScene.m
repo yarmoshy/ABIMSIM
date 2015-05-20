@@ -67,6 +67,7 @@
     SKSpriteNode *background, *background2;
     SKSpriteNode *shipSprite, *currentBlackHole, *explodingMine, *explodedMine;
     SKSpriteNode *shieldPowerUpSprite, *minePowerUpSprite;
+    SKLabelNode *levelNode, *parsecsNode;
     BOOL shipWarping;
     BOOL hasShield;
     BOOL showingSun;
@@ -364,27 +365,27 @@ CGFloat DegreesToRadians(CGFloat degrees)
         spritesArrays = [NSMutableArray array];
         currentSpriteArray = [NSMutableArray array];
         
-        SKLabelNode *level = [[SKLabelNode alloc] initWithFontNamed:@"Moki-Lean"];
-        level.alpha = 0.7f;
-        level.fontSize = 15;
-        level.text = [NSString stringWithFormat:@"%d",self.currentLevel];
-        level.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeLeft;
-        level.position = CGPointMake(15, 15);
-        level.zPosition = 100;
-        level.name = levelNodeName;
-        level.hidden = YES;
-        [self addChild:level];
+        levelNode = [[SKLabelNode alloc] initWithFontNamed:@"Moki-Lean"];
+        levelNode.alpha = 0.7f;
+        levelNode.fontSize = 15;
+        levelNode.text = [NSString stringWithFormat:@"%d",self.currentLevel];
+        levelNode.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeLeft;
+        levelNode.position = CGPointMake(15, 15);
+        levelNode.zPosition = 100;
+        levelNode.name = levelNodeName;
+        levelNode.hidden = YES;
+        [self addChild:levelNode];
         
-        SKLabelNode *levelParsecs = [[SKLabelNode alloc] initWithFontNamed:@"Futura-CondensedMedium"];
-        levelParsecs.alpha = 0.7f;
-        levelParsecs.fontSize = 12;
-        levelParsecs.text = @"PARSEC";
-        levelParsecs.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeLeft;
-        levelParsecs.position = CGPointMake(level.position.x + level.frame.size.width + 1, 16);
-        levelParsecs.zPosition = 100;
-        levelParsecs.name = levelParsecsNodeName;
-        levelParsecs.hidden = YES;
-        [self addChild:levelParsecs];
+        parsecsNode = [[SKLabelNode alloc] initWithFontNamed:@"Futura-CondensedMedium"];
+        parsecsNode.alpha = 0.7f;
+        parsecsNode.fontSize = 12;
+        parsecsNode.text = @"PARSEC";
+        parsecsNode.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeLeft;
+        parsecsNode.position = CGPointMake(levelNode.position.x + levelNode.frame.size.width + 1, 16);
+        parsecsNode.zPosition = 100;
+        parsecsNode.name = levelParsecsNodeName;
+        parsecsNode.hidden = YES;
+        [self addChild:parsecsNode];
 
         [self addChild:shipSprite];
         [self updateShipPhysics];
@@ -433,10 +434,10 @@ CGFloat DegreesToRadians(CGFloat degrees)
     [self showCurrentSprites];
     self.viewController.pauseButton.hidden = NO;
     self.viewController.pauseButton.alpha = 0;
-    [self childNodeWithName:levelNodeName].hidden = NO;
-    [self childNodeWithName:levelNodeName].alpha = 0;
-    [self childNodeWithName:levelParsecsNodeName].hidden = NO;
-    [self childNodeWithName:levelParsecsNodeName].alpha = 0;
+    levelNode.hidden = NO;
+    levelNode.alpha = 0;
+    parsecsNode.hidden = NO;
+    parsecsNode.alpha = 0;
 
     if (!walkthroughSeen) {
         [[self childNodeWithName:shipCategoryName] runAction:[SKAction moveTo:CGPointMake(sceneWidth/2, shipSize.height*2) duration:0.5] completion:^{
@@ -469,8 +470,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
         if ([ABIMSIMDefaults boolForKey:kWalkthroughSeen]) {
             self.viewController.pauseButton.alpha = 0.7;
         }
-        [self childNodeWithName:levelNodeName].alpha = 0.7;
-        [self childNodeWithName:levelParsecsNodeName].alpha = 0.7;
+        levelNode.alpha = 0.7;
+        parsecsNode.alpha = 0.7;
     } completion:^(BOOL finished) {
         ;
     }];
@@ -1301,10 +1302,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
     }
     shipHitPoints = 1;
 
-    SKLabelNode *level = (SKLabelNode*)[self childNodeWithName:levelNodeName];
-    level.text = [NSString stringWithFormat:@"%d",self.currentLevel];
-    [self childNodeWithName:levelParsecsNodeName].position = CGPointMake(level.position.x + level.frame.size.width + 1, 16);
-    ((SKLabelNode*)[self childNodeWithName:levelParsecsNodeName]).text = @"PARSEC";
+    levelNode.text = [NSString stringWithFormat:@"%d",self.currentLevel];
+    parsecsNode.position = CGPointMake(levelNode.position.x + levelNode.frame.size.width + 1, 16);
+    parsecsNode.text = @"PARSEC";
 
     safeToTransition = @YES;
     if (!shipSprite) {
@@ -1531,10 +1531,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
 -(void)generateInitialLevelsAndShowSprites:(BOOL)show {
     self.currentLevel = 1;
-    SKLabelNode *level = (SKLabelNode*)[self childNodeWithName:levelNodeName];
-    level.text = @"1";
-    [self childNodeWithName:levelParsecsNodeName].position = CGPointMake(level.position.x + level.frame.size.width + 1, 16);
-    ((SKLabelNode*)[self childNodeWithName:levelParsecsNodeName]).text = @"PARSEC";
+    levelNode.text = @"1";
+    parsecsNode.position = CGPointMake(levelNode.position.x + levelNode.frame.size.width + 1, 16);
+    parsecsNode.text = @"PARSEC";
 
     for (int i = 1; i <= kNumberOfLevelsToGenerate; i++) {
         NSMutableArray *spriteArray = [NSMutableArray array];
@@ -1653,10 +1652,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
         }
     }
     
-    SKLabelNode *level = (SKLabelNode*)[self childNodeWithName:levelNodeName];
-    level.text = [NSString stringWithFormat:@"%d",self.currentLevel];
-    [self childNodeWithName:levelParsecsNodeName].position = CGPointMake(level.position.x + level.frame.size.width + 1, 16);
-    ((SKLabelNode*)[self childNodeWithName:levelParsecsNodeName]).text = @"PARSECS";
+    levelNode.text = [NSString stringWithFormat:@"%d",self.currentLevel];
+    parsecsNode.position = CGPointMake(levelNode.position.x + levelNode.frame.size.width + 1, 16);
+    parsecsNode.text = @"PARSECS";
     
     __block NSMutableArray *array = spritesArrays.lastObject;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
