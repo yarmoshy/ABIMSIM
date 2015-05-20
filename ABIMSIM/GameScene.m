@@ -1205,8 +1205,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
     SKSpriteNode *explosionSprite = [SKSpriteNode spriteNodeWithImageNamed:@"ShipExplosion"];
     explosionSprite.name = shipExplosionSpriteName;
     explosionSprite.position = CGPointMake(0, 0);
-    explosionSprite.alpha = 1;
-    [explosionSprite setScale:0.1];
+    explosionSprite.alpha = 0;
+    [explosionSprite setScale:0];
     
     SKSpriteNode *ship = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:shipShieldImage.size];
     [ship addChild:shipImage];
