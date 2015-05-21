@@ -945,34 +945,28 @@ CGFloat DegreesToRadians(CGFloat degrees)
         
         if ((firstBody.categoryBitMask == shipCategory && secondBody.categoryBitMask == asteroidShieldCategory) || (firstBody.categoryBitMask == asteroidShieldCategory && secondBody.categoryBitMask == blackHoleCategory)) {
             possibleBubblesPopped++;
-            NSString *imageName = @"";
-            float scale = 0;
-            float duration = 0.5;
-            if ([secondBody.node.userData[planetNumber] intValue] == asteroidShield0) {
-                imageName = @"AsteroidShield_Pop_0";
-                scale = 0.625;
-            } else {
-                imageName = @"AsteroidShield_Pop_1";
-                scale = 0.65;
-            }
             SKSpriteNode *nodeToUse;
             if  (secondBody.categoryBitMask == asteroidShieldCategory) {
                 nodeToUse = (SKSpriteNode*)secondBody.node;
             } else {
                 nodeToUse = (SKSpriteNode*)firstBody.node;
             }
-
-            SKSpriteNode *explosionSprite = [SKSpriteNode spriteNodeWithImageNamed:imageName];
+            
+            SKSpriteNode *explosionSprite = (SKSpriteNode*)nodeToUse.userData[@"asteroidBubblePopExplosion"];
             explosionSprite.position = nodeToUse.position;
-            [explosionSprite setScale:scale];
-            explosionSprite.zPosition = 10;
-            [self addChild:explosionSprite];
-            SKAction *fadeAction = [SKAction fadeAlphaTo:0 duration:0.5];
-            SKAction *scaleAction = [SKAction scaleTo:1 duration:duration];
-            SKAction *groupAction = [SKAction group:@[fadeAction, scaleAction]];
-            [explosionSprite runAction:groupAction completion:^{
+            if ([nodeToUse.userData[planetNumber] intValue] == asteroidShield0) {
+                explosionSprite.scale = 0.625;
+            } else {
+                explosionSprite.scale = 0.65;
+            }
+
+            if (!explosionSprite.parent && explosionSprite) {
+                [self addChild:explosionSprite];
+            }
+            [explosionSprite runAction:explosionSprite.userData[@"asteroidBubblePopExplosionAction"] completion:^{
                 explosionSprite.remove = @YES;
             }];
+            
             nodeToUse.remove = @YES;
             for (SKSpriteNode *asteroid in [self children]) {
                 if ([asteroid.name isEqual:asteroidInShieldCategoryName] &&
@@ -2474,6 +2468,25 @@ CGFloat DegreesToRadians(CGFloat degrees)
                 }
                 if ([planet.userData[planetNumber] intValue] >= asteroidShield0) {
                     [self addAsteroidShieldAnimationsToSprite:planet];
+                }
+                if ([planet.userData[planetNumber] intValue] >= asteroidShield0) {
+                    NSString *imageName = @"";
+                    float scale = 0;
+                    float duration = 0.5;
+                    if ([planet.userData[planetNumber] intValue] == asteroidShield0) {
+                        imageName = @"AsteroidShield_Pop_0";
+                        scale = 0.625;
+                    } else {
+                        imageName = @"AsteroidShield_Pop_1";
+                        scale = 0.65;
+                    }
+                    SKSpriteNode *explosionSprite = [SKSpriteNode spriteNodeWithImageNamed:imageName];
+                    explosionSprite.zPosition = 10;
+                    SKAction *fadeAction = [SKAction fadeAlphaTo:0 duration:0.5];
+                    SKAction *scaleAction = [SKAction scaleTo:1 duration:duration];
+                    SKAction *groupAction = [SKAction group:@[fadeAction, scaleAction]];
+                    explosionSprite.userData = @{@"asteroidBubblePopExplosionAction" : groupAction }.mutableCopy;
+                    planet.userData[@"asteroidBubblePopExplosion"] = explosionSprite;
                 }
             } else {
                 if (![planet.userData[planetFlavorNumber] isEqualToNumber:@2] && ![planet.name isEqualToString:sunObjectSpriteName] && [planet.userData[planetNumber] intValue] < 5) {
