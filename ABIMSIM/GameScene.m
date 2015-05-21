@@ -97,6 +97,8 @@
 
     CGPoint lastShipPosition, pendingVelocity;
     CGSize shipSize;
+    
+    int shieldDurabilityLevel, shieldOnStart, shieldOccuranceLevel, mineBlastSpeedLevel, mineOccuranceLevel, sfxSetting;
 }
 
 static NSMutableArray *backgroundTextures;
@@ -120,6 +122,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
         /* Setup your scene here */
         sceneHeight = self.frame.size.height;
         sceneWidth = self.frame.size.width;
+        
+        [self setDefaultValues];
 
         walkthroughSeen = [ABIMSIMDefaults boolForKey:kWalkthroughSeen];
         self.initialPause = !walkthroughSeen;
@@ -353,9 +357,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
         lastShieldLevel = lastMineLevel = 0;
         
-        hasShield = [ABIMSIMDefaults boolForKey:kShieldOnStart];
+        hasShield = shieldOnStart;
         if (hasShield) {
-            shieldHitPoints = 1 + [ABIMSIMDefaults integerForKey:kShieldDurabilityLevel];
+            shieldHitPoints = 1 + shieldDurabilityLevel;
         } else {
             shieldHitPoints = 0;
         }
@@ -405,6 +409,15 @@ CGFloat DegreesToRadians(CGFloat degrees)
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActive) name:UIApplicationWillResignActiveNotification object:nil];
     }
     return self;
+}
+
+-(void)setDefaultValues {
+    shieldDurabilityLevel = (int)[ABIMSIMDefaults integerForKey:kShieldDurabilityLevel];
+    shieldOnStart = (int)[ABIMSIMDefaults integerForKey:kShieldOnStart];
+    shieldOccuranceLevel = (int)[ABIMSIMDefaults integerForKey:kShieldOccuranceLevel];
+    mineBlastSpeedLevel = (int)[ABIMSIMDefaults integerForKey:kMineBlastSpeedLevel];
+    mineOccuranceLevel = (int)[ABIMSIMDefaults integerForKey:kMineOccuranceLevel];
+    sfxSetting = (int)[ABIMSIMDefaults integerForKey:kSFXSetting];
 }
 
 -(void)applicationWillResignActive {
@@ -989,12 +1002,12 @@ CGFloat DegreesToRadians(CGFloat degrees)
                 ;
             }];
 
-            SKAction *sequenceAction = [SKAction sequence:@[[SKAction waitForDuration:0.5],secondBody.node.userData[powerUpSpaceMineExplosionRingAnimation],[SKAction waitForDuration:1.75 - ([ABIMSIMDefaults integerForKey:kMineBlastSpeedLevel] * 0.25)]]];
+            SKAction *sequenceAction = [SKAction sequence:@[[SKAction waitForDuration:0.5],secondBody.node.userData[powerUpSpaceMineExplosionRingAnimation],[SKAction waitForDuration:1.75 - (mineBlastSpeedLevel * 0.25)]]];
             [secondBody.node runAction:sequenceAction completion:^{
                 secondBody.node.name = explodedSpaceMine;
                 explodedMine = (SKSpriteNode*)secondBody.node;
             }];
-            if ([ABIMSIMDefaults boolForKey:kSFXSetting]) {
+            if (sfxSetting) {
                 [self runAction:spaceMineSoundAction];
             }
         }
@@ -1017,7 +1030,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         if (firstBody.categoryBitMask == shipCategory && secondBody.categoryBitMask == powerUpShieldCategory) {
             hasShield = NO;
             secondBody.node.remove = @YES;
-            shieldHitPoints = 1 + [ABIMSIMDefaults integerForKey:kShieldDurabilityLevel];
+            shieldHitPoints = 1 + shieldDurabilityLevel;
         }
 
         if ([secondBody.node.name isEqualToString:sunObjectSpriteName]) {
@@ -1038,7 +1051,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
                         [firstBody.node childNodeWithName:shipShieldImpactSpriteName].zRotation = DegreesToRadians(f);
                         [[firstBody.node childNodeWithName:shipShieldImpactSpriteName] runAction:firstBody.node.userData[shipShieldImpactAnimation]];
                         [[firstBody.node childNodeWithName:shipShieldHitSpriteName] runAction:firstBody.node.userData[shipShieldHitAnimation]];
-                        if ([ABIMSIMDefaults boolForKey:kSFXSetting]) {
+                        if (sfxSetting) {
                             [self runAction:shieldHitSoundAction];
                         }
                     }
@@ -1054,7 +1067,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
                 } else {
                     firstBody.node.remove = @YES;
                 }
-                if ([ABIMSIMDefaults boolForKey:kSFXSetting]) {
+                if (sfxSetting) {
                     [self runAction:asteroidSunSoundAction];
                 }
             }
@@ -1132,7 +1145,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
                 [firstBody.node childNodeWithName:shipShieldImpactSpriteName].zRotation = DegreesToRadians(f);
                 [[firstBody.node childNodeWithName:shipShieldImpactSpriteName] runAction:firstBody.node.userData[shipShieldImpactAnimation]];
                 [[firstBody.node childNodeWithName:shipShieldHitSpriteName] runAction:firstBody.node.userData[shipShieldHitAnimation]];
-                if ([ABIMSIMDefaults boolForKey:kSFXSetting]) {
+                if (sfxSetting) {
                     [self runAction:shieldHitSoundAction];
                 }
             }
@@ -1157,7 +1170,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     [[shipSprite childNodeWithName:shipExplosionSpriteName] runAction:shipSprite.userData[shipExplosionAnimation]];
 
     [[AudioController sharedController] playerDeath];
-    if ([ABIMSIMDefaults boolForKey:kSFXSetting]) {
+    if (sfxSetting) {
         [self runAction:playerDeathSoundAction];
     }
 
@@ -1281,6 +1294,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
 }
 
 -(void)resetWorld {
+    [self setDefaultValues];
     lastShieldLevel = lastMineLevel = 0;
     
     [background setTexture:backgroundTextures[0]];
@@ -1294,9 +1308,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
     self.bubblesPopped = 0;
     self.sunsSurvived = 0;
     self.blackHolesSurvived = 0;
-    hasShield = [ABIMSIMDefaults boolForKey:kShieldOnStart];
+    hasShield = shieldOnStart;
     if (hasShield) {
-        shieldHitPoints = 1 + [ABIMSIMDefaults integerForKey:kShieldDurabilityLevel];
+        shieldHitPoints = 1 + shieldDurabilityLevel;
     } else {
         shieldHitPoints = 0;
     }
@@ -1797,9 +1811,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
 -(NSMutableArray*)powerUpsForLevel:(int)level {
     NSMutableArray *powerUps = [[NSMutableArray alloc] init];
-    if ([ABIMSIMDefaults integerForKey:kShieldOccuranceLevel] > 0) {
+    if (shieldOccuranceLevel > 0) {
         if (level - lastShieldLevel >= 10 || (level >= 5 && lastShieldLevel == 0)) {
-            long number = 10 * ([ABIMSIMDefaults integerForKey:kShieldOccuranceLevel] + (lastMineLevel == 0 ? 5 : 0));
+            long number = 10 * (shieldOccuranceLevel + (lastMineLevel == 0 ? 5 : 0));
             if (((arc4random() % 100)+1) <= number) {
                 SKSpriteNode *shieldPowerUp = [self shieldPowerUp];
                 [powerUps addObject:shieldPowerUp];
@@ -1807,9 +1821,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
             }
         }
     }
-    if ([ABIMSIMDefaults integerForKey:kMineOccuranceLevel] > 0) {
+    if (mineOccuranceLevel > 0) {
         if (level - lastMineLevel >= 10 || (level >= 5 && lastMineLevel == 0)) {
-            long number = 10 * ([ABIMSIMDefaults integerForKey:kMineOccuranceLevel] + (lastMineLevel == 0 ? 5 : 0));
+            long number = 10 * (mineOccuranceLevel + (lastMineLevel == 0 ? 5 : 0));
             if (((arc4random() % 100)+1) <= number) {
                 SKSpriteNode *spaceMinePowerUp = [self spaceMinePowerUp];
                 [powerUps addObject:spaceMinePowerUp];
@@ -1871,7 +1885,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         sprite.userData = [NSMutableDictionary new];
     }
     float scale = 0;
-    float duration = 1.75 - ([ABIMSIMDefaults integerForKey:kMineBlastSpeedLevel] * 0.25);
+    float duration = 1.75 - (mineBlastSpeedLevel * 0.25);
     SKSpriteNode *ring1 = [SKSpriteNode spriteNodeWithTexture:powerUpTextures[0]];
     [sprite addChild:ring1];
     ring1.name = powerUpSpaceMineExplodeRingName;
@@ -1954,7 +1968,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     if (hasShield) {
         width = shipSprite.size.width;
         if (self.currentLevel != 0) {
-            if ([ABIMSIMDefaults boolForKey:kSFXSetting]) {
+            if (sfxSetting) {
                 [self runAction:shieldUpSoundAction];
             }
             [[shipSprite childNodeWithName:shipShieldSpriteName] runAction:shipSprite.userData[shipShieldOnAnimation]];
@@ -1964,7 +1978,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         }
     } else {
         if (self.currentLevel != 0) {
-            if ([ABIMSIMDefaults boolForKey:kSFXSetting]) {
+            if (sfxSetting) {
                 [self runAction:shieldDownSoundAction];
             }
             NSString *imageName = @"ShipShield_Pop";
@@ -2002,7 +2016,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         return;
     }
     float minAlpha = 0.5;
-    float currentShieldPercentage = ((shieldHitPoints - 1) * 1.0f) / (0.0f + [ABIMSIMDefaults integerForKey:kShieldDurabilityLevel]);
+    float currentShieldPercentage = ((shieldHitPoints - 1) * 1.0f) / (0.0f + shieldDurabilityLevel);
     float alpha = minAlpha + 0.5 * currentShieldPercentage;
     [shipSprite childNodeWithName:shipShieldSpriteName].alpha = alpha;
 }
