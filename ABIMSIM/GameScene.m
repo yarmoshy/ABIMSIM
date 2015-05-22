@@ -1670,12 +1670,13 @@ CGFloat DegreesToRadians(CGFloat degrees)
     parsecsNode.text = @"PARSECS";
     
     __block NSMutableArray *array = spritesArrays.lastObject;
+    __block int levelToGenerate = self.currentLevel+kNumberOfLevelsToGenerate-1;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-        NSMutableArray *asteroids = [self asteroidsForLevel:self.currentLevel+kNumberOfLevelsToGenerate];
+        NSMutableArray *asteroids = [self asteroidsForLevel:levelToGenerate];
         [array addObjectsFromArray:asteroids];
-        NSMutableArray *planets = [self planetsForLevel:self.currentLevel+kNumberOfLevelsToGenerate];
+        NSMutableArray *planets = [self planetsForLevel:levelToGenerate];
         [array addObjectsFromArray:planets];
-        NSMutableArray *powerUps = [self powerUpsForLevel:self.currentLevel+kNumberOfLevelsToGenerate];
+        NSMutableArray *powerUps = [self powerUpsForLevel:levelToGenerate];
         [array addObjectsFromArray:powerUps];
     });
 }
@@ -1811,7 +1812,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     NSMutableArray *powerUps = [[NSMutableArray alloc] init];
     if (shieldOccuranceLevel > 0) {
         if (level - lastShieldLevel >= 10 || (level >= 5 && lastShieldLevel == 0)) {
-            long number = 10 * (shieldOccuranceLevel + (lastMineLevel == 0 ? 5 : 0));
+            long number = 10 * (shieldOccuranceLevel + (lastShieldLevel == 0 ? 5 : 0));
             if (((arc4random() % 100)+1) <= number) {
                 SKSpriteNode *shieldPowerUp = [self shieldPowerUp];
                 [powerUps addObject:shieldPowerUp];
