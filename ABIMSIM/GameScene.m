@@ -1153,6 +1153,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
 }
 
 -(void)killShipAndStartOver {
+    if ([shipSprite childNodeWithName:shipImageSpriteName].hidden) {
+        return;
+    }
     __block int pointsEarned = self.currentLevel;
     pointsEarned += self.currentLevel / 10;
     pointsEarned += self.bubblesPopped * 5;
