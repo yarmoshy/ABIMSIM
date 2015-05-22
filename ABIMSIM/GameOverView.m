@@ -275,6 +275,13 @@
 }
 
 -(void)animateBonuses {
+    if (![NSThread isMainThread]) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self animateBonuses];
+        });
+        return;
+    }
+
     NSMutableArray *bonusStrings = [NSMutableArray array];
     NSMutableArray *bonusAmounts = [NSMutableArray array];
     UIFont *boldFont = [UIFont fontWithName:@"Futura-CondensedExtraBold" size:18];
@@ -350,15 +357,24 @@
     
     if (bonusAmounts.count) {
         self.bonusBubbleOneTopConstraint.constant = 40;
+        self.bonusLabelOne.attributedText = bonusStrings[0];
+        [self.bonusLabelOne sizeToFit];
         if (bonusAmounts.count > 1) {
             self.bonusBubbleTwoTopConstraint.constant = 35;
+            self.bonusLabelTwo.attributedText = bonusStrings[1];
+            [self.bonusLabelTwo sizeToFit];
             if (bonusAmounts.count > 2) {
                 self.bonusBubbleThreeTopConstraint.constant = 35;
+                self.bonusLabelThree.attributedText = bonusStrings[2];
+                [self.bonusLabelThree sizeToFit];
                 if (bonusAmounts.count > 3) {
                     self.bonusBubbleFourTopConstraint.constant = 35;
+                    self.bonusLabelFour.attributedText = bonusStrings[3];
+                    [self.bonusLabelFour sizeToFit];
                 }
             }
         }
+        [self.superview layoutIfNeeded];
     }
     if (bonusAmounts.count && !killAnimations) {
         [UIView animateWithDuration:0.5 delay:0 options:0 animations:^{
@@ -372,9 +388,6 @@
                     self.bonusImage.alpha = 1;
                 } completion:^(BOOL finished) {
                     if (finished && !killAnimations) {
-                        self.bonusLabelOne.attributedText = bonusStrings[0];
-                        [self.bonusLabelOne sizeToFit];
-                        [self.superview layoutIfNeeded];
                         [UIView animateWithDuration:0.5 animations:^{
                             self.bonusLabelOne.alpha = 1;
                             self.bonusBubbleOne.alpha = 1;
@@ -382,10 +395,6 @@
                             [self.superview layoutIfNeeded];
                             [self animatePointDifference:[bonusAmounts[0] intValue] withIncrementingLabel:self.largeXPLabel andCompletionBlock:^{
                                 if (bonusAmounts.count > 1 && !killAnimations) {
-                                    self.bonusLabelTwo.attributedText = bonusStrings[1];
-                                    [self.bonusLabelTwo sizeToFit];
-                                    [self.superview layoutIfNeeded];
-                                    
                                     [UIView animateWithDuration:0.5 animations:^{
                                         self.bonusLabelTwo.alpha = 1;
                                         self.bonusBubbleTwo.alpha = 1;
@@ -393,10 +402,6 @@
                                         [self.superview layoutIfNeeded];
                                         [self animatePointDifference:[bonusAmounts[1] intValue] withIncrementingLabel:self.largeXPLabel andCompletionBlock:^{
                                             if (bonusAmounts.count > 2 && !killAnimations) {
-                                                self.bonusLabelThree.attributedText = bonusStrings[2];
-                                                [self.bonusLabelThree sizeToFit];
-                                                [self.superview layoutIfNeeded];
-                                                
                                                 [UIView animateWithDuration:0.5 animations:^{
                                                     self.bonusLabelThree.alpha = 1;
                                                     self.bonusBubbleThree.alpha = 1;
@@ -404,10 +409,6 @@
                                                     [self.superview layoutIfNeeded];
                                                     [self animatePointDifference:[bonusAmounts[2] intValue] withIncrementingLabel:self.largeXPLabel andCompletionBlock:^{
                                                         if (bonusAmounts.count > 3 && !killAnimations) {
-                                                            self.bonusLabelFour.attributedText = bonusStrings[3];
-                                                            [self.bonusLabelFour sizeToFit];
-                                                            [self.superview layoutIfNeeded];
-                                                            
                                                             [UIView animateWithDuration:0.5 animations:^{
                                                                 self.bonusLabelFour.alpha = 1;
                                                                 self.bonusBubbleFour.alpha = 1;
@@ -450,6 +451,13 @@
 }
 
 -(void)showGameOverButtons {
+    if (![NSThread isMainThread]) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self showGameOverButtons];
+        });
+        return;
+    }
+
     int pointsEarned = self.delegate.scene.currentLevel;
     pointsEarned += self.delegate.scene.currentLevel / 10;
     pointsEarned += self.delegate.scene.bubblesPopped * 5;
@@ -460,9 +468,10 @@
     [self.smallXPLabel sizeToFit];
     self.smallParsecsLabel.text = [NSString stringWithFormat:@"%d",self.delegate.scene.currentLevel];
     [self.smallParsecsLabel sizeToFit];
+    self.largeParsecsLabelYAlignmentConstraint.constant = -30;
+    self.largeXPLabelYAlignmentConstraint.constant = 40;
+
     [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
-        self.largeParsecsLabelYAlignmentConstraint.constant = -30;
-        self.largeXPLabelYAlignmentConstraint.constant = 40;
         self.largeParsecsImage.alpha = 0;
         self.largeParsecsLabel.alpha = 0;
         self.largeXPImage.alpha = 0;
