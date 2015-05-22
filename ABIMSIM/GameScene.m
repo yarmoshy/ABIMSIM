@@ -438,6 +438,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
 -(void)transitionFromMainMenu {
     self.paused = NO;
+    [self setDefaultValues];
     [[AudioController sharedController] gameplay];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive) name:UIApplicationDidBecomeActiveNotification object:nil];

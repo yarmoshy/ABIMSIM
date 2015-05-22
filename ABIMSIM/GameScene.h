@@ -24,4 +24,5 @@
 
 -(void)transitionFromMainMenu;
 -(void)pause;
+-(void)setDefaultValues;
 @end
