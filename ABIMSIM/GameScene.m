@@ -1190,6 +1190,16 @@ CGFloat DegreesToRadians(CGFloat degrees)
                 NSLog(@"Score Submit Error: %@", error);
             }
         }];
+        if (self.bubblesPopped >= 5 &&
+            self.sunsSurvived >= 5 &&
+            self.blackHolesSurvived >= 5) {
+            [self sendAchievementWithIdentifier:@"tripleCrown"];
+        }
+        if (self.bubblesPopped >= 10 &&
+            self.sunsSurvived >= 10 &&
+            self.blackHolesSurvived >= 10) {
+            [self sendAchievementWithIdentifier:@"tripleDouble"];
+        }
     });
 
 }
