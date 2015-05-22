@@ -2040,6 +2040,12 @@ CGFloat DegreesToRadians(CGFloat degrees)
     for (int j = 0; j < numOfAsteroids; j++) {
         SKSpriteNode *asteroid = [self randomAsteroidForLevel:level];
         [self randomizeSprite:asteroid];
+        if (asteroid.position.x < asteroid.frame.size.width/2) {
+            asteroid.position = CGPointMake(asteroid.frame.size.width/2, asteroid.position.y);
+        } else if (asteroid.position.x > sceneWidth - asteroid.frame.size.width/2) {
+            asteroid.position = CGPointMake(sceneWidth - asteroid.frame.size.width/2, asteroid.position.y);
+        }
+
         if (level == 1) {
             asteroid.position = CGPointMake(asteroid.position.x, sceneHeight/4 * 3);
             if (![ABIMSIMDefaults boolForKey:kWalkthroughSeen]) {
