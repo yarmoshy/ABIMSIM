@@ -1657,7 +1657,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     if (self.currentLevel % 10 == 0) {
         int backgroundNumber = self.currentLevel / 10;
         backgroundNumber++;
-        if (backgroundNumber > 8) backgroundNumber = 8;
+        while (backgroundNumber > 8) backgroundNumber -= 9;
         if (background.alpha == 0) {
             [background runAction:[SKAction fadeAlphaTo:1 duration:0.5]];
             [background2 runAction:[SKAction fadeAlphaTo:0 duration:0.5] completion:^{
