@@ -39,6 +39,11 @@
 		B4557EE01AC3B24D004E097E /* MainMenuView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B4557EDF1AC3B24D004E097E /* MainMenuView.xib */; };
 		B4557EE31AC3B26B004E097E /* MainMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = B4557EE21AC3B26B004E097E /* MainMenuView.m */; };
 		B45865EC18DA3ACA005C9566 /* HexColor.m in Sources */ = {isa = PBXBuildFile; fileRef = B45865EB18DA3ACA005C9566 /* HexColor.m */; };
+		B45CA24A1B25F5CD001E07D9 /* MKStoreKit.m in Sources */ = {isa = PBXBuildFile; fileRef = B45CA2491B25F5CD001E07D9 /* MKStoreKit.m */; };
+		B45CA24C1B25F5D5001E07D9 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B45CA24B1B25F5D5001E07D9 /* StoreKit.framework */; };
+		B45CA24E1B25F94E001E07D9 /* MKStoreKitConfigs.plist in Resources */ = {isa = PBXBuildFile; fileRef = B45CA24D1B25F94E001E07D9 /* MKStoreKitConfigs.plist */; };
+		B45CA2511B25FBD9001E07D9 /* IAPView.m in Sources */ = {isa = PBXBuildFile; fileRef = B45CA2501B25FBD9001E07D9 /* IAPView.m */; };
+		B45CA2531B25FBE8001E07D9 /* IAPView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B45CA2521B25FBE8001E07D9 /* IAPView.xib */; };
 		B45FF12818CE8708001662CD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B45FF12718CE8708001662CD /* Foundation.framework */; };
 		B45FF12A18CE8708001662CD /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B45FF12918CE8708001662CD /* CoreGraphics.framework */; };
 		B45FF12C18CE8708001662CD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B45FF12B18CE8708001662CD /* UIKit.framework */; };
@@ -186,6 +191,13 @@
 		B4557EE21AC3B26B004E097E /* MainMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainMenuView.m; sourceTree = "<group>"; };
 		B45865EA18DA3ACA005C9566 /* HexColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HexColor.h; sourceTree = "<group>"; };
 		B45865EB18DA3ACA005C9566 /* HexColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HexColor.m; sourceTree = "<group>"; };
+		B45CA2481B25F5CD001E07D9 /* MKStoreKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKStoreKit.h; sourceTree = "<group>"; };
+		B45CA2491B25F5CD001E07D9 /* MKStoreKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKStoreKit.m; sourceTree = "<group>"; };
+		B45CA24B1B25F5D5001E07D9 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		B45CA24D1B25F94E001E07D9 /* MKStoreKitConfigs.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MKStoreKitConfigs.plist; sourceTree = "<group>"; };
+		B45CA24F1B25FBD9001E07D9 /* IAPView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAPView.h; sourceTree = "<group>"; };
+		B45CA2501B25FBD9001E07D9 /* IAPView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAPView.m; sourceTree = "<group>"; };
+		B45CA2521B25FBE8001E07D9 /* IAPView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAPView.xib; sourceTree = "<group>"; };
 		B45FF12418CE8708001662CD /* ABIMSIM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ABIMSIM.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B45FF12718CE8708001662CD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		B45FF12918CE8708001662CD /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -300,6 +312,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B45CA24C1B25F5D5001E07D9 /* StoreKit.framework in Frameworks */,
 				E14F49AA19E41F0A008B727A /* Accelerate.framework in Frameworks */,
 				B47BCFC71921879000C22D22 /* Social.framework in Frameworks */,
 				B45FF12A18CE8708001662CD /* CoreGraphics.framework in Frameworks */,
@@ -426,6 +439,9 @@
 				B48AA3841AD043C80054CC65 /* UpgradeTableViewCell.h */,
 				B48AA3851AD043C80054CC65 /* UpgradeTableViewCell.m */,
 				B48AA3861AD043C80054CC65 /* UpgradeTableViewCell.xib */,
+				B45CA24F1B25FBD9001E07D9 /* IAPView.h */,
+				B45CA2501B25FBD9001E07D9 /* IAPView.m */,
+				B45CA2521B25FBE8001E07D9 /* IAPView.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -511,6 +527,7 @@
 		B45FF12618CE8708001662CD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B45CA24B1B25F5D5001E07D9 /* StoreKit.framework */,
 				E14F49A919E41F0A008B727A /* Accelerate.framework */,
 				B4DAAF73193F54A200BE03C9 /* Crashlytics.framework */,
 				B47BCFC61921879000C22D22 /* Social.framework */,
@@ -527,6 +544,9 @@
 		B45FF12F18CE8708001662CD /* ABIMSIM */ = {
 			isa = PBXGroup;
 			children = (
+				B45CA2481B25F5CD001E07D9 /* MKStoreKit.h */,
+				B45CA2491B25F5CD001E07D9 /* MKStoreKit.m */,
+				B45CA24D1B25F94E001E07D9 /* MKStoreKitConfigs.plist */,
 				B47244491ACB7576002A8B4B /* Constants */,
 				B45FF13818CE8708001662CD /* AppDelegate.h */,
 				B45FF13918CE8708001662CD /* AppDelegate.m */,
@@ -697,6 +717,9 @@
 							com.apple.GameCenter = {
 								enabled = 1;
 							};
+							com.apple.InAppPurchase = {
+								enabled = 1;
+							};
 						};
 					};
 					B45FF14B18CE8708001662CD = {
@@ -762,7 +785,9 @@
 				B47E22D818DBA7E200F42EBB /* Asteroid_11@2x.png in Resources */,
 				B4D42E821AFEA11800248BE8 /* ShipShieldHit@2x.png in Resources */,
 				B4D42E801AFEA10D00248BE8 /* ShipShield_Impact@2x.png in Resources */,
+				B45CA24E1B25F94E001E07D9 /* MKStoreKitConfigs.plist in Resources */,
 				B45FF14718CE8708001662CD /* Images.xcassets in Resources */,
+				B45CA2531B25FBE8001E07D9 /* IAPView.xib in Resources */,
 				E128D1F91A6DDB9600856772 /* Background1.atlas in Resources */,
 				B47E22D518DBA7E200F42EBB /* Asteroid_8@2x.png in Resources */,
 				B4D42E861AFEAC4100248BE8 /* upgrade.caf in Resources */,
@@ -852,6 +877,7 @@
 				B4557ECC1AC0DDF1004E097E /* UIImage+Effects.m in Sources */,
 				B45865EC18DA3ACA005C9566 /* HexColor.m in Sources */,
 				B45FF14318CE8708001662CD /* GameScene.m in Sources */,
+				B45CA2511B25FBD9001E07D9 /* IAPView.m in Sources */,
 				B4557EC81AC0DD95004E097E /* UIView+Screenshot.m in Sources */,
 				B47244431ACB710C002A8B4B /* BlackHole.m in Sources */,
 				B45FF14018CE8708001662CD /* ViewController.m in Sources */,
@@ -868,6 +894,7 @@
 				B45FF13A18CE8708001662CD /* AppDelegate.m in Sources */,
 				B47244451ACB717A002A8B4B /* PhysicsContstants.h in Sources */,
 				B47244481ACB71F8002A8B4B /* BaseSprite.m in Sources */,
+				B45CA24A1B25F5CD001E07D9 /* MKStoreKit.m in Sources */,
 				B497926A1A844756005174C1 /* AudioController.m in Sources */,
 				B45FF13618CE8708001662CD /* main.m in Sources */,
 				B472444D1ACE0433002A8B4B /* UpgradesView.m in Sources */,
@@ -1001,8 +1028,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Kevin Yarmosh (V93Q49NDVM)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Kevin Yarmosh (V93Q49NDVM)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1011,7 +1038,7 @@
 				GCC_PREFIX_HEADER = "ABIMSIM/ABIMSIM-Prefix.pch";
 				INFOPLIST_FILE = "ABIMSIM/ABIMSIM-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "165f1c72-30f3-4b97-b939-d4d306abdf4c";
+				PROVISIONING_PROFILE = "";
 				SPRITEKIT_TEXTURE_ATLAS_OUTPUT = YES;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1022,8 +1049,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Kevin Yarmosh (V93Q49NDVM)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Kevin Yarmosh (V93Q49NDVM)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1032,7 +1059,7 @@
 				GCC_PREFIX_HEADER = "ABIMSIM/ABIMSIM-Prefix.pch";
 				INFOPLIST_FILE = "ABIMSIM/ABIMSIM-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "165f1c72-30f3-4b97-b939-d4d306abdf4c";
+				PROVISIONING_PROFILE = "";
 				SPRITEKIT_TEXTURE_ATLAS_OUTPUT = YES;
 				WRAPPER_EXTENSION = app;
 			};

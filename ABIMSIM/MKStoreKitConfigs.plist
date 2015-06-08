@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Consumables</key>
+	<dict>
+		<key>50000XP</key>
+		<dict>
+			<key>ConsumableCount</key>
+			<integer>50000</integer>
+			<key>ConsumableId</key>
+			<string>50,000 XP</string>
+		</dict>
+		<key>10000XP</key>
+		<dict>
+			<key>ConsumableCount</key>
+			<real>10000</real>
+			<key>ConsumableId</key>
+			<string>10,000 XP</string>
+		</dict>
+		<key>4000XP</key>
+		<dict>
+			<key>ConsumableCount</key>
+			<real>4000</real>
+			<key>ConsumableId</key>
+			<string>4,000 XP</string>
+		</dict>
+		<key>1500XP</key>
+		<dict>
+			<key>ConsumableCount</key>
+			<integer>1500</integer>
+			<key>ConsumableId</key>
+			<string>1,500 XP</string>
+		</dict>
+		<key>750XP</key>
+		<dict>
+			<key>ConsumableCount</key>
+			<integer>750</integer>
+			<key>ConsumableId</key>
+			<string>750 XP</string>
+		</dict>
+		<key>500XP</key>
+		<dict>
+			<key>ConsumableCount</key>
+			<integer>500</integer>
+			<key>ConsumableId</key>
+			<string>500 XP</string>
+		</dict>
+		<key>200XP</key>
+		<dict>
+			<key>ConsumableCount</key>
+			<integer>200</integer>
+			<key>ConsumableId</key>
+			<string>200 XP</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

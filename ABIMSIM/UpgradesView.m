@@ -8,12 +8,13 @@
 
 #import "UpgradesView.h"
 #import "AudioController.h"
-
+#import "IAPView.h"
 #define kTypeCellHeight 55
 
 @implementation UpgradesView {
     long shieldOccurance, shieldDurability, shieldOnStart, mineOccurance, mineBlastSpeed;
     NSNumberFormatter *formatter;
+    IAPView *iapView;
 
     BOOL animating;
 }
@@ -22,8 +23,25 @@
     if (self = [super initWithCoder:aDecoder]) {
         formatter  = [NSNumberFormatter new];
         [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
+        UINib * IAPNib = [UINib nibWithNibName:@"IAPView" bundle:nil];
+        iapView = [IAPNib instantiateWithOwner:self options:nil][0];
+        iapView.frame = self.frame;
+        iapView.alpha = 0;
+        [self addSubview:iapView];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(IAPPurchaseComplete) name:kStoreKitPurchaseFinished object:nil];
+
     }
     return self;
+}
+
+-(void)storeButtonTapped:(id)sender {
+    iapView.alpha = 1;
+}
+
+-(void)IAPPurchaseComplete {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.tableView reloadData];
+    });
 }
 
 -(void)didMoveToSuperview {
@@ -109,7 +127,7 @@
         xpCell.backgroundColor = xpCell.contentView.backgroundColor = [UIColor clearColor];
         
         UIImageView *youHaveImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"YouHaveTitle"]];
-        youHaveImageView.center = CGPointMake(tableView.frame.size.width/2, 97 + youHaveImageView.frame.size.height/2);
+        youHaveImageView.center = CGPointMake(tableView.frame.size.width/3, 97 + youHaveImageView.frame.size.height/2);
         [xpCell.contentView addSubview:youHaveImageView];
         
         UILabel *xpLabel = [[UILabel alloc] init];
@@ -128,6 +146,14 @@
         rightBracket.center = CGPointMake(xpLabel.frame.origin.x + xpLabel.frame.size.width + rightBracket.frame.size.width, (youHaveImageView.frame.origin.y + xpLabel.frame.origin.y + xpLabel.frame.size.height)/2 - 4);
         [xpCell.contentView addSubview:rightBracket];
 
+        UIButton *storeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [storeButton setTitle:@"Store" forState:UIControlStateNormal];
+        [storeButton setTitleColor: [UIColor whiteColor] forState: UIControlStateNormal];
+        [storeButton sizeToFit];
+        storeButton.center = CGPointMake(tableView.frame.size.width * (2.f/3.f), 72 + (xpCell.frame.size.height-72)/2 + storeButton.frame.size.height/2);
+        [storeButton addTarget:self action:@selector(storeButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+        [xpCell.contentView addSubview:storeButton];
+        
         return xpCell;
     } else {
         if (indexPath.row == 0) {

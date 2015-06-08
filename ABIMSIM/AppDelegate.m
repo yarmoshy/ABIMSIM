@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import <Crashlytics/Crashlytics.h>
+#import "MKStoreKit.h"
 
 @implementation AppDelegate
 
@@ -42,6 +43,51 @@
             // disableGameCenter
         }
     };
+
+    [[MKStoreKit sharedKit] startProductRequest];
+
+    [[NSNotificationCenter defaultCenter] addObserverForName:kMKStoreKitProductsAvailableNotification
+                                                      object:nil
+                                                       queue:[[NSOperationQueue alloc] init]
+                                                  usingBlock:^(NSNotification *note) {
+                                                      
+                                                      NSLog(@"Products available: %@", [[MKStoreKit sharedKit] availableProducts]);
+                                                  }];
+    
+    
+    [[NSNotificationCenter defaultCenter] addObserverForName:kMKStoreKitProductPurchasedNotification
+                                                      object:nil
+                                                       queue:[[NSOperationQueue alloc] init]
+                                                  usingBlock:^(NSNotification *note) {
+                                                      
+                                                      NSLog(@"Purchased/Subscribed to product with id: %@", [note object]);
+                                                      if ([[note object] isEqualToString:@"200XP"]) {
+                                                          [ABIMSIMDefaults setInteger:[ABIMSIMDefaults integerForKey:kUserDuckets] + 200 forKey:kUserDuckets];
+                                                      } else if ([[note object] isEqualToString:@"500XP"]) {
+                                                          [ABIMSIMDefaults setInteger:[ABIMSIMDefaults integerForKey:kUserDuckets] + 500 forKey:kUserDuckets];
+                                                      } else if ([[note object] isEqualToString:@"750XP"]) {
+                                                          [ABIMSIMDefaults setInteger:[ABIMSIMDefaults integerForKey:kUserDuckets] + 750 forKey:kUserDuckets];
+                                                      } else if ([[note object] isEqualToString:@"1500XP"]) {
+                                                          [ABIMSIMDefaults setInteger:[ABIMSIMDefaults integerForKey:kUserDuckets] + 1500 forKey:kUserDuckets];
+                                                      } else if ([[note object] isEqualToString:@"4000XP"]) {
+                                                          [ABIMSIMDefaults setInteger:[ABIMSIMDefaults integerForKey:kUserDuckets] + 4000 forKey:kUserDuckets];
+                                                      } else if ([[note object] isEqualToString:@"10000XP"]) {
+                                                          [ABIMSIMDefaults setInteger:[ABIMSIMDefaults integerForKey:kUserDuckets] + 10000 forKey:kUserDuckets];
+                                                      } else if ([[note object] isEqualToString:@"50000XP"]) {
+                                                          [ABIMSIMDefaults setInteger:[ABIMSIMDefaults integerForKey:kUserDuckets] + 50000 forKey:kUserDuckets];
+                                                      }
+                                                      [ABIMSIMDefaults synchronize];
+                                                      [[NSNotificationCenter defaultCenter] postNotificationName:kStoreKitPurchaseFinished object:nil];
+                                                  }];
+
+    [[NSNotificationCenter defaultCenter] addObserverForName:kMKStoreKitProductPurchaseFailedNotification
+                                                      object:nil
+                                                       queue:[[NSOperationQueue alloc] init]
+                                                  usingBlock:^(NSNotification *note) {
+                                                      
+                                                      NSLog(@"Purchase failed with error: %@", [note object]);
+                                                      [[NSNotificationCenter defaultCenter] postNotificationName:kStoreKitPurchaseFinished object:nil];
+                                                  }];
 
     return YES;
 }
