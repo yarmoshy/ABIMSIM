@@ -1902,7 +1902,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     ring1.name = powerUpSpaceMineExplodeRingName;
     ring1.alpha = 0;
     [ring1 setScale:scale];
-    SKAction *expandRingAction = [SKAction scaleTo:1.25 duration:duration];
+    SKAction *expandRingAction = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? [SKAction scaleTo:3 duration:duration] : [SKAction scaleTo:1.25 duration:duration];
     SKAction *blockAction = [SKAction runBlock:^{
         [ring1 setScale:scale];
         [ring1 setAlpha:1];
