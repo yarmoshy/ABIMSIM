@@ -325,12 +325,14 @@ CGFloat DegreesToRadians(CGFloat degrees)
         self.physicsWorld.contactDelegate = self;
         
         background2 = [SKSpriteNode spriteNodeWithTexture:backgroundTextures[1]];
+        background2.size = self.size;
         background2.anchorPoint = CGPointZero;
         background2.zPosition = -1;
         background2.alpha = 0;
         [self addChild:background2];
         
         background = [SKSpriteNode spriteNodeWithTexture:backgroundTextures[0]];
+        background.size = self.size;
         background.anchorPoint = CGPointZero;
         background.zPosition = -1;
         [self addChild:background];
@@ -2088,50 +2090,98 @@ CGFloat DegreesToRadians(CGFloat degrees)
 }
 
 -(int)maxNumberOfAsteroidsForLevel:(int)level {
-    if (level <= 1) {
-        return 1;
-    } else if (level <= 2) {
-        return 2;
-    } else if (level <= 7) {
-        return 3;
-    } else if (level <= 15) {
-        return 4;
-    } else if (level <= 30) {
-        return 5;
-    } else if (level <= 40) {
-        return 6;
-    } else if (level <= 45) {
-        return 7;
-    } else if (level <= 50) {
-        return 8;
-    } else if (level <= 60) {
-        return 9;
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        if (level <= 1) {
+            return 2;
+        } else if (level <= 2) {
+            return 4;
+        } else if (level <= 7) {
+            return 6;
+        } else if (level <= 15) {
+            return 8;
+        } else if (level <= 30) {
+            return 10;
+        } else if (level <= 40) {
+            return 12;
+        } else if (level <= 45) {
+            return 14;
+        } else if (level <= 50) {
+            return 16;
+        } else if (level <= 60) {
+            return 18;
+        } else {
+            return 20;
+        }
     } else {
-        return 10;
+        if (level <= 1) {
+            return 1;
+        } else if (level <= 2) {
+            return 2;
+        } else if (level <= 7) {
+            return 3;
+        } else if (level <= 15) {
+            return 4;
+        } else if (level <= 30) {
+            return 5;
+        } else if (level <= 40) {
+            return 6;
+        } else if (level <= 45) {
+            return 7;
+        } else if (level <= 50) {
+            return 8;
+        } else if (level <= 60) {
+            return 9;
+        } else {
+            return 10;
+        }
     }
 }
 
 -(int)minNumberOfAsteroidsForLevel:(int)level {
-    if (level <= 1) {
-        return 1;
-    } else if (level <= 2) {
-        return 2;
-    } else if (level <= 25) {
-        return 3;
-    } else if (level <= 35) {
-        return 4;
-    } else if (level <= 50) {
-        return 5;
-    } else if (level <= 65) {
-        return 6;
-    } else if (level <= 70) {
-        return 7;
-    } else if (level <= 75) {
-        return 8;
-    } else if (level <= 90) {
-        return 9;
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        if (level <= 1) {
+            return 2;
+        } else if (level <= 2) {
+            return 4;
+        } else if (level <= 25) {
+            return 6;
+        } else if (level <= 35) {
+            return 8;
+        } else if (level <= 50) {
+            return 10;
+        } else if (level <= 65) {
+            return 12;
+        } else if (level <= 70) {
+            return 14;
+        } else if (level <= 75) {
+            return 16;
+        } else if (level <= 90) {
+            return 18;
+        } else {
+            return 20;
+        }
     } else {
-        return 10;
+        if (level <= 1) {
+            return 1;
+        } else if (level <= 2) {
+            return 2;
+        } else if (level <= 25) {
+            return 3;
+        } else if (level <= 35) {
+            return 4;
+        } else if (level <= 50) {
+            return 5;
+        } else if (level <= 65) {
+            return 6;
+        } else if (level <= 70) {
+            return 7;
+        } else if (level <= 75) {
+            return 8;
+        } else if (level <= 90) {
+            return 9;
+        } else {
+            return 10;
+        }
     }
 }
 
@@ -2619,24 +2669,46 @@ CGFloat DegreesToRadians(CGFloat degrees)
 }
 
 -(int)maxNumberOfPlanetsForLevel:(int)level {
-    if (level <= 3) {
-        return 0;
-    } else if (level <= 10) {
-        return 1;
-    } else if (level <= 20) {
-        return 2;
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        if (level <= 3) {
+            return 1;
+        } else if (level <= 10) {
+            return 2;
+        } else if (level <= 20) {
+            return 4;
+        } else {
+            return 6;
+        }
     } else {
-        return 3;
+        if (level <= 3) {
+            return 0;
+        } else if (level <= 10) {
+            return 1;
+        } else if (level <= 20) {
+            return 2;
+        } else {
+            return 3;
+        }
     }
 }
 
 -(int)minNumberOfPlanetsForLevel:(int)level {
-    if (level <= 15) {
-        return 0;
-    } else if (level <= 30) {
-        return 1;
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        if (level <= 15) {
+            return 1;
+        } else if (level <= 30) {
+            return 2;
+        } else {
+            return 4;
+        }
     } else {
-        return 2;
+        if (level <= 15) {
+            return 0;
+        } else if (level <= 30) {
+            return 1;
+        } else {
+            return 2;
+        }
     }
 }
 

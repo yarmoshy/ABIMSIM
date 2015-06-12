@@ -89,8 +89,8 @@
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="SmallParsecs" translatesAutoresizingMaskIntoConstraints="NO" id="uOk-um-5rs">
-                    <rect key="frame" x="30" y="154" width="70" height="12"/>
+                <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SmallParsecs" translatesAutoresizingMaskIntoConstraints="NO" id="uOk-um-5rs">
+                    <rect key="frame" x="30" y="155" width="70" height="12"/>
                 </imageView>
                 <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SmallXP" translatesAutoresizingMaskIntoConstraints="NO" id="i3C-tT-bcL">
                     <rect key="frame" x="174" y="155" width="22" height="12"/>
@@ -313,10 +313,10 @@
                 <constraint firstItem="hTN-vP-ZZn" firstAttribute="top" secondItem="HfH-Pa-XmW" secondAttribute="top" constant="22" id="ag8-8m-h2A"/>
                 <constraint firstItem="1Uh-hJ-meG" firstAttribute="centerY" secondItem="1dc-iq-eUa" secondAttribute="centerY" id="axe-lK-bJo"/>
                 <constraint firstAttribute="centerX" secondItem="Mht-yU-7Nl" secondAttribute="centerX" id="cSa-zR-IJd"/>
-                <constraint firstItem="IcI-dD-uzd" firstAttribute="top" secondItem="hTN-vP-ZZn" secondAttribute="bottom" constant="15" id="d2w-wv-g99"/>
                 <constraint firstAttribute="centerY" secondItem="VBp-BT-04Z" secondAttribute="centerY" constant="100" id="dEx-vL-rlv"/>
                 <constraint firstItem="49D-TM-SC5" firstAttribute="centerX" secondItem="MP8-RW-XUx" secondAttribute="centerX" id="dQ7-IB-1wi"/>
                 <constraint firstItem="IcI-dD-uzd" firstAttribute="centerY" secondItem="8Fn-x1-AtY" secondAttribute="centerY" id="fpU-6e-x4g"/>
+                <constraint firstAttribute="centerY" secondItem="IcI-dD-uzd" secondAttribute="centerY" constant="156" id="g4h-Ng-0Bp"/>
                 <constraint firstItem="h2r-Pf-PyK" firstAttribute="centerX" secondItem="4rg-0s-B8Y" secondAttribute="centerX" id="hZ9-oN-F0F"/>
                 <constraint firstItem="1Uh-hJ-meG" firstAttribute="centerX" secondItem="1dc-iq-eUa" secondAttribute="centerX" id="jYO-iV-bFY"/>
                 <constraint firstItem="h2r-Pf-PyK" firstAttribute="top" secondItem="Qb5-YS-JmM" secondAttribute="top" constant="-1" id="nt7-qC-FHh"/>
@@ -411,7 +411,7 @@
         <image name="SmallParsecs" width="70" height="12"/>
         <image name="SmallXP" width="22" height="12"/>
         <image name="TwitterIcon_GameOver" width="23" height="18"/>
-        <image name="UpgradesTextNotification_0" width="112" height="59"/>
+        <image name="UpgradesTextNotification_0" width="85" height="32"/>
         <image name="UpgradesText_0" width="74" height="20"/>
         <image name="UpgradesText_1" width="75" height="21"/>
         <image name="Upgrades_0" width="96" height="96"/>

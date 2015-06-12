@@ -191,6 +191,7 @@
             return typeCell;
         } else {
             UpgradeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UpgradeTableViewCell" forIndexPath:indexPath];
+            cell.backgroundColor = cell.contentView.backgroundColor = [UIColor clearColor];
             cell.delegate = self;
             cell.contentView.alpha = 1;
             cell.upgradeLabel.alpha = 1;

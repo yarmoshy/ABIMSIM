@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -11,7 +11,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Background_7.png" translatesAutoresizingMaskIntoConstraints="NO" id="FdE-VK-S8r">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Background_7.png" translatesAutoresizingMaskIntoConstraints="NO" id="FdE-VK-S8r">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                 </imageView>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="ROn-Yt-dQR">
@@ -49,16 +49,20 @@
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstItem="FdE-VK-S8r" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="0lb-Oi-VEB"/>
                 <constraint firstItem="dHm-rb-9KP" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="5F1-C2-aoo"/>
                 <constraint firstItem="dHm-rb-9KP" firstAttribute="centerY" secondItem="eVw-28-GZV" secondAttribute="centerY" id="A0S-ls-lhU"/>
                 <constraint firstAttribute="trailing" secondItem="ROn-Yt-dQR" secondAttribute="trailing" id="H6f-6K-CZn"/>
                 <constraint firstItem="qOY-HB-JBK" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="22" id="QEe-4R-DHX"/>
+                <constraint firstAttribute="trailing" secondItem="FdE-VK-S8r" secondAttribute="trailing" id="QOB-Za-Afn"/>
                 <constraint firstItem="dHm-rb-9KP" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="SVV-ZT-NQf"/>
                 <constraint firstAttribute="centerX" secondItem="qOY-HB-JBK" secondAttribute="centerX" id="TT2-oa-Ehd"/>
                 <constraint firstAttribute="bottom" secondItem="ROn-Yt-dQR" secondAttribute="bottom" id="TtU-yn-nBC"/>
                 <constraint firstItem="ROn-Yt-dQR" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="VSR-u0-9FZ"/>
+                <constraint firstItem="FdE-VK-S8r" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Ytu-qg-EvG"/>
                 <constraint firstAttribute="trailing" secondItem="dHm-rb-9KP" secondAttribute="trailing" id="eFj-G8-VRM"/>
                 <constraint firstItem="ROn-Yt-dQR" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="huQ-8g-Rre"/>
+                <constraint firstAttribute="bottom" secondItem="FdE-VK-S8r" secondAttribute="bottom" id="oMd-1W-vVS"/>
                 <constraint firstItem="eVw-28-GZV" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="san-GG-qD7"/>
             </constraints>
             <connections>
