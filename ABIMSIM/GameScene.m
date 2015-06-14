@@ -2460,11 +2460,11 @@ CGFloat DegreesToRadians(CGFloat degrees)
             thisWidth = planet.size.height;
         }
         CGPoint thisCenter = planet.position;
-        float otherWidthA, otherWidthB;
-        CGPoint otherCenterA, otherCenterB;
-        float distanceA, distanceB;
-        distanceA = distanceB = MAXFLOAT;
-        otherWidthA = otherWidthB = 0;
+        float otherWidthA, otherWidthB, otherWidthC, otherWidthD, otherWidthE;
+        CGPoint otherCenterA, otherCenterB, otherCenterC, otherCenterD, otherCenterE;
+        float distanceA, distanceB, distanceC, distanceD, distanceE;
+        distanceA = distanceB = distanceC = distanceD = distanceE = MAXFLOAT;
+        otherWidthA = otherWidthB = otherWidthC = otherWidthD = otherWidthE = 0;
         if (planets.count > 0) {
             SKSpriteNode *otherPlanetA = planets[0];
             if ([otherPlanetA.userData[planetNumber] intValue] == 5) {
@@ -2489,10 +2489,50 @@ CGFloat DegreesToRadians(CGFloat degrees)
             otherCenterB = otherPlanetB.position;
             distanceB = sqrtf(powf(thisCenter.x - otherCenterB.x, 2) + pow(thisCenter.y - otherCenterB.y, 2));
         }
+        if (planets.count > 2) {
+            SKSpriteNode *otherPlanetC = planets[2];
+            if ([otherPlanetC.userData[planetNumber] intValue] == 5) {
+                otherWidthC = largePlanetWidth;
+            } else if (otherPlanetC.size.width >= otherPlanetC.size.height) {
+                otherWidthC = otherPlanetC.size.width;
+            } else {
+                otherWidthC = otherPlanetC.size.height;
+            }
+            otherCenterC = otherPlanetC.position;
+            distanceC = sqrtf(powf(thisCenter.x - otherCenterC.x, 2) + pow(thisCenter.y - otherCenterC.y, 2));
+        }
+        if (planets.count > 3) {
+            SKSpriteNode *otherPlanetD = planets[3];
+            if ([otherPlanetD.userData[planetNumber] intValue] == 5) {
+                otherWidthD = largePlanetWidth;
+            } else if (otherPlanetD.size.width >= otherPlanetD.size.height) {
+                otherWidthD = otherPlanetD.size.width;
+            } else {
+                otherWidthD = otherPlanetD.size.height;
+            }
+            otherCenterD = otherPlanetD.position;
+            distanceD = sqrtf(powf(thisCenter.x - otherCenterD.x, 2) + pow(thisCenter.y - otherCenterD.y, 2));
+        }
+        if (planets.count > 4) {
+            SKSpriteNode *otherPlanetE = planets[4];
+            if ([otherPlanetE.userData[planetNumber] intValue] == 5) {
+                otherWidthE = largePlanetWidth;
+            } else if (otherPlanetE.size.width >= otherPlanetE.size.height) {
+                otherWidthE = otherPlanetE.size.width;
+            } else {
+                otherWidthE = otherPlanetE.size.height;
+            }
+            otherCenterE = otherPlanetE.position;
+            distanceE = sqrtf(powf(thisCenter.x - otherCenterE.x, 2) + pow(thisCenter.y - otherCenterE.y, 2));
+        }
+
         BOOL addPlanet = YES;
         int attempt = 0;
         while ((distanceA - (thisWidth/2) - (otherWidthA/2) < shipSize.width + 10) ||
-               (distanceB - (thisWidth/2) - (otherWidthB/2) < shipSize.width + 10)) {
+               (distanceB - (thisWidth/2) - (otherWidthB/2) < shipSize.width + 10) ||
+               (distanceC - (thisWidth/2) - (otherWidthC/2) < shipSize.width + 10) ||
+               (distanceD - (thisWidth/2) - (otherWidthD/2) < shipSize.width + 10) ||
+               (distanceE - (thisWidth/2) - (otherWidthE/2) < shipSize.width + 10)) {
             if (attempt > 200) {
                 addPlanet = NO;
                 break;
@@ -2507,6 +2547,15 @@ CGFloat DegreesToRadians(CGFloat degrees)
             }
             if (planets.count > 1) {
                 distanceB = sqrtf(powf(thisCenter.x - otherCenterB.x, 2) + pow(thisCenter.y - otherCenterB.y, 2));
+            }
+            if (planets.count > 2) {
+                distanceC = sqrtf(powf(thisCenter.x - otherCenterC.x, 2) + pow(thisCenter.y - otherCenterC.y, 2));
+            }
+            if (planets.count > 3) {
+                distanceD = sqrtf(powf(thisCenter.x - otherCenterD.x, 2) + pow(thisCenter.y - otherCenterD.y, 2));
+            }
+            if (planets.count > 4) {
+                distanceE = sqrtf(powf(thisCenter.x - otherCenterE.x, 2) + pow(thisCenter.y - otherCenterE.y, 2));
             }
             attempt++;
         }
