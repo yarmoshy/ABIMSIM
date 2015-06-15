@@ -39,15 +39,37 @@
     {
       "size" : "29x29",
       "idiom" : "ipad",
-      "filename" : "58x58-2.png",
-      "unassigned" : true,
+      "filename" : "iPadSettings1x.png",
+      "scale" : "1x"
+    },
+    {
+      "size" : "29x29",
+      "idiom" : "ipad",
+      "filename" : "iPadSettings2x.png",
       "scale" : "2x"
     },
     {
       "size" : "40x40",
       "idiom" : "ipad",
-      "filename" : "80x80.png",
-      "unassigned" : true,
+      "filename" : "iPad1x.png",
+      "scale" : "1x"
+    },
+    {
+      "size" : "40x40",
+      "idiom" : "ipad",
+      "filename" : "iPad2x.png",
+      "scale" : "2x"
+    },
+    {
+      "size" : "76x76",
+      "idiom" : "ipad",
+      "filename" : "iPadApp1x.png",
+      "scale" : "1x"
+    },
+    {
+      "size" : "76x76",
+      "idiom" : "ipad",
+      "filename" : "iPadApp2x.png",
       "scale" : "2x"
     }
   ],
