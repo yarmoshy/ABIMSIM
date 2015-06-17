@@ -20,7 +20,6 @@
     BOOL showingSettings;
     BOOL showingUpgradesFromGameOver;
     SMPortalButton *mainMenuPortalButton, *gameOverPortalButton;
-    BOOL sessionMError;
 }
 
 - (void)viewDidLoad
@@ -102,31 +101,24 @@
 }
 
 -(void)sessionMStateChanged:(NSNotification*)notif {
+    [self setupSessionMButtons:notif];
+}
+
+-(void)sessionMOptOutChanged:(NSNotification*)notif {
+    [self setupSessionMButtons:notif];
+}
+
+-(void)setupSessionMButtons:(NSNotification*)notif {
     if ([SessionM sharedInstance].sessionState != SessionMStateStartedOnline) {
         mainMenuPortalButton.button.enabled = gameOverPortalButton.button.enabled = NO;
     } else {
         mainMenuPortalButton.button.enabled = gameOverPortalButton.button.enabled = YES;
-        if (![SessionM sharedInstance].user.isOptedOut) {
-            mainMenuPortalButton.hidden = gameOverPortalButton.hidden = NO;
-        }
-        sessionMError = NO;
     }
-    if ([notif.userInfo valueForKey:@"error"]) {
-        NSError *error = notif.userInfo[@"error"];
-        sessionMError = YES;
-        if (error.code == SessionMServiceUnavailable || error.code == SessionMInvalidAppIdError) {
-            mainMenuPortalButton.hidden = gameOverPortalButton.hidden = YES;
-        }
-    }
-}
-
--(void)sessionMOptOutChanged:(NSNotification*)notif {
+    
     if ([SessionM sharedInstance].user.isOptedOut) {
         mainMenuPortalButton.hidden = gameOverPortalButton.hidden = YES;
     } else {
-        if (!sessionMError) {
-            mainMenuPortalButton.hidden = gameOverPortalButton.hidden = NO;
-        }
+        mainMenuPortalButton.hidden = gameOverPortalButton.hidden = NO;
     }
 }
 

@@ -129,10 +129,17 @@
 
 - (void)sessionM: (SessionM *)session didTransitionToState: (SessionMState)state {
     [[NSNotificationCenter defaultCenter] postNotificationName:kSessionMStateChanged object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kSessionMToggleChanged object:nil];
 }
 
 -(void)sessionM:(SessionM *)sessionM didFailWithError:(NSError *)error {
+    [[NSNotificationCenter defaultCenter] postNotificationName:kSessionMToggleChanged object:nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:kSessionMStateChanged object:nil userInfo:@{@"error":error}];
+}
+
+-(void)sessionM:(SessionM *)sessionM didUpdateUser:(SMUser *)user {
+    [[NSNotificationCenter defaultCenter] postNotificationName:kSessionMToggleChanged object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kSessionMStateChanged object:nil];
 }
 
 @end
