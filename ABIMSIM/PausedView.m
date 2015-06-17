@@ -34,11 +34,11 @@
 }
 
 -(void)setupMusicToggle {
-    self.musicPausedSwitch.on = [ABIMSIMDefaults boolForKey:kMusicSetting];
+//    self.musicPausedSwitch.on = [ABIMSIMDefaults boolForKey:kMusicSetting];
 }
 
 -(void)setupSFXToggle {
-    self.sfxPausedSwitch.on = [ABIMSIMDefaults boolForKey:kSFXSetting];
+//    self.sfxPausedSwitch.on = [ABIMSIMDefaults boolForKey:kSFXSetting];
 }
 
 

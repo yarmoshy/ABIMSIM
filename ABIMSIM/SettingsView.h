@@ -24,6 +24,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *settingsTopConstraint;
 @property (weak, nonatomic) IBOutlet DCRoundSwitch *musicSettingsToggle;
 @property (weak, nonatomic) IBOutlet DCRoundSwitch *sfxSettingsToggle;
+@property (weak, nonatomic) IBOutlet DCRoundSwitch *sessionMSettingsToggle;
 
 - (IBAction)twitterTapped:(id)sender;
 - (IBAction)facebookTapped:(id)sender;

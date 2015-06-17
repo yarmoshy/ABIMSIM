@@ -52,6 +52,7 @@
 #import "SpriteUserDataConstants.h"
 #import "BlackHole.h"
 #import "SKNode+Removed.h"
+#import "SessionM.h"
 
 @implementation GameScene  {
     NSMutableArray *spritesArrays;
@@ -778,33 +779,43 @@ CGFloat DegreesToRadians(CGFloat degrees)
         switch (self.currentLevel) {
             case 10:
                 identifier = @"learningToFly";
+                SMAction(@"parsecs10");
                 break;
             case 20:
                 identifier = @"explorerReporting";
+                SMAction(@"parsecs20");
                 break;
             case 30:
                 identifier = @"adventureIsOutThere";
+                SMAction(@"parsecs30");
                 break;
             case 40:
                 identifier = @"gettinKindaHectic";
+                SMAction(@"parsecs40");
                 break;
             case 50:
                 identifier = @"deepSpace";
+                SMAction(@"parsecs50");
                 break;
             case 60:
                 identifier = @"toBoldyGo";
+                SMAction(@"parsecs60");
                 break;
             case 70:
                 identifier = @"whereNoManHasGoneBefore";
+                SMAction(@"parsecs70");
                 break;
             case 80:
                 identifier = @"acrossTheCosmos";
+                SMAction(@"parsecs80");
                 break;
             case 90:
                 identifier = @"theObservableUniverse";
+                SMAction(@"parsecs90");
                 break;
             case 100:
                 identifier = @"theEdgeOfSpace";
+                SMAction(@"parsecs100");
                 break;
             default:
                 identifier = @"";
@@ -822,6 +833,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
 -(void)sendAchievementWithIdentifier:(NSString*)identifier {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        [self smActionForIdentifier:identifier];
         GKAchievement *achievement = [[GKAchievement alloc] initWithIdentifier:identifier];
         if (achievement)
         {
@@ -845,6 +857,22 @@ CGFloat DegreesToRadians(CGFloat degrees)
             }];
         }
     });
+}
+
+-(void)smActionForIdentifier:(NSString*)identifier {
+    if ([identifier isEqualToString:@"setTheControlsForTheHeartOfTheSun"]) {
+        SMAction(@"sunDeath");
+    } else if ([identifier isEqualToString:@"Autopilot"]) {
+        SMAction(@"autopilot");
+    } else if ([identifier isEqualToString:@"blackHole"]) {
+        SMAction(@"blackHoleDeath");
+    } else if ([identifier isEqualToString:@"poorUnfortunateSoul"]) {
+        SMAction(@"poorSoul");
+    } else if ([identifier isEqualToString:@"tripleCrown"]) {
+        SMAction(@"tripleCrown");
+    } else if ([identifier isEqualToString:@"tripleDouble"]) {
+        SMAction(@"tripleDouble");
+    }
 }
 
 #pragma mark - Touch Handling

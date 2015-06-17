@@ -11,6 +11,7 @@
 #import "UIView+Fancy.h"
 #import "DCRoundSwitch.h"
 #import <Social/Social.h>
+#import "SessionM.h"
 
 @implementation SettingsView {
     BOOL showingSettings;
@@ -20,6 +21,7 @@
     if (self = [super initWithCoder:aDecoder]) {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setupMusicToggle) name:kMusicToggleChanged object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setupSFXToggle) name:kSFXToggleChanged object:nil];
+//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setupSessionMToggle) name:kSessionMToggleChanged object:nil];
     }
     return self;
 }
@@ -29,12 +31,14 @@
     [self setupToggles];
     [self.musicSettingsToggle addTarget:self action:@selector(musicSwitchToggled:) forControlEvents:UIControlEventValueChanged];
     [self.sfxSettingsToggle addTarget:self action:@selector(sfxSwitchToggled:) forControlEvents:UIControlEventValueChanged];
+    [self.sessionMSettingsToggle addTarget:self action:@selector(sessionMSwitchToggled:) forControlEvents:UIControlEventValueChanged];
 }
 
 
 -(void)setupToggles {
     [self setupMusicToggle];
     [self setupSFXToggle];
+    [self setupSessionMToggle];
 }
 
 -(void)setupMusicToggle {
@@ -43,6 +47,11 @@
 
 -(void)setupSFXToggle {
     self.sfxSettingsToggle.on = [ABIMSIMDefaults boolForKey:kSFXSetting];
+}
+
+-(void)setupSessionMToggle {
+    self.sessionMSettingsToggle.on = ![SessionM sharedInstance].user.isOptedOut;
+    self.sessionMSettingsToggle.ignoreTap = NO;
 }
 
 
@@ -79,6 +88,12 @@
     [ABIMSIMDefaults synchronize];
     self.sfxSettingsToggle.on = toggle.on;
     [[NSNotificationCenter defaultCenter] postNotificationName:kSFXToggleChanged object:nil];
+}
+
+-(void)sessionMSwitchToggled:(DCRoundSwitch*)toggle {
+    [SessionM sharedInstance].user.isOptedOut = !toggle.on;
+    self.sessionMSettingsToggle.on = toggle.on;
+    [[NSNotificationCenter defaultCenter] postNotificationName:kSessionMToggleChanged object:nil];
 }
 
 - (IBAction)twitterTapped:(id)sender {

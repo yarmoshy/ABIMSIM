@@ -11,13 +11,16 @@
 #import "DCRoundSwitch.h"
 #import <objc/runtime.h>
 #import "AudioController.h"
-
+#import "SMPortalButton.h"
+#import "SessionM.h"
 
 @implementation ViewController {
     NSMutableArray *hamburgerToXImages;
     NSMutableArray *hamburgerToOriginalImages;
     BOOL showingSettings;
     BOOL showingUpgradesFromGameOver;
+    SMPortalButton *mainMenuPortalButton, *gameOverPortalButton;
+    BOOL sessionMError;
 }
 
 - (void)viewDidLoad
@@ -38,6 +41,13 @@
     self.mainMenuView = [mainMenuNib instantiateWithOwner:self options:nil][0];
     self.mainMenuView.frame = self.view.frame;
     self.mainMenuView.delegate = self;
+    
+    mainMenuPortalButton=[SMPortalButton buttonWithType:UIButtonTypeCustom];
+    [mainMenuPortalButton.button setImage:[UIImage imageNamed:@"btnSessionM"] forState:UIControlStateNormal];
+    [mainMenuPortalButton sizeToFit];
+    mainMenuPortalButton.frame = CGRectMake(self.mainMenuView.buttonContainerView.frame.size.width - 80, 40, mainMenuPortalButton.button.frame.size.width, mainMenuPortalButton.button.frame.size.height);
+    [self.mainMenuView.buttonContainerView addSubview:mainMenuPortalButton];
+
     [self.view addSubview:self.mainMenuView];
     [self.mainMenuView layoutIfNeeded];
     
@@ -45,6 +55,13 @@
     self.gameOverView = [gameOverViewNib instantiateWithOwner:self options:nil][0];
     self.gameOverView.frame = self.view.frame;
     self.gameOverView.delegate = self;
+    
+    gameOverPortalButton=[SMPortalButton buttonWithType:UIButtonTypeCustom];
+    [gameOverPortalButton.button setImage:[UIImage imageNamed:@"btnSessionM"] forState:UIControlStateNormal];
+    [gameOverPortalButton sizeToFit];
+    gameOverPortalButton.frame = CGRectMake(self.mainMenuView.buttonContainerView.frame.size.width - 80, 40, gameOverPortalButton.button.frame.size.width, gameOverPortalButton.button.frame.size.height);
+    [self.gameOverView.gameOverButtonContainer addSubview:gameOverPortalButton];
+
     [self.view insertSubview:self.gameOverView atIndex:1];
 
     UINib * pausedViewNib = [UINib nibWithNibName:@"PausedView" bundle:nil];
@@ -73,7 +90,44 @@
     self.scene.scaleMode = SKSceneScaleModeAspectFill;
     self.scene.viewController = self;
     // Present the scene.
-    [skView presentScene:self.scene];    
+    [skView presentScene:self.scene];
+    
+    if ([SessionM sharedInstance].user.isOptedOut) {
+        mainMenuPortalButton.hidden = gameOverPortalButton.hidden = YES;
+    } else if ([SessionM sharedInstance].sessionState != SessionMStateStartedOnline) {
+        mainMenuPortalButton.button.enabled = NO;
+    }
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sessionMStateChanged:) name:kSessionMStateChanged object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sessionMOptOutChanged:) name:kSessionMToggleChanged object:nil];
+}
+
+-(void)sessionMStateChanged:(NSNotification*)notif {
+    if ([SessionM sharedInstance].sessionState != SessionMStateStartedOnline) {
+        mainMenuPortalButton.button.enabled = gameOverPortalButton.button.enabled = NO;
+    } else {
+        mainMenuPortalButton.button.enabled = gameOverPortalButton.button.enabled = YES;
+        if (![SessionM sharedInstance].user.isOptedOut) {
+            mainMenuPortalButton.hidden = gameOverPortalButton.hidden = NO;
+        }
+        sessionMError = NO;
+    }
+    if ([notif.userInfo valueForKey:@"error"]) {
+        NSError *error = notif.userInfo[@"error"];
+        sessionMError = YES;
+        if (error.code == SessionMServiceUnavailable || error.code == SessionMInvalidAppIdError) {
+            mainMenuPortalButton.hidden = gameOverPortalButton.hidden = YES;
+        }
+    }
+}
+
+-(void)sessionMOptOutChanged:(NSNotification*)notif {
+    if ([SessionM sharedInstance].user.isOptedOut) {
+        mainMenuPortalButton.hidden = gameOverPortalButton.hidden = YES;
+    } else {
+        if (!sessionMError) {
+            mainMenuPortalButton.hidden = gameOverPortalButton.hidden = NO;
+        }
+    }
 }
 
 - (BOOL)prefersStatusBarHidden {

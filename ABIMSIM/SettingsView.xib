@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="13F1077" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="Voltaire-Regular.ttf">
@@ -27,16 +27,16 @@
                     <rect key="frame" x="-164" y="5" width="479" height="479"/>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SFX" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iAu-nQ-hDg">
-                    <rect key="frame" x="135" y="137.5" width="21.5" height="21.5"/>
+                    <rect key="frame" x="135" y="138" width="22" height="22"/>
                     <fontDescription key="fontDescription" name="Voltaire" family="Voltaire" pointSize="17"/>
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SettingsText" translatesAutoresizingMaskIntoConstraints="NO" id="xme-ox-pnA">
-                    <rect key="frame" x="15" y="63.5" width="90" height="27"/>
+                    <rect key="frame" x="15" y="64" width="90" height="27"/>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RUD-lz-DsJ" customClass="DCRoundSwitch">
-                    <rect key="frame" x="111" y="105.5" width="70" height="30"/>
+                    <rect key="frame" x="111" y="106" width="70" height="30"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="VR3-8v-pU5"/>
@@ -44,15 +44,23 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mhf-IA-Qia" customClass="DCRoundSwitch">
-                    <rect key="frame" x="15" y="105.5" width="70" height="30"/>
+                    <rect key="frame" x="15" y="106" width="70" height="30"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="69B-8O-0EK"/>
                         <constraint firstAttribute="width" constant="70" id="wDp-PC-ln0"/>
                     </constraints>
                 </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TnE-Kb-whH" customClass="DCRoundSwitch">
+                    <rect key="frame" x="179" y="216" width="70" height="30"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="70" id="lzN-XU-zCd"/>
+                        <constraint firstAttribute="height" constant="30" id="v8e-mr-GcU"/>
+                    </constraints>
+                </view>
                 <view alpha="0.20000000298023224" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Qf-VW-RQG">
-                    <rect key="frame" x="15" y="173.5" width="240" height="1"/>
+                    <rect key="frame" x="15" y="175" width="240" height="1"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="240" id="Ewa-WM-AmT"/>
@@ -60,7 +68,7 @@
                     </constraints>
                 </view>
                 <view alpha="0.20000000298023224" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ivj-fX-aDI">
-                    <rect key="frame" x="15" y="290.5" width="240" height="1"/>
+                    <rect key="frame" x="15" y="292" width="240" height="1"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="1" id="5VF-Ca-LaQ"/>
@@ -68,10 +76,10 @@
                     </constraints>
                 </view>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ShareText" translatesAutoresizingMaskIntoConstraints="NO" id="dWJ-Jt-fht">
-                    <rect key="frame" x="15" y="189.5" width="63" height="27"/>
+                    <rect key="frame" x="15" y="191" width="63" height="27"/>
                 </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SRU-hJ-9SL">
-                    <rect key="frame" x="15" y="231.5" width="44" height="44"/>
+                    <rect key="frame" x="15" y="233" width="44" height="44"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="44" id="Xd2-yP-8OW"/>
                         <constraint firstAttribute="height" constant="44" id="luy-3R-WiT"/>
@@ -84,13 +92,13 @@
                     </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MUSIC" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SK2-f3-oKl">
-                    <rect key="frame" x="31" y="137.5" width="38" height="21.5"/>
+                    <rect key="frame" x="31" y="138" width="38" height="22"/>
                     <fontDescription key="fontDescription" name="Voltaire" family="Voltaire" pointSize="17"/>
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="InE-v4-vvQ">
-                    <rect key="frame" x="15" y="306.5" width="55" height="55"/>
+                    <rect key="frame" x="15" y="308" width="55" height="55"/>
                     <state key="normal" image="ResetButton">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -99,7 +107,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sEq-7G-WLf">
-                    <rect key="frame" x="74" y="231.5" width="44" height="44"/>
+                    <rect key="frame" x="74" y="233" width="44" height="44"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="JQk-D5-ENF"/>
                         <constraint firstAttribute="width" constant="44" id="sZD-cO-Fyt"/>
@@ -111,14 +119,20 @@
                         <action selector="facebookTapped:" destination="uom-KZ-6EE" eventType="touchUpInside" id="b9s-i2-Gyw"/>
                     </connections>
                 </button>
+                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="btnSessionM.png" translatesAutoresizingMaskIntoConstraints="NO" id="0MQ-wD-leH">
+                    <rect key="frame" x="171" y="250" width="87" height="27"/>
+                </imageView>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="RUD-lz-DsJ" firstAttribute="leading" secondItem="mhf-IA-Qia" secondAttribute="trailing" constant="26" id="607-6I-FSH"/>
                 <constraint firstItem="iAu-nQ-hDg" firstAttribute="top" secondItem="RUD-lz-DsJ" secondAttribute="bottom" constant="2" id="6oc-6T-xb3"/>
                 <constraint firstItem="SRU-hJ-9SL" firstAttribute="top" secondItem="dWJ-Jt-fht" secondAttribute="bottom" constant="15" id="71o-a4-1Ie"/>
+                <constraint firstItem="TnE-Kb-whH" firstAttribute="top" secondItem="7Qf-VW-RQG" secondAttribute="bottom" constant="40" id="79o-xy-SCl"/>
                 <constraint firstItem="InE-v4-vvQ" firstAttribute="top" secondItem="Ivj-fX-aDI" secondAttribute="bottom" constant="15" id="8ia-Ni-B2r"/>
+                <constraint firstItem="TnE-Kb-whH" firstAttribute="leading" secondItem="sEq-7G-WLf" secondAttribute="trailing" constant="61" id="8ko-Ju-7cG"/>
                 <constraint firstItem="SRU-hJ-9SL" firstAttribute="bottom" secondItem="sEq-7G-WLf" secondAttribute="bottom" id="CPS-Mf-T1D"/>
+                <constraint firstItem="0MQ-wD-leH" firstAttribute="top" secondItem="TnE-Kb-whH" secondAttribute="bottom" constant="4" id="Gfm-g8-vMg"/>
                 <constraint firstItem="InE-v4-vvQ" firstAttribute="leading" secondItem="xme-ox-pnA" secondAttribute="leading" id="HG1-5d-eit"/>
                 <constraint firstItem="mhf-IA-Qia" firstAttribute="centerX" secondItem="SK2-f3-oKl" secondAttribute="centerX" id="NQp-HO-DNa"/>
                 <constraint firstItem="7Qf-VW-RQG" firstAttribute="top" secondItem="SK2-f3-oKl" secondAttribute="bottom" constant="15" id="PCc-9i-we9"/>
@@ -127,6 +141,7 @@
                 <constraint firstAttribute="trailing" secondItem="kmn-MX-nKa" secondAttribute="trailing" constant="5" id="S0G-ak-foK"/>
                 <constraint firstItem="xme-ox-pnA" firstAttribute="leading" secondItem="mhf-IA-Qia" secondAttribute="leading" id="U1M-lb-Rae"/>
                 <constraint firstItem="kmn-MX-nKa" firstAttribute="top" secondItem="uom-KZ-6EE" secondAttribute="top" constant="5" id="UgZ-vQ-QtX"/>
+                <constraint firstItem="0MQ-wD-leH" firstAttribute="centerX" secondItem="TnE-Kb-whH" secondAttribute="centerX" id="WfA-at-Ekp"/>
                 <constraint firstItem="xme-ox-pnA" firstAttribute="leading" secondItem="7Qf-VW-RQG" secondAttribute="leading" id="aJN-Mo-Evw"/>
                 <constraint firstItem="xme-ox-pnA" firstAttribute="leading" secondItem="Ivj-fX-aDI" secondAttribute="leading" id="bsF-Rh-Mqq"/>
                 <constraint firstItem="xme-ox-pnA" firstAttribute="leading" secondItem="uom-KZ-6EE" secondAttribute="leading" constant="15" id="ftg-XK-iyv"/>
@@ -147,6 +162,7 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="musicSettingsToggle" destination="mhf-IA-Qia" id="GGc-Q9-cbt"/>
+                <outlet property="sessionMSettingsToggle" destination="TnE-Kb-whH" id="ooA-Ng-e41"/>
                 <outlet property="settingsLeadngConstraint" destination="ftg-XK-iyv" id="PZU-Mi-KLB"/>
                 <outlet property="sfxSettingsToggle" destination="RUD-lz-DsJ" id="6J3-HO-8X9"/>
             </connections>
@@ -162,6 +178,7 @@
         <image name="SettingsText" width="90" height="27"/>
         <image name="ShareText" width="63" height="27"/>
         <image name="TwitterIcon" width="40" height="32"/>
+        <image name="btnSessionM.png" width="87" height="27"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

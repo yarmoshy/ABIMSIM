@@ -20,7 +20,6 @@
 @property (nonatomic, retain) DCRoundSwitchToggleLayer *toggleLayer;
 @property (nonatomic, retain) DCRoundSwitchKnobLayer *knobLayer;
 @property (nonatomic, retain) CAShapeLayer *clipLayer;
-@property (nonatomic, assign) BOOL ignoreTap;
 
 - (void)setup;
 - (void)useLayerMasking;

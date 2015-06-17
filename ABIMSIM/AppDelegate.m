@@ -9,6 +9,11 @@
 #import "AppDelegate.h"
 #import <Crashlytics/Crashlytics.h>
 #import "MKStoreKit.h"
+#import "SessionM.h"
+
+@interface AppDelegate () <SessionMDelegate>
+
+@end
 
 @implementation AppDelegate
 
@@ -16,7 +21,10 @@
 {
     // Override point for customization after application launch.
     [Crashlytics startWithAPIKey:@"066787c672b57a8fd2a11bcf1e72df26be8cbed5"];
-    
+    [SessionM sharedInstance].delegate = self;
+    [SessionM sharedInstance].logLevel = SMLogLevelDebug;
+    SMStart(@"76a75bec6be6cd72ac61f90cc3ab22651f17641a")
+
     [ABIMSIMDefaults registerDefaults:@{kMusicSetting:@(YES),kSFXSetting:@(YES)}];
     
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationNone];
@@ -117,6 +125,14 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (void)sessionM: (SessionM *)session didTransitionToState: (SessionMState)state {
+    [[NSNotificationCenter defaultCenter] postNotificationName:kSessionMStateChanged object:nil];
+}
+
+-(void)sessionM:(SessionM *)sessionM didFailWithError:(NSError *)error {
+    [[NSNotificationCenter defaultCenter] postNotificationName:kSessionMStateChanged object:nil userInfo:@{@"error":error}];
 }
 
 @end

@@ -46,12 +46,13 @@
     #define kMusicSetting @"kMusicSetting"
     #define kSFXSetting @"kSFXSetting"
 
-
     #define ABIMSIMDefaults [NSUserDefaults standardUserDefaults]
 
     #define kBlurBackgroundViewTag 777
 
 #define kMusicToggleChanged @"kMusicToggleChanged"
 #define kSFXToggleChanged @"kSFXToggleChanged"
+#define kSessionMToggleChanged @"kSessionMToggleChanged"
+#define kSessionMStateChanged @"kSessionMStateChanged"
 
 #endif
