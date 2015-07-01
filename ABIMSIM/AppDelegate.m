@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
 #import "MKStoreKit.h"
 #import "SessionM.h"
@@ -20,7 +21,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
-    [Crashlytics startWithAPIKey:@"066787c672b57a8fd2a11bcf1e72df26be8cbed5"];
+    [Fabric with:@[CrashlyticsKit]];
     [SessionM sharedInstance].delegate = self;
     [SessionM sharedInstance].logLevel = SMLogLevelDebug;
     SMStart(@"76a75bec6be6cd72ac61f90cc3ab22651f17641a")
