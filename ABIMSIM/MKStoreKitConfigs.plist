@@ -39,20 +39,6 @@
 			<key>ConsumableId</key>
 			<string>750 XP</string>
 		</dict>
-		<key>500XP</key>
-		<dict>
-			<key>ConsumableCount</key>
-			<integer>500</integer>
-			<key>ConsumableId</key>
-			<string>500 XP</string>
-		</dict>
-		<key>200XP</key>
-		<dict>
-			<key>ConsumableCount</key>
-			<integer>200</integer>
-			<key>ConsumableId</key>
-			<string>200 XP</string>
-		</dict>
 	</dict>
 </dict>
 </plist>
