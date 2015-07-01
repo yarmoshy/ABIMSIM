@@ -74,11 +74,11 @@
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9gc-ve-rrJ">
                     <rect key="frame" x="125" y="307" width="71" height="30"/>
-                    <state key="normal" title="50,000 XP">
+                    <state key="normal" title="25,000 XP">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
-                        <action selector="xp50000Tapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="pHZ-rk-cwz"/>
+                        <action selector="xp25000Tapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="1zP-iw-V2w"/>
                     </connections>
                 </button>
                 <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8uZ-m4-8Au">

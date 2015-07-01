@@ -49,16 +49,6 @@
     self.alpha = 0;
 }
 
-- (IBAction)xp200Tapped:(id)sender {
-    [self showLoader];
-    [[MKStoreKit sharedKit] initiatePaymentRequestForProductWithIdentifier:@"200XP"];
-}
-
-- (IBAction)xp500Tapped:(id)sender {
-    [self showLoader];
-    [[MKStoreKit sharedKit] initiatePaymentRequestForProductWithIdentifier:@"500XP"];
-}
-
 - (IBAction)xp750Tapped:(id)sender {
     [self showLoader];
     [[MKStoreKit sharedKit] initiatePaymentRequestForProductWithIdentifier:@"750XP"];
@@ -79,9 +69,9 @@
     [[MKStoreKit sharedKit] initiatePaymentRequestForProductWithIdentifier:@"10000XP"];
 }
 
-- (IBAction)xp50000Tapped:(id)sender {
+- (IBAction)xp25000Tapped:(id)sender {
     [self showLoader];
-    [[MKStoreKit sharedKit] initiatePaymentRequestForProductWithIdentifier:@"50000XP"];
+    [[MKStoreKit sharedKit] initiatePaymentRequestForProductWithIdentifier:@"25000XP"];
 }
 
 

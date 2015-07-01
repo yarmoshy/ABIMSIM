@@ -16,6 +16,7 @@
     #import <GameKit/GameKit.h>
 
     #define kStoreKitPurchaseFinished @"kStoreKitPurchasedFinished"
+
     //NSUserDefaults
     #define kGameCenterCancelled @"kGameCenterCancelled"
 
@@ -26,11 +27,8 @@
     #define kMineOccuranceLevel @"kMineOccuranceLevel"
     #define kMineBlastSpeedLevel @"kMineBlastSpeedLevel"
 
-// To be removed:
-//    #define kShieldFireDurabilityLevel @"kShieldFireDurabilityLevel"
-//    #define kHullDurabilityLevel @"kHullDurabilityLevel"
-//    #define kSurvivabilityLevel @"kSurvivabilityLevel"
-// end
+    #define kMineHolsterNukes @"kMineHolsterNukes"
+    #define kMineHolsterCapacity @"kMineHolsterCapacity"
 
     #define kUserDuckets @"kUserDuckets"
 

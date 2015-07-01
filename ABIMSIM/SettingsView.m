@@ -158,6 +158,8 @@
             [ABIMSIMDefaults setBool:NO forKey:kShieldOnStart];
             [ABIMSIMDefaults setInteger:0 forKey:kMineOccuranceLevel];
             [ABIMSIMDefaults setInteger:0 forKey:kMineBlastSpeedLevel];
+            [ABIMSIMDefaults setInteger:0 forKey:kMineHolsterCapacity];
+            [ABIMSIMDefaults setInteger:0 forKey:kMineHolsterNukes];
             [ABIMSIMDefaults setInteger:0 forKey:kUserDuckets];
             [ABIMSIMDefaults setBool:NO forKey:kWalkthroughSeen];
             [ABIMSIMDefaults synchronize];

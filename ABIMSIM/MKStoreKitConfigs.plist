@@ -4,12 +4,12 @@
 <dict>
 	<key>Consumables</key>
 	<dict>
-		<key>50000XP</key>
+		<key>25000XP</key>
 		<dict>
 			<key>ConsumableCount</key>
-			<integer>50000</integer>
+			<real>25000</real>
 			<key>ConsumableId</key>
-			<string>50,000 XP</string>
+			<string>25,000 XP</string>
 		</dict>
 		<key>10000XP</key>
 		<dict>

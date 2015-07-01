@@ -15,7 +15,10 @@ typedef enum {
     UpgradeTableViewCellTypeShieldStrength,
     UpgradeTableViewCellTypeUnlockMines,
     UpgradeTableViewCellTypeMineOccurance,
-    UpgradeTableViewCellTypeMineBlastSpeed
+    UpgradeTableViewCellTypeMineBlastSpeed,
+    UpgradeTableViewCellTypeUnlockArmory,
+    UpgradeTableViewCellTypeHolsterCapacity,
+    UpgradeTableViewCellTypeHolsterNuke
 } UpgradeTableViewCellType;
 
 @protocol UpgradeTableViewCellDelegate <NSObject>

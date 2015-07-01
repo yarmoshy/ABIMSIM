@@ -18,6 +18,6 @@
 - (IBAction)xp1500Tapped:(id)sender;
 - (IBAction)xp4000Tapped:(id)sender;
 - (IBAction)xp10000Tapped:(id)sender;
-- (IBAction)xp50000Tapped:(id)sender;
+- (IBAction)xp25000Tapped:(id)sender;
 
 @end

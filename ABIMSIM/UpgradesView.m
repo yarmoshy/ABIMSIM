@@ -12,7 +12,7 @@
 #define kTypeCellHeight 55
 
 @implementation UpgradesView {
-    long shieldOccurance, shieldDurability, shieldOnStart, mineOccurance, mineBlastSpeed;
+    long shieldOccurance, shieldDurability, shieldOnStart, mineOccurance, mineBlastSpeed, mineHolsterNukes, mineHolsterCapacity;
     NSNumberFormatter *formatter;
     IAPView *iapView;
 
@@ -56,8 +56,9 @@
     shieldOnStart = [ABIMSIMDefaults integerForKey:kShieldOnStart];
     mineOccurance = [ABIMSIMDefaults integerForKey:kMineOccuranceLevel];
     mineBlastSpeed = [ABIMSIMDefaults integerForKey:kMineBlastSpeedLevel];
-
-    return 3;
+    mineHolsterCapacity = [ABIMSIMDefaults integerForKey:kMineHolsterCapacity];
+    mineHolsterNukes = [ABIMSIMDefaults integerForKey:kMineHolsterNukes];
+    return 4;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -73,6 +74,13 @@
     }
     if (section == 2) {
         if (mineOccurance > 0) {
+            return 3;
+        } else {
+            return 4;
+        }
+    }
+    if (section == 3) {
+        if (mineHolsterCapacity > 0) {
             return 3;
         } else {
             return 4;
@@ -165,7 +173,9 @@
             UIImageView *upgradeIconImage;
             if (indexPath.section == 1) {
                 upgradeIconImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ShipShield"]];
-            } else {
+            } else if (indexPath.section == 2) {
+                upgradeIconImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"MineIcon"]];
+            } else if (indexPath.section == 3) {
                 upgradeIconImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"MineIcon"]];
             }
             upgradeIconImage.frame = CGRectMake(15, 12.5, 30, 30);
@@ -174,8 +184,10 @@
             UIImageView *upgradeTypeImage;
             if (indexPath.section == 1) {
                 upgradeTypeImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ShieldsTitle"]];
-            } else {
+            } else if (indexPath.section == 2) {
                 upgradeTypeImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"MinesTitle"]];
+            } else if (indexPath.section == 3) {
+                upgradeTypeImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ShipArmoryTitle"]];
             }
             upgradeTypeImage.frame = CGRectMake(upgradeIconImage.frame.size.width + upgradeIconImage.frame.origin.x + 5, (kTypeCellHeight - upgradeTypeImage.frame.size.height)/2, upgradeTypeImage.frame.size.width, upgradeTypeImage.frame.size.height);
             [typeCell.contentView addSubview:upgradeTypeImage];
@@ -258,6 +270,39 @@
                             break;
                         case 3:
                             [self configureMineBlastSpeedCell:cell];
+                            break;
+                        default:
+                            break;
+                    }
+                    if (indexPath.row > 1) {
+                        cell.contentView.alpha = 0.4;
+                        cell.upgradeTypeImageView.alpha = 0.4;
+                        cell.xpRequiredLabel.alpha = 0.4;
+                        cell.upgradeButton.enabled = NO;
+                    }
+                }
+            } else if (indexPath.section == 3) {
+                if (mineHolsterCapacity > 0) {
+                    switch (indexPath.row) {
+                        case 1:
+                            [self configureHolsterCapacityCell:cell];
+                            break;
+                        case 2:
+                            [self configureAsteroidNukeCell:cell];
+                            break;
+                        default:
+                            break;
+                    }
+                } else {
+                    switch (indexPath.row) {
+                        case 1:
+                            [self configureUnlockArmoryCell:cell];
+                            break;
+                        case 2:
+                            [self configureHolsterCapacityCell:cell];
+                            break;
+                        case 3:
+                            [self configureAsteroidNukeCell:cell];
                             break;
                         default:
                             break;
@@ -383,7 +428,7 @@
     cell.unlimitedUpgradesHeightConstraint.constant = 0;
     cell.xpRequiredLabel.text = @"10 XP";
     cell.ringImageView.image = [UIImage imageNamed:@"SolidRing_Empty"];
-    cell.descriptionLabel.text = @"The mines will become available to use and upgrade.";
+    cell.descriptionLabel.text = @"The nukes will become available to use and upgrade.";
     if ([ABIMSIMDefaults integerForKey:kUserDuckets] < 10) {
         cell.upgradeButton.alpha = 1;
         cell.upgradeButton.enabled = NO;
@@ -399,7 +444,7 @@
     cell.unlimitedUpgradesHeightConstraint.constant = 0;
     cell.xpRequiredLabel.text = [NSString stringWithFormat:@"%ld XP",(mineOccurance+1)*10];
     cell.ringImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"Ring_10Pieces_%ld", mineOccurance]];
-    cell.descriptionLabel.text = @"The higher your upgrade, the more often the mines will become available.";
+    cell.descriptionLabel.text = @"The higher your upgrade, the more often the nukes will become available.";
     if (mineOccurance == 10) {
         cell.upgradeButton.alpha = 0;
         cell.xpRequiredLabel.text = @"FULLY UPGRADED";
@@ -419,7 +464,7 @@
     cell.unlimitedUpgradesHeightConstraint.constant = 0;
     cell.xpRequiredLabel.text = [NSString stringWithFormat:@"%ld XP",(mineBlastSpeed+1)*20];
     cell.ringImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"Ring_5Pieces_%ld", mineBlastSpeed]];
-    cell.descriptionLabel.text = @"The higher your upgrade, the faster the mine will explode and clear out obstacles.";
+    cell.descriptionLabel.text = @"The higher your upgrade, the faster the nuke will explode and clear out obstacles.";
     if (mineBlastSpeed == 5) {
         cell.upgradeButton.alpha = 0;
         cell.xpRequiredLabel.text = @"FULLY UPGRADED";
@@ -433,13 +478,84 @@
     }
 }
 
+-(void)configureUnlockArmoryCell:(UpgradeTableViewCell*)cell {
+    cell.cellType = UpgradeTableViewCellTypeUnlockArmory;
+    cell.upgradeTypeImageView.image = [UIImage imageNamed:@"UnlockArmoryText"];
+    cell.unlimitedUpgradesHeightConstraint.constant = 0;
+    cell.xpRequiredLabel.text = @"250 XP";
+    cell.ringImageView.image = [UIImage imageNamed:@"SolidRing_Empty"];
+    cell.descriptionLabel.text = @"Unlocking the armory will give you access to on-ship weaponry.";
+    if ([ABIMSIMDefaults integerForKey:kUserDuckets] < 250) {
+        cell.upgradeButton.alpha = 1;
+        cell.upgradeButton.enabled = NO;
+    } else {
+        cell.upgradeButton.alpha = 1;
+        cell.upgradeButton.enabled = YES;
+    }
+}
+
+-(void)configureHolsterCapacityCell:(UpgradeTableViewCell*)cell {
+    cell.cellType = UpgradeTableViewCellTypeHolsterCapacity;
+    cell.upgradeTypeImageView.image = [UIImage imageNamed:@"ArmoryCapacityText"];
+    cell.unlimitedUpgradesHeightConstraint.constant = 0;
+    cell.xpRequiredLabel.text = [NSString stringWithFormat:@"%ld XP",(mineHolsterCapacity+1)*250];
+    cell.ringImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"Ring_5Pieces_%ld", mineHolsterCapacity]];
+    cell.descriptionLabel.text = @"Your ship can be upgraded to hold a max of 5 items.";
+    if (mineHolsterCapacity == 5) {
+        cell.upgradeButton.alpha = 0;
+        cell.xpRequiredLabel.text = @"FULLY UPGRADED";
+        cell.upgradeButton.enabled = NO;
+    } else if ([ABIMSIMDefaults integerForKey:kUserDuckets] < (mineHolsterCapacity+1)*250) {
+        cell.upgradeButton.alpha = 1;
+        cell.upgradeButton.enabled = NO;
+    } else {
+        cell.upgradeButton.alpha = 1;
+        cell.upgradeButton.enabled = YES;
+    }
+}
+
+-(void)configureAsteroidNukeCell:(UpgradeTableViewCell*)cell {
+    cell.cellType = UpgradeTableViewCellTypeHolsterNuke;
+    cell.upgradeTypeImageView.image = [UIImage imageNamed:@"AsteroidNukeText"];
+    cell.unlimitedUpgradesHeightConstraint.constant = 0;
+    cell.xpRequiredLabel.text = [NSString stringWithFormat:@"%d XP",50];
+    cell.ringImageView.image = [UIImage imageNamed:@"SolidRing_Empty"];
+    cell.descriptionLabel.text = @"Add a nuke to your armory when there is capacity.";
+    if (mineHolsterNukes == mineHolsterCapacity && mineHolsterCapacity > 0) {
+        cell.upgradeButton.alpha = 0;
+        cell.xpRequiredLabel.text = @"FULL CAPACITY";
+        cell.upgradeButton.enabled = NO;
+        cell.ringImageView.image = [UIImage imageNamed:@"SolidRing_Full"];
+    } else if ([ABIMSIMDefaults integerForKey:kUserDuckets] < 50) {
+        cell.upgradeButton.alpha = 1;
+        cell.upgradeButton.enabled = NO;
+    } else {
+        cell.upgradeButton.alpha = 1;
+        cell.upgradeButton.enabled = YES;
+    }
+}
+
+
 -(void)upgradeCellTapped:(UpgradeTableViewCell*)cell {
     if (animating) {
         return;
     }
     BOOL unlock = NO;
-//    BOOL delay = NO;
+    BOOL delay = NO;
     switch (cell.cellType) {
+        case UpgradeTableViewCellTypeHolsterNuke: {
+            long newValue = mineHolsterNukes+1;
+            cell.ringImageView.image = [UIImage imageNamed:@"SolidRing_Full"];
+            [ABIMSIMDefaults setInteger:newValue forKey:kMineHolsterNukes];
+            delay = YES;
+        }
+            break;
+        case UpgradeTableViewCellTypeHolsterCapacity: {
+            long newValue = mineHolsterCapacity+1;
+            cell.ringImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"Ring_5Pieces_%ld",newValue]];
+            [ABIMSIMDefaults setInteger:newValue forKey:kMineHolsterCapacity];
+        }
+            break;
         case UpgradeTableViewCellTypeMineBlastSpeed: {
             long newValue = mineBlastSpeed+1;
             cell.ringImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"Ring_5Pieces_%ld",newValue]];
@@ -484,6 +600,13 @@
             [ABIMSIMDefaults setInteger:newValue forKey:kShieldOccuranceLevel];
         }
             break;
+        case UpgradeTableViewCellTypeUnlockArmory: {
+            unlock = YES;
+            long newValue = mineHolsterCapacity+1;
+            cell.ringImageView.image = [UIImage imageNamed:@"SolidRing_Full"];
+            [ABIMSIMDefaults setInteger:newValue forKey:kMineHolsterCapacity];
+        }
+            break;
         default:
             break;
     }
@@ -498,40 +621,32 @@
         }];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self.tableView beginUpdates];
-            NSArray *indexPathsToDelete, *indexPathsToUpdate;
+            NSArray *indexPathsToDelete;
             if (cell.cellType == UpgradeTableViewCellTypeUnlockMines) {
                 indexPathsToDelete = @[[NSIndexPath indexPathForRow:1 inSection:2]];
-                if ([ABIMSIMDefaults integerForKey:kShieldOccuranceLevel] > 0) {
-                    indexPathsToUpdate = @[[NSIndexPath indexPathForRow:0 inSection:0], [NSIndexPath indexPathForRow:1 inSection:2], [NSIndexPath indexPathForRow:2 inSection:2], [NSIndexPath indexPathForRow:1 inSection:1], [NSIndexPath indexPathForRow:2 inSection:1], [NSIndexPath indexPathForRow:3 inSection:1]];
-                } else {
-                    indexPathsToUpdate = @[[NSIndexPath indexPathForRow:0 inSection:0], [NSIndexPath indexPathForRow:1 inSection:2], [NSIndexPath indexPathForRow:2 inSection:2]];
-                }
             } else if (cell.cellType == UpgradeTableViewCellTypeUnlockShield) {
                 indexPathsToDelete = @[[NSIndexPath indexPathForRow:1 inSection:1]];
-                if ([ABIMSIMDefaults integerForKey:kShieldOccuranceLevel] > 0) {
-                    indexPathsToUpdate = @[[NSIndexPath indexPathForRow:0 inSection:0], [NSIndexPath indexPathForRow:1 inSection:2], [NSIndexPath indexPathForRow:2 inSection:2], [NSIndexPath indexPathForRow:1 inSection:1], [NSIndexPath indexPathForRow:2 inSection:1], [NSIndexPath indexPathForRow:3 inSection:1]];
-                } else {
-                    indexPathsToUpdate = @[[NSIndexPath indexPathForRow:0 inSection:0], [NSIndexPath indexPathForRow:1 inSection:1], [NSIndexPath indexPathForRow:2 inSection:1], [NSIndexPath indexPathForRow:3 inSection:1]];
-                }
+            } else if (cell.cellType == UpgradeTableViewCellTypeUnlockArmory) {
+                indexPathsToDelete = @[[NSIndexPath indexPathForRow:1 inSection:3]];
             }
             [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
             [self.tableView deleteRowsAtIndexPaths:indexPathsToDelete withRowAnimation:UITableViewRowAnimationNone];
             [self.tableView endUpdates];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [self.tableView beginUpdates];
-                [self.tableView reloadRowsAtIndexPaths:indexPathsToUpdate withRowAnimation:UITableViewRowAnimationFade];
+                [self.tableView reloadRowsAtIndexPaths:self.tableView.indexPathsForVisibleRows withRowAnimation:UITableViewRowAnimationFade];
                 [self.tableView endUpdates];
                 animating = NO;
             });
         });
     } else {
-//        if (delay) {
-//            animating = YES;
-//            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//                [self.tableView reloadData];
-//                animating = NO;
-//            });
-//        } else
+        if (delay) {
+            animating = YES;
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.15 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.tableView reloadData];
+                animating = NO;
+            });
+        } else
             [self.tableView reloadData];
     }
 }

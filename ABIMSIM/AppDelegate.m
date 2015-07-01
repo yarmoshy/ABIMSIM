@@ -82,8 +82,8 @@
                                                           [ABIMSIMDefaults setInteger:[ABIMSIMDefaults integerForKey:kUserDuckets] + 4000 forKey:kUserDuckets];
                                                       } else if ([[note object] isEqualToString:@"10000XP"]) {
                                                           [ABIMSIMDefaults setInteger:[ABIMSIMDefaults integerForKey:kUserDuckets] + 10000 forKey:kUserDuckets];
-                                                      } else if ([[note object] isEqualToString:@"50000XP"]) {
-                                                          [ABIMSIMDefaults setInteger:[ABIMSIMDefaults integerForKey:kUserDuckets] + 50000 forKey:kUserDuckets];
+                                                      } else if ([[note object] isEqualToString:@"25000XP"]) {
+                                                          [ABIMSIMDefaults setInteger:[ABIMSIMDefaults integerForKey:kUserDuckets] + 25000 forKey:kUserDuckets];
                                                       }
                                                       [ABIMSIMDefaults synchronize];
                                                       [[NSNotificationCenter defaultCenter] postNotificationName:kStoreKitPurchaseFinished object:nil];
