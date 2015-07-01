@@ -27,14 +27,13 @@
                             <constraint firstAttribute="width" constant="104" id="w8e-s0-GQc"/>
                         </constraints>
                     </imageView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="UpgradeText_" translatesAutoresizingMaskIntoConstraints="NO" id="Gjl-BS-vMN">
-                        <rect key="frame" x="218" y="52" width="46" height="13"/>
-                    </imageView>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TgB-19-HXp">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TgB-19-HXp">
                         <rect key="frame" x="189" y="7" width="104" height="104"/>
-                        <state key="normal">
+                        <state key="normal" image="UpgradeText_0">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
+                        <state key="selected" image="UpgradeText_1"/>
+                        <state key="highlighted" image="UpgradeText_1"/>
                         <connections>
                             <action selector="upgradeButtonTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="IBU-V8-eRb"/>
                         </connections>
@@ -77,7 +76,7 @@
                         </variation>
                     </view>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gcO-Sj-ca9">
-                        <rect key="frame" x="0.0" y="0.0" width="181" height="117.5"/>
+                        <rect key="frame" x="0.0" y="0.0" width="181" height="117"/>
                         <state key="normal">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
@@ -85,8 +84,8 @@
                             <action selector="descriptionButtonTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="kcT-8z-8EA"/>
                         </connections>
                     </button>
-                    <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="The higher your upgrade the more often the shield will become available." lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cz0-eo-bdX">
-                        <rect key="frame" x="15" y="17" width="158" height="86"/>
+                    <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The higher your upgrade the more often the shield will become available." lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cz0-eo-bdX">
+                        <rect key="frame" x="15" y="17" width="158" height="85"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="158" id="uDr-fe-ZVq"/>
                         </constraints>
@@ -106,13 +105,11 @@
                     <constraint firstItem="7Z0-2R-Xya" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Bie-e2-iVD"/>
                     <constraint firstItem="f2j-Ii-iGG" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="BrQ-Jk-f0n"/>
                     <constraint firstItem="2Y8-um-cx0" firstAttribute="leading" secondItem="gcO-Sj-ca9" secondAttribute="trailing" id="CCa-Mb-piq"/>
-                    <constraint firstItem="15P-bT-fkp" firstAttribute="centerX" secondItem="Gjl-BS-vMN" secondAttribute="centerX" id="D9g-OU-d8a"/>
                     <constraint firstAttribute="bottom" secondItem="cz0-eo-bdX" secondAttribute="bottom" constant="19" id="DL0-rg-6jk"/>
                     <constraint firstItem="15P-bT-fkp" firstAttribute="leading" secondItem="TgB-19-HXp" secondAttribute="leading" id="GSF-xs-qBh"/>
                     <constraint firstItem="gcO-Sj-ca9" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="MXP-00-Ofy"/>
                     <constraint firstItem="15P-bT-fkp" firstAttribute="bottom" secondItem="TgB-19-HXp" secondAttribute="bottom" id="T6T-I4-6RX"/>
                     <constraint firstItem="15P-bT-fkp" firstAttribute="top" secondItem="TgB-19-HXp" secondAttribute="top" id="XYN-3X-ykw"/>
-                    <constraint firstItem="15P-bT-fkp" firstAttribute="centerY" secondItem="Gjl-BS-vMN" secondAttribute="centerY" id="cvz-lN-dmx"/>
                     <constraint firstAttribute="bottom" secondItem="gcO-Sj-ca9" secondAttribute="bottom" constant="4" id="d2X-U4-THR"/>
                     <constraint firstItem="2Y8-um-cx0" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="ghC-Ig-Wbb"/>
                     <constraint firstItem="15P-bT-fkp" firstAttribute="centerY" secondItem="2Y8-um-cx0" secondAttribute="centerY" id="ibZ-IK-E8c"/>
@@ -135,7 +132,6 @@
                 <outlet property="typeAndCostContainerView" destination="f2j-Ii-iGG" id="045-G0-0Lp"/>
                 <outlet property="unlimitedUpgradesHeightConstraint" destination="i0I-S3-FNU" id="rfg-Jy-tq3"/>
                 <outlet property="upgradeButton" destination="TgB-19-HXp" id="Exa-ux-aUd"/>
-                <outlet property="upgradeLabel" destination="Gjl-BS-vMN" id="Pql-b8-WaG"/>
                 <outlet property="upgradeTypeImageView" destination="2br-85-ChM" id="SbO-jf-noi"/>
                 <outlet property="xpRequiredLabel" destination="97p-kL-Kba" id="QZz-SQ-6oq"/>
             </connections>
@@ -148,6 +144,7 @@
         <image name="UnlimitedUpgradesText" width="82" height="10"/>
         <image name="UpgradeBackgroundLeft" width="180" height="117"/>
         <image name="UpgradeBackgroundRight" width="139" height="117"/>
-        <image name="UpgradeText_" width="46" height="13"/>
+        <image name="UpgradeText_0" width="46" height="13"/>
+        <image name="UpgradeText_1" width="48" height="15"/>
     </resources>
 </document>

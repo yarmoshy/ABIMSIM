@@ -33,7 +33,6 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet UIButton *detailsButton;
 @property (weak, nonatomic) IBOutlet UIView *typeAndCostContainerView;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *upgradeLabel;
 @property (assign, nonatomic) UpgradeTableViewCellType cellType;
 - (IBAction)descriptionButtonTapped:(id)sender;
 - (IBAction)upgradeButtonTapped:(id)sender;
