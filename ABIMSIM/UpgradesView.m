@@ -12,7 +12,7 @@
 #define kTypeCellHeight 55
 
 @implementation UpgradesView {
-    long shieldOccurance, shieldDurability, shieldOnStart, mineOccurance, mineBlastSpeed, mineHolsterNukes, mineHolsterCapacity;
+    long shieldOccurance, shieldDurability, shieldOnStart, mineOccurance, mineBlastSpeed, holsterNukes, holsterCapacity;
     NSNumberFormatter *formatter;
     IAPView *iapView;
 
@@ -56,8 +56,8 @@
     shieldOnStart = [ABIMSIMDefaults integerForKey:kShieldOnStart];
     mineOccurance = [ABIMSIMDefaults integerForKey:kMineOccuranceLevel];
     mineBlastSpeed = [ABIMSIMDefaults integerForKey:kMineBlastSpeedLevel];
-    mineHolsterCapacity = [ABIMSIMDefaults integerForKey:kMineHolsterCapacity];
-    mineHolsterNukes = [ABIMSIMDefaults integerForKey:kMineHolsterNukes];
+    holsterCapacity = [ABIMSIMDefaults integerForKey:kHolsterCapacity];
+    holsterNukes = [ABIMSIMDefaults integerForKey:kHolsterNukes];
     return 4;
 }
 
@@ -80,7 +80,7 @@
         }
     }
     if (section == 3) {
-        if (mineHolsterCapacity > 0) {
+        if (holsterCapacity > 0) {
             return 3;
         } else {
             return 4;
@@ -282,7 +282,7 @@
                     }
                 }
             } else if (indexPath.section == 3) {
-                if (mineHolsterCapacity > 0) {
+                if (holsterCapacity > 0) {
                     switch (indexPath.row) {
                         case 1:
                             [self configureHolsterCapacityCell:cell];
@@ -498,14 +498,14 @@
     cell.cellType = UpgradeTableViewCellTypeHolsterCapacity;
     cell.upgradeTypeImageView.image = [UIImage imageNamed:@"ArmoryCapacityText"];
     cell.unlimitedUpgradesHeightConstraint.constant = 0;
-    cell.xpRequiredLabel.text = [NSString stringWithFormat:@"%ld XP",(mineHolsterCapacity+1)*250];
-    cell.ringImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"Ring_5Pieces_%ld", mineHolsterCapacity]];
+    cell.xpRequiredLabel.text = [NSString stringWithFormat:@"%ld XP",(holsterCapacity+1)*250];
+    cell.ringImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"Ring_5Pieces_%ld", holsterCapacity]];
     cell.descriptionLabel.text = @"Your ship can be upgraded to hold a max of 5 items.";
-    if (mineHolsterCapacity == 5) {
+    if (holsterCapacity == 5) {
         cell.upgradeButton.alpha = 0;
         cell.xpRequiredLabel.text = @"FULLY UPGRADED";
         cell.upgradeButton.enabled = NO;
-    } else if ([ABIMSIMDefaults integerForKey:kUserDuckets] < (mineHolsterCapacity+1)*250) {
+    } else if ([ABIMSIMDefaults integerForKey:kUserDuckets] < (holsterCapacity+1)*250) {
         cell.upgradeButton.alpha = 1;
         cell.upgradeButton.enabled = NO;
     } else {
@@ -521,7 +521,7 @@
     cell.xpRequiredLabel.text = [NSString stringWithFormat:@"%d XP",50];
     cell.ringImageView.image = [UIImage imageNamed:@"SolidRing_Empty"];
     cell.descriptionLabel.text = @"Add a nuke to your armory when there is capacity.";
-    if (mineHolsterNukes == mineHolsterCapacity && mineHolsterCapacity > 0) {
+    if (holsterNukes == holsterCapacity && holsterCapacity > 0) {
         cell.upgradeButton.alpha = 0;
         cell.xpRequiredLabel.text = @"FULL CAPACITY";
         cell.upgradeButton.enabled = NO;
@@ -544,16 +544,16 @@
     BOOL delay = NO;
     switch (cell.cellType) {
         case UpgradeTableViewCellTypeHolsterNuke: {
-            long newValue = mineHolsterNukes+1;
+            long newValue = holsterNukes+1;
             cell.ringImageView.image = [UIImage imageNamed:@"SolidRing_Full"];
-            [ABIMSIMDefaults setInteger:newValue forKey:kMineHolsterNukes];
+            [ABIMSIMDefaults setInteger:newValue forKey:kHolsterNukes];
             delay = YES;
         }
             break;
         case UpgradeTableViewCellTypeHolsterCapacity: {
-            long newValue = mineHolsterCapacity+1;
+            long newValue = holsterCapacity+1;
             cell.ringImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"Ring_5Pieces_%ld",newValue]];
-            [ABIMSIMDefaults setInteger:newValue forKey:kMineHolsterCapacity];
+            [ABIMSIMDefaults setInteger:newValue forKey:kHolsterCapacity];
         }
             break;
         case UpgradeTableViewCellTypeMineBlastSpeed: {
@@ -602,9 +602,9 @@
             break;
         case UpgradeTableViewCellTypeUnlockArmory: {
             unlock = YES;
-            long newValue = mineHolsterCapacity+1;
+            long newValue = holsterCapacity+1;
             cell.ringImageView.image = [UIImage imageNamed:@"SolidRing_Full"];
-            [ABIMSIMDefaults setInteger:newValue forKey:kMineHolsterCapacity];
+            [ABIMSIMDefaults setInteger:newValue forKey:kHolsterCapacity];
         }
             break;
         default:

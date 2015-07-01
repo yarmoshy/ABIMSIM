@@ -12,8 +12,6 @@
 @property (weak, nonatomic) IBOutlet UIView *loaderView;
 
 - (IBAction)backButtonTapped:(id)sender;
-- (IBAction)xp200Tapped:(id)sender;
-- (IBAction)xp500Tapped:(id)sender;
 - (IBAction)xp750Tapped:(id)sender;
 - (IBAction)xp1500Tapped:(id)sender;
 - (IBAction)xp4000Tapped:(id)sender;

@@ -27,8 +27,8 @@
     #define kMineOccuranceLevel @"kMineOccuranceLevel"
     #define kMineBlastSpeedLevel @"kMineBlastSpeedLevel"
 
-    #define kMineHolsterNukes @"kMineHolsterNukes"
-    #define kMineHolsterCapacity @"kMineHolsterCapacity"
+    #define kHolsterNukes @"kHolsterNukes"
+    #define kHolsterCapacity @"kHolsterCapacity"
 
     #define kUserDuckets @"kUserDuckets"
 

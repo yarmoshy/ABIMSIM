@@ -66,20 +66,21 @@
     SKSpriteNode *currentFrontLayer;
     SKSpriteNode *currentBackLayer;
     SKSpriteNode *background, *background2;
-    SKSpriteNode *shipSprite, *currentBlackHole, *explodingMine, *explodedMine;
+    SKSpriteNode *shipSprite, *currentBlackHole, *explodingMine, *explodedMine, *explodingNuke;
     SKSpriteNode *shieldPowerUpSprite, *minePowerUpSprite;
     SKLabelNode *levelNode, *parsecsNode;
     BOOL shipWarping;
     BOOL hasShield;
     BOOL showingSun;
     BOOL advanceLevel;
+    BOOL nukeUsedThisLevel;
     int possibleBubblesPopped, lastShieldLevel, lastMineLevel;
     
     NSInteger shieldHitPoints;
     NSInteger shipHitPoints;
     
     UIPanGestureRecognizer *flickRecognizer;
-    
+    UITapGestureRecognizer *tapRecognizer;
     BOOL showGameCenter, walkthroughSeen;
     int lastLevelPanned;
     NSTimeInterval lastTimeHit;
@@ -99,7 +100,7 @@
     CGPoint lastShipPosition, pendingVelocity;
     CGSize shipSize;
     
-    int shieldDurabilityLevel, shieldOnStart, shieldOccuranceLevel, mineBlastSpeedLevel, mineOccuranceLevel, sfxSetting;
+    int shieldDurabilityLevel, shieldOnStart, shieldOccuranceLevel, mineBlastSpeedLevel, mineOccuranceLevel, sfxSetting, holsterNukes, holsterCapacity;
 }
 
 static NSMutableArray *backgroundTextures;
@@ -368,7 +369,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
         }
         shipHitPoints = 1;
         shipSprite = [self createShip];
-        
+        [self addSpaceMineExplosionRingAnimationsToSprite:shipSprite];
+
         spritesArrays = [NSMutableArray array];
         currentSpriteArray = [NSMutableArray array];
         
@@ -421,6 +423,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
     mineBlastSpeedLevel = (int)[ABIMSIMDefaults integerForKey:kMineBlastSpeedLevel];
     mineOccuranceLevel = (int)[ABIMSIMDefaults integerForKey:kMineOccuranceLevel];
     sfxSetting = (int)[ABIMSIMDefaults integerForKey:kSFXSetting];
+    holsterNukes = (int)[ABIMSIMDefaults integerForKey:kHolsterNukes];
+    holsterCapacity = (int)[ABIMSIMDefaults integerForKey:kHolsterCapacity];
 }
 
 -(void)applicationWillResignActive {
@@ -460,7 +464,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
         [shipSprite runAction:[SKAction moveTo:CGPointMake(sceneWidth/2, shipSize.height*2) duration:0.5] completion:^{
             self.paused = NO;
             self.initialPause = YES;
-            flickRecognizer.enabled = YES;
+            [self configureGestureRecognizers:YES];
+            
         }];
         SKAction *move = [SKAction moveTo:CGPointMake(sceneWidth/2, sceneHeight/2) duration:0.5];
         SKAction *alphaIn = [SKAction fadeAlphaTo:1 duration:0.5];
@@ -479,7 +484,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
             }
         }];
     } else {
-        flickRecognizer.enabled = YES;
+        [self configureGestureRecognizers:YES];
         shipSprite.physicsBody.velocity = CGVectorMake(0, MAX_VELOCITY);
     }
 
@@ -502,8 +507,10 @@ CGFloat DegreesToRadians(CGFloat degrees)
     [super didMoveToView:view];
     viewHeight = self.view.frame.size.height;
     flickRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGesture:)];
+    tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
     [self.view addGestureRecognizer:flickRecognizer];
-    flickRecognizer.enabled = NO;
+    [self.view addGestureRecognizer:tapRecognizer];
+    [self configureGestureRecognizers:NO];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         self.paused = NO;
     });
@@ -514,12 +521,16 @@ CGFloat DegreesToRadians(CGFloat degrees)
     [self.view removeGestureRecognizer:flickRecognizer];
 }
 
+-(void)configureGestureRecognizers:(BOOL)enabled {
+    flickRecognizer.enabled = tapRecognizer.enabled = enabled;
+}
+
 -(void)pause {
     if ([shipSprite childNodeWithName:shipImageSpriteName].hidden) {
         return;
     }
     self.paused = YES;
-    flickRecognizer.enabled = NO;
+    [self configureGestureRecognizers:NO];
     [self.viewController showPausedView];
 }
 
@@ -529,7 +540,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     }
     if (self.paused) {
         if (self.resuming && !flickRecognizer.enabled) {
-            flickRecognizer.enabled = YES;
+            [self configureGestureRecognizers:YES];
         }
         return;
     }
@@ -674,6 +685,14 @@ CGFloat DegreesToRadians(CGFloat degrees)
             explodingRing.physicsBody.dynamic = NO;
             explodingRing.physicsBody.categoryBitMask = powerUpSpaceMineExplodingRingCategory;
             explodingRing.physicsBody.contactTestBitMask = asteroidCategory | asteroidInShieldCategory;
+        }
+    }
+    if (explodingNuke) {
+        if (explodingNuke.size.width > 0) {
+            explodingNuke.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:explodingNuke.size.width/2];
+            explodingNuke.physicsBody.dynamic = NO;
+            explodingNuke.physicsBody.categoryBitMask = powerUpSpaceMineExplodingRingCategory;
+            explodingNuke.physicsBody.contactTestBitMask = asteroidCategory | asteroidInShieldCategory;
         }
     }
     if (explodedMine) {
@@ -902,6 +921,20 @@ CGFloat DegreesToRadians(CGFloat degrees)
     }
 }
 
+-(void)handleTapGesture:(UITapGestureRecognizer*)recognizer {
+    if (recognizer.state == UIGestureRecognizerStateRecognized) {
+        if (holsterNukes > 0 && !nukeUsedThisLevel) {
+            holsterNukes--;
+            nukeUsedThisLevel = YES;
+            [self nuke];
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+                [ABIMSIMDefaults setInteger:holsterNukes forKey:kHolsterNukes];
+                [ABIMSIMDefaults synchronize];
+            });
+        }
+    }
+}
+
 #pragma mark - Collisions and Contacts
 
 - (void)didBeginContact:(SKPhysicsContact*)contact {
@@ -1019,6 +1052,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
                 [secondBody.node.name isEqualToString:explodedSpaceMine]) {
                 return;
             }
+            nukeUsedThisLevel = YES;
+
             secondBody.node.name = explodingSpaceMine;
             explodingMine = (SKSpriteNode*)secondBody.node;
             [secondBody.node removeAllActions];
@@ -1206,7 +1241,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         self.paused = YES;
         [self.viewController showGameOverView];
         self.gameOver = YES;
-        flickRecognizer.enabled = NO;
+        [self configureGestureRecognizers:NO];
     });
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
@@ -1316,23 +1351,25 @@ CGFloat DegreesToRadians(CGFloat degrees)
     SKAction *explSetup = [SKAction runBlock:^{
         [explosionSprite setScale:0.4];
         [explosionSprite setAlpha:0];
-        flickRecognizer.enabled = NO;
+        [self configureGestureRecognizers:NO];
         ship.physicsBody.collisionBitMask = 0;
         ship.physicsBody.contactTestBitMask = 0;
     }];
     SKAction *removeShipPhysicsBodyAction = [SKAction runBlock:^{
-        flickRecognizer.enabled = YES;
+        [self configureGestureRecognizers:YES];
         ship.physicsBody = nil;
     }];
     SKAction *explSequence = [SKAction sequence:@[explSetup, explGroupAction, explGroupAction2, removeShipPhysicsBodyAction]];
     ship.userData[shipExplosionAnimation] = explSequence;
 
     shipSize = ship.size;
+    explodingNuke = nil;
     return ship;
 }
 
 -(void)resetWorld {
     [self setDefaultValues];
+    nukeUsedThisLevel = NO;
     lastShieldLevel = lastMineLevel = 0;
     
     [background setTexture:backgroundTextures[0]];
@@ -1362,6 +1399,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     if (!shipSprite) {
         shipSprite = [self createShip];
         [self addChild:shipSprite];
+        [self addSpaceMineExplosionRingAnimationsToSprite:shipSprite];
     }
     [shipSprite childNodeWithName:shipShieldSpriteName].hidden = NO;
     [shipSprite childNodeWithName:shipImageSpriteName].hidden = NO;
@@ -1402,7 +1440,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     }
     shipWarping = YES;
     self.reset = NO;
-    flickRecognizer.enabled = YES;
+    [self configureGestureRecognizers:YES];
 }
 
 -(void)transitionStars {
@@ -1582,6 +1620,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
 }
 
 -(void)generateInitialLevelsAndShowSprites:(BOOL)show {
+    nukeUsedThisLevel = NO;
     self.currentLevel = 1;
     levelNode.text = @"1";
     parsecsNode.position = CGPointMake(levelNode.position.x + levelNode.frame.size.width + 1, 16);
@@ -1658,6 +1697,12 @@ CGFloat DegreesToRadians(CGFloat degrees)
         [explodingRing removeFromParent];
         [explodingMine removeFromParent];
     }
+    if (explodingNuke) {
+        [explodingNuke removeAllActions];
+        explodingNuke.alpha = 0;
+        [explodingNuke setScale:0];
+        [explodingNuke setPosition:CGPointZero];
+    }
 }
 
 -(void)advanceToNextLevel {
@@ -1680,7 +1725,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     shipSprite.position = CGPointMake(shipSprite.position.x, -kExtraSpaceOffScreen + shipSprite.size.height/2);
     shipWarping = YES;
     advanceLevel = NO;
-    
+    nukeUsedThisLevel = NO;
     
     self.currentLevel++;
     [self checkLevelAchievements];
@@ -1923,48 +1968,60 @@ CGFloat DegreesToRadians(CGFloat degrees)
     if (!sprite.userData) {
         sprite.userData = [NSMutableDictionary new];
     }
-    float scale = 0;
+    BOOL isShipSprite = [sprite isEqual:shipSprite];
     float duration = 1.75 - (mineBlastSpeedLevel * 0.25);
     SKSpriteNode *ring1 = [SKSpriteNode spriteNodeWithTexture:powerUpTextures[0]];
     [sprite addChild:ring1];
     ring1.name = powerUpSpaceMineExplodeRingName;
     ring1.alpha = 0;
-    [ring1 setScale:scale];
+    [ring1 setScale:0];
     SKAction *expandRingAction = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? [SKAction scaleTo:3 duration:duration] : [SKAction scaleTo:1.25 duration:duration];
     SKAction *blockAction = [SKAction runBlock:^{
-        [ring1 setScale:scale];
+        [ring1 setScale:0];
         [ring1 setAlpha:1];
     }];
-    SKAction *sequenceAction = [SKAction sequence:@[blockAction, expandRingAction]];
+    SKAction *resetAction = [SKAction runBlock:^{
+        [ring1 setScale:0];
+        [ring1 setAlpha:0];
+        [ring1 setPosition:CGPointZero];
+    }];
+
+    SKAction *sequenceAction;
+    if (isShipSprite) {
+        sequenceAction = [SKAction sequence:@[blockAction, expandRingAction, resetAction]];
+    } else {
+        sequenceAction = [SKAction sequence:@[blockAction, expandRingAction]];
+    }
     SKAction *animationAction = [SKAction runBlock:^{
         [ring1 runAction:sequenceAction];
     }];
     sprite.userData[powerUpSpaceMineExplosionRingAnimation] = animationAction;
 
-    scale = 0;
-    SKSpriteNode *largeGlow = [SKSpriteNode spriteNodeWithTexture:powerUpTextures[1]];
-    [sprite addChild:largeGlow];
-    largeGlow.name = powerUpSpaceMineExplodeGlowName;
-    largeGlow.alpha = 0;
-    [largeGlow setScale:scale];
-    SKAction *expandRingActionB = [SKAction scaleTo:1 duration:duration/2.f];
-    SKAction *alphaInRingActionB = [SKAction fadeAlphaTo:1 duration:duration/2.f];
-    SKAction *alphaOutRingActionB = [SKAction fadeAlphaTo:0 duration:duration];
-    SKAction *removeImageAction = [SKAction runBlock:^{
-        [sprite setTexture:nil];
-    }];
-    SKAction *groupActionB = [SKAction group:@[expandRingActionB,alphaInRingActionB]];
-    SKAction *groupActionC = [SKAction group:@[alphaOutRingActionB,removeImageAction]];
-    SKAction *sequenceActionB = [SKAction sequence:@[groupActionB, groupActionC]];
-    SKAction *blockActionB = [SKAction runBlock:^{
-        [largeGlow setScale:scale];
-        [largeGlow setAlpha:0];
-    }];
-    SKAction *sequenceActionC = [SKAction sequence:@[blockActionB, sequenceActionB]];
-    SKAction *animationActionB = [SKAction runBlock:^{
-        [largeGlow runAction:sequenceActionC];
-    }];
-    sprite.userData[powerUpSpaceMineExplosionGlowAnimation] = animationActionB;
+    if (!isShipSprite) {
+        SKSpriteNode *largeGlow = [SKSpriteNode spriteNodeWithTexture:powerUpTextures[1]];
+        [sprite addChild:largeGlow];
+        largeGlow.name = powerUpSpaceMineExplodeGlowName;
+        largeGlow.alpha = 0;
+        [largeGlow setScale:0];
+        SKAction *expandRingActionB = [SKAction scaleTo:1 duration:duration/2.f];
+        SKAction *alphaInRingActionB = [SKAction fadeAlphaTo:1 duration:duration/2.f];
+        SKAction *alphaOutRingActionB = [SKAction fadeAlphaTo:0 duration:duration];
+        SKAction *removeImageAction = [SKAction runBlock:^{
+            [sprite setTexture:nil];
+        }];
+        SKAction *groupActionB = [SKAction group:@[expandRingActionB,alphaInRingActionB]];
+        SKAction *groupActionC = [SKAction group:@[alphaOutRingActionB,removeImageAction]];
+        SKAction *sequenceActionB = [SKAction sequence:@[groupActionB, groupActionC]];
+        SKAction *blockActionB = [SKAction runBlock:^{
+            [largeGlow setScale:0];
+            [largeGlow setAlpha:0];
+        }];
+        SKAction *sequenceActionC = [SKAction sequence:@[blockActionB, sequenceActionB]];
+        SKAction *animationActionB = [SKAction runBlock:^{
+            [largeGlow runAction:sequenceActionC];
+        }];
+        sprite.userData[powerUpSpaceMineExplosionGlowAnimation] = animationActionB;
+    }
 }
 
 
@@ -2059,6 +2116,17 @@ CGFloat DegreesToRadians(CGFloat degrees)
     float alpha = minAlpha + 0.5 * currentShieldPercentage;
     [shipSprite childNodeWithName:shipShieldSpriteName].alpha = alpha;
 }
+
+-(void)nuke {
+    if (!explodingNuke) {
+        explodingNuke = (SKSpriteNode*)[shipSprite childNodeWithName:powerUpSpaceMineExplodeRingName];
+        [explodingNuke removeFromParent];
+        [self addChild:explodingNuke];
+    }
+    explodingNuke.position = shipSprite.position;
+    [shipSprite runAction:shipSprite.userData[powerUpSpaceMineExplosionRingAnimation]];
+}
+
 #pragma mark - Asteroids
 
 -(NSMutableArray*)asteroidsForLevel:(int)level {
