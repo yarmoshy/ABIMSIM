@@ -424,7 +424,7 @@
 
 -(void)configureUnlockMinesCell:(UpgradeTableViewCell*)cell {
     cell.cellType = UpgradeTableViewCellTypeUnlockMines;
-    cell.upgradeTypeImageView.image = [UIImage imageNamed:@"UnlockMinesText"];
+    cell.upgradeTypeImageView.image = [UIImage imageNamed:@"UnlockNukesText"];
     cell.unlimitedUpgradesHeightConstraint.constant = 0;
     cell.xpRequiredLabel.text = @"10 XP";
     cell.ringImageView.image = [UIImage imageNamed:@"SolidRing_Empty"];
@@ -499,9 +499,9 @@
     cell.upgradeTypeImageView.image = [UIImage imageNamed:@"ArmoryCapacityText"];
     cell.unlimitedUpgradesHeightConstraint.constant = 0;
     cell.xpRequiredLabel.text = [NSString stringWithFormat:@"%ld XP",(holsterCapacity+1)*250];
-    cell.ringImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"Ring_5Pieces_%ld", holsterCapacity]];
-    cell.descriptionLabel.text = @"Your ship can be upgraded to hold a max of 5 items.";
-    if (holsterCapacity == 5) {
+    cell.ringImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"Ring_10Pieces_%ld", holsterCapacity]];
+    cell.descriptionLabel.text = @"Your ship can be upgraded to hold a max of 10 items.";
+    if (holsterCapacity >= 10) {
         cell.upgradeButton.alpha = 0;
         cell.xpRequiredLabel.text = @"FULLY UPGRADED";
         cell.upgradeButton.enabled = NO;
@@ -518,15 +518,14 @@
     cell.cellType = UpgradeTableViewCellTypeHolsterNuke;
     cell.upgradeTypeImageView.image = [UIImage imageNamed:@"AsteroidNukeText"];
     cell.unlimitedUpgradesHeightConstraint.constant = 0;
-    cell.xpRequiredLabel.text = [NSString stringWithFormat:@"%d XP",50];
-    cell.ringImageView.image = [UIImage imageNamed:@"SolidRing_Empty"];
+    cell.xpRequiredLabel.text = [NSString stringWithFormat:@"%d XP",25];
+    cell.ringImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"Ring_10Pieces_%ld", holsterNukes]];
     cell.descriptionLabel.text = @"Add a nuke to your armory when there is capacity.";
-    if (holsterNukes == holsterCapacity && holsterCapacity > 0) {
+    if (holsterNukes >= holsterCapacity && holsterCapacity > 0) {
         cell.upgradeButton.alpha = 0;
         cell.xpRequiredLabel.text = @"FULL CAPACITY";
         cell.upgradeButton.enabled = NO;
-        cell.ringImageView.image = [UIImage imageNamed:@"SolidRing_Full"];
-    } else if ([ABIMSIMDefaults integerForKey:kUserDuckets] < 50) {
+    } else if ([ABIMSIMDefaults integerForKey:kUserDuckets] < 25) {
         cell.upgradeButton.alpha = 1;
         cell.upgradeButton.enabled = NO;
     } else {
@@ -545,15 +544,15 @@
     switch (cell.cellType) {
         case UpgradeTableViewCellTypeHolsterNuke: {
             long newValue = holsterNukes+1;
-            cell.ringImageView.image = [UIImage imageNamed:@"SolidRing_Full"];
+            cell.ringImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"Ring_10Pieces_%ld",newValue]];
             [ABIMSIMDefaults setInteger:newValue forKey:kHolsterNukes];
-            delay = YES;
         }
             break;
         case UpgradeTableViewCellTypeHolsterCapacity: {
             long newValue = holsterCapacity+1;
             cell.ringImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"Ring_5Pieces_%ld",newValue]];
             [ABIMSIMDefaults setInteger:newValue forKey:kHolsterCapacity];
+            [ABIMSIMDefaults setInteger:newValue forKey:kHolsterNukes];
         }
             break;
         case UpgradeTableViewCellTypeMineBlastSpeed: {
@@ -605,6 +604,7 @@
             long newValue = holsterCapacity+1;
             cell.ringImageView.image = [UIImage imageNamed:@"SolidRing_Full"];
             [ABIMSIMDefaults setInteger:newValue forKey:kHolsterCapacity];
+            [ABIMSIMDefaults setInteger:newValue forKey:kHolsterNukes];
         }
             break;
         default:

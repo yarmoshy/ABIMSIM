@@ -110,6 +110,7 @@ static NSMutableArray *asteroidTextures;
 static NSMutableArray *powerUpTextures;
 static NSMutableArray *spaceMineTextures;
 static NSMutableArray *impactSpriteArrays;
+static NSMutableArray *holsterNukeSpritesArray;
 static NSMutableDictionary *asteroidSpritesDictionary;
 static NSMutableDictionary *planetSpritesDictionary;
 
@@ -126,7 +127,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         sceneWidth = self.frame.size.width;
         
         [self setDefaultValues];
-
+        
         walkthroughSeen = [ABIMSIMDefaults boolForKey:kWalkthroughSeen];
         self.initialPause = !walkthroughSeen;
 
@@ -319,6 +320,24 @@ CGFloat DegreesToRadians(CGFloat degrees)
             [impactSpriteArrays addObject:largerImpactArray];
         }
         
+        if (!holsterNukeSpritesArray) {
+            holsterNukeSpritesArray = [NSMutableArray arrayWithCapacity:10];
+            int baseX = self.size.width - 19;
+            int gap = 5;
+            for (int i = 0; i < 10; i++) {
+                SKSpriteNode *holsterNukeSprite = [SKSpriteNode spriteNodeWithImageNamed:@"AvailableHolster_"];
+                holsterNukeSprite.position = CGPointMake(baseX - holsterNukeSprite.size.width/2 - ((holsterNukeSprite.size.width + gap) * i), self.size.height - 20);
+                holsterNukeSprite.alpha = 0;
+                holsterNukeSprite.zPosition = 1000;
+                [holsterNukeSpritesArray insertObject:holsterNukeSprite atIndex:0];
+            }
+        }
+        for (SKSpriteNode *holsterNukeSprite in holsterNukeSpritesArray) {
+            [holsterNukeSprite removeFromParent];
+            [self addChild:holsterNukeSprite];
+            holsterNukeSprite.alpha = 0;
+        }
+        
         self.physicsWorld.gravity = CGVectorMake(0.0f, 0.0f);
         SKPhysicsBody* borderBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:CGRectMake(0, -kExtraSpaceOffScreen, size.width, size.height+kExtraSpaceOffScreen*2)];
         borderBody.categoryBitMask = borderCategory;
@@ -427,6 +446,39 @@ CGFloat DegreesToRadians(CGFloat degrees)
     holsterCapacity = (int)[ABIMSIMDefaults integerForKey:kHolsterCapacity];
 }
 
+-(void)configureHolsterNukeSprites {
+    if (holsterCapacity == 0) {
+        for (SKSpriteNode *holsterNuke in holsterNukeSpritesArray) {
+            holsterNuke.alpha = 0;
+        }
+        return;
+    }
+    for (int i = 0; i < holsterNukes; i++) {
+        SKSpriteNode *holsterNuke = holsterNukeSpritesArray[i];
+        holsterNuke.alpha = 1;
+        [holsterNuke setTexture:[SKTexture textureWithImageNamed:@"FullHolster_"]];
+        if (!holsterNuke.parent) {
+            [self addChild:holsterNuke];
+        }
+    }
+    for (int i = holsterNukes; i < holsterCapacity; i++) {
+        SKSpriteNode *holsterNuke = holsterNukeSpritesArray[i];
+        holsterNuke.alpha = 1;
+        [holsterNuke setTexture:[SKTexture textureWithImageNamed:@"AvailableHolster_"]];
+        if (!holsterNuke.parent) {
+            [self addChild:holsterNuke];
+        }
+    }
+    for (int i = holsterCapacity; i < 10; i++) {
+        SKSpriteNode *holsterNuke = holsterNukeSpritesArray[i];
+        holsterNuke.alpha = 0.4;
+        [holsterNuke setTexture:[SKTexture textureWithImageNamed:@"AvailableHolster_"]];
+        if (!holsterNuke.parent) {
+            [self addChild:holsterNuke];
+        }
+    }
+}
+
 -(void)applicationWillResignActive {
     if (self.viewController.mainMenuView.alpha == 0 &&
         self.viewController.pausedView.alpha == 0 &&
@@ -494,6 +546,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         }
         levelNode.alpha = 0.7;
         parsecsNode.alpha = 0.7;
+        [self configureHolsterNukeSprites];
     } completion:^(BOOL finished) {
         ;
     }];
@@ -927,6 +980,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
             holsterNukes--;
             nukeUsedThisLevel = YES;
             [self nuke];
+            [self configureHolsterNukeSprites];
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
                 [ABIMSIMDefaults setInteger:holsterNukes forKey:kHolsterNukes];
                 [ABIMSIMDefaults synchronize];
@@ -1369,6 +1423,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
 -(void)resetWorld {
     [self setDefaultValues];
+    [self configureHolsterNukeSprites];
     nukeUsedThisLevel = NO;
     lastShieldLevel = lastMineLevel = 0;
     
@@ -1969,7 +2024,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         sprite.userData = [NSMutableDictionary new];
     }
     BOOL isShipSprite = [sprite isEqual:shipSprite];
-    float duration = 1.75 - (mineBlastSpeedLevel * 0.25);
+    float duration = isShipSprite ? 0.5 : 1.75 - (mineBlastSpeedLevel * 0.25);
     SKSpriteNode *ring1 = [SKSpriteNode spriteNodeWithTexture:powerUpTextures[0]];
     [sprite addChild:ring1];
     ring1.name = powerUpSpaceMineExplodeRingName;
