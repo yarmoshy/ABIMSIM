@@ -27,6 +27,7 @@
     [super viewDidLoad];
     
     [AudioController sharedController];
+    [ABIMSIMDefaults setInteger:30000 forKey:kUserDuckets];
     
     showingSettings = NO;
     

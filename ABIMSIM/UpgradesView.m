@@ -15,7 +15,7 @@
     long shieldOccurance, shieldDurability, shieldOnStart, mineOccurance, mineBlastSpeed, holsterNukes, holsterCapacity;
     NSNumberFormatter *formatter;
     IAPView *iapView;
-
+    UIViewController *IAPController;
     BOOL animating;
 }
 
@@ -26,16 +26,18 @@
         UINib * IAPNib = [UINib nibWithNibName:@"IAPView" bundle:nil];
         iapView = [IAPNib instantiateWithOwner:self options:nil][0];
         iapView.frame = self.frame;
-        iapView.alpha = 0;
-        [self addSubview:iapView];
+        IAPController = [[UIViewController alloc] init];
+        IAPController.view = iapView;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(IAPPurchaseComplete) name:kStoreKitPurchaseFinished object:nil];
-
     }
     return self;
 }
 
 -(void)storeButtonTapped:(id)sender {
-    iapView.alpha = 1;
+    ((IAPView*)IAPController.view).presentingViewController = ((UIViewController*)self.delegate);
+    [((UIViewController*)self.delegate) presentViewController:IAPController animated:YES completion:^{
+        ;
+    }];
 }
 
 -(void)IAPPurchaseComplete {
@@ -155,10 +157,13 @@
         [xpCell.contentView addSubview:rightBracket];
 
         UIButton *storeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [storeButton setTitle:@"Store" forState:UIControlStateNormal];
-        [storeButton setTitleColor: [UIColor whiteColor] forState: UIControlStateNormal];
+        [storeButton setImage:[UIImage imageNamed:@"GetMoreButton_Normal"] forState:UIControlStateNormal];
+        [storeButton setImage:[UIImage imageNamed:@"GetMoreButton_Tapped"] forState:UIControlStateHighlighted];
+        [storeButton setImage:[UIImage imageNamed:@"GetMoreButton_Tapped"] forState:UIControlStateSelected];
+//        [storeButton setTitle:@"Store" forState:UIControlStateNormal];
+//        [storeButton setTitleColor: [UIColor whiteColor] forState: UIControlStateNormal];
         [storeButton sizeToFit];
-        storeButton.center = CGPointMake(tableView.frame.size.width * (2.f/3.f), 72 + (xpCell.frame.size.height-72)/2 + storeButton.frame.size.height/2);
+        storeButton.center = CGPointMake(tableView.frame.size.width * (2.f/3.f), 72 + (xpCell.frame.size.height-72)/2 + storeButton.frame.size.height/4);
         [storeButton addTarget:self action:@selector(storeButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
         [xpCell.contentView addSubview:storeButton];
         
@@ -171,26 +176,36 @@
             }
             typeCell.backgroundColor = typeCell.contentView.backgroundColor = [UIColor clearColor];
             UIImageView *upgradeIconImage;
+            UILabel *upgradeIconLabel = [[UILabel alloc] init];
+            [upgradeIconLabel setFont:[UIFont fontWithName:@"Futura-CondensedMedium" size:22]];
+            upgradeIconLabel.textColor = [UIColor whiteColor];
+            upgradeIconLabel.backgroundColor = [UIColor clearColor];
             if (indexPath.section == 1) {
+                upgradeIconLabel.text = NSLocalizedString(@"SHIELD", nil);
                 upgradeIconImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ShipShield"]];
             } else if (indexPath.section == 2) {
+                upgradeIconLabel.text = NSLocalizedString(@"ASTEROID NUKES", nil);
                 upgradeIconImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"MineIcon"]];
             } else if (indexPath.section == 3) {
+                upgradeIconLabel.text = NSLocalizedString(@"SHIP ARMORY", nil);
                 upgradeIconImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"MineIcon"]];
             }
             upgradeIconImage.frame = CGRectMake(15, 12.5, 30, 30);
+            [upgradeIconLabel sizeToFit];
+            upgradeIconLabel.frame = CGRectMake(upgradeIconImage.frame.size.width + upgradeIconImage.frame.origin.x + 5, (kTypeCellHeight - upgradeIconLabel.frame.size.height)/2, upgradeIconLabel.frame.size.width, upgradeIconLabel.frame.size.height);
             [typeCell.contentView addSubview:upgradeIconImage];
-            
-            UIImageView *upgradeTypeImage;
-            if (indexPath.section == 1) {
-                upgradeTypeImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ShieldsTitle"]];
-            } else if (indexPath.section == 2) {
-                upgradeTypeImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"MinesTitle"]];
-            } else if (indexPath.section == 3) {
-                upgradeTypeImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ShipArmoryTitle"]];
-            }
-            upgradeTypeImage.frame = CGRectMake(upgradeIconImage.frame.size.width + upgradeIconImage.frame.origin.x + 5, (kTypeCellHeight - upgradeTypeImage.frame.size.height)/2, upgradeTypeImage.frame.size.width, upgradeTypeImage.frame.size.height);
-            [typeCell.contentView addSubview:upgradeTypeImage];
+            [typeCell.contentView addSubview:upgradeIconLabel];
+
+//            UIImageView *upgradeTypeImage;
+//            if (indexPath.section == 1) {
+//                upgradeTypeImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ShieldsTitle"]];
+//            } else if (indexPath.section == 2) {
+//                upgradeTypeImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"MinesTitle"]];
+//            } else if (indexPath.section == 3) {
+//                upgradeTypeImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ShipArmoryTitle"]];
+//            }
+//            upgradeTypeImage.frame = CGRectMake(upgradeIconImage.frame.size.width + upgradeIconImage.frame.origin.x + 5, (kTypeCellHeight - upgradeTypeImage.frame.size.height)/2, upgradeTypeImage.frame.size.width, upgradeTypeImage.frame.size.height);
+//            [typeCell.contentView addSubview:upgradeTypeImage];
             
             UIImageView *divider;
             if (indexPath.section == 1) {
@@ -198,7 +213,7 @@
             } else {
                 divider = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"MinesDivider"]];
             }
-            divider.frame = CGRectMake(upgradeTypeImage.frame.size.width + upgradeTypeImage.frame.origin.x + 15, (kTypeCellHeight - divider.frame.size.height)/2, tableView.frame.size.width - upgradeTypeImage.frame.size.width + upgradeTypeImage.frame.origin.x + 15, divider.frame.size.height);
+            divider.frame = CGRectMake(upgradeIconLabel.frame.size.width + upgradeIconLabel.frame.origin.x + 15, (kTypeCellHeight - divider.frame.size.height)/2, tableView.frame.size.width - upgradeIconLabel.frame.size.width + upgradeIconLabel.frame.origin.x + 15, divider.frame.size.height);
             [typeCell.contentView addSubview:divider];
             return typeCell;
         } else {
@@ -207,7 +222,7 @@
             cell.delegate = self;
             cell.contentView.alpha = 1;
             cell.upgradeButton.alpha = 1;
-            cell.upgradeTypeImageView.alpha = 1;
+            cell.upgradeTypeLabel.alpha = 1;
             cell.xpRequiredLabel.alpha = 1;
             if (indexPath.section == 1) {
                 if (shieldOccurance > 0) {
@@ -243,7 +258,7 @@
                     }
                     if (indexPath.row > 1) {
                         cell.contentView.alpha = 0.4;
-                        cell.upgradeTypeImageView.alpha = 0.4;
+                        cell.upgradeTypeLabel.alpha = 0.4;
                         cell.xpRequiredLabel.alpha = 0.4;
                         cell.upgradeButton.enabled = NO;
                     }
@@ -276,7 +291,7 @@
                     }
                     if (indexPath.row > 1) {
                         cell.contentView.alpha = 0.4;
-                        cell.upgradeTypeImageView.alpha = 0.4;
+                        cell.upgradeTypeLabel.alpha = 0.4;
                         cell.xpRequiredLabel.alpha = 0.4;
                         cell.upgradeButton.enabled = NO;
                     }
@@ -309,7 +324,7 @@
                     }
                     if (indexPath.row > 1) {
                         cell.contentView.alpha = 0.4;
-                        cell.upgradeTypeImageView.alpha = 0.4;
+                        cell.upgradeTypeLabel.alpha = 0.4;
                         cell.xpRequiredLabel.alpha = 0.4;
                         cell.upgradeButton.enabled = NO;
                     }
@@ -328,7 +343,7 @@
 
 -(void)configureUnlockShieldCell:(UpgradeTableViewCell*)cell {
     cell.cellType = UpgradeTableViewCellTypeUnlockShield;
-    cell.upgradeTypeImageView.image = [UIImage imageNamed:@"UnlockShieldTitle"];
+    cell.upgradeTypeLabel.text = NSLocalizedString(@"UNLOCK SHIELD", nil);
     cell.unlimitedUpgradesHeightConstraint.constant = 0;
     cell.xpRequiredLabel.text = @"10 XP";
     cell.ringImageView.image = [UIImage imageNamed:@"SolidRing_Empty"];
@@ -343,7 +358,7 @@
 
 -(void)configureStartWithShieldCell:(UpgradeTableViewCell*)cell {
     cell.cellType = UpgradeTableViewCellTypeStartWithShield;
-    cell.upgradeTypeImageView.image = [UIImage imageNamed:@"StartWithShieldTitle"];
+    cell.upgradeTypeLabel.text = NSLocalizedString(@"START WITH SHIELD",nil);
     cell.unlimitedUpgradesHeightConstraint.constant = 0;
     cell.xpRequiredLabel.text = @"100 XP";
     cell.ringImageView.image = [UIImage imageNamed:@"SolidRing_Empty"];
@@ -364,7 +379,7 @@
 
 -(void)configureShieldOccuranceCell:(UpgradeTableViewCell*)cell {
     cell.cellType = UpgradeTableViewCellTypeShieldOccurance;
-    cell.upgradeTypeImageView.image = [UIImage imageNamed:@"ShieldOccuranceTitle"];
+    cell.upgradeTypeLabel.text = NSLocalizedString(@"SHIELD OCCURANCE",nil);
     cell.unlimitedUpgradesHeightConstraint.constant = 0;
     cell.xpRequiredLabel.text = [NSString stringWithFormat:@"%ld XP",(shieldOccurance+1)*10];
     cell.ringImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"Ring_10Pieces_%ld", shieldOccurance]];
@@ -384,7 +399,7 @@
 
 -(void)configureShieldStrengthCell:(UpgradeTableViewCell*)cell {
     cell.cellType = UpgradeTableViewCellTypeShieldStrength;
-    cell.upgradeTypeImageView.image = [UIImage imageNamed:@"ShieldStrengthText"];
+    cell.upgradeTypeLabel.text = NSLocalizedString(@"SHIELD STRENGTH",nil);
     int shipShieldStrengthCost = (int)(shieldDurability+1)*100;
     switch (shipShieldStrengthCost) {
         case 600:
@@ -405,7 +420,7 @@
         default:
             break;
     }
-    cell.xpRequiredLabel.text = [NSString stringWithFormat:@"%@ XP",[formatter stringFromNumber:[NSNumber numberWithInteger:shipShieldStrengthCost]]];
+    cell.xpRequiredLabel.text = [NSString stringWithFormat:@"%@ %@",[formatter stringFromNumber:[NSNumber numberWithInteger:shipShieldStrengthCost]], NSLocalizedString(@"XP",nil)];
     cell.ringImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"Ring_10Pieces_%ld", shieldDurability]];
     cell.unlimitedUpgradesHeightConstraint.constant = 0;
     cell.descriptionLabel.text = @"The higher your upgrade, the more hits it will take to pop your shield.";
@@ -424,7 +439,7 @@
 
 -(void)configureUnlockMinesCell:(UpgradeTableViewCell*)cell {
     cell.cellType = UpgradeTableViewCellTypeUnlockMines;
-    cell.upgradeTypeImageView.image = [UIImage imageNamed:@"UnlockNukesText"];
+    cell.upgradeTypeLabel.text = NSLocalizedString(@"UNLOCK NUKES",nil);
     cell.unlimitedUpgradesHeightConstraint.constant = 0;
     cell.xpRequiredLabel.text = @"10 XP";
     cell.ringImageView.image = [UIImage imageNamed:@"SolidRing_Empty"];
@@ -440,7 +455,7 @@
 
 -(void)configureMineOccuranceCell:(UpgradeTableViewCell*)cell {
     cell.cellType = UpgradeTableViewCellTypeMineOccurance;
-    cell.upgradeTypeImageView.image = [UIImage imageNamed:@"MineOccuranceText"];
+    cell.upgradeTypeLabel.text = NSLocalizedString(@"NUKE OCCURANCE",nil);
     cell.unlimitedUpgradesHeightConstraint.constant = 0;
     cell.xpRequiredLabel.text = [NSString stringWithFormat:@"%ld XP",(mineOccurance+1)*10];
     cell.ringImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"Ring_10Pieces_%ld", mineOccurance]];
@@ -460,7 +475,7 @@
 
 -(void)configureMineBlastSpeedCell:(UpgradeTableViewCell*)cell {
     cell.cellType = UpgradeTableViewCellTypeMineBlastSpeed;
-    cell.upgradeTypeImageView.image = [UIImage imageNamed:@"BlastSpeedText"];
+    cell.upgradeTypeLabel.text = NSLocalizedString(@"BLAST SPEED",nil);
     cell.unlimitedUpgradesHeightConstraint.constant = 0;
     cell.xpRequiredLabel.text = [NSString stringWithFormat:@"%ld XP",(mineBlastSpeed+1)*20];
     cell.ringImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"Ring_5Pieces_%ld", mineBlastSpeed]];
@@ -480,7 +495,7 @@
 
 -(void)configureUnlockArmoryCell:(UpgradeTableViewCell*)cell {
     cell.cellType = UpgradeTableViewCellTypeUnlockArmory;
-    cell.upgradeTypeImageView.image = [UIImage imageNamed:@"UnlockArmoryText"];
+    cell.upgradeTypeLabel.text = NSLocalizedString(@"UNLOCK ARMORY",nil);
     cell.unlimitedUpgradesHeightConstraint.constant = 0;
     cell.xpRequiredLabel.text = @"250 XP";
     cell.ringImageView.image = [UIImage imageNamed:@"SolidRing_Empty"];
@@ -496,7 +511,7 @@
 
 -(void)configureHolsterCapacityCell:(UpgradeTableViewCell*)cell {
     cell.cellType = UpgradeTableViewCellTypeHolsterCapacity;
-    cell.upgradeTypeImageView.image = [UIImage imageNamed:@"ArmoryCapacityText"];
+    cell.upgradeTypeLabel.text = NSLocalizedString(@"ARMORY CAPACITY",nil);
     cell.unlimitedUpgradesHeightConstraint.constant = 0;
     cell.xpRequiredLabel.text = [NSString stringWithFormat:@"%ld XP",(holsterCapacity+1)*250];
     cell.ringImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"Ring_10Pieces_%ld", holsterCapacity]];
@@ -516,7 +531,7 @@
 
 -(void)configureAsteroidNukeCell:(UpgradeTableViewCell*)cell {
     cell.cellType = UpgradeTableViewCellTypeHolsterNuke;
-    cell.upgradeTypeImageView.image = [UIImage imageNamed:@"AsteroidNukeText"];
+    cell.upgradeTypeLabel.text = NSLocalizedString(@"ASTEROID NUKE",nil);
     cell.unlimitedUpgradesHeightConstraint.constant = 0;
     cell.xpRequiredLabel.text = [NSString stringWithFormat:@"%d XP",10];
     cell.ringImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"Ring_10Pieces_%ld", holsterNukes]];

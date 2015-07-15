@@ -18,7 +18,12 @@ typedef enum {
     UpgradeTableViewCellTypeMineBlastSpeed,
     UpgradeTableViewCellTypeUnlockArmory,
     UpgradeTableViewCellTypeHolsterCapacity,
-    UpgradeTableViewCellTypeHolsterNuke
+    UpgradeTableViewCellTypeHolsterNuke,
+    UpgradeTableViewCellTypeIAPZero,
+    UpgradeTableViewCellTypeIAPOne,
+    UpgradeTableViewCellTypeIAPTwo,
+    UpgradeTableViewCellTypeIAPThree,
+    UpgradeTableViewCellTypeIAPFour
 } UpgradeTableViewCellType;
 
 @protocol UpgradeTableViewCellDelegate <NSObject>
@@ -28,7 +33,7 @@ typedef enum {
 
 @interface UpgradeTableViewCell : UITableViewCell
 @property (weak, nonatomic) id<UpgradeTableViewCellDelegate> delegate;
-@property (weak, nonatomic) IBOutlet UIImageView *upgradeTypeImageView;
+@property (weak, nonatomic) IBOutlet UILabel *upgradeTypeLabel;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *unlimitedUpgradesHeightConstraint;
 @property (weak, nonatomic) IBOutlet UILabel *xpRequiredLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *ringImageView;

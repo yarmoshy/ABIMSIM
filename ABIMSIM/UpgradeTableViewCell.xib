@@ -39,19 +39,22 @@
                         </connections>
                     </button>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f2j-Ii-iGG">
-                        <rect key="frame" x="15" y="36" width="150" height="44"/>
+                        <rect key="frame" x="15" y="34" width="150" height="49"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ShieldStrengthText" translatesAutoresizingMaskIntoConstraints="NO" id="2br-85-ChM">
-                                <rect key="frame" x="0.0" y="0.0" width="102" height="15"/>
-                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gp6-ZR-l48">
+                                <rect key="frame" x="0.0" y="0.0" width="33" height="23"/>
+                                <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="19"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="UnlimitedUpgradesText" translatesAutoresizingMaskIntoConstraints="NO" id="0jF-jQ-4ZY">
-                                <rect key="frame" x="0.0" y="18" width="82" height="10"/>
+                                <rect key="frame" x="0.0" y="23" width="82" height="10"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="10" id="i0I-S3-FNU"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100 XP" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="97p-kL-Kba">
-                                <rect key="frame" x="0.0" y="25" width="40" height="22"/>
+                                <rect key="frame" x="0.0" y="30" width="40" height="22"/>
                                 <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="18"/>
                                 <color key="textColor" red="0.82745098039215681" green="0.047058823529411764" blue="0.37254901960784315" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -59,19 +62,21 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="bottom" secondItem="Gp6-ZR-l48" secondAttribute="bottom" constant="3" id="1ok-4f-CCu"/>
+                            <constraint firstItem="Gp6-ZR-l48" firstAttribute="leading" secondItem="97p-kL-Kba" secondAttribute="trailing" id="35g-Si-G0X"/>
                             <constraint firstItem="0jF-jQ-4ZY" firstAttribute="leading" secondItem="f2j-Ii-iGG" secondAttribute="leading" id="7GA-Vo-w9S"/>
+                            <constraint firstItem="Gp6-ZR-l48" firstAttribute="leading" secondItem="f2j-Ii-iGG" secondAttribute="leading" id="CBu-eb-4eW"/>
                             <constraint firstAttribute="bottom" secondItem="97p-kL-Kba" secondAttribute="bottom" constant="-3" id="E33-Du-QET"/>
                             <constraint firstItem="97p-kL-Kba" firstAttribute="top" secondItem="0jF-jQ-4ZY" secondAttribute="bottom" constant="-3" id="Gcp-QN-IpI"/>
-                            <constraint firstAttribute="trailing" secondItem="2br-85-ChM" secondAttribute="trailing" id="L3t-6x-tBo"/>
-                            <constraint firstItem="2br-85-ChM" firstAttribute="leading" secondItem="f2j-Ii-iGG" secondAttribute="leading" id="Lsc-ji-H71"/>
-                            <constraint firstItem="0jF-jQ-4ZY" firstAttribute="top" secondItem="2br-85-ChM" secondAttribute="bottom" constant="3" id="MUg-LP-Ra0"/>
+                            <constraint firstItem="Gp6-ZR-l48" firstAttribute="top" secondItem="f2j-Ii-iGG" secondAttribute="top" id="IMT-R1-SFD"/>
+                            <constraint firstItem="0jF-jQ-4ZY" firstAttribute="top" secondItem="Gp6-ZR-l48" secondAttribute="bottom" id="Ihz-En-C0D"/>
                             <constraint firstItem="97p-kL-Kba" firstAttribute="leading" secondItem="f2j-Ii-iGG" secondAttribute="leading" id="V1m-de-zJM"/>
                             <constraint firstAttribute="width" constant="150" id="o5k-1h-4yy"/>
-                            <constraint firstItem="2br-85-ChM" firstAttribute="top" secondItem="f2j-Ii-iGG" secondAttribute="top" id="spJ-wF-WWP"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="L3t-6x-tBo"/>
+                                <exclude reference="1ok-4f-CCu"/>
+                                <exclude reference="35g-Si-G0X"/>
                             </mask>
                         </variation>
                     </view>
@@ -132,14 +137,13 @@
                 <outlet property="typeAndCostContainerView" destination="f2j-Ii-iGG" id="045-G0-0Lp"/>
                 <outlet property="unlimitedUpgradesHeightConstraint" destination="i0I-S3-FNU" id="rfg-Jy-tq3"/>
                 <outlet property="upgradeButton" destination="TgB-19-HXp" id="Exa-ux-aUd"/>
-                <outlet property="upgradeTypeImageView" destination="2br-85-ChM" id="SbO-jf-noi"/>
+                <outlet property="upgradeTypeLabel" destination="Gp6-ZR-l48" id="K2y-G5-zp9"/>
                 <outlet property="xpRequiredLabel" destination="97p-kL-Kba" id="QZz-SQ-6oq"/>
             </connections>
             <point key="canvasLocation" x="318" y="333"/>
         </tableViewCell>
     </objects>
     <resources>
-        <image name="ShieldStrengthText" width="102" height="15"/>
         <image name="SolidRing_Empty" width="104" height="104"/>
         <image name="UnlimitedUpgradesText" width="82" height="10"/>
         <image name="UpgradeBackgroundLeft" width="180" height="117"/>

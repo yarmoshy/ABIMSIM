@@ -7,15 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UpgradeTableViewCell.h"
 
-@interface IAPView : UIView
+@interface IAPView : UIView <UpgradeTableViewCellDelegate>
 @property (weak, nonatomic) IBOutlet UIView *loaderView;
-
+@property (weak, nonatomic) UIViewController *presentingViewController;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 - (IBAction)backButtonTapped:(id)sender;
-- (IBAction)xp750Tapped:(id)sender;
-- (IBAction)xp1500Tapped:(id)sender;
-- (IBAction)xp4000Tapped:(id)sender;
-- (IBAction)xp10000Tapped:(id)sender;
-- (IBAction)xp25000Tapped:(id)sender;
 
 @end

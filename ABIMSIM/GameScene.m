@@ -323,7 +323,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         if (!holsterNukeSpritesArray) {
             holsterNukeSpritesArray = [NSMutableArray arrayWithCapacity:10];
             int gap = 5;
-            int baseX = self.size.width/2 + (16*3) + (gap * 3);
+            int baseX = self.size.width/2 + (16*3) + (gap * 3) - 1;
             for (int i = 0; i < 10; i++) {
                 SKSpriteNode *holsterNukeSprite = [SKSpriteNode spriteNodeWithImageNamed:@"AvailableHolster_"];
                 holsterNukeSprite.position = CGPointMake(baseX - holsterNukeSprite.size.width/2 - ((holsterNukeSprite.size.width + gap) * i), 22.5);
