@@ -9,6 +9,8 @@
 #import "UpgradesView.h"
 #import "AudioController.h"
 #import "IAPView.h"
+#import "GGViewController.h"
+
 #define kTypeCellHeight 55
 
 @implementation UpgradesView {
@@ -26,7 +28,7 @@
         UINib * IAPNib = [UINib nibWithNibName:@"IAPView" bundle:nil];
         iapView = [IAPNib instantiateWithOwner:self options:nil][0];
         iapView.frame = self.frame;
-        IAPController = [[UIViewController alloc] init];
+        IAPController = [[GGViewController alloc] init];
         IAPController.view = iapView;
         IAPController.modalPresentationStyle = UIModalPresentationFormSheet;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(IAPPurchaseComplete) name:kStoreKitPurchaseFinished object:nil];

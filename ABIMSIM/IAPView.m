@@ -48,6 +48,8 @@
 -(void)IAPPurchaseComplete {
     dispatch_async(dispatch_get_main_queue(), ^{
         [self removeLoader];
+        [self.tableView reloadData];
+        [self.tableView setContentOffset:CGPointZero animated:YES];
     });
 }
 

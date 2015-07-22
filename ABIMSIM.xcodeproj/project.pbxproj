@@ -44,6 +44,7 @@
 		B45CA24E1B25F94E001E07D9 /* MKStoreKitConfigs.plist in Resources */ = {isa = PBXBuildFile; fileRef = B45CA24D1B25F94E001E07D9 /* MKStoreKitConfigs.plist */; };
 		B45CA2511B25FBD9001E07D9 /* IAPView.m in Sources */ = {isa = PBXBuildFile; fileRef = B45CA2501B25FBD9001E07D9 /* IAPView.m */; };
 		B45CA2531B25FBE8001E07D9 /* IAPView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B45CA2521B25FBE8001E07D9 /* IAPView.xib */; };
+		B45CAE2E1B5F35240076916A /* GGViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B45CAE2D1B5F35240076916A /* GGViewController.m */; };
 		B45FF12818CE8708001662CD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B45FF12718CE8708001662CD /* Foundation.framework */; };
 		B45FF12A18CE8708001662CD /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B45FF12918CE8708001662CD /* CoreGraphics.framework */; };
 		B45FF12C18CE8708001662CD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B45FF12B18CE8708001662CD /* UIKit.framework */; };
@@ -213,6 +214,8 @@
 		B45CA24F1B25FBD9001E07D9 /* IAPView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAPView.h; sourceTree = "<group>"; };
 		B45CA2501B25FBD9001E07D9 /* IAPView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAPView.m; sourceTree = "<group>"; };
 		B45CA2521B25FBE8001E07D9 /* IAPView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAPView.xib; sourceTree = "<group>"; };
+		B45CAE2C1B5F35240076916A /* GGViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GGViewController.h; sourceTree = "<group>"; };
+		B45CAE2D1B5F35240076916A /* GGViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GGViewController.m; sourceTree = "<group>"; };
 		B45FF12418CE8708001662CD /* ABIMSIM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ABIMSIM.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B45FF12718CE8708001662CD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		B45FF12918CE8708001662CD /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -523,6 +526,8 @@
 		B4557ED81AC0FEC6004E097E /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				B45CAE2C1B5F35240076916A /* GGViewController.h */,
+				B45CAE2D1B5F35240076916A /* GGViewController.m */,
 				B45FF13E18CE8708001662CD /* ViewController.h */,
 				B45FF13F18CE8708001662CD /* ViewController.m */,
 				B49792681A844756005174C1 /* AudioController.h */,
@@ -1003,6 +1008,7 @@
 				B43358611AF834FF00DB6444 /* SKNode+Removed.m in Sources */,
 				E1D4EDF61A5B5E5900676C17 /* DCRoundSwitchKnobLayer.m in Sources */,
 				B4557EC31AC0D4C8004E097E /* GameOverView.m in Sources */,
+				B45CAE2E1B5F35240076916A /* GGViewController.m in Sources */,
 				E1D4EDF51A5B5E5900676C17 /* DCRoundSwitch.m in Sources */,
 				B400F410191AFCA100A483E2 /* UpgradeScene.m in Sources */,
 				E1D4EDF71A5B5E5900676C17 /* DCRoundSwitchOutlineLayer.m in Sources */,
