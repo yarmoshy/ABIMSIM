@@ -119,8 +119,9 @@
 }
 
 - (IBAction)upgradesTouchUpInside:(id)sender {
+    [self.delegate upgradeCellTapped:self];
+
     [self animateUpgradesButtonDeselect:^{
-        [self.delegate upgradeCellTapped:self];
     }];
 }
 
