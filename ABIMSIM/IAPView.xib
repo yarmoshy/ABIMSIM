@@ -11,10 +11,10 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Background_IAP" translatesAutoresizingMaskIntoConstraints="NO" id="gar-HA-2Pr">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Background_IAP" translatesAutoresizingMaskIntoConstraints="NO" id="gar-HA-2Pr">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                 </imageView>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="h3o-fu-dHi">
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="h3o-fu-dHi">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -48,17 +48,24 @@
                 <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8uZ-m4-8Au">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <subviews>
-                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="Htn-g3-wpj">
+                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="Htn-g3-wpj">
                             <rect key="frame" x="142" y="265" width="37" height="37"/>
                         </activityIndicatorView>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="centerY" secondItem="Htn-g3-wpj" secondAttribute="centerY" id="Qae-Ek-Qy3"/>
+                        <constraint firstAttribute="centerX" secondItem="Htn-g3-wpj" secondAttribute="centerX" id="TXu-yu-4vY"/>
+                    </constraints>
                 </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstAttribute="trailing" secondItem="h3o-fu-dHi" secondAttribute="trailing" id="2B8-EL-QFF"/>
                 <constraint firstItem="dPs-es-h8K" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="16" id="6dr-JO-zYq"/>
+                <constraint firstAttribute="bottom" secondItem="gar-HA-2Pr" secondAttribute="bottom" id="CGg-N1-694"/>
                 <constraint firstItem="4h4-fE-Qxg" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="DI6-fn-O0V"/>
+                <constraint firstItem="gar-HA-2Pr" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="DXf-Zl-3EJ"/>
                 <constraint firstAttribute="trailing" secondItem="8uZ-m4-8Au" secondAttribute="trailing" id="E8w-sq-pbC"/>
                 <constraint firstAttribute="bottom" secondItem="8uZ-m4-8Au" secondAttribute="bottom" id="GSY-h2-h1L"/>
                 <constraint firstItem="8uZ-m4-8Au" firstAttribute="leading" secondItem="twO-dF-xpz" secondAttribute="leading" id="HOq-wp-95P"/>
@@ -68,6 +75,11 @@
                 <constraint firstItem="8uZ-m4-8Au" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="VwB-cY-lJx"/>
                 <constraint firstItem="dPs-es-h8K" firstAttribute="centerY" secondItem="twO-dF-xpz" secondAttribute="centerY" id="aJ5-tf-O7c"/>
                 <constraint firstItem="4h4-fE-Qxg" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="22" id="bV6-YQ-93b"/>
+                <constraint firstItem="gar-HA-2Pr" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="cEO-TI-aCD"/>
+                <constraint firstItem="h3o-fu-dHi" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="eP1-kl-vs7"/>
+                <constraint firstAttribute="bottom" secondItem="h3o-fu-dHi" secondAttribute="bottom" id="g6O-A0-tKg"/>
+                <constraint firstItem="h3o-fu-dHi" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="kXl-wW-P71"/>
+                <constraint firstAttribute="trailing" secondItem="gar-HA-2Pr" secondAttribute="trailing" id="n2h-gj-K7L"/>
                 <constraint firstItem="8uZ-m4-8Au" firstAttribute="trailing" secondItem="twO-dF-xpz" secondAttribute="trailing" id="qgl-nH-ukF"/>
             </constraints>
             <connections>

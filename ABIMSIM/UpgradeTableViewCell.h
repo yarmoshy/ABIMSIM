@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <StoreKit/StoreKit.h>
+
 @class UpgradeTableViewCell;
 typedef enum {
     UpgradeTableViewCellTypeUnlockShield,
@@ -18,12 +20,7 @@ typedef enum {
     UpgradeTableViewCellTypeMineBlastSpeed,
     UpgradeTableViewCellTypeUnlockArmory,
     UpgradeTableViewCellTypeHolsterCapacity,
-    UpgradeTableViewCellTypeHolsterNuke,
-    UpgradeTableViewCellTypeIAPZero,
-    UpgradeTableViewCellTypeIAPOne,
-    UpgradeTableViewCellTypeIAPTwo,
-    UpgradeTableViewCellTypeIAPThree,
-    UpgradeTableViewCellTypeIAPFour
+    UpgradeTableViewCellTypeHolsterNuke
 } UpgradeTableViewCellType;
 
 @protocol UpgradeTableViewCellDelegate <NSObject>
@@ -41,8 +38,13 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet UIButton *detailsButton;
 @property (weak, nonatomic) IBOutlet UIView *typeAndCostContainerView;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
+@property (strong, nonatomic) UIImageView *upgradeRing0;
+@property (strong, nonatomic) UIImageView *upgradeRing1;
+@property (strong, nonatomic) UIImageView *upgradeRing2;
+@property (strong, nonatomic) UIImageView *upgradeRing3;
+@property (strong, nonatomic) SKProduct *product;
 @property (assign, nonatomic) UpgradeTableViewCellType cellType;
 - (IBAction)descriptionButtonTapped:(id)sender;
 - (IBAction)upgradeButtonTapped:(id)sender;
-
+-(void)setupAsIAP;
 @end

@@ -28,6 +28,7 @@
         iapView.frame = self.frame;
         IAPController = [[UIViewController alloc] init];
         IAPController.view = iapView;
+        IAPController.modalPresentationStyle = UIModalPresentationFormSheet;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(IAPPurchaseComplete) name:kStoreKitPurchaseFinished object:nil];
     }
     return self;
@@ -35,6 +36,7 @@
 
 -(void)storeButtonTapped:(id)sender {
     ((IAPView*)IAPController.view).presentingViewController = ((UIViewController*)self.delegate);
+    [iapView.tableView setContentOffset:CGPointZero];
     [((UIViewController*)self.delegate) presentViewController:IAPController animated:YES completion:^{
         ;
     }];
