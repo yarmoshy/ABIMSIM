@@ -158,17 +158,25 @@ CGFloat DegreesToRadians(CGFloat degrees)
         
         if (!backgroundTextures) {
             backgroundTextures = [NSMutableArray arrayWithCapacity:8];
-            NSMutableArray *backgroundTextureAtlases = [NSMutableArray array];
-            for (int i = 0; i < 3; i++) {
-                SKTextureAtlas *atlas = [SKTextureAtlas atlasNamed:[NSString stringWithFormat:@"Background%d",i]];
-                [backgroundTextureAtlases addObject:atlas];
-                for (int j = 0; j < 4; j++) {
-                    NSString *textureName = [NSString stringWithFormat:@"Background_%d", (i*4)+j];
-                    if ((i*4)+j > 8) {
-                        break;
-                    }
+            if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+                for (int j = 0; j < 10; j++) {
+                    NSString *textureName = [NSString stringWithFormat:@"Background_%d_iPad", j];
                     NSLog(@"%@",textureName);
-                    [backgroundTextures addObject:[atlas textureNamed:textureName]];
+                    [backgroundTextures addObject:[SKTexture textureWithImageNamed:textureName]];
+                }
+            } else {
+                backgroundTextureAtlases = [NSMutableArray array];
+                for (int i = 0; i < 3; i++) {
+                    SKTextureAtlas *atlas = [SKTextureAtlas atlasNamed:[NSString stringWithFormat:@"Background%d",i]];
+                    [backgroundTextureAtlases addObject:atlas];
+                    for (int j = 0; j < 4; j++) {
+                        NSString *textureName = [NSString stringWithFormat:@"Background_%d", (i*4)+j];
+                        if ((i*4)+j > 8) {
+                            break;
+                        }
+                        NSLog(@"%@",textureName);
+                        [backgroundTextures addObject:[atlas textureNamed:textureName]];
+                    }
                 }
             }
         }
@@ -181,16 +189,18 @@ CGFloat DegreesToRadians(CGFloat degrees)
         
         if (!planetTextures) {
             planetTextures = [NSMutableArray array];
+            SKTextureAtlas *atlas = [SKTextureAtlas atlasNamed:@"Planets"];
+
             for (int i = 0; i < 6; i++) {
                 for (int j = 0; j < 4; j++) {
                     NSString *textureName = [NSString stringWithFormat:@"Planet_%d_%d", i, j];
                     NSLog(@"%@",textureName);
-                    [planetTextures addObject:[SKTexture textureWithImageNamed:textureName]];
+                    [planetTextures addObject:[atlas textureNamed:textureName]];
                 }
             }
-            [planetTextures addObject:[SKTexture textureWithImageNamed:@"Planet_5_S"]];
-            [planetTextures addObject:[SKTexture textureWithImageNamed:@"AsteroidShield_0"]];
-            [planetTextures addObject:[SKTexture textureWithImageNamed:@"AsteroidShield_1"]];
+            [planetTextures addObject:[atlas textureNamed:@"Planet_5_S"]];
+            [planetTextures addObject:[atlas textureNamed:@"AsteroidShield_0"]];
+            [planetTextures addObject:[atlas textureNamed:@"AsteroidShield_1"]];
         }
         [SKTexture preloadTextures:planetTextures withCompletionHandler:^{
             ;
@@ -198,10 +208,11 @@ CGFloat DegreesToRadians(CGFloat degrees)
         
         if (!asteroidTextures) {
             asteroidTextures = [NSMutableArray array];
+            SKTextureAtlas *atlas = [SKTextureAtlas atlasNamed:@"Asteroids"];
             for (int i = 0; i < 12; i++) {
                 NSString *textureName = [NSString stringWithFormat:@"Asteroid_%d", i];
                 NSLog(@"%@",textureName);
-                [asteroidTextures addObject:[SKTexture textureWithImageNamed:textureName]];
+                [asteroidTextures addObject:[atlas textureNamed:textureName]];
             }
         }
         [SKTexture preloadTextures:asteroidTextures withCompletionHandler:^{

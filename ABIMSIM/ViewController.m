@@ -37,7 +37,12 @@
     self.upgradesView.delegate = self;
     [self.view addSubview:self.upgradesView];
     
-    UINib * mainMenuNib = [UINib nibWithNibName:@"MainMenuView" bundle:nil];
+    UINib * mainMenuNib;
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        mainMenuNib = [UINib nibWithNibName:@"MainMenuView_iPad" bundle:nil];
+    } else {
+        mainMenuNib = [UINib nibWithNibName:@"MainMenuView" bundle:nil];
+    }
     self.mainMenuView = [mainMenuNib instantiateWithOwner:self options:nil][0];
     self.mainMenuView.frame = self.view.frame;
     self.mainMenuView.delegate = self;
