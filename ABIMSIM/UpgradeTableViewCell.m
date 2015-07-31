@@ -100,6 +100,7 @@
     [self.upgradeButton addTarget:self action:@selector(upgradesDeselect:) forControlEvents:UIControlEventTouchDragExit];
     [self.upgradeButton addTarget:self action:@selector(upgradesTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
 
+    self.upgradeTypeLabel.font = [UIFont fontWithName:@"Futura-CondensedMedium" size:25];
 }
 
 -(void)animateUpgradesButtonSelect:(void(^)(void))completionBlock {

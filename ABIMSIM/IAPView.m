@@ -122,7 +122,7 @@
         
         UILabel *xpLabel = [[UILabel alloc] init];
         xpLabel.font = [UIFont fontWithName:@"Futura-CondensedMedium" size:25];
-        xpLabel.textColor = [UIColor colorWithRed:211.f/255.f green:12.f/255.f blue:95.f/255.f alpha:1];
+        xpLabel.textColor = [UIColor whiteColor];
         xpLabel.text = [NSString stringWithFormat:@"%@ XP",[formatter stringFromNumber:[NSNumber numberWithInteger:[ABIMSIMDefaults integerForKey:kUserDuckets]]]];
         [xpLabel sizeToFit];
         xpLabel.center = CGPointMake(youHaveImageView.center.x, youHaveImageView.center.y + youHaveImageView.frame.size.height/2 + xpLabel.frame.size.height/2);
