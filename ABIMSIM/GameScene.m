@@ -507,6 +507,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     [self transitionStars];
     self.currentLevel = 1;
     [self showCurrentSprites];
+    [self showTutorialIfNeeded];
     self.viewController.pauseButton.hidden = NO;
     self.viewController.pauseButton.alpha = 0;
     levelNode.hidden = NO;
@@ -617,27 +618,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
     
     if (shipSprite.physicsBody.velocity.dx!=0 || shipSprite.physicsBody.velocity.dy!=0)
         shipSprite.zRotation = atan2f(-shipSprite.physicsBody.velocity.dx, shipSprite.physicsBody.velocity.dy);
-    
-    if (!walkthroughSeen) {
-        if (self.currentLevel == 2) {
-            SKSpriteNode *directions = [SKSpriteNode spriteNodeWithImageNamed:@"Instructions_Screen2"];
-            directions.position = CGPointMake(sceneWidth/2, sceneHeight/2 + directions.size.height);
-            [self addChild:directions];
-            directions.alpha = 0;
-            directions.zPosition = 100;
-            directions.name = directionsSpriteName;
-
-            SKAction *move = [SKAction moveTo:CGPointMake(sceneWidth/2, sceneHeight/2) duration:0.5];
-            SKAction *alphaIn = [SKAction fadeAlphaTo:1 duration:0.5];
-            SKAction *group = [SKAction group:@[move, alphaIn]];
-            [[self childNodeWithName:directionsSpriteName] runAction:group completion:^{
-                self.paused = YES;
-                self.initialPause = YES;
-            }];
-            [ABIMSIMDefaults setBool:YES forKey:kWalkthroughSeen];
-            [ABIMSIMDefaults synchronize];
-        }
-    }
     
     if (self.reset) {
         [self resetWorld];
@@ -1785,6 +1765,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     nukeUsedThisLevel = NO;
     
     self.currentLevel++;
+    [self showTutorialIfNeeded];
     [self checkLevelAchievements];
     if (self.currentLevel % 10 == 0) {
         int backgroundNumber = self.currentLevel / 10;
@@ -1821,6 +1802,52 @@ CGFloat DegreesToRadians(CGFloat degrees)
         NSMutableArray *powerUps = [self powerUpsForLevel:levelToGenerate];
         [array addObjectsFromArray:powerUps];
     });
+}
+
+-(void)showTutorialIfNeeded {
+    if (self.currentLevel == 1 && !self.reset && !walkthroughSeen) {
+        SKSpriteNode *directions = [SKSpriteNode spriteNodeWithImageNamed:@"Instructions_Screen1"];
+        directions.position = CGPointMake(sceneWidth/2, sceneHeight/2 + directions.size.height);
+        [self addChild:directions];
+        directions.alpha = 0;
+        directions.zPosition = 100;
+        directions.name = directionsSpriteName;
+        
+        SKSpriteNode *swipeToStart = [SKSpriteNode spriteNodeWithImageNamed:@"SwipeToStartText"];
+        swipeToStart.position = CGPointMake(sceneWidth/2, shipSize.height*3 - swipeToStart.size.height + 5);
+        [self addChild:swipeToStart];
+        swipeToStart.alpha = 0;
+        swipeToStart.name = directionsSecondarySpriteName;
+        
+        SKSpriteNode *shipDashedLine = [SKSpriteNode spriteNodeWithImageNamed:@"ShipDashedLine"];
+        shipDashedLine.position = CGPointMake(sceneWidth/2, shipSize.height*2 + 5);
+        [self addChild:shipDashedLine];
+        shipDashedLine.alpha = 0;
+        shipDashedLine.name = directionsSecondaryBlinkingSpriteName;
+        
+        SKSpriteNode *goalDashedLine = [SKSpriteNode spriteNodeWithImageNamed:@"TopDashedLine"];
+        goalDashedLine.position = CGPointMake(sceneWidth/2, sceneHeight - goalDashedLine.size.height);
+        [self addChild:goalDashedLine];
+        goalDashedLine.alpha = 0;
+        goalDashedLine.name = directionsSecondaryBlinkingSpriteName;
+    } else if (!walkthroughSeen && self.currentLevel == 2) {
+        SKSpriteNode *directions = [SKSpriteNode spriteNodeWithImageNamed:@"Instructions_Screen2"];
+        directions.position = CGPointMake(sceneWidth/2, sceneHeight/2 + directions.size.height);
+        [self addChild:directions];
+        directions.alpha = 0;
+        directions.zPosition = 100;
+        directions.name = directionsSpriteName;
+        
+        SKAction *move = [SKAction moveTo:CGPointMake(sceneWidth/2, sceneHeight/2) duration:0.5];
+        SKAction *alphaIn = [SKAction fadeAlphaTo:1 duration:0.5];
+        SKAction *group = [SKAction group:@[move, alphaIn]];
+        [[self childNodeWithName:directionsSpriteName] runAction:group completion:^{
+            self.paused = YES;
+            self.initialPause = YES;
+        }];
+        [ABIMSIMDefaults setBool:YES forKey:kWalkthroughSeen];
+        [ABIMSIMDefaults synchronize];
+    }
 }
 
 -(void)showCurrentSprites {
@@ -1880,32 +1907,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
             [sprite runAction:sprite.userData[powerUpSpaceMinePulseAnimation]];
             [sprite runAction:sprite.userData[powerUpSpaceMineRotationAnimation]];
         }
-    }
-    if (self.currentLevel == 1 && !self.reset && !walkthroughSeen) {
-        SKSpriteNode *directions = [SKSpriteNode spriteNodeWithImageNamed:@"Instructions_Screen1"];
-        directions.position = CGPointMake(sceneWidth/2, sceneHeight/2 + directions.size.height);
-        [self addChild:directions];
-        directions.alpha = 0;
-        directions.zPosition = 100;
-        directions.name = directionsSpriteName;
-        
-        SKSpriteNode *swipeToStart = [SKSpriteNode spriteNodeWithImageNamed:@"SwipeToStartText"];
-        swipeToStart.position = CGPointMake(sceneWidth/2, shipSize.height*3 - swipeToStart.size.height + 5);
-        [self addChild:swipeToStart];
-        swipeToStart.alpha = 0;
-        swipeToStart.name = directionsSecondarySpriteName;
-
-        SKSpriteNode *shipDashedLine = [SKSpriteNode spriteNodeWithImageNamed:@"ShipDashedLine"];
-        shipDashedLine.position = CGPointMake(sceneWidth/2, shipSize.height*2 + 5);
-        [self addChild:shipDashedLine];
-        shipDashedLine.alpha = 0;
-        shipDashedLine.name = directionsSecondaryBlinkingSpriteName;
-
-        SKSpriteNode *goalDashedLine = [SKSpriteNode spriteNodeWithImageNamed:@"TopDashedLine"];
-        goalDashedLine.position = CGPointMake(sceneWidth/2, sceneHeight - goalDashedLine.size.height);
-        [self addChild:goalDashedLine];
-        goalDashedLine.alpha = 0;
-        goalDashedLine.name = directionsSecondaryBlinkingSpriteName;
     }
 }
 
