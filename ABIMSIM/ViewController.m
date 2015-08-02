@@ -80,7 +80,11 @@
     self.settingsView.delegate = self;
     [self.mainMenuView.settingsContainerView addSubview:self.settingsView];
     
-    self.mainMenuView.settingsContainerTopAlignmentConstraint.constant = -1* (self.view.frame.size.height - self.mainMenuView.buttonContainerView.frame.origin.y);
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        self.mainMenuView.settingsContainerTopAlignmentConstraint.constant = (self.view.frame.size.height - self.mainMenuView.buttonContainerView.frame.origin.y);
+    } else {
+        self.mainMenuView.settingsContainerTopAlignmentConstraint.constant = -1* (self.view.frame.size.height - self.mainMenuView.buttonContainerView.frame.origin.y);
+    }
     self.mainMenuView.settingsContainerTrailingConstraint.constant = self.view.frame.size.width;
 
     // Configure the view.

@@ -121,9 +121,15 @@
     
     [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionAllowAnimatedContent animations:^{
         self.settingsContainerTopAlignmentConstraint.constant = 0;
-        self.settingsContainerTrailingConstraint.constant = 0;
-        self.hamburgerBottomConstraint.constant = self.superview.frame.size.height - self.buttonContainerView.frame.origin.y - 100;
-        self.hamburgerLeadingConstraint.constant = self.buttonContainerView.frame.origin.x + self.buttonContainerView.frame.size.width - 100;
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+            self.settingsContainerTrailingConstraint.constant = self.superview.frame.size.width - self.settingsContainerView.frame.size.width;
+            self.hamburgerBottomConstraint.constant = self.superview.frame.size.height - self.buttonContainerView.frame.origin.y - 100;
+            self.hamburgerLeadingConstraint.constant = self.settingsContainerView.frame.size.width - 125;
+        } else {
+            self.settingsContainerTrailingConstraint.constant = 0;
+            self.hamburgerBottomConstraint.constant = self.superview.frame.size.height - self.buttonContainerView.frame.origin.y - 100;
+            self.hamburgerLeadingConstraint.constant = self.buttonContainerView.frame.origin.x + self.buttonContainerView.frame.size.width - 100;
+        }
         [self.superview layoutIfNeeded];
     } completion:^(BOOL finished) {
         showingSettings = YES;
@@ -143,7 +149,11 @@
         self.settingsContainerTrailingConstraint.constant = self.superview.frame.size.width;
         self.hamburgerBottomConstraint.constant = 10;
         self.hamburgerLeadingConstraint.constant = 10;
-        self.settingsContainerTopAlignmentConstraint.constant = -1* (self.superview.frame.size.height - self.buttonContainerView.frame.origin.y);
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+            self.settingsContainerTopAlignmentConstraint.constant = (self.superview.frame.size.height - self.buttonContainerView.frame.origin.y);
+        } else {
+            self.settingsContainerTopAlignmentConstraint.constant = -1* (self.superview.frame.size.height - self.buttonContainerView.frame.origin.y);
+        }
         [self.superview layoutIfNeeded];
     } completion:^(BOOL finished) {
         showingSettings = NO;
