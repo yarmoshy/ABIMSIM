@@ -55,6 +55,8 @@
 
 -(void)didMoveToSuperview {
     self.ggPlayButton.exclusiveTouch = self.ggUpgradeButton.exclusiveTouch = self.ggMainMenuButton.exclusiveTouch = YES;
+    self.bonusLabelOne.layer.borderColor = self.bonusLabelTwo.layer.borderColor = self.bonusLabelThree.layer.borderColor = self.bonusLabelFour.layer.borderColor = [[UIColor whiteColor] colorWithAlphaComponent:0.5].CGColor;
+    self.bonusLabelOne.layer.borderWidth = self.bonusLabelTwo.layer.borderWidth = self.bonusLabelThree.layer.borderWidth = self.bonusLabelFour.layer.borderWidth = 0.5;
 }
 #pragma mark - Game Over Play Button
 
@@ -286,12 +288,23 @@
     NSMutableArray *bonusAmounts = [NSMutableArray array];
     UIFont *boldFont = [UIFont fontWithName:@"Futura-CondensedExtraBold" size:18];
     UIFont *regularFont = [UIFont fontWithName:@"Futura-CondensedMedium" size:18];
-    if (self.delegate.scene.currentLevel / 10 > 0) {
+    NSArray *labels = @[self.bonusLabelOne, self.bonusLabelTwo, self.bonusLabelThree, self.bonusLabelFour];
+    for (UILabel *label in labels) {
+        for (UIView *subview in label.subviews) {
+            [subview removeFromSuperview];
+        }
+    }
+    self.delegate.scene.currentLevel = 10;
+    self.delegate.scene.blackHolesSurvived = 10;
+    self.delegate.scene.bubblesPopped = 10;
+    self.delegate.scene.sunsSurvived = 10;
+    if (YES || self.delegate.scene.currentLevel / 10 > 0) {
         [bonusAmounts addObject:@(self.delegate.scene.currentLevel / 10)];
-        NSMutableAttributedString *bonusString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"+%d - %d PARSECS TRAVELLED", self.delegate.scene.currentLevel / 10, self.delegate.scene.currentLevel]];
+        NSMutableAttributedString *bonusString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"   +%d    %d PARSECS TRAVELLED   ", self.delegate.scene.currentLevel / 10, self.delegate.scene.currentLevel]];
         NSRange rangeToDash;
         rangeToDash.location = 0;
-        rangeToDash.length = [bonusString.string rangeOfString:@"-"].location;
+        rangeToDash.length = [bonusString.string rangeOfString:[NSString stringWithFormat:@"   +%d  ", self.delegate.scene.currentLevel / 10]].length;
+        
         NSRange remainingRange;
         remainingRange.location = rangeToDash.length;
         remainingRange.length = bonusString.string.length - rangeToDash.length;
@@ -302,13 +315,20 @@
         [bonusString addAttribute:NSFontAttributeName value:regularFont range:remainingRange];
         
         [bonusStrings addObject:bonusString];
+        
+        NSAttributedString *widthString = [bonusString attributedSubstringFromRange:rangeToDash];
+        CGFloat width = [widthString size].width;
+        CGFloat height =[widthString size].height;
+        UIView *divider = [[UIView alloc] initWithFrame:CGRectMake(width - 1, 2, 0.5, height-4)];
+        divider.backgroundColor =  [[UIColor whiteColor] colorWithAlphaComponent:0.5];
+        [self.bonusLabelOne addSubview:divider];
     }
-    if (self.delegate.scene.bubblesPopped > 0) {
+    if (YES || self.delegate.scene.bubblesPopped > 0) {
         [bonusAmounts addObject:@(self.delegate.scene.bubblesPopped * 5)];
-        NSMutableAttributedString *bonusString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"+%d - %d ASTEROID BUBBLE POPS SURVIVED", self.delegate.scene.bubblesPopped * 5, self.delegate.scene.bubblesPopped]];
+        NSMutableAttributedString *bonusString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"   +%d    %d ASTEROID BUBBLE POPS SURVIVED   ", self.delegate.scene.bubblesPopped * 5, self.delegate.scene.bubblesPopped]];
         NSRange rangeToDash;
         rangeToDash.location = 0;
-        rangeToDash.length = [bonusString.string rangeOfString:@"-"].location;
+        rangeToDash.length = [bonusString.string rangeOfString:[NSString stringWithFormat:@"   +%d  ", self.delegate.scene.bubblesPopped * 5]].length;
         NSRange remainingRange;
         remainingRange.location = rangeToDash.length;
         remainingRange.length = bonusString.string.length - rangeToDash.length;
@@ -319,13 +339,20 @@
         [bonusString addAttribute:NSFontAttributeName value:regularFont range:remainingRange];
         
         [bonusStrings addObject:bonusString];
+        
+        NSAttributedString *widthString = [bonusString attributedSubstringFromRange:rangeToDash];
+        CGFloat width = [widthString size].width;
+        CGFloat height =[widthString size].height;
+        UIView *divider = [[UIView alloc] initWithFrame:CGRectMake(width - 1, 2, 0.5, height-4)];
+        divider.backgroundColor =  [[UIColor whiteColor] colorWithAlphaComponent:0.5];
+        [self.bonusLabelTwo addSubview:divider];
     }
-    if (self.delegate.scene.blackHolesSurvived > 0) {
+    if (YES || self.delegate.scene.blackHolesSurvived > 0) {
         [bonusAmounts addObject:@(self.delegate.scene.blackHolesSurvived * 4)];
-        NSMutableAttributedString *bonusString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"+%d - %d BLACK HOLES SURVIVED", self.delegate.scene.blackHolesSurvived * 4, self.delegate.scene.blackHolesSurvived]];
+        NSMutableAttributedString *bonusString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"   +%d    %d BLACK HOLES SURVIVED   ", self.delegate.scene.blackHolesSurvived * 4, self.delegate.scene.blackHolesSurvived]];
         NSRange rangeToDash;
         rangeToDash.location = 0;
-        rangeToDash.length = [bonusString.string rangeOfString:@"-"].location;
+        rangeToDash.length = [bonusString.string rangeOfString:[NSString stringWithFormat:@"   +%d  ", self.delegate.scene.blackHolesSurvived * 4]].length;
         NSRange remainingRange;
         remainingRange.location = rangeToDash.length;
         remainingRange.length = bonusString.string.length - rangeToDash.length;
@@ -336,13 +363,20 @@
         [bonusString addAttribute:NSFontAttributeName value:regularFont range:remainingRange];
         
         [bonusStrings addObject:bonusString];
+        
+        NSAttributedString *widthString = [bonusString attributedSubstringFromRange:rangeToDash];
+        CGFloat width = [widthString size].width;
+        CGFloat height =[widthString size].height;
+        UIView *divider = [[UIView alloc] initWithFrame:CGRectMake(width - 1, 2, 0.5, height-4)];
+        divider.backgroundColor =  [[UIColor whiteColor] colorWithAlphaComponent:0.5];
+        [self.bonusLabelThree addSubview:divider];
     }
-    if (self.delegate.scene.sunsSurvived > 0) {
+    if (YES || self.delegate.scene.sunsSurvived > 0) {
         [bonusAmounts addObject:@(self.delegate.scene.sunsSurvived * 3)];
-        NSMutableAttributedString *bonusString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"+%d - %d SUNS SURVIVED", self.delegate.scene.sunsSurvived * 3, self.delegate.scene.sunsSurvived]];
+        NSMutableAttributedString *bonusString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"   +%d    %d SUNS SURVIVED   ", self.delegate.scene.sunsSurvived * 3, self.delegate.scene.sunsSurvived]];
         NSRange rangeToDash;
         rangeToDash.location = 0;
-        rangeToDash.length = [bonusString.string rangeOfString:@"-"].location;
+        rangeToDash.length = [bonusString.string rangeOfString:[NSString stringWithFormat:@"   +%d  ", self.delegate.scene.sunsSurvived * 3]].length;
         NSRange remainingRange;
         remainingRange.location = rangeToDash.length;
         remainingRange.length = bonusString.string.length - rangeToDash.length;
@@ -353,6 +387,13 @@
         [bonusString addAttribute:NSFontAttributeName value:regularFont range:remainingRange];
         
         [bonusStrings addObject:bonusString];
+        
+        NSAttributedString *widthString = [bonusString attributedSubstringFromRange:rangeToDash];
+        CGFloat width = [widthString size].width;
+        CGFloat height =[widthString size].height;
+        UIView *divider = [[UIView alloc] initWithFrame:CGRectMake(width - 1, 2, 0.5, height-4)];
+        divider.backgroundColor =  [[UIColor whiteColor] colorWithAlphaComponent:0.5];
+        [self.bonusLabelFour addSubview:divider];
     }
     
     if (bonusAmounts.count) {
@@ -374,6 +415,8 @@
                 }
             }
         }
+        self.bonusLabelOne.layer.cornerRadius = self.bonusLabelTwo.layer.cornerRadius = self.bonusLabelThree.layer.cornerRadius = self.bonusLabelFour.layer.cornerRadius = self.bonusLabelOne.frame.size.height/2;
+
         [self.superview layoutIfNeeded];
     }
     if (bonusAmounts.count && !killAnimations) {
