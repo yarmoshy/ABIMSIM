@@ -1519,16 +1519,18 @@ CGFloat DegreesToRadians(CGFloat degrees)
     [self insertChild:newStarBackLayer atIndex:0];
     [self insertChild:newStarFrontLayer atIndex:0];
 
+    int allStars = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 48 : 12;
+    int halfStars = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 24 : 6;
     if (!starSprites) {
         starSprites = [NSMutableArray array];
-        for (int i = 0; i < 12; i++) {
+        for (int i = 0; i < allStars; i++) {
             SKSpriteNode *star = [SKSpriteNode spriteNodeWithImageNamed:@"LargeStar"];
             star.alpha = 0.4;
             star.name = starSpriteName;
             [starSprites addObject:star];
             float x = arc4random() % (int)sceneWidth * 1;
             float y;
-            if (i < 6) {
+            if (i < halfStars) {
                 y = arc4random() % (int)(sceneHeight * starBackMovement * 1);
             } else {
                 y = arc4random() % (int)(sceneHeight * starFrontMovement * 1);
@@ -1565,7 +1567,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
                     break;
             }
             star.colorBlendFactor = 1.0;
-            if (i < 6) {
+            if (i < halfStars) {
                 [newStarBackLayer addChild:star];
             } else {
                 [newStarFrontLayer addChild:star];
@@ -1573,14 +1575,14 @@ CGFloat DegreesToRadians(CGFloat degrees)
             [star setScale:0];
             [star runAction:[SKAction scaleTo:1 duration:0.5]];
         }
-        for (int i = 0; i < 12; i++) {
+        for (int i = 0; i < allStars; i++) {
             SKSpriteNode *star = [SKSpriteNode spriteNodeWithImageNamed:@"LargeStar"];
             star.alpha = 0.4;
             star.name = starSpriteName;
             [starSprites addObject:star];
             [star setScale:0];
             star.colorBlendFactor = 1.0;
-            if (i < 6) {
+            if (i < halfStars) {
                 [newStarBackLayer addChild:star];
             } else {
                 [newStarFrontLayer addChild:star];
@@ -1593,7 +1595,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         for (SKSpriteNode *star in starSprites) {
             float x = arc4random() % (int)sceneWidth * 1;
             float y;
-            if (i < 6) {
+            if (i < halfStars) {
                 y = arc4random() % (int)(sceneHeight * starBackMovement * 1);
             } else {
                 y = arc4random() % (int)(sceneHeight * starFrontMovement * 1);
@@ -1602,7 +1604,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
             if ((shrinkBackHalf && half == 0) ||
                 (!shrinkBackHalf && half == 1)) {
                 [star removeFromParent];
-                if (i < 6) {
+                if (i < halfStars) {
                     [newStarBackLayer addChild:star];
                 } else {
                     [newStarFrontLayer addChild:star];
@@ -1647,7 +1649,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
                                                           [SKAction runBlock:^{
                     [star runAction:[SKAction scaleTo:0 duration:0.5] completion:^{
                         [star removeFromParent];
-                        if (i < 6) {
+                        if (i < UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 24 : 6) {
                             [newStarBackLayer addChild:star];
                         } else {
                             [newStarFrontLayer addChild:star];
@@ -1659,7 +1661,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
                 [star runAction:spawnAction];
             }
             i++;
-            if (i > 11) {
+            if (i > allStars - 1) {
                 i = 0;
                 half++;
             }
@@ -2257,25 +2259,25 @@ CGFloat DegreesToRadians(CGFloat degrees)
 -(int)maxNumberOfAsteroidsForLevel:(int)level {
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         if (level <= 1) {
-            return 2;
-        } else if (level <= 2) {
             return 4;
-        } else if (level <= 7) {
-            return 6;
-        } else if (level <= 15) {
+        } else if (level <= 2) {
             return 8;
-        } else if (level <= 30) {
-            return 10;
-        } else if (level <= 40) {
+        } else if (level <= 7) {
             return 12;
-        } else if (level <= 45) {
-            return 14;
-        } else if (level <= 50) {
+        } else if (level <= 15) {
             return 16;
-        } else if (level <= 60) {
-            return 18;
-        } else {
+        } else if (level <= 30) {
             return 20;
+        } else if (level <= 40) {
+            return 24;
+        } else if (level <= 45) {
+            return 28;
+        } else if (level <= 50) {
+            return 32;
+        } else if (level <= 60) {
+            return 36;
+        } else {
+            return 40;
         }
     } else {
         if (level <= 1) {
@@ -2305,25 +2307,25 @@ CGFloat DegreesToRadians(CGFloat degrees)
 -(int)minNumberOfAsteroidsForLevel:(int)level {
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         if (level <= 1) {
-            return 2;
-        } else if (level <= 2) {
             return 4;
-        } else if (level <= 25) {
-            return 6;
-        } else if (level <= 35) {
+        } else if (level <= 2) {
             return 8;
-        } else if (level <= 50) {
-            return 10;
-        } else if (level <= 65) {
+        } else if (level <= 25) {
             return 12;
-        } else if (level <= 70) {
-            return 14;
-        } else if (level <= 75) {
+        } else if (level <= 35) {
             return 16;
-        } else if (level <= 90) {
-            return 18;
-        } else {
+        } else if (level <= 50) {
             return 20;
+        } else if (level <= 65) {
+            return 24;
+        } else if (level <= 70) {
+            return 28;
+        } else if (level <= 75) {
+            return 32;
+        } else if (level <= 90) {
+            return 36;
+        } else {
+            return 40;
         }
     } else {
         if (level <= 1) {
@@ -2625,11 +2627,11 @@ CGFloat DegreesToRadians(CGFloat degrees)
             thisWidth = planet.size.height;
         }
         CGPoint thisCenter = planet.position;
-        float otherWidthA, otherWidthB, otherWidthC, otherWidthD, otherWidthE;
-        CGPoint otherCenterA, otherCenterB, otherCenterC, otherCenterD, otherCenterE;
-        float distanceA, distanceB, distanceC, distanceD, distanceE;
-        distanceA = distanceB = distanceC = distanceD = distanceE = MAXFLOAT;
-        otherWidthA = otherWidthB = otherWidthC = otherWidthD = otherWidthE = 0;
+        float otherWidthA, otherWidthB, otherWidthC, otherWidthD, otherWidthE, otherWidthF, otherWidthG, otherWidthH, otherWidthI, otherWidthJ, otherWidthK;
+        CGPoint otherCenterA, otherCenterB, otherCenterC, otherCenterD, otherCenterE, otherCenterF, otherCenterG, otherCenterH, otherCenterI, otherCenterJ, otherCenterK;
+        float distanceA, distanceB, distanceC, distanceD, distanceE, distanceF, distanceG, distanceH, distanceI, distanceJ, distanceK;
+        distanceA = distanceB = distanceC = distanceD = distanceE = distanceF = distanceG = distanceH = distanceI = distanceJ = distanceK = MAXFLOAT;
+        otherWidthA = otherWidthB = otherWidthC = otherWidthD = otherWidthE = otherWidthF = otherWidthG = otherWidthH = otherWidthI = otherWidthJ = otherWidthK = 0;
         if (planets.count > 0) {
             SKSpriteNode *otherPlanetA = planets[0];
             if ([otherPlanetA.userData[planetNumber] intValue] == 5) {
@@ -2690,6 +2692,78 @@ CGFloat DegreesToRadians(CGFloat degrees)
             otherCenterE = otherPlanetE.position;
             distanceE = sqrtf(powf(thisCenter.x - otherCenterE.x, 2) + pow(thisCenter.y - otherCenterE.y, 2));
         }
+        if (planets.count > 5) {
+            SKSpriteNode *otherPlanetF = planets[5];
+            if ([otherPlanetF.userData[planetNumber] intValue] == 5) {
+                otherWidthF = largePlanetWidth;
+            } else if (otherPlanetF.size.width >= otherPlanetF.size.height) {
+                otherWidthF = otherPlanetF.size.width;
+            } else {
+                otherWidthF = otherPlanetF.size.height;
+            }
+            otherCenterF = otherPlanetF.position;
+            distanceF = sqrtf(powf(thisCenter.x - otherCenterF.x, 2) + pow(thisCenter.y - otherCenterF.y, 2));
+        }
+        if (planets.count > 6) {
+            SKSpriteNode *otherPlanetG = planets[6];
+            if ([otherPlanetG.userData[planetNumber] intValue] == 5) {
+                otherWidthG = largePlanetWidth;
+            } else if (otherPlanetG.size.width >= otherPlanetG.size.height) {
+                otherWidthG = otherPlanetG.size.width;
+            } else {
+                otherWidthG = otherPlanetG.size.height;
+            }
+            otherCenterG = otherPlanetG.position;
+            distanceG = sqrtf(powf(thisCenter.x - otherCenterG.x, 2) + pow(thisCenter.y - otherCenterG.y, 2));
+        }
+        if (planets.count > 7) {
+            SKSpriteNode *otherPlanetH = planets[7];
+            if ([otherPlanetH.userData[planetNumber] intValue] == 5) {
+                otherWidthH = largePlanetWidth;
+            } else if (otherPlanetH.size.width >= otherPlanetH.size.height) {
+                otherWidthH = otherPlanetH.size.width;
+            } else {
+                otherWidthH = otherPlanetH.size.height;
+            }
+            otherCenterH = otherPlanetH.position;
+            distanceH = sqrtf(powf(thisCenter.x - otherCenterH.x, 2) + pow(thisCenter.y - otherCenterH.y, 2));
+        }
+        if (planets.count > 8) {
+            SKSpriteNode *otherPlanetI = planets[8];
+            if ([otherPlanetI.userData[planetNumber] intValue] == 5) {
+                otherWidthI = largePlanetWidth;
+            } else if (otherPlanetI.size.width >= otherPlanetI.size.height) {
+                otherWidthI = otherPlanetI.size.width;
+            } else {
+                otherWidthI = otherPlanetI.size.height;
+            }
+            otherCenterI = otherPlanetI.position;
+            distanceI = sqrtf(powf(thisCenter.x - otherCenterI.x, 2) + pow(thisCenter.y - otherCenterI.y, 2));
+        }
+        if (planets.count > 9) {
+            SKSpriteNode *otherPlanetJ = planets[9];
+            if ([otherPlanetJ.userData[planetNumber] intValue] == 5) {
+                otherWidthJ = largePlanetWidth;
+            } else if (otherPlanetJ.size.width >= otherPlanetJ.size.height) {
+                otherWidthJ = otherPlanetJ.size.width;
+            } else {
+                otherWidthJ = otherPlanetJ.size.height;
+            }
+            otherCenterJ = otherPlanetJ.position;
+            distanceJ = sqrtf(powf(thisCenter.x - otherCenterJ.x, 2) + pow(thisCenter.y - otherCenterJ.y, 2));
+        }
+        if (planets.count > 10) {
+            SKSpriteNode *otherPlanetK = planets[10];
+            if ([otherPlanetK.userData[planetNumber] intValue] == 5) {
+                otherWidthK = largePlanetWidth;
+            } else if (otherPlanetK.size.width >= otherPlanetK.size.height) {
+                otherWidthK = otherPlanetK.size.width;
+            } else {
+                otherWidthK = otherPlanetK.size.height;
+            }
+            otherCenterK = otherPlanetK.position;
+            distanceK = sqrtf(powf(thisCenter.x - otherCenterK.x, 2) + pow(thisCenter.y - otherCenterK.y, 2));
+        }
 
         BOOL addPlanet = YES;
         int attempt = 0;
@@ -2697,8 +2771,14 @@ CGFloat DegreesToRadians(CGFloat degrees)
                (distanceB - (thisWidth/2) - (otherWidthB/2) < shipSize.width + 10) ||
                (distanceC - (thisWidth/2) - (otherWidthC/2) < shipSize.width + 10) ||
                (distanceD - (thisWidth/2) - (otherWidthD/2) < shipSize.width + 10) ||
-               (distanceE - (thisWidth/2) - (otherWidthE/2) < shipSize.width + 10)) {
-            if (attempt > 200) {
+               (distanceE - (thisWidth/2) - (otherWidthE/2) < shipSize.width + 10) ||
+               (distanceF - (thisWidth/2) - (otherWidthF/2) < shipSize.width + 10) ||
+               (distanceG - (thisWidth/2) - (otherWidthG/2) < shipSize.width + 10) ||
+               (distanceH - (thisWidth/2) - (otherWidthH/2) < shipSize.width + 10) ||
+               (distanceI - (thisWidth/2) - (otherWidthI/2) < shipSize.width + 10) ||
+               (distanceJ - (thisWidth/2) - (otherWidthJ/2) < shipSize.width + 10) ||
+               (distanceK - (thisWidth/2) - (otherWidthK/2) < shipSize.width + 10)) {
+            if (attempt > 50) {
                 addPlanet = NO;
                 break;
             }
@@ -2721,6 +2801,24 @@ CGFloat DegreesToRadians(CGFloat degrees)
             }
             if (planets.count > 4) {
                 distanceE = sqrtf(powf(thisCenter.x - otherCenterE.x, 2) + pow(thisCenter.y - otherCenterE.y, 2));
+            }
+            if (planets.count > 5) {
+                distanceF = sqrtf(powf(thisCenter.x - otherCenterF.x, 2) + pow(thisCenter.y - otherCenterF.y, 2));
+            }
+            if (planets.count > 6) {
+                distanceG = sqrtf(powf(thisCenter.x - otherCenterG.x, 2) + pow(thisCenter.y - otherCenterG.y, 2));
+            }
+            if (planets.count > 7) {
+                distanceH = sqrtf(powf(thisCenter.x - otherCenterH.x, 2) + pow(thisCenter.y - otherCenterH.y, 2));
+            }
+            if (planets.count > 8) {
+                distanceI = sqrtf(powf(thisCenter.x - otherCenterI.x, 2) + pow(thisCenter.y - otherCenterI.y, 2));
+            }
+            if (planets.count > 9) {
+                distanceJ = sqrtf(powf(thisCenter.x - otherCenterJ.x, 2) + pow(thisCenter.y - otherCenterJ.y, 2));
+            }
+            if (planets.count > 10) {
+                distanceK = sqrtf(powf(thisCenter.x - otherCenterK.x, 2) + pow(thisCenter.y - otherCenterK.y, 2));
             }
             attempt++;
         }
@@ -2885,13 +2983,13 @@ CGFloat DegreesToRadians(CGFloat degrees)
 -(int)maxNumberOfPlanetsForLevel:(int)level {
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         if (level <= 3) {
-            return 1;
-        } else if (level <= 10) {
             return 2;
-        } else if (level <= 20) {
+        } else if (level <= 10) {
             return 4;
+        } else if (level <= 20) {
+            return 8;
         } else {
-            return 6;
+            return 12;
         }
     } else {
         if (level <= 3) {
@@ -2909,11 +3007,11 @@ CGFloat DegreesToRadians(CGFloat degrees)
 -(int)minNumberOfPlanetsForLevel:(int)level {
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         if (level <= 15) {
-            return 1;
-        } else if (level <= 30) {
             return 2;
-        } else {
+        } else if (level <= 30) {
             return 4;
+        } else {
+            return 8;
         }
     } else {
         if (level <= 15) {
@@ -2934,8 +3032,10 @@ CGFloat DegreesToRadians(CGFloat degrees)
         planetFlavor = 3;
     }
     BOOL safeToContinue = NO;
-    while (!safeToContinue) {
+    int i = 0;
+    while (!safeToContinue && i < 50) {
         safeToContinue = YES;
+        i++;
         for (SKSpriteNode *planet in planets) {
             if ([planet.userData[planetNumber] intValue] == planetNum &&
                 [planet.userData[planetFlavorNumber] intValue] == planetFlavor) {

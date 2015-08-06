@@ -267,7 +267,7 @@
             [UIView animateWithDuration:0.5 delay:0 options:0 animations:^{
                 self.largeParsecsImage.alpha = 1;
                 self.largeParsecsLabel.alpha = 1;
-                self.largeParsecsLabelYAlignmentConstraint.constant = 30;
+                self.largeParsecsLabelYAlignmentConstraint.constant = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 40 : 30;
                 [self layoutIfNeeded];
             } completion:^(BOOL finished) {
                 if (finished && !killAnimations) {
@@ -309,11 +309,11 @@
             [subview removeFromSuperview];
         }
     }
-    self.delegate.scene.currentLevel = 10;
-    self.delegate.scene.blackHolesSurvived = 1;
-    self.delegate.scene.bubblesPopped = 1;
-    self.delegate.scene.sunsSurvived = 1;
-    if (YES || self.delegate.scene.currentLevel / 10 > 0) {
+//    self.delegate.scene.currentLevel = 10;
+//    self.delegate.scene.blackHolesSurvived = 1;
+//    self.delegate.scene.bubblesPopped = 1;
+//    self.delegate.scene.sunsSurvived = 1;
+    if (self.delegate.scene.currentLevel / 10 > 0) {
         [bonusAmounts addObject:@(self.delegate.scene.currentLevel / 10)];
         NSMutableAttributedString *bonusString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"   +%d    %d PARSECS TRAVELLED   ", self.delegate.scene.currentLevel / 10, self.delegate.scene.currentLevel]];
         NSRange rangeToDash;
@@ -338,7 +338,7 @@
         divider.backgroundColor =  [[UIColor whiteColor] colorWithAlphaComponent:0.5];
         [self.bonusLabelOne addSubview:divider];
     }
-    if (YES || self.delegate.scene.bubblesPopped > 0) {
+    if (self.delegate.scene.bubblesPopped > 0) {
         [bonusAmounts addObject:@(self.delegate.scene.bubblesPopped * 5)];
         NSMutableAttributedString *bonusString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"   +%d    %d ASTEROID BUBBLE POPS SURVIVED   ", self.delegate.scene.bubblesPopped * 5, self.delegate.scene.bubblesPopped]];
         NSRange rangeToDash;
@@ -362,7 +362,7 @@
         divider.backgroundColor =  [[UIColor whiteColor] colorWithAlphaComponent:0.5];
         [self.bonusLabelTwo addSubview:divider];
     }
-    if (YES || self.delegate.scene.blackHolesSurvived > 0) {
+    if (self.delegate.scene.blackHolesSurvived > 0) {
         [bonusAmounts addObject:@(self.delegate.scene.blackHolesSurvived * 4)];
         NSMutableAttributedString *bonusString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"   +%d    %d BLACK HOLES SURVIVED   ", self.delegate.scene.blackHolesSurvived * 4, self.delegate.scene.blackHolesSurvived]];
         NSRange rangeToDash;
@@ -386,7 +386,7 @@
         divider.backgroundColor =  [[UIColor whiteColor] colorWithAlphaComponent:0.5];
         [self.bonusLabelThree addSubview:divider];
     }
-    if (YES || self.delegate.scene.sunsSurvived > 0) {
+    if (self.delegate.scene.sunsSurvived > 0) {
         [bonusAmounts addObject:@(self.delegate.scene.sunsSurvived * 3)];
         NSMutableAttributedString *bonusString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"   +%d    %d SUNS SURVIVED   ", self.delegate.scene.sunsSurvived * 3, self.delegate.scene.sunsSurvived]];
         NSRange rangeToDash;
