@@ -2280,25 +2280,25 @@ CGFloat DegreesToRadians(CGFloat degrees)
         }
     } else {
         if (level <= 1) {
-            return 1;
+            return [self iPhoneRoundedAdjustedNumberForScreenSize:1];
         } else if (level <= 2) {
-            return 2;
+            return [self iPhoneRoundedAdjustedNumberForScreenSize:2];
         } else if (level <= 7) {
-            return 3;
+            return [self iPhoneRoundedAdjustedNumberForScreenSize:3];
         } else if (level <= 15) {
-            return 4;
+            return [self iPhoneRoundedAdjustedNumberForScreenSize:4];
         } else if (level <= 30) {
-            return 5;
+            return [self iPhoneRoundedAdjustedNumberForScreenSize:5];
         } else if (level <= 40) {
-            return 6;
+            return [self iPhoneRoundedAdjustedNumberForScreenSize:6];
         } else if (level <= 45) {
-            return 7;
+            return [self iPhoneRoundedAdjustedNumberForScreenSize:7];
         } else if (level <= 50) {
-            return 8;
+            return [self iPhoneRoundedAdjustedNumberForScreenSize:8];
         } else if (level <= 60) {
-            return 9;
+            return [self iPhoneRoundedAdjustedNumberForScreenSize:9];
         } else {
-            return 10;
+            return [self iPhoneRoundedAdjustedNumberForScreenSize:10];
         }
     }
 }
@@ -2328,25 +2328,25 @@ CGFloat DegreesToRadians(CGFloat degrees)
         }
     } else {
         if (level <= 1) {
-            return 1;
+            return [self iPhoneRoundedAdjustedNumberForScreenSize:1];
         } else if (level <= 2) {
-            return 2;
+            return [self iPhoneRoundedAdjustedNumberForScreenSize:2];
         } else if (level <= 25) {
-            return 3;
+            return [self iPhoneRoundedAdjustedNumberForScreenSize:3];
         } else if (level <= 35) {
-            return 4;
+            return [self iPhoneRoundedAdjustedNumberForScreenSize:4];
         } else if (level <= 50) {
-            return 5;
+            return [self iPhoneRoundedAdjustedNumberForScreenSize:5];
         } else if (level <= 65) {
-            return 6;
+            return [self iPhoneRoundedAdjustedNumberForScreenSize:6];
         } else if (level <= 70) {
-            return 7;
+            return [self iPhoneRoundedAdjustedNumberForScreenSize:7];
         } else if (level <= 75) {
-            return 8;
+            return [self iPhoneRoundedAdjustedNumberForScreenSize:8];
         } else if (level <= 90) {
-            return 9;
+            return [self iPhoneRoundedAdjustedNumberForScreenSize:9];
         } else {
-            return 10;
+            return [self iPhoneRoundedAdjustedNumberForScreenSize:10];
         }
     }
 }
@@ -2994,14 +2994,15 @@ CGFloat DegreesToRadians(CGFloat degrees)
         if (level <= 3) {
             return 0;
         } else if (level <= 10) {
-            return 1;
+            return [self iPhoneRoundedAdjustedNumberForScreenSize:1];
         } else if (level <= 20) {
-            return 2;
+            return [self iPhoneRoundedAdjustedNumberForScreenSize:2];
         } else {
-            return 3;
+            return [self iPhoneRoundedAdjustedNumberForScreenSize:3];
         }
     }
 }
+
 
 -(int)minNumberOfPlanetsForLevel:(int)level {
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
@@ -3016,9 +3017,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
         if (level <= 15) {
             return 0;
         } else if (level <= 30) {
-            return 1;
+            return [self iPhoneRoundedAdjustedNumberForScreenSize:1];
         } else {
-            return 2;
+            return [self iPhoneRoundedAdjustedNumberForScreenSize:2];
         }
     }
 }
@@ -3401,5 +3402,10 @@ CGFloat DegreesToRadians(CGFloat degrees)
     bearingDegrees = (bearingDegrees > 0.0 ? bearingDegrees : (360.0 + bearingDegrees)); // correct discontinuity
     return bearingDegrees;
 }
+
+-(int)iPhoneRoundedAdjustedNumberForScreenSize:(int)number {
+    return roundf(number * ((self.size.width * self.size.height) / 181760));
+}
+
 
 @end
