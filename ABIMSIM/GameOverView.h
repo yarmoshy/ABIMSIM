@@ -28,31 +28,28 @@ typedef enum {
 
 @interface GameOverView : UIView
 @property (weak, nonatomic) id<GameOverViewDelegate> delegate;
+@property (weak, nonatomic) IBOutlet UILabel *gameOverLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *largeParsecsLabel;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *largeParsecsLabelYAlignmentConstraint;
-@property (weak, nonatomic) IBOutlet UIImageView *largeParsecsImage;
+@property (weak, nonatomic) IBOutlet UILabel *largeParsecsImage;
 
 @property (weak, nonatomic) IBOutlet UILabel *largeXPLabel;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *largeXPLabelYAlignmentConstraint;
-@property (weak, nonatomic) IBOutlet UIImageView *largeXPImage;
+@property (weak, nonatomic) IBOutlet UILabel *largeXPImage;
 
-@property (weak, nonatomic) IBOutlet UIImageView *bonusImage;
+@property (weak, nonatomic) IBOutlet UILabel *bonusImage;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bonusImageTopConstraint;
 
-@property (weak, nonatomic) IBOutlet UIImageView *bonusBubbleOne;
 @property (weak, nonatomic) IBOutlet UILabel *bonusLabelOne;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bonusBubbleOneTopConstraint;
 
-@property (weak, nonatomic) IBOutlet UIImageView *bonusBubbleTwo;
 @property (weak, nonatomic) IBOutlet UILabel *bonusLabelTwo;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bonusBubbleTwoTopConstraint;
 
-@property (weak, nonatomic) IBOutlet UIImageView *bonusBubbleThree;
 @property (weak, nonatomic) IBOutlet UILabel *bonusLabelThree;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bonusBubbleThreeTopConstraint;
 
-@property (weak, nonatomic) IBOutlet UIImageView *bonusBubbleFour;
 @property (weak, nonatomic) IBOutlet UILabel *bonusLabelFour;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bonusBubbleFourTopConstraint;
 

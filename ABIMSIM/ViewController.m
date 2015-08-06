@@ -56,7 +56,12 @@
     [self.view addSubview:self.mainMenuView];
     [self.mainMenuView layoutIfNeeded];
     
-    UINib * gameOverViewNib = [UINib nibWithNibName:@"GameOverView" bundle:nil];
+    UINib * gameOverViewNib;
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        gameOverViewNib = [UINib nibWithNibName:@"GameOverView_iPad" bundle:nil];
+    } else {
+        gameOverViewNib = [UINib nibWithNibName:@"GameOverView" bundle:nil];
+    }
     self.gameOverView = [gameOverViewNib instantiateWithOwner:self options:nil][0];
     self.gameOverView.frame = self.view.frame;
     self.gameOverView.delegate = self;

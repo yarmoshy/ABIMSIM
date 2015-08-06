@@ -57,6 +57,13 @@
     self.ggPlayButton.exclusiveTouch = self.ggUpgradeButton.exclusiveTouch = self.ggMainMenuButton.exclusiveTouch = YES;
     self.bonusLabelOne.layer.borderColor = self.bonusLabelTwo.layer.borderColor = self.bonusLabelThree.layer.borderColor = self.bonusLabelFour.layer.borderColor = [[UIColor whiteColor] colorWithAlphaComponent:0.5].CGColor;
     self.bonusLabelOne.layer.borderWidth = self.bonusLabelTwo.layer.borderWidth = self.bonusLabelThree.layer.borderWidth = self.bonusLabelFour.layer.borderWidth = 0.5;
+    self.gameOverLabel.layer.shadowColor = [UIColor whiteColor].CGColor;
+    self.gameOverLabel.layer.shadowRadius = 10;
+    self.gameOverLabel.layer.shadowOpacity = 0.5;
+    self.largeParsecsImage.layer.shadowColor = self.largeParsecsImage.textColor.CGColor;
+    self.largeParsecsImage.layer.shadowRadius = 10;
+    self.largeParsecsImage.layer.shadowOpacity = 0.5;
+    
 }
 #pragma mark - Game Over Play Button
 
@@ -286,8 +293,8 @@
 
     NSMutableArray *bonusStrings = [NSMutableArray array];
     NSMutableArray *bonusAmounts = [NSMutableArray array];
-    UIFont *boldFont = [UIFont fontWithName:@"Futura-CondensedExtraBold" size:18];
-    UIFont *regularFont = [UIFont fontWithName:@"Futura-CondensedMedium" size:18];
+    UIFont *boldFont = [UIFont fontWithName:@"Futura-CondensedExtraBold" size:UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 23 :  18];
+    UIFont *regularFont = [UIFont fontWithName:@"Futura-CondensedMedium" size:UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 23 : 18];
     NSArray *labels = @[self.bonusLabelOne, self.bonusLabelTwo, self.bonusLabelThree, self.bonusLabelFour];
     for (UILabel *label in labels) {
         for (UIView *subview in label.subviews) {
@@ -433,28 +440,24 @@
                     if (finished && !killAnimations) {
                         [UIView animateWithDuration:0.5 animations:^{
                             self.bonusLabelOne.alpha = 1;
-                            self.bonusBubbleOne.alpha = 1;
-                            self.bonusBubbleOneTopConstraint.constant = 10;
+                            self.bonusBubbleOneTopConstraint.constant = 2;
                             [self.superview layoutIfNeeded];
                             [self animatePointDifference:[bonusAmounts[0] intValue] withIncrementingLabel:self.largeXPLabel andCompletionBlock:^{
                                 if (bonusAmounts.count > 1 && !killAnimations) {
                                     [UIView animateWithDuration:0.5 animations:^{
                                         self.bonusLabelTwo.alpha = 1;
-                                        self.bonusBubbleTwo.alpha = 1;
                                         self.bonusBubbleTwoTopConstraint.constant = 5;
                                         [self.superview layoutIfNeeded];
                                         [self animatePointDifference:[bonusAmounts[1] intValue] withIncrementingLabel:self.largeXPLabel andCompletionBlock:^{
                                             if (bonusAmounts.count > 2 && !killAnimations) {
                                                 [UIView animateWithDuration:0.5 animations:^{
                                                     self.bonusLabelThree.alpha = 1;
-                                                    self.bonusBubbleThree.alpha = 1;
                                                     self.bonusBubbleThreeTopConstraint.constant = 5;
                                                     [self.superview layoutIfNeeded];
                                                     [self animatePointDifference:[bonusAmounts[2] intValue] withIncrementingLabel:self.largeXPLabel andCompletionBlock:^{
                                                         if (bonusAmounts.count > 3 && !killAnimations) {
                                                             [UIView animateWithDuration:0.5 animations:^{
                                                                 self.bonusLabelFour.alpha = 1;
-                                                                self.bonusBubbleFour.alpha = 1;
                                                                 self.bonusBubbleFourTopConstraint.constant = 5;
                                                                 [self.superview layoutIfNeeded];
                                                                 [self animatePointDifference:[bonusAmounts[3] intValue] withIncrementingLabel:self.largeXPLabel andCompletionBlock:^{
@@ -520,10 +523,6 @@
         self.largeXPImage.alpha = 0;
         self.largeXPLabel.alpha = 0;
         self.bonusImage.alpha = 0;
-        self.bonusBubbleOne.alpha = 0;
-        self.bonusBubbleTwo.alpha = 0;
-        self.bonusBubbleThree.alpha = 0;
-        self.bonusBubbleFour.alpha = 0;
         self.bonusLabelOne.alpha = 0;
         self.bonusLabelTwo.alpha = 0;
         self.bonusLabelThree.alpha = 0;

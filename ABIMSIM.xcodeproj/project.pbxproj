@@ -122,6 +122,7 @@
 		E18208C51B6BDB8D0029446E /* MainMenuView_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = E18208C41B6BDB8D0029446E /* MainMenuView_iPad.xib */; };
 		E18208C71B6BE9A30029446E /* Planets.atlas in Resources */ = {isa = PBXBuildFile; fileRef = E18208C61B6BE9A30029446E /* Planets.atlas */; };
 		E18208C91B6BEA2B0029446E /* Asteroids.atlas in Resources */ = {isa = PBXBuildFile; fileRef = E18208C81B6BEA2B0029446E /* Asteroids.atlas */; };
+		E1C786071B72A4270016DF45 /* GameOverView_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1C786061B72A4270016DF45 /* GameOverView_iPad.xib */; };
 		E1D4EDF51A5B5E5900676C17 /* DCRoundSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = E1D4EDEE1A5B5E5900676C17 /* DCRoundSwitch.m */; };
 		E1D4EDF61A5B5E5900676C17 /* DCRoundSwitchKnobLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E1D4EDF01A5B5E5900676C17 /* DCRoundSwitchKnobLayer.m */; };
 		E1D4EDF71A5B5E5900676C17 /* DCRoundSwitchOutlineLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E1D4EDF21A5B5E5900676C17 /* DCRoundSwitchOutlineLayer.m */; };
@@ -294,6 +295,7 @@
 		E18208C41B6BDB8D0029446E /* MainMenuView_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenuView_iPad.xib; sourceTree = "<group>"; };
 		E18208C61B6BE9A30029446E /* Planets.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Planets.atlas; sourceTree = "<group>"; };
 		E18208C81B6BEA2B0029446E /* Asteroids.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Asteroids.atlas; sourceTree = "<group>"; };
+		E1C786061B72A4270016DF45 /* GameOverView_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GameOverView_iPad.xib; sourceTree = "<group>"; };
 		E1D4EDED1A5B5E5900676C17 /* DCRoundSwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCRoundSwitch.h; sourceTree = "<group>"; };
 		E1D4EDEE1A5B5E5900676C17 /* DCRoundSwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCRoundSwitch.m; sourceTree = "<group>"; };
 		E1D4EDEF1A5B5E5900676C17 /* DCRoundSwitchKnobLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCRoundSwitchKnobLayer.h; sourceTree = "<group>"; };
@@ -379,6 +381,7 @@
 				B4557EC11AC0D4C8004E097E /* GameOverView.h */,
 				B4557EC21AC0D4C8004E097E /* GameOverView.m */,
 				B4557EC41AC0D4DD004E097E /* GameOverView.xib */,
+				E1C786061B72A4270016DF45 /* GameOverView_iPad.xib */,
 				B4557ED31AC0EF47004E097E /* PausedView.h */,
 				B4557ED41AC0EF47004E097E /* PausedView.m */,
 				B4557ED61AC0EF57004E097E /* PausedView.xib */,
@@ -795,6 +798,7 @@
 				B4D0732E19785F620028840D /* SpaceMine_CenterGlow_0@2x.png in Resources */,
 				B49792F21A86E617005174C1 /* explosionMineTrimmed.caf in Resources */,
 				E18208C21B6BD8560029446E /* Background_9_iPad@2x.png in Resources */,
+				E1C786071B72A4270016DF45 /* GameOverView_iPad.xib in Resources */,
 				B4557ED71AC0EF57004E097E /* PausedView.xib in Resources */,
 				E18208C11B6BD8560029446E /* Background_8_iPad@2x.png in Resources */,
 				B4D0733019785F620028840D /* SpaceMine_LargeGlow_0@2x.png in Resources */,
