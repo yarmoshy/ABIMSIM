@@ -58,6 +58,7 @@
     NSMutableArray *spritesArrays;
     NSMutableArray *starSprites;
     NSMutableArray *currentSpriteArray;
+    NSMutableArray *backgroundNodes;
     NSNumber *safeToTransition;
     SKSpriteNode *starBackLayer;
     SKSpriteNode *starFrontLayer;
@@ -65,7 +66,6 @@
     SKSpriteNode *alternateFrontLayer;
     SKSpriteNode *currentFrontLayer;
     SKSpriteNode *currentBackLayer;
-    SKSpriteNode *background, *background2;
     SKSpriteNode *shipSprite, *currentBlackHole, *explodingMine, *explodedMine, *explodingNuke;
     SKSpriteNode *shieldPowerUpSprite, *minePowerUpSprite;
     SKLabelNode *levelNode, *parsecsNode;
@@ -356,18 +356,16 @@ CGFloat DegreesToRadians(CGFloat degrees)
         self.physicsBody.friction = 0.0f;
         self.physicsWorld.contactDelegate = self;
         
-        background2 = [SKSpriteNode spriteNodeWithTexture:backgroundTextures[1]];
-        background2.size = self.size;
-        background2.anchorPoint = CGPointZero;
-        background2.zPosition = -1;
-        background2.alpha = 0;
-        [self addChild:background2];
-        
-        background = [SKSpriteNode spriteNodeWithTexture:backgroundTextures[0]];
-        background.size = self.size;
-        background.anchorPoint = CGPointZero;
-        background.zPosition = -1;
-        [self addChild:background];
+        backgroundNodes = [NSMutableArray new];
+        for (int i = 0; i < backgroundTextures.count; i++) {
+            SKSpriteNode *backgroundNode = [SKSpriteNode spriteNodeWithTexture:backgroundTextures[i]];
+            backgroundNode.alpha = i == 0;
+            backgroundNode.size = self.size;
+            backgroundNode.anchorPoint = CGPointZero;
+            backgroundNode.zPosition = -1;
+            [self addChild:backgroundNode];
+            [backgroundNodes addObject:backgroundNode];
+        }
         
         SKSpriteNode *secondaryBorderSprite = [SKSpriteNode spriteNodeWithColor:[UIColor clearColor] size:CGSizeMake(size.width, size.height+kExtraSpaceOffScreen)];
         secondaryBorderSprite.anchorPoint = CGPointZero;
@@ -1420,10 +1418,10 @@ CGFloat DegreesToRadians(CGFloat degrees)
     nukeUsedThisLevel = NO;
     lastShieldLevel = lastMineLevel = 0;
     
-    [background setTexture:backgroundTextures[0]];
-    background.alpha = 1;
-    [background2 setTexture:backgroundTextures[1]];
-    background2.alpha = 0;
+    for (int i = 0; i < backgroundNodes.count; i++) {
+        SKSpriteNode *backgroundNode = backgroundNodes[i];
+        backgroundNode.alpha = i == 0;
+    }
 
     [self removeOverlayChildren];
     [self removeCurrentSprites];
@@ -1783,22 +1781,19 @@ CGFloat DegreesToRadians(CGFloat degrees)
     if (self.currentLevel % 10 == 0) {
         int backgroundNumber = self.currentLevel / 10;
         backgroundNumber++;
-        while (backgroundNumber > 8) backgroundNumber -= 9;
-        if (background.alpha == 0) {
-            [background runAction:[SKAction fadeAlphaTo:1 duration:0.5]];
-            [background2 runAction:[SKAction fadeAlphaTo:0 duration:0.5] completion:^{
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-                    [background2 setTexture:backgroundTextures[backgroundNumber]];
-                });
-            }];
-        } else {
-            [background runAction:[SKAction fadeAlphaTo:0 duration:0.5] completion:^{
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-                    [background setTexture:backgroundTextures[backgroundNumber]];
-                });
-            }];
-            [background2 runAction:[SKAction fadeAlphaTo:1 duration:0.5]];
+        
+        while (backgroundNumber > backgroundNodes.count) {
+            backgroundNumber -= backgroundNodes.count + 1;
         }
+        int previousBackgroudNumber = backgroundNumber - 1;
+        if (previousBackgroudNumber < 0) {
+            previousBackgroudNumber = backgroundNodes.count - 1;
+        }
+        
+        SKSpriteNode *backgroundNode = backgroundNodes[backgroundNumber];
+        SKSpriteNode *previousBackground = backgroundNodes[previousBackgroudNumber];
+        [backgroundNode runAction:[SKAction fadeAlphaTo:1 duration:0.5]];
+        [previousBackground runAction:[SKAction fadeAlphaTo:0 duration:0.5]];
     }
     
     levelNode.text = [NSString stringWithFormat:@"%d",self.currentLevel];
