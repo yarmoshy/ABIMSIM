@@ -67,6 +67,8 @@
     } else {
         self.rectangleImageWidthConstraint.constant = self.frame.size.width;
         self.rectangleSocialImageWidthConstraint.constant = 75;
+        self.rectangleImageYConstraint.constant = self.frame.size.height / 3.64;
+
     }
 //    self.largeParsecsImage.layer.shadowColor = self.largeParsecsImage.textColor.CGColor;
 //    self.largeParsecsImage.layer.shadowRadius = 10;
@@ -309,10 +311,10 @@
             [subview removeFromSuperview];
         }
     }
-//    self.delegate.scene.currentLevel = 10;
-//    self.delegate.scene.blackHolesSurvived = 1;
-//    self.delegate.scene.bubblesPopped = 1;
-//    self.delegate.scene.sunsSurvived = 1;
+    self.delegate.scene.currentLevel = 10;
+    self.delegate.scene.blackHolesSurvived = 10;
+    self.delegate.scene.bubblesPopped = 10;
+    self.delegate.scene.sunsSurvived = 10;
     if (self.delegate.scene.currentLevel / 10 > 0) {
         [bonusAmounts addObject:@(self.delegate.scene.currentLevel / 10)];
         NSMutableAttributedString *bonusString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"   +%d    %d PARSECS TRAVELLED   ", self.delegate.scene.currentLevel / 10, self.delegate.scene.currentLevel]];

@@ -73,9 +73,15 @@
                 </label>
                 <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="RectangleBackground" translatesAutoresizingMaskIntoConstraints="NO" id="IcI-dD-uzd">
                     <rect key="frame" x="0.0" y="78" width="320" height="100"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="320" id="07v-cF-thp"/>
+                    </constraints>
                 </imageView>
                 <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="RectangleBackground_Social" translatesAutoresizingMaskIntoConstraints="NO" id="4rg-0s-B8Y">
                     <rect key="frame" x="245" y="78" width="75" height="100"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="75" id="py7-JH-0RW"/>
+                    </constraints>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="400" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tyu-i4-NY3" userLabel="smallParsecsLabel">
                     <rect key="frame" x="27" y="82" width="75" height="73"/>
@@ -373,9 +379,12 @@
                 <outlet property="largeXPLabelYAlignmentConstraint" destination="dEx-vL-rlv" id="nlN-f6-Vg2"/>
                 <outlet property="quitButton" destination="4lc-xw-tfm" id="paa-bJ-Zt8"/>
                 <outlet property="rectangleImage" destination="IcI-dD-uzd" id="vwQ-gc-B8r"/>
+                <outlet property="rectangleImageWidthConstraint" destination="07v-cF-thp" id="0q5-Jg-xKn"/>
+                <outlet property="rectangleImageYConstraint" destination="g4h-Ng-0Bp" id="4IK-HP-h4V"/>
                 <outlet property="rectangleSocialImage" destination="4rg-0s-B8Y" id="V1q-4I-V2H"/>
                 <outlet property="smallParsecsImage" destination="uOk-um-5rs" id="Vwq-X3-M0A"/>
                 <outlet property="smallParsecsLabel" destination="tyu-i4-NY3" id="DYn-DS-fgb"/>
+                <outlet property="smallParsecsLabelHorizonalConstraint" destination="py7-JH-0RW" id="x2f-YZ-2v8"/>
                 <outlet property="smallXPImage" destination="i3C-tT-bcL" id="EAI-px-Pps"/>
                 <outlet property="smallXPLabel" destination="cEO-ap-5ob" id="pN3-zo-Eht"/>
                 <outlet property="twitterButton" destination="Qb5-YS-JmM" id="ksF-lc-SWf"/>

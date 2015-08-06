@@ -55,6 +55,7 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bonusBubbleFourTopConstraint;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *rectangleImageHorizontalConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *rectangleImageYConstraint;
 @property (weak, nonatomic) IBOutlet UIImageView *rectangleImage;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *rectangleImageWidthConstraint;
 @property (weak, nonatomic) IBOutlet UIImageView *rectangleSocialImage;
