@@ -265,7 +265,9 @@
                         <constraint firstAttribute="width" constant="40" id="IZW-Ka-ErZ"/>
                         <constraint firstAttribute="height" constant="40" id="qku-xR-uar"/>
                     </constraints>
-                    <state key="normal" image="QuitText">
+                    <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="18"/>
+                    <state key="normal" title="Quit">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
@@ -389,7 +391,6 @@
         <image name="Play_1" width="150" height="150"/>
         <image name="Play_2" width="150" height="150"/>
         <image name="Play_3" width="158" height="158"/>
-        <image name="QuitText" width="25" height="15"/>
         <image name="RectangleBackground" width="320" height="100"/>
         <image name="RectangleBackground_Social" width="75" height="100"/>
         <image name="SmallParsecs" width="70" height="12"/>

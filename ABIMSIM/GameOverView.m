@@ -59,10 +59,18 @@
     self.bonusLabelOne.layer.borderWidth = self.bonusLabelTwo.layer.borderWidth = self.bonusLabelThree.layer.borderWidth = self.bonusLabelFour.layer.borderWidth = 0.5;
     self.gameOverLabel.layer.shadowColor = [UIColor whiteColor].CGColor;
     self.gameOverLabel.layer.shadowRadius = 10;
-    self.gameOverLabel.layer.shadowOpacity = 0.5;
-    self.largeParsecsImage.layer.shadowColor = self.largeParsecsImage.textColor.CGColor;
-    self.largeParsecsImage.layer.shadowRadius = 10;
-    self.largeParsecsImage.layer.shadowOpacity = 0.5;
+    self.gameOverLabel.layer.shadowOpacity = 0.25;
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        self.rectangleImageWidthConstraint.constant = self.frame.size.width/2;
+        self.rectangleSocialImageWidthConstraint.constant = (self.frame.size.width/2) / (320.f/75.f);
+        self.smallParsecsLabelHorizonalConstraint.constant = self.smallXPLabelHorizonalConstraint.constant = (self.frame.size.width/2) / (320.f/60.f);
+    } else {
+        self.rectangleImageWidthConstraint.constant = self.frame.size.width;
+        self.rectangleSocialImageWidthConstraint.constant = 75;
+    }
+//    self.largeParsecsImage.layer.shadowColor = self.largeParsecsImage.textColor.CGColor;
+//    self.largeParsecsImage.layer.shadowRadius = 10;
+//    self.largeParsecsImage.layer.shadowOpacity = 0.25;
     
 }
 #pragma mark - Game Over Play Button
@@ -216,7 +224,7 @@
     self.twitterButton.alpha = 0;
     self.quitButton.alpha = 0;
     self.gameOverButtonContainer.alpha = 0;
-    
+    self.gameOverLabelHorizonalConstraint.constant = 0;
     while ([self.superview viewWithTag:kBlurBackgroundViewTag]) {
         [[self.superview viewWithTag:kBlurBackgroundViewTag] removeFromSuperview];
     }
@@ -302,9 +310,9 @@
         }
     }
     self.delegate.scene.currentLevel = 10;
-    self.delegate.scene.blackHolesSurvived = 10;
-    self.delegate.scene.bubblesPopped = 10;
-    self.delegate.scene.sunsSurvived = 10;
+    self.delegate.scene.blackHolesSurvived = 1;
+    self.delegate.scene.bubblesPopped = 1;
+    self.delegate.scene.sunsSurvived = 1;
     if (YES || self.delegate.scene.currentLevel / 10 > 0) {
         [bonusAmounts addObject:@(self.delegate.scene.currentLevel / 10)];
         NSMutableAttributedString *bonusString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"   +%d    %d PARSECS TRAVELLED   ", self.delegate.scene.currentLevel / 10, self.delegate.scene.currentLevel]];
@@ -527,6 +535,10 @@
         self.bonusLabelTwo.alpha = 0;
         self.bonusLabelThree.alpha = 0;
         self.bonusLabelFour.alpha = 0;
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+            self.gameOverLabelHorizonalConstraint.constant = self.frame.size.width/4.f;
+            self.rectangleImageHorizontalConstraint.constant = self.frame.size.width/-4.f;
+        }
         [self.superview viewWithTag:kBlurBackgroundViewTag].alpha = 1;
         [self.superview layoutIfNeeded];
     } completion:^(BOOL finished) {

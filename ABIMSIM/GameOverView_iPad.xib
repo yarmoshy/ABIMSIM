@@ -12,15 +12,15 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GAME OVER" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="taQ-2D-ReT">
-                    <rect key="frame" x="110" y="31" width="548" height="181"/>
-                    <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="150"/>
+                    <rect key="frame" x="247" y="76" width="274" height="91"/>
+                    <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="75"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="99" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fdZ-FY-znP">
                     <rect key="frame" x="295" y="382" width="179" height="259"/>
                     <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="215"/>
-                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PARSECS" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MSZ-Xa-RNJ">
@@ -32,7 +32,7 @@
                 <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="99" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zcd-Vk-j7I">
                     <rect key="frame" x="295" y="198" width="179" height="259"/>
                     <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="215"/>
-                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="XP" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dBb-w3-QVp">
@@ -44,7 +44,7 @@
                 <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BONUS!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t0S-HN-oOU">
                     <rect key="frame" x="341" y="604" width="87" height="43"/>
                     <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="35"/>
-                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hXd-8q-B49" userLabel="BonusLabelOne">
@@ -71,29 +71,301 @@
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="VerticalDivider" translatesAutoresizingMaskIntoConstraints="NO" id="1EO-1s-bjI">
+                    <rect key="frame" x="573" y="90" width="1" height="64"/>
+                </imageView>
+                <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="RectangleBackground" translatesAutoresizingMaskIntoConstraints="NO" id="Ri0-00-y9t">
+                    <rect key="frame" x="448" y="72" width="320" height="100"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="320" id="aSF-ak-NPa"/>
+                    </constraints>
+                </imageView>
+                <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SmallXP" translatesAutoresizingMaskIntoConstraints="NO" id="325-Sd-TGF">
+                    <rect key="frame" x="623" y="149" width="22" height="12"/>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="400" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="goA-G1-xvE" userLabel="smallXPLabel">
+                    <rect key="frame" x="596" y="76" width="75" height="73"/>
+                    <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="60"/>
+                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SmallParsecs" translatesAutoresizingMaskIntoConstraints="NO" id="Rdw-ZQ-1T0">
+                    <rect key="frame" x="478" y="149" width="70" height="12"/>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="400" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q5v-jG-H3M" userLabel="smallParsecsLabel">
+                    <rect key="frame" x="476" y="76" width="75" height="73"/>
+                    <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="60"/>
+                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="RectangleBackground_Social" translatesAutoresizingMaskIntoConstraints="NO" id="ChA-2x-dQk">
+                    <rect key="frame" x="693" y="72" width="75" height="100"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="75" id="Xd1-h9-xtw"/>
+                    </constraints>
+                </imageView>
+                <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HorizontalDivider" translatesAutoresizingMaskIntoConstraints="NO" id="CNr-GP-A61">
+                    <rect key="frame" x="707" y="121" width="46" height="1"/>
+                </imageView>
+                <button opaque="NO" alpha="0.0" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1aE-cS-pPT">
+                    <rect key="frame" x="693" y="72" width="75" height="50"/>
+                    <state key="normal" image="FBIcon__GameOver">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="facebookTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="qgb-Zf-go9"/>
+                    </connections>
+                </button>
+                <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oT7-CT-w8p">
+                    <rect key="frame" x="693" y="122" width="75" height="50"/>
+                    <state key="normal" image="TwitterIcon_GameOver">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="twitterTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="ebg-5v-fcH"/>
+                    </connections>
+                </button>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sjT-1T-I4P" userLabel="ButtonContainerView">
+                    <rect key="frame" x="123" y="222" width="522" height="589"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Play_0_iPad" translatesAutoresizingMaskIntoConstraints="NO" id="heb-0l-6hO">
+                            <rect key="frame" x="29" y="29" width="258" height="258"/>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Play_1_iPad" translatesAutoresizingMaskIntoConstraints="NO" id="CKe-DL-eal">
+                            <rect key="frame" x="8" y="8" width="300" height="300"/>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Play_2_iPad" translatesAutoresizingMaskIntoConstraints="NO" id="7cr-Mm-dvP">
+                            <rect key="frame" x="8" y="8" width="300" height="300"/>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Play_3_iPad" translatesAutoresizingMaskIntoConstraints="NO" id="gSs-zs-REx">
+                            <rect key="frame" x="0.0" y="0.0" width="316" height="316"/>
+                        </imageView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9g5-NH-zUa" userLabel="PlayButton">
+                            <rect key="frame" x="0.0" y="0.0" width="316" height="316"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="316" id="Frk-KN-yJy"/>
+                                <constraint firstAttribute="width" constant="316" id="ZhR-sY-NVB"/>
+                            </constraints>
+                            <state key="normal" image="PlayText_0_iPad">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <state key="selected" image="PlayText_1_iPad"/>
+                            <state key="highlighted" image="PlayText_1_iPad"/>
+                            <connections>
+                                <action selector="ggPlayDeselect:" destination="iN0-l3-epB" eventType="touchDragExit" id="kTT-qA-bki"/>
+                                <action selector="ggPlaySelect:" destination="iN0-l3-epB" eventType="touchDragEnter" id="WhT-11-5Cu"/>
+                                <action selector="ggPlaySelect:" destination="iN0-l3-epB" eventType="touchDown" id="m2R-yv-nXk"/>
+                                <action selector="ggPlayTouchUpInside:" destination="iN0-l3-epB" eventType="touchUpInside" id="fuX-CT-1vf"/>
+                            </connections>
+                        </button>
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HS_0_iPad" translatesAutoresizingMaskIntoConstraints="NO" id="eHQ-41-Jfd">
+                            <rect key="frame" x="342" y="218" width="153" height="153"/>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HS_1_iPad" translatesAutoresizingMaskIntoConstraints="NO" id="xlG-tD-vek">
+                            <rect key="frame" x="323" y="199" width="191" height="191"/>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HS_2_iPad" translatesAutoresizingMaskIntoConstraints="NO" id="Nox-i1-5KO">
+                            <rect key="frame" x="323" y="199" width="191" height="191"/>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HS_3_iPad" translatesAutoresizingMaskIntoConstraints="NO" id="prI-kL-3WZ">
+                            <rect key="frame" x="314" y="190" width="208" height="208"/>
+                        </imageView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aUX-ze-p0W" userLabel="MainMenuButton">
+                            <rect key="frame" x="314" y="190" width="208" height="208"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="208" id="8Ld-gW-FKw"/>
+                                <constraint firstAttribute="width" constant="208" id="df6-ZR-aRP"/>
+                            </constraints>
+                            <state key="normal" image="HighScoresText_0_iPad">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <state key="selected" image="HighScoresText_1_iPad"/>
+                            <state key="highlighted" image="HighScoresText_1_iPad"/>
+                            <connections>
+                                <action selector="ggMainMenuDeselect:" destination="iN0-l3-epB" eventType="touchDragExit" id="hAa-q9-lJM"/>
+                                <action selector="ggMainMenuSelect:" destination="iN0-l3-epB" eventType="touchDown" id="ArR-1L-Yg4"/>
+                                <action selector="ggMainMenuSelect:" destination="iN0-l3-epB" eventType="touchDragEnter" id="JRD-dQ-g4d"/>
+                                <action selector="ggMainMenuTouchUpInside:" destination="iN0-l3-epB" eventType="touchUpInside" id="RXT-mS-Q37"/>
+                            </connections>
+                        </button>
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Upgrades_0_iPad" translatesAutoresizingMaskIntoConstraints="NO" id="Q0M-91-wCS">
+                            <rect key="frame" x="132" y="367" width="193" height="193"/>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Upgrades_1_iPad" translatesAutoresizingMaskIntoConstraints="NO" id="VQh-NI-flu">
+                            <rect key="frame" x="113" y="348" width="231" height="231"/>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Upgrades_2_iPad" translatesAutoresizingMaskIntoConstraints="NO" id="guS-Ui-23t">
+                            <rect key="frame" x="113" y="348" width="231" height="231"/>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Upgrades_3_iPad" translatesAutoresizingMaskIntoConstraints="NO" id="9lv-55-blM">
+                            <rect key="frame" x="103" y="338" width="251" height="251"/>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="UpgradesTextNotification_0_iPad" translatesAutoresizingMaskIntoConstraints="NO" id="3Fa-w8-VGV">
+                            <rect key="frame" x="103" y="338" width="251" height="251"/>
+                        </imageView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7zN-61-ZCD" userLabel="UpgradesButton">
+                            <rect key="frame" x="103" y="338" width="251" height="251"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="251" id="ATv-95-tLQ"/>
+                                <constraint firstAttribute="width" constant="251" id="RS9-io-5eh"/>
+                            </constraints>
+                            <state key="normal" image="UpgradesText_0_iPad">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <state key="selected" image="UpgradesText_1_iPad"/>
+                            <state key="highlighted" image="UpgradesText_1_iPad"/>
+                            <connections>
+                                <action selector="ggUpgradeDeselect:" destination="iN0-l3-epB" eventType="touchDragExit" id="9wS-W6-jua"/>
+                                <action selector="ggUpgradeSelect:" destination="iN0-l3-epB" eventType="touchDown" id="8Th-7f-SHM"/>
+                                <action selector="ggUpgradeSelect:" destination="iN0-l3-epB" eventType="touchDragEnter" id="sW9-CG-DWM"/>
+                                <action selector="ggUpgradeTouchUpInside:" destination="iN0-l3-epB" eventType="touchUpInside" id="2xw-EH-QeW"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="guS-Ui-23t" firstAttribute="centerY" secondItem="Q0M-91-wCS" secondAttribute="centerY" id="05G-6p-7qS"/>
+                        <constraint firstItem="heb-0l-6hO" firstAttribute="centerY" secondItem="gSs-zs-REx" secondAttribute="centerY" id="0ey-rU-Lox"/>
+                        <constraint firstItem="9g5-NH-zUa" firstAttribute="top" secondItem="sjT-1T-I4P" secondAttribute="top" id="2RT-SC-6GV"/>
+                        <constraint firstItem="9g5-NH-zUa" firstAttribute="leading" secondItem="sjT-1T-I4P" secondAttribute="leading" id="5RP-ai-9Iw"/>
+                        <constraint firstItem="VQh-NI-flu" firstAttribute="centerY" secondItem="Q0M-91-wCS" secondAttribute="centerY" id="6cJ-EE-GRk"/>
+                        <constraint firstItem="guS-Ui-23t" firstAttribute="centerY" secondItem="7zN-61-ZCD" secondAttribute="centerY" id="7LR-5q-LRk"/>
+                        <constraint firstItem="heb-0l-6hO" firstAttribute="centerX" secondItem="7cr-Mm-dvP" secondAttribute="centerX" id="8gf-fy-09Z"/>
+                        <constraint firstItem="guS-Ui-23t" firstAttribute="centerX" secondItem="VQh-NI-flu" secondAttribute="centerX" id="8xO-q1-A14"/>
+                        <constraint firstItem="Nox-i1-5KO" firstAttribute="centerY" secondItem="eHQ-41-Jfd" secondAttribute="centerY" id="Adi-OX-5UD"/>
+                        <constraint firstItem="heb-0l-6hO" firstAttribute="centerY" secondItem="CKe-DL-eal" secondAttribute="centerY" id="Ae1-ZD-C6h"/>
+                        <constraint firstItem="heb-0l-6hO" firstAttribute="centerX" secondItem="gSs-zs-REx" secondAttribute="centerX" id="CGM-1p-fzF"/>
+                        <constraint firstItem="guS-Ui-23t" firstAttribute="centerY" secondItem="VQh-NI-flu" secondAttribute="centerY" id="D9E-v9-H8e"/>
+                        <constraint firstItem="xlG-tD-vek" firstAttribute="centerY" secondItem="eHQ-41-Jfd" secondAttribute="centerY" id="FAL-yF-VHl"/>
+                        <constraint firstItem="Nox-i1-5KO" firstAttribute="centerY" secondItem="prI-kL-3WZ" secondAttribute="centerY" id="FvP-GB-hfJ"/>
+                        <constraint firstItem="7zN-61-ZCD" firstAttribute="leading" secondItem="3Fa-w8-VGV" secondAttribute="leading" id="Gfh-jH-dqw"/>
+                        <constraint firstItem="CKe-DL-eal" firstAttribute="centerX" secondItem="7cr-Mm-dvP" secondAttribute="centerX" id="GuX-wb-0Gp"/>
+                        <constraint firstItem="Nox-i1-5KO" firstAttribute="centerX" secondItem="eHQ-41-Jfd" secondAttribute="centerX" id="Ijx-7n-ZU8"/>
+                        <constraint firstItem="guS-Ui-23t" firstAttribute="centerX" secondItem="Q0M-91-wCS" secondAttribute="centerX" id="KTk-gm-WDt"/>
+                        <constraint firstItem="heb-0l-6hO" firstAttribute="centerY" secondItem="9g5-NH-zUa" secondAttribute="centerY" id="LCG-Mo-4iF"/>
+                        <constraint firstItem="CKe-DL-eal" firstAttribute="centerX" secondItem="gSs-zs-REx" secondAttribute="centerX" id="LY3-OY-53v"/>
+                        <constraint firstItem="VQh-NI-flu" firstAttribute="centerX" secondItem="7zN-61-ZCD" secondAttribute="centerX" id="MiP-f6-5qA"/>
+                        <constraint firstItem="VQh-NI-flu" firstAttribute="centerX" secondItem="guS-Ui-23t" secondAttribute="centerX" id="OH6-F8-m2R"/>
+                        <constraint firstAttribute="width" constant="522" id="OJw-Jd-wz4"/>
+                        <constraint firstItem="heb-0l-6hO" firstAttribute="centerX" secondItem="gSs-zs-REx" secondAttribute="centerX" id="PWn-2d-P3o"/>
+                        <constraint firstItem="xlG-tD-vek" firstAttribute="centerX" secondItem="aUX-ze-p0W" secondAttribute="centerX" id="Pig-bQ-1P9"/>
+                        <constraint firstItem="VQh-NI-flu" firstAttribute="centerX" secondItem="9lv-55-blM" secondAttribute="centerX" id="PwG-Oc-idg"/>
+                        <constraint firstItem="CKe-DL-eal" firstAttribute="centerY" secondItem="gSs-zs-REx" secondAttribute="centerY" id="Qkr-3F-zS7"/>
+                        <constraint firstItem="heb-0l-6hO" firstAttribute="centerY" secondItem="gSs-zs-REx" secondAttribute="centerY" id="WtH-LN-SYs"/>
+                        <constraint firstItem="guS-Ui-23t" firstAttribute="centerX" secondItem="7zN-61-ZCD" secondAttribute="centerX" id="Xkh-Da-EK2"/>
+                        <constraint firstItem="CKe-DL-eal" firstAttribute="centerY" secondItem="9g5-NH-zUa" secondAttribute="centerY" id="Y52-cv-lvX"/>
+                        <constraint firstItem="Nox-i1-5KO" firstAttribute="centerY" secondItem="aUX-ze-p0W" secondAttribute="centerY" id="YEI-8o-T0D"/>
+                        <constraint firstItem="Nox-i1-5KO" firstAttribute="centerX" secondItem="xlG-tD-vek" secondAttribute="centerX" id="YGU-oy-teW"/>
+                        <constraint firstItem="CKe-DL-eal" firstAttribute="centerX" secondItem="heb-0l-6hO" secondAttribute="centerX" id="Z3B-Zi-hcE"/>
+                        <constraint firstItem="heb-0l-6hO" firstAttribute="centerX" secondItem="9g5-NH-zUa" secondAttribute="centerX" id="ZST-B7-SKx"/>
+                        <constraint firstItem="guS-Ui-23t" firstAttribute="centerX" secondItem="9lv-55-blM" secondAttribute="centerX" id="Zia-IU-ZEN"/>
+                        <constraint firstItem="VQh-NI-flu" firstAttribute="centerY" secondItem="7zN-61-ZCD" secondAttribute="centerY" id="aHD-J9-gAR"/>
+                        <constraint firstItem="heb-0l-6hO" firstAttribute="centerX" secondItem="9g5-NH-zUa" secondAttribute="centerX" id="aHt-33-uFk"/>
+                        <constraint firstItem="CKe-DL-eal" firstAttribute="centerY" secondItem="7cr-Mm-dvP" secondAttribute="centerY" id="aRS-Nx-5Ki"/>
+                        <constraint firstItem="7zN-61-ZCD" firstAttribute="bottom" secondItem="3Fa-w8-VGV" secondAttribute="bottom" id="axw-AW-X4o"/>
+                        <constraint firstItem="7zN-61-ZCD" firstAttribute="leading" secondItem="sjT-1T-I4P" secondAttribute="leading" constant="103" id="bug-xD-YwV"/>
+                        <constraint firstItem="VQh-NI-flu" firstAttribute="centerY" secondItem="guS-Ui-23t" secondAttribute="centerY" id="cz1-WP-YXM"/>
+                        <constraint firstItem="heb-0l-6hO" firstAttribute="centerY" secondItem="CKe-DL-eal" secondAttribute="centerY" id="dHk-bz-aCf"/>
+                        <constraint firstItem="Nox-i1-5KO" firstAttribute="centerX" secondItem="aUX-ze-p0W" secondAttribute="centerX" id="dLA-W4-YMG"/>
+                        <constraint firstItem="heb-0l-6hO" firstAttribute="centerX" secondItem="CKe-DL-eal" secondAttribute="centerX" id="e8T-oE-hDV"/>
+                        <constraint firstAttribute="trailing" secondItem="aUX-ze-p0W" secondAttribute="trailing" id="fJ1-Tb-QwN"/>
+                        <constraint firstItem="heb-0l-6hO" firstAttribute="centerY" secondItem="7cr-Mm-dvP" secondAttribute="centerY" id="gE7-DU-WVj"/>
+                        <constraint firstItem="CKe-DL-eal" firstAttribute="centerY" secondItem="heb-0l-6hO" secondAttribute="centerY" id="gH9-FK-GTf"/>
+                        <constraint firstItem="xlG-tD-vek" firstAttribute="centerY" secondItem="Nox-i1-5KO" secondAttribute="centerY" id="hPX-Ve-fvC"/>
+                        <constraint firstAttribute="height" constant="589" id="hX9-8F-edH"/>
+                        <constraint firstItem="heb-0l-6hO" firstAttribute="centerX" secondItem="CKe-DL-eal" secondAttribute="centerX" id="hqM-0W-01o"/>
+                        <constraint firstItem="heb-0l-6hO" firstAttribute="centerX" secondItem="7cr-Mm-dvP" secondAttribute="centerX" id="ibP-c9-U6i"/>
+                        <constraint firstItem="Nox-i1-5KO" firstAttribute="centerX" secondItem="prI-kL-3WZ" secondAttribute="centerX" id="j7I-M3-lay"/>
+                        <constraint firstItem="Nox-i1-5KO" firstAttribute="centerY" secondItem="xlG-tD-vek" secondAttribute="centerY" id="jK8-rR-DTy"/>
+                        <constraint firstItem="heb-0l-6hO" firstAttribute="centerY" secondItem="9g5-NH-zUa" secondAttribute="centerY" id="ksm-NG-m0W"/>
+                        <constraint firstItem="guS-Ui-23t" firstAttribute="centerY" secondItem="9lv-55-blM" secondAttribute="centerY" id="lss-71-Cqv"/>
+                        <constraint firstItem="xlG-tD-vek" firstAttribute="centerX" secondItem="Nox-i1-5KO" secondAttribute="centerX" id="nwU-ad-eBi"/>
+                        <constraint firstItem="xlG-tD-vek" firstAttribute="centerY" secondItem="prI-kL-3WZ" secondAttribute="centerY" id="oLa-Sq-r6a"/>
+                        <constraint firstItem="xlG-tD-vek" firstAttribute="centerY" secondItem="aUX-ze-p0W" secondAttribute="centerY" id="oZZ-LK-Lbm"/>
+                        <constraint firstItem="VQh-NI-flu" firstAttribute="centerY" secondItem="9lv-55-blM" secondAttribute="centerY" id="rWT-Cr-ara"/>
+                        <constraint firstItem="7zN-61-ZCD" firstAttribute="top" secondItem="9g5-NH-zUa" secondAttribute="bottom" constant="22" id="sRT-h9-4bg"/>
+                        <constraint firstItem="7zN-61-ZCD" firstAttribute="top" secondItem="3Fa-w8-VGV" secondAttribute="top" id="sdB-AP-tNT"/>
+                        <constraint firstItem="xlG-tD-vek" firstAttribute="centerX" secondItem="eHQ-41-Jfd" secondAttribute="centerX" id="tNf-nF-Vpq"/>
+                        <constraint firstItem="xlG-tD-vek" firstAttribute="centerX" secondItem="prI-kL-3WZ" secondAttribute="centerX" id="tXg-go-PaF"/>
+                        <constraint firstItem="heb-0l-6hO" firstAttribute="centerY" secondItem="7cr-Mm-dvP" secondAttribute="centerY" id="utM-d3-Dvn"/>
+                        <constraint firstItem="7zN-61-ZCD" firstAttribute="trailing" secondItem="3Fa-w8-VGV" secondAttribute="trailing" id="wL1-zZ-NdP"/>
+                        <constraint firstItem="aUX-ze-p0W" firstAttribute="top" secondItem="sjT-1T-I4P" secondAttribute="top" constant="190" id="wnu-5q-rPp"/>
+                        <constraint firstItem="VQh-NI-flu" firstAttribute="centerX" secondItem="Q0M-91-wCS" secondAttribute="centerX" id="xDK-YK-MeY"/>
+                        <constraint firstItem="CKe-DL-eal" firstAttribute="centerX" secondItem="9g5-NH-zUa" secondAttribute="centerX" id="yEJ-O4-2Lf"/>
+                    </constraints>
+                </view>
+                <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JXD-l0-Bng">
+                    <rect key="frame" x="718" y="974" width="40" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="40" id="EwM-Er-Nm7"/>
+                        <constraint firstAttribute="height" constant="40" id="ddI-yu-sf0"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="25"/>
+                    <state key="normal" title="Quit">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <state key="highlighted">
+                        <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="quitTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="a2X-FO-vf5"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstAttribute="bottom" secondItem="JXD-l0-Bng" secondAttribute="bottom" constant="10" id="2CO-mr-yo4"/>
                 <constraint firstAttribute="centerX" secondItem="hXd-8q-B49" secondAttribute="centerX" id="3W7-S9-6Jq"/>
                 <constraint firstAttribute="centerX" secondItem="zcd-Vk-j7I" secondAttribute="centerX" id="6hl-zL-Aah"/>
+                <constraint firstItem="ChA-2x-dQk" firstAttribute="centerY" secondItem="Ri0-00-y9t" secondAttribute="centerY" id="9eT-ok-5C2"/>
+                <constraint firstItem="ChA-2x-dQk" firstAttribute="bottom" secondItem="oT7-CT-w8p" secondAttribute="bottom" id="AhK-aV-vK3"/>
                 <constraint firstAttribute="centerX" secondItem="taQ-2D-ReT" secondAttribute="centerX" id="C1l-bF-oCg"/>
+                <constraint firstItem="Ri0-00-y9t" firstAttribute="trailing" secondItem="ChA-2x-dQk" secondAttribute="trailing" id="D6E-MX-JPO"/>
+                <constraint firstItem="Q5v-jG-H3M" firstAttribute="centerY" secondItem="Ri0-00-y9t" secondAttribute="centerY" constant="-10" id="DZk-RB-Y2A"/>
                 <constraint firstItem="t0S-HN-oOU" firstAttribute="top" secondItem="dBb-w3-QVp" secondAttribute="bottom" constant="64" id="Ehu-a1-dSV"/>
-                <constraint firstItem="taQ-2D-ReT" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="31" id="GQe-Dj-eXX"/>
+                <constraint firstItem="goA-G1-xvE" firstAttribute="centerX" secondItem="325-Sd-TGF" secondAttribute="centerX" id="FnE-b2-Jvi"/>
+                <constraint firstItem="sjT-1T-I4P" firstAttribute="top" secondItem="Ri0-00-y9t" secondAttribute="bottom" constant="50" id="GCG-hQ-LJ8"/>
+                <constraint firstItem="taQ-2D-ReT" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="76" id="GQe-Dj-eXX"/>
+                <constraint firstAttribute="centerX" secondItem="Ri0-00-y9t" secondAttribute="centerX" constant="-224" id="HXl-Ey-8lO"/>
                 <constraint firstAttribute="centerX" secondItem="D40-7b-pCQ" secondAttribute="centerX" id="IIv-QO-rBt"/>
+                <constraint firstAttribute="trailing" secondItem="JXD-l0-Bng" secondAttribute="trailing" constant="10" id="J3c-yG-U8M"/>
+                <constraint firstItem="1EO-1s-bjI" firstAttribute="centerX" secondItem="Q5v-jG-H3M" secondAttribute="centerX" constant="60" id="KYu-MH-hdO"/>
                 <constraint firstItem="hXd-8q-B49" firstAttribute="top" secondItem="t0S-HN-oOU" secondAttribute="bottom" constant="8" id="Kwn-5c-ofB"/>
+                <constraint firstItem="ChA-2x-dQk" firstAttribute="trailing" secondItem="1aE-cS-pPT" secondAttribute="trailing" id="LLb-KH-rcZ"/>
+                <constraint firstItem="325-Sd-TGF" firstAttribute="top" secondItem="goA-G1-xvE" secondAttribute="bottom" id="Lte-FB-deX"/>
                 <constraint firstAttribute="centerX" secondItem="MSZ-Xa-RNJ" secondAttribute="centerX" id="Mky-tV-jYo"/>
                 <constraint firstAttribute="centerY" secondItem="zcd-Vk-j7I" secondAttribute="centerY" constant="184.5" id="Pli-Xa-P8m"/>
                 <constraint firstItem="U7O-O8-Mjb" firstAttribute="top" secondItem="hXd-8q-B49" secondAttribute="bottom" constant="7" id="R4g-sV-w6t"/>
+                <constraint firstItem="ChA-2x-dQk" firstAttribute="trailing" secondItem="oT7-CT-w8p" secondAttribute="trailing" id="RyD-o8-hsm"/>
                 <constraint firstAttribute="centerX" secondItem="dBb-w3-QVp" secondAttribute="centerX" id="VeQ-UE-BHi"/>
+                <constraint firstItem="Ri0-00-y9t" firstAttribute="centerX" secondItem="1EO-1s-bjI" secondAttribute="centerX" constant="35" id="XYm-zI-cx2"/>
+                <constraint firstItem="oT7-CT-w8p" firstAttribute="top" secondItem="CNr-GP-A61" secondAttribute="top" constant="1" id="YcO-be-LCa"/>
+                <constraint firstItem="CNr-GP-A61" firstAttribute="centerX" secondItem="ChA-2x-dQk" secondAttribute="centerX" id="YsR-ZA-IkI"/>
                 <constraint firstAttribute="centerX" secondItem="akw-Qx-QMb" secondAttribute="centerX" id="aDi-y1-5Pd"/>
                 <constraint firstItem="D40-7b-pCQ" firstAttribute="top" secondItem="akw-Qx-QMb" secondAttribute="bottom" constant="8" id="bZO-ih-32p"/>
+                <constraint firstItem="CNr-GP-A61" firstAttribute="centerY" secondItem="ChA-2x-dQk" secondAttribute="centerY" id="ctl-Qi-5ZM"/>
+                <constraint firstItem="goA-G1-xvE" firstAttribute="centerX" secondItem="1EO-1s-bjI" secondAttribute="centerX" constant="60" id="fYV-pI-y7T"/>
+                <constraint firstItem="goA-G1-xvE" firstAttribute="centerY" secondItem="Ri0-00-y9t" secondAttribute="centerY" constant="-10" id="flO-zm-Xcx"/>
+                <constraint firstItem="CNr-GP-A61" firstAttribute="bottom" secondItem="1aE-cS-pPT" secondAttribute="bottom" id="gp1-CH-wLM"/>
+                <constraint firstItem="ChA-2x-dQk" firstAttribute="leading" secondItem="1aE-cS-pPT" secondAttribute="leading" id="iD7-vK-aY7"/>
                 <constraint firstAttribute="centerX" secondItem="fdZ-FY-znP" secondAttribute="centerX" id="iKe-CU-LhJ"/>
                 <constraint firstItem="MSZ-Xa-RNJ" firstAttribute="top" secondItem="fdZ-FY-znP" secondAttribute="bottom" constant="-20" id="ihS-58-mJR"/>
                 <constraint firstAttribute="centerX" secondItem="U7O-O8-Mjb" secondAttribute="centerX" id="ln4-fD-GYe"/>
+                <constraint firstAttribute="centerY" secondItem="Ri0-00-y9t" secondAttribute="centerY" constant="390" id="oUC-bU-Dcl"/>
                 <constraint firstItem="akw-Qx-QMb" firstAttribute="top" secondItem="U7O-O8-Mjb" secondAttribute="bottom" constant="8" id="rOg-pE-NgC"/>
                 <constraint firstAttribute="centerY" secondItem="fdZ-FY-znP" secondAttribute="centerY" id="rz4-GX-Hs1"/>
+                <constraint firstItem="ChA-2x-dQk" firstAttribute="top" secondItem="1aE-cS-pPT" secondAttribute="top" id="tUj-ah-g07"/>
                 <constraint firstAttribute="centerX" secondItem="t0S-HN-oOU" secondAttribute="centerX" id="tWy-wh-X54"/>
+                <constraint firstItem="Rdw-ZQ-1T0" firstAttribute="top" secondItem="Q5v-jG-H3M" secondAttribute="bottom" id="uPD-eh-vmM"/>
+                <constraint firstItem="ChA-2x-dQk" firstAttribute="leading" secondItem="oT7-CT-w8p" secondAttribute="leading" id="vSj-0y-LBG"/>
+                <constraint firstItem="Q5v-jG-H3M" firstAttribute="centerX" secondItem="Rdw-ZQ-1T0" secondAttribute="centerX" id="vvh-yC-e3M"/>
+                <constraint firstAttribute="centerX" secondItem="sjT-1T-I4P" secondAttribute="centerX" id="wv5-xi-LWe"/>
                 <constraint firstItem="dBb-w3-QVp" firstAttribute="top" secondItem="zcd-Vk-j7I" secondAttribute="bottom" constant="-20" id="yj9-6f-YDY"/>
+                <constraint firstItem="Ri0-00-y9t" firstAttribute="centerY" secondItem="1EO-1s-bjI" secondAttribute="centerY" id="yjD-mg-Z5M"/>
             </constraints>
             <connections>
                 <outlet property="bonusBubbleFourTopConstraint" destination="bZO-ih-32p" id="UBd-Bc-GVy"/>
@@ -105,17 +377,80 @@
                 <outlet property="bonusLabelOne" destination="hXd-8q-B49" id="che-gq-QQ6"/>
                 <outlet property="bonusLabelThree" destination="akw-Qx-QMb" id="n2X-W1-EOP"/>
                 <outlet property="bonusLabelTwo" destination="U7O-O8-Mjb" id="MO5-qF-Raq"/>
+                <outlet property="facebookButton" destination="1aE-cS-pPT" id="8uE-dN-LcS"/>
+                <outlet property="gameOverButtonContainer" destination="sjT-1T-I4P" id="KwT-8T-kHx"/>
                 <outlet property="gameOverLabel" destination="taQ-2D-ReT" id="05N-9n-zZX"/>
+                <outlet property="gameOverLabelHorizonalConstraint" destination="C1l-bF-oCg" id="glF-NP-wPw"/>
+                <outlet property="ggMMRing0" destination="eHQ-41-Jfd" id="0tn-7H-suB"/>
+                <outlet property="ggMMRing1" destination="xlG-tD-vek" id="aTG-ac-DRh"/>
+                <outlet property="ggMMRing2" destination="Nox-i1-5KO" id="RZh-B1-ZnX"/>
+                <outlet property="ggMMRing3" destination="prI-kL-3WZ" id="QWd-3F-VHg"/>
+                <outlet property="ggMainMenuButton" destination="aUX-ze-p0W" id="K7J-Na-AdX"/>
+                <outlet property="ggPlayButton" destination="9g5-NH-zUa" id="QJV-P7-DWc"/>
+                <outlet property="ggPlayRing0" destination="heb-0l-6hO" id="Qmf-by-OIx"/>
+                <outlet property="ggPlayRing1" destination="CKe-DL-eal" id="K1l-O9-hMq"/>
+                <outlet property="ggPlayRing2" destination="7cr-Mm-dvP" id="INO-B6-X2h"/>
+                <outlet property="ggPlayRing3" destination="gSs-zs-REx" id="kpo-np-Web"/>
+                <outlet property="ggUpgradeButton" destination="7zN-61-ZCD" id="64t-UF-PWA"/>
+                <outlet property="ggUpgradeRing0" destination="Q0M-91-wCS" id="UQb-PQ-LdE"/>
+                <outlet property="ggUpgradeRing1" destination="VQh-NI-flu" id="rWB-p0-bYx"/>
+                <outlet property="ggUpgradeRing2" destination="guS-Ui-23t" id="Ab4-T5-cyt"/>
+                <outlet property="ggUpgradeRing3" destination="9lv-55-blM" id="FSC-Mi-9hJ"/>
+                <outlet property="horizontalDivider" destination="CNr-GP-A61" id="enN-U9-NTc"/>
                 <outlet property="largeParsecsImage" destination="MSZ-Xa-RNJ" id="Qur-KT-5QL"/>
                 <outlet property="largeParsecsLabel" destination="fdZ-FY-znP" id="fLx-dV-4Lf"/>
                 <outlet property="largeParsecsLabelYAlignmentConstraint" destination="rz4-GX-Hs1" id="H1L-Ud-HtI"/>
                 <outlet property="largeXPImage" destination="dBb-w3-QVp" id="W53-0a-yNA"/>
                 <outlet property="largeXPLabel" destination="zcd-Vk-j7I" id="khQ-tf-1as"/>
                 <outlet property="largeXPLabelYAlignmentConstraint" destination="Pli-Xa-P8m" id="Nau-v2-pcX"/>
+                <outlet property="quitButton" destination="JXD-l0-Bng" id="xKr-Kp-pW8"/>
+                <outlet property="rectangleImage" destination="Ri0-00-y9t" id="Iax-YR-KRq"/>
+                <outlet property="rectangleImageHorizontalConstraint" destination="HXl-Ey-8lO" id="p4V-bL-vuz"/>
+                <outlet property="rectangleImageWidthConstraint" destination="aSF-ak-NPa" id="AET-W0-30H"/>
+                <outlet property="rectangleSocialImage" destination="ChA-2x-dQk" id="9eh-SZ-JK4"/>
+                <outlet property="rectangleSocialImageWidthConstraint" destination="Xd1-h9-xtw" id="3vD-VE-85m"/>
+                <outlet property="smallParsecsImage" destination="Rdw-ZQ-1T0" id="niG-3d-H6F"/>
+                <outlet property="smallParsecsLabel" destination="Q5v-jG-H3M" id="jo4-f6-PIb"/>
+                <outlet property="smallParsecsLabelHorizonalConstraint" destination="KYu-MH-hdO" id="bQT-xF-28B"/>
+                <outlet property="smallXPImage" destination="325-Sd-TGF" id="SYz-I8-lR2"/>
+                <outlet property="smallXPLabel" destination="goA-G1-xvE" id="irE-FK-DZ4"/>
+                <outlet property="smallXPLabelHorizonalConstraint" destination="fYV-pI-y7T" id="Qrm-rq-aYJ"/>
+                <outlet property="twitterButton" destination="oT7-CT-w8p" id="KMR-jM-b8i"/>
+                <outlet property="upgradesAvailableImageView" destination="3Fa-w8-VGV" id="NXi-gA-1pW"/>
+                <outlet property="verticalDivider" destination="1EO-1s-bjI" id="tsK-Ai-qbQ"/>
             </connections>
             <point key="canvasLocation" x="139" y="356"/>
         </view>
     </objects>
+    <resources>
+        <image name="FBIcon__GameOver" width="23" height="22"/>
+        <image name="HS_0_iPad" width="153" height="153"/>
+        <image name="HS_1_iPad" width="191" height="191"/>
+        <image name="HS_2_iPad" width="191" height="191"/>
+        <image name="HS_3_iPad" width="208" height="208"/>
+        <image name="HighScoresText_0_iPad" width="104" height="74"/>
+        <image name="HighScoresText_1_iPad" width="105" height="75"/>
+        <image name="HorizontalDivider" width="46" height="1"/>
+        <image name="PlayText_0_iPad" width="135" height="74"/>
+        <image name="PlayText_1_iPad" width="138" height="77"/>
+        <image name="Play_0_iPad" width="258" height="258"/>
+        <image name="Play_1_iPad" width="300" height="300"/>
+        <image name="Play_2_iPad" width="300" height="300"/>
+        <image name="Play_3_iPad" width="316" height="316"/>
+        <image name="RectangleBackground" width="320" height="100"/>
+        <image name="RectangleBackground_Social" width="75" height="100"/>
+        <image name="SmallParsecs" width="70" height="12"/>
+        <image name="SmallXP" width="22" height="12"/>
+        <image name="TwitterIcon_GameOver" width="23" height="18"/>
+        <image name="UpgradesTextNotification_0_iPad" width="156" height="48"/>
+        <image name="UpgradesText_0_iPad" width="145" height="37"/>
+        <image name="UpgradesText_1_iPad" width="146" height="38"/>
+        <image name="Upgrades_0_iPad" width="193" height="193"/>
+        <image name="Upgrades_1_iPad" width="231" height="231"/>
+        <image name="Upgrades_2_iPad" width="231" height="231"/>
+        <image name="Upgrades_3_iPad" width="251" height="251"/>
+        <image name="VerticalDivider" width="1" height="64"/>
+    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

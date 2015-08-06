@@ -11,7 +11,7 @@
             <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="Logo_TitleScreen_iPad" translatesAutoresizingMaskIntoConstraints="NO" id="0nj-vN-AKl">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo_TitleScreen_iPad" translatesAutoresizingMaskIntoConstraints="NO" id="0nj-vN-AKl">
                     <rect key="frame" x="88" y="78" width="593" height="85"/>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="btn-Dc-UEo" userLabel="ButtonContainerView">

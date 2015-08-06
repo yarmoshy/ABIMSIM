@@ -29,6 +29,7 @@ typedef enum {
 @interface GameOverView : UIView
 @property (weak, nonatomic) id<GameOverViewDelegate> delegate;
 @property (weak, nonatomic) IBOutlet UILabel *gameOverLabel;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *gameOverLabelHorizonalConstraint;
 
 @property (weak, nonatomic) IBOutlet UILabel *largeParsecsLabel;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *largeParsecsLabelYAlignmentConstraint;
@@ -53,12 +54,17 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet UILabel *bonusLabelFour;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bonusBubbleFourTopConstraint;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *rectangleImageHorizontalConstraint;
 @property (weak, nonatomic) IBOutlet UIImageView *rectangleImage;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *rectangleImageWidthConstraint;
 @property (weak, nonatomic) IBOutlet UIImageView *rectangleSocialImage;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *rectangleSocialImageWidthConstraint;
 @property (weak, nonatomic) IBOutlet UIImageView *smallParsecsImage;
 @property (weak, nonatomic) IBOutlet UILabel *smallParsecsLabel;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *smallParsecsLabelHorizonalConstraint;
 @property (weak, nonatomic) IBOutlet UIImageView *smallXPImage;
 @property (weak, nonatomic) IBOutlet UILabel *smallXPLabel;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *smallXPLabelHorizonalConstraint;
 @property (weak, nonatomic) IBOutlet UIImageView *verticalDivider;
 @property (weak, nonatomic) IBOutlet UIImageView *horizontalDivider;
 @property (weak, nonatomic) IBOutlet UIButton *facebookButton;
