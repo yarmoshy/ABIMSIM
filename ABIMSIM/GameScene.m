@@ -280,9 +280,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
                 [spaceMineTextures addObject:[SKTexture textureWithImageNamed:textureName]];
             }
         }
-        [SKTexture preloadTextures:spaceMineTextures withCompletionHandler:^{
-            ;
-        }];
         
         [BlackHole blackHole];
         
@@ -296,7 +293,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
             [powerUpTextures addObject:[SKTexture textureWithImageNamed:@"ShieldPowerUp_Animated"]];
         }
         [SKTexture preloadTextures:powerUpTextures withCompletionHandler:^{
-            ;
+            [SKTexture preloadTextures:spaceMineTextures withCompletionHandler:^{
+                ;
+            }];
         }];
         
         if (!impactSpriteArrays) {
