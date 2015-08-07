@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="Voltaire-Regular.ttf">
@@ -17,9 +17,12 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PausedTitle" translatesAutoresizingMaskIntoConstraints="NO" id="xaX-lq-bHW">
-                    <rect key="frame" x="76" y="56" width="168" height="58"/>
-                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PAUSED" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ajd-ct-raE">
+                    <rect key="frame" x="74" y="42" width="173" height="85"/>
+                    <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="70"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u01-4B-dhd">
                     <rect key="frame" x="36" y="173" width="261" height="199"/>
                     <subviews>
@@ -113,7 +116,7 @@
                     </constraints>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MUSIC" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w2X-Gr-GNc">
-                    <rect key="frame" x="90.5" y="520.5" width="38" height="21.5"/>
+                    <rect key="frame" x="91" y="520" width="38" height="22"/>
                     <fontDescription key="fontDescription" name="Voltaire" family="Voltaire" pointSize="17"/>
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
@@ -135,30 +138,33 @@
                     </constraints>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SFX" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NEF-ds-iaa">
-                    <rect key="frame" x="199" y="520" width="21.5" height="21.5"/>
+                    <rect key="frame" x="199" y="520" width="22" height="22"/>
                     <fontDescription key="fontDescription" name="Voltaire" family="Voltaire" pointSize="17"/>
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SettingsText" translatesAutoresizingMaskIntoConstraints="NO" id="aaK-d9-Qkc">
-                    <rect key="frame" x="115" y="455" width="90" height="27"/>
-                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="SETTINGS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gdM-HE-Cw7">
+                    <rect key="frame" x="115" y="450" width="91" height="38"/>
+                    <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="31"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="centerX" secondItem="t9z-Cl-r6U" secondAttribute="centerX" constant="-50" id="0ww-zz-Jh6"/>
                 <constraint firstItem="w2X-Gr-GNc" firstAttribute="top" secondItem="ddB-zv-4nl" secondAttribute="bottom" id="2VM-Wt-zRN"/>
-                <constraint firstItem="xaX-lq-bHW" firstAttribute="top" secondItem="8aW-Y7-ALy" secondAttribute="top" constant="56" id="DRr-0D-w5h"/>
                 <constraint firstAttribute="centerX" secondItem="NEF-ds-iaa" secondAttribute="centerX" constant="-50" id="E7U-O7-RoO"/>
                 <constraint firstAttribute="bottom" secondItem="NEF-ds-iaa" secondAttribute="bottom" constant="26" id="Ode-S3-V35"/>
+                <constraint firstAttribute="centerX" secondItem="Ajd-ct-raE" secondAttribute="centerX" id="OkX-Rx-3Ee"/>
                 <constraint firstAttribute="centerX" secondItem="w2X-Gr-GNc" secondAttribute="centerX" constant="50" id="PPo-LX-x3Z"/>
                 <constraint firstAttribute="centerX" secondItem="u01-4B-dhd" secondAttribute="centerX" constant="-6" id="Wea-1r-AGk"/>
                 <constraint firstAttribute="centerY" secondItem="u01-4B-dhd" secondAttribute="centerY" constant="12" id="d4h-8N-Ywp"/>
+                <constraint firstItem="t9z-Cl-r6U" firstAttribute="top" secondItem="gdM-HE-Cw7" secondAttribute="bottom" constant="2" id="e5p-8h-V8F"/>
+                <constraint firstAttribute="centerX" secondItem="gdM-HE-Cw7" secondAttribute="centerX" id="jYY-cf-ceH"/>
                 <constraint firstItem="NEF-ds-iaa" firstAttribute="top" secondItem="t9z-Cl-r6U" secondAttribute="bottom" id="kln-lU-Jsp"/>
                 <constraint firstAttribute="bottom" secondItem="w2X-Gr-GNc" secondAttribute="bottom" constant="26" id="qon-0I-cO3"/>
-                <constraint firstItem="t9z-Cl-r6U" firstAttribute="top" secondItem="aaK-d9-Qkc" secondAttribute="bottom" constant="8" id="t7l-xo-jL5"/>
-                <constraint firstAttribute="centerX" secondItem="xaX-lq-bHW" secondAttribute="centerX" id="tIc-2a-2Z6"/>
-                <constraint firstAttribute="centerX" secondItem="aaK-d9-Qkc" secondAttribute="centerX" id="yDc-rR-SBo"/>
+                <constraint firstItem="Ajd-ct-raE" firstAttribute="top" secondItem="8aW-Y7-ALy" secondAttribute="top" constant="42" id="u4c-RW-inB"/>
                 <constraint firstAttribute="centerX" secondItem="ddB-zv-4nl" secondAttribute="centerX" constant="50" id="yQv-i7-dih"/>
             </constraints>
             <connections>
@@ -168,11 +174,13 @@
                 <outlet property="mmRing2" destination="lZ2-61-m29" id="hXS-T1-y0h"/>
                 <outlet property="mmRing3" destination="1mN-lY-xEA" id="zsg-Pw-w6G"/>
                 <outlet property="musicPausedSwitch" destination="ddB-zv-4nl" id="z3G-P7-5ex"/>
+                <outlet property="pausedLabel" destination="Ajd-ct-raE" id="mKN-pG-yDi"/>
                 <outlet property="playPausedButton" destination="q3v-Wq-4cg" id="TOs-s0-9Cw"/>
                 <outlet property="playPausedRing0" destination="Ubr-La-NCL" id="qFI-cX-zGd"/>
                 <outlet property="playPausedRing1" destination="nRf-0H-pwl" id="1cj-xd-hMy"/>
                 <outlet property="playPausedRing2" destination="BjA-KA-smM" id="djb-JF-X3Y"/>
                 <outlet property="playPausedRing3" destination="mmd-Fa-C1S" id="S7r-Pj-s6e"/>
+                <outlet property="settingsLabel" destination="gdM-HE-Cw7" id="bkq-q7-vTW"/>
                 <outlet property="sfxPausedSwitch" destination="t9z-Cl-r6U" id="UDm-yE-snt"/>
             </connections>
             <point key="canvasLocation" x="277" y="245"/>
@@ -185,14 +193,12 @@
         <image name="HS_3" width="104" height="104"/>
         <image name="MainMenuText_0" width="42" height="38"/>
         <image name="MainMenuText_1" width="45" height="41"/>
-        <image name="PausedTitle" width="168" height="58"/>
         <image name="PlayText_0" width="69" height="39"/>
         <image name="PlayText_1" width="72" height="42"/>
         <image name="Play_0" width="129" height="129"/>
         <image name="Play_1" width="150" height="150"/>
         <image name="Play_2" width="150" height="150"/>
         <image name="Play_3" width="158" height="158"/>
-        <image name="SettingsText" width="90" height="27"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

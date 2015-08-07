@@ -71,7 +71,7 @@
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="RectangleBackground" translatesAutoresizingMaskIntoConstraints="NO" id="IcI-dD-uzd">
+                <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="RectangleBackground" translatesAutoresizingMaskIntoConstraints="NO" id="IcI-dD-uzd">
                     <rect key="frame" x="0.0" y="78" width="320" height="100"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="320" id="07v-cF-thp"/>
@@ -107,7 +107,7 @@
                 <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HorizontalDivider" translatesAutoresizingMaskIntoConstraints="NO" id="h2r-Pf-PyK">
                     <rect key="frame" x="259" y="127" width="46" height="1"/>
                 </imageView>
-                <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zBT-3D-UQT" userLabel="ButtonContainerView">
+                <view alpha="0.0" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zBT-3D-UQT" userLabel="ButtonContainerView">
                     <rect key="frame" x="29" y="212" width="261" height="293"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Play_0" translatesAutoresizingMaskIntoConstraints="NO" id="2YT-Tf-Wjn">

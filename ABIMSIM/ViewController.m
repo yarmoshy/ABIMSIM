@@ -74,7 +74,13 @@
 
     [self.view insertSubview:self.gameOverView atIndex:1];
 
-    UINib * pausedViewNib = [UINib nibWithNibName:@"PausedView" bundle:nil];
+    UINib * pausedViewNib;
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        pausedViewNib = [UINib nibWithNibName:@"PausedView_iPad" bundle:nil];
+    } else {
+        pausedViewNib = [UINib nibWithNibName:@"PausedView" bundle:nil];
+    }
+
     self.pausedView = [pausedViewNib instantiateWithOwner:self options:nil][0];
     self.pausedView.frame = self.view.frame;
     self.pausedView.delegate = self;
@@ -251,20 +257,23 @@
         } completion:^(BOOL finished) {
             ;
         }];
-        UIImageView *ring3 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Play_3"]];
-        UIImageView *ring2 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Play_2"]];
-        UIImageView *ring1 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Play_1"]];
-        UIImageView *ring0 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Play_0"]];
-        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Countdown_0"]];
+        UIImageView *ring3 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[NSString stringWithFormat:@"Play_3%@", UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? @"_iPad" : @""]]];
+        UIImageView *ring2 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[NSString stringWithFormat:@"Play_2%@", UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? @"_iPad" : @""]]];
+        UIImageView *ring1 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[NSString stringWithFormat:@"Play_1%@", UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? @"_iPad" : @""]]];
+        UIImageView *ring0 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[NSString stringWithFormat:@"Play_0%@", UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? @"_iPad" : @""]]];
+        __block UILabel *countDownLabel = [[UILabel alloc] init];
+        countDownLabel.font = [UIFont fontWithName:@"Futura-CondensedMedium" size:UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 150 : 75];
+        countDownLabel.textAlignment = NSTextAlignmentCenter;
+        countDownLabel.textColor = [UIColor whiteColor];
         UIView *resumeView = [[UIView alloc] initWithFrame:ring3.frame];
-        imageView.frame = resumeView.bounds;
-        imageView.contentMode = UIViewContentModeCenter;
+        countDownLabel.frame = resumeView.bounds;
+        countDownLabel.contentMode = UIViewContentModeCenter;
         [resumeView addSubview:ring3];
         [resumeView addSubview:ring2];
         [resumeView addSubview:ring1];
         [resumeView addSubview:ring0];
-        [resumeView addSubview:imageView];
-        ring3.center = ring2.center = ring1.center = ring0.center = imageView.center = CGPointMake(resumeView.frame.size.width/2.f, resumeView.frame.size.height/2.f);
+        [resumeView addSubview:countDownLabel];
+        ring3.center = ring2.center = ring1.center = ring0.center = countDownLabel.center = CGPointMake(resumeView.frame.size.width/2.f, resumeView.frame.size.height/2.f);
         resumeView.alpha = 0;
         resumeView.center = self.view.center;
         resumeView.userInteractionEnabled = NO;
@@ -273,11 +282,22 @@
             resumeView.alpha = 1;
         } completion:^(BOOL finished) {
             if (finished) {
-                [imageView setImage:[UIImage imageNamed:@"Countdown_3"]];
-                [imageView setAnimationDuration:2.5];
-                [imageView setAnimationRepeatCount:1];
-                [imageView setAnimationImages:@[[UIImage imageNamed:@"Countdown_0"],[UIImage imageNamed:@"Countdown_1"],[UIImage imageNamed:@"Countdown_2"],[UIImage imageNamed:@"Countdown_3"]]];
-                [imageView startAnimating];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    countDownLabel.text = @"3";
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                        countDownLabel.text = @"2";
+                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                            countDownLabel.text = @"1";
+                            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                                countDownLabel.attributedText = [[NSAttributedString alloc] initWithString:@"GO!" attributes:@{NSFontAttributeName : [UIFont fontWithName:@"Futura-CondensedMedium" size:UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 150 : 75],
+                                                                                                                               NSForegroundColorAttributeName : [UIColor colorWithRed:131.f/255.f green:216.f/255.f blue:12.f/255.f alpha:1]}];
+                                countDownLabel.layer.shadowColor = countDownLabel.textColor.CGColor;
+                                countDownLabel.layer.shadowRadius = 10;
+                                countDownLabel.layer.shadowOpacity = 0.25;
+                            });
+                        });
+                    });
+                });
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     [UIView animateWithDuration:0.25 animations:^{
                         resumeView.alpha = 0;

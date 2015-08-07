@@ -24,6 +24,8 @@ typedef enum {
 
 @interface PausedView : UIView
 @property (weak, nonatomic) id<PausedViewDelegate> delegate;
+@property (weak, nonatomic) IBOutlet UILabel *pausedLabel;
+@property (weak, nonatomic) IBOutlet UILabel *settingsLabel;
 
 @property (weak, nonatomic) IBOutlet UIImageView *playPausedRing0;
 @property (weak, nonatomic) IBOutlet UIImageView *playPausedRing1;

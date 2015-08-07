@@ -311,10 +311,10 @@
             [subview removeFromSuperview];
         }
     }
-    self.delegate.scene.currentLevel = 10;
-    self.delegate.scene.blackHolesSurvived = 10;
-    self.delegate.scene.bubblesPopped = 10;
-    self.delegate.scene.sunsSurvived = 10;
+//    self.delegate.scene.currentLevel = 10;
+//    self.delegate.scene.blackHolesSurvived = 10;
+//    self.delegate.scene.bubblesPopped = 10;
+//    self.delegate.scene.sunsSurvived = 10;
     if (self.delegate.scene.currentLevel / 10 > 0) {
         [bonusAmounts addObject:@(self.delegate.scene.currentLevel / 10)];
         NSMutableAttributedString *bonusString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"   +%d    %d PARSECS TRAVELLED   ", self.delegate.scene.currentLevel / 10, self.delegate.scene.currentLevel]];

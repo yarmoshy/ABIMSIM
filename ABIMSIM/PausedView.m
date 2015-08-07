@@ -26,6 +26,13 @@
     [self setupToggles];
     [self.musicPausedSwitch addTarget:self action:@selector(musicSwitchToggled:) forControlEvents:UIControlEventValueChanged];
     [self.sfxPausedSwitch addTarget:self action:@selector(sfxSwitchToggled:) forControlEvents:UIControlEventValueChanged];
+    self.pausedLabel.layer.shadowColor = [UIColor whiteColor].CGColor;
+    self.pausedLabel.layer.shadowRadius = 10;
+    self.pausedLabel.layer.shadowOpacity = 0.25;
+    self.settingsLabel.layer.shadowColor = [UIColor whiteColor].CGColor;
+    self.settingsLabel.layer.shadowRadius = 10;
+    self.settingsLabel.layer.shadowOpacity = 0.25;
+
 }
 
 -(void)setupToggles {
