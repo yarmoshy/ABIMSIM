@@ -1784,10 +1784,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
     [self checkLevelAchievements];
     if (self.currentLevel % 10 == 0) {
         int backgroundNumber = self.currentLevel / 10;
-        backgroundNumber++;
-        
-        while (backgroundNumber > backgroundNodes.count) {
-            backgroundNumber -= backgroundNodes.count + 1;
+        while (backgroundNumber >= backgroundNodes.count) {
+            backgroundNumber -= backgroundNodes.count;
         }
         int previousBackgroudNumber = backgroundNumber - 1;
         if (previousBackgroudNumber < 0) {
