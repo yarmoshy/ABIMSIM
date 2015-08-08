@@ -104,11 +104,11 @@
 }
 
 -(void)animateUpgradesButtonSelect:(void(^)(void))completionBlock {
-    [self animateFancySelectWithRing1:self.upgradeRing0 ring2:self.upgradeRing1 ring3:self.upgradeRing2 ring4:self.upgradeRing3 andCompletion:completionBlock];
+    [self animateFancySelectWithButton:self.upgradeButton ring1:self.upgradeRing0 ring2:self.upgradeRing1 ring3:self.upgradeRing2 ring4:self.upgradeRing3 andCompletion:completionBlock];
 }
 
 -(void)animateUpgradesButtonDeselect:(void(^)(void))completionBlock {
-    [self animateFancyDeselectWithRing1:self.upgradeRing0 ring2:self.upgradeRing1 ring3:self.upgradeRing2 ring4:self.upgradeRing3 andCompletion:completionBlock];
+    [self animateFancyDeselectWithButton:self.upgradeButton ring1:self.upgradeRing0 ring2:self.upgradeRing1 ring3:self.upgradeRing2 ring4:self.upgradeRing3 andCompletion:completionBlock];
 }
 
 - (IBAction)upgradesSelect:(id)sender {

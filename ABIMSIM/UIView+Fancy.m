@@ -10,7 +10,7 @@
 
 @implementation UIView (Fancy)
 
--(void)animateFancySelectWithRing1:(UIImageView*)ring1 ring2:(UIImageView*)ring2 ring3:(UIImageView*)ring3 ring4:(UIImageView*)ring4 andCompletion:(void(^)(void))completionBlock {
+-(void)animateFancySelectWithButton:(UIButton*)button ring1:(UIImageView*)ring1 ring2:(UIImageView*)ring2 ring3:(UIImageView*)ring3 ring4:(UIImageView*)ring4 andCompletion:(void(^)(void))completionBlock {
     [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
         [ring4 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1.12, 1.12)];
     } completion:nil];
@@ -27,9 +27,13 @@
             completionBlock();
         }
     }];
+    button.layer.shadowColor = [UIColor whiteColor].CGColor;
+    button.layer.shadowRadius = 2.0f;
+    button.layer.shadowOpacity = 1.0f;
+    button.layer.shadowOffset = CGSizeMake(0, 0);
 }
 
--(void)animateFancyDeselectWithRing1:(UIImageView*)ring1 ring2:(UIImageView*)ring2 ring3:(UIImageView*)ring3 ring4:(UIImageView*)ring4 andCompletion:(void(^)(void))completionBlock {
+-(void)animateFancyDeselectWithButton:(UIButton*)button ring1:(UIImageView*)ring1 ring2:(UIImageView*)ring2 ring3:(UIImageView*)ring3 ring4:(UIImageView*)ring4 andCompletion:(void(^)(void))completionBlock {
     [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseIn animations:^{
         [ring1 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 0.9, 0.9)];
     } completion:^(BOOL finished) {
@@ -70,6 +74,7 @@
             }];
         }
     }];
+    button.layer.shadowColor = [UIColor clearColor].CGColor;
 }
 
 @end

@@ -45,11 +45,11 @@
                                 <constraint firstAttribute="height" constant="158" id="4kP-yY-NEb"/>
                                 <constraint firstAttribute="width" constant="158" id="Gh4-H7-juU"/>
                             </constraints>
-                            <state key="normal" image="PlayText_0">
+                            <inset key="titleEdgeInsets" minX="0.0" minY="10" maxX="0.0" maxY="0.0"/>
+                            <state key="normal" title="PLAY">
+                                <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
-                            <state key="selected" image="PlayText_1"/>
-                            <state key="highlighted" image="PlayText_1"/>
                             <connections>
                                 <action selector="playPausedDeselect:" destination="8aW-Y7-ALy" eventType="touchDragExit" id="xAi-SS-fY4"/>
                                 <action selector="playPausedSelect:" destination="8aW-Y7-ALy" eventType="touchDragEnter" id="mLW-rn-axR"/>
@@ -76,11 +76,11 @@
                                 <constraint firstAttribute="height" constant="104" id="FSP-p0-CaZ"/>
                                 <constraint firstAttribute="width" constant="104" id="Gxa-Et-vNo"/>
                             </constraints>
-                            <state key="normal" image="MainMenuText_0">
+                            <inset key="titleEdgeInsets" minX="0.0" minY="5" maxX="0.0" maxY="0.0"/>
+                            <state key="normal" title="MAIN MENU">
+                                <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
-                            <state key="selected" image="MainMenuText_1"/>
-                            <state key="highlighted" image="MainMenuText_1"/>
                             <connections>
                                 <action selector="mainMenuDeselect:" destination="8aW-Y7-ALy" eventType="touchDragExit" id="iDj-T9-f82"/>
                                 <action selector="mainMenuSelect:" destination="8aW-Y7-ALy" eventType="touchDragEnter" id="NiJ-er-3AB"/>
@@ -191,10 +191,6 @@
         <image name="HS_1" width="95" height="96"/>
         <image name="HS_2" width="95" height="96"/>
         <image name="HS_3" width="104" height="104"/>
-        <image name="MainMenuText_0" width="42" height="38"/>
-        <image name="MainMenuText_1" width="45" height="41"/>
-        <image name="PlayText_0" width="69" height="39"/>
-        <image name="PlayText_1" width="72" height="42"/>
         <image name="Play_0" width="129" height="129"/>
         <image name="Play_1" width="150" height="150"/>
         <image name="Play_2" width="150" height="150"/>

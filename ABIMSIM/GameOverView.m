@@ -78,11 +78,11 @@
 #pragma mark - Game Over Play Button
 
 -(void)animateGGPlayButtonSelect:(void(^)(void))completionBlock {
-    [self animateFancySelectWithRing1:self.ggPlayRing0 ring2:self.ggPlayRing1 ring3:self.ggPlayRing2 ring4:self.ggPlayRing3 andCompletion:completionBlock];
+    [self animateFancySelectWithButton:self.ggPlayButton ring1:self.ggPlayRing0 ring2:self.ggPlayRing1 ring3:self.ggPlayRing2 ring4:self.ggPlayRing3 andCompletion:completionBlock];
 }
 
 -(void)animateGGPlayButtonDeselect:(void(^)(void))completionBlock {
-    [self animateFancyDeselectWithRing1:self.ggPlayRing0 ring2:self.ggPlayRing1 ring3:self.ggPlayRing2 ring4:self.ggPlayRing3 andCompletion:completionBlock];
+    [self animateFancyDeselectWithButton:self.ggPlayButton ring1:self.ggPlayRing0 ring2:self.ggPlayRing1 ring3:self.ggPlayRing2 ring4:self.ggPlayRing3 andCompletion:completionBlock];
 }
 
 - (IBAction)ggPlaySelect:(id)sender {
@@ -103,11 +103,11 @@
 #pragma mark High Scores Main Menu Button
 
 -(void)animateGGMainMenuButtonSelect:(void(^)(void))completionBlock {
-    [self animateFancySelectWithRing1:self.ggMMRing0 ring2:self.ggMMRing1 ring3:self.ggMMRing2 ring4:self.ggMMRing3 andCompletion:completionBlock];
+    [self animateFancySelectWithButton:self.ggMainMenuButton ring1:self.ggMMRing0 ring2:self.ggMMRing1 ring3:self.ggMMRing2 ring4:self.ggMMRing3 andCompletion:completionBlock];
 }
 
 -(void)animateGGMainMenuButtonDeselect:(void(^)(void))completionBlock {
-    [self animateFancyDeselectWithRing1:self.ggMMRing0 ring2:self.ggMMRing1 ring3:self.ggMMRing2 ring4:self.ggMMRing3 andCompletion:completionBlock];
+    [self animateFancyDeselectWithButton:self.ggMainMenuButton ring1:self.ggMMRing0 ring2:self.ggMMRing1 ring3:self.ggMMRing2 ring4:self.ggMMRing3 andCompletion:completionBlock];
 }
 
 - (IBAction)ggMainMenuSelect:(id)sender {
@@ -128,11 +128,11 @@
 #pragma mark Game Over Upgrade Button
 
 -(void)animateGGUpgradesButtonSelect:(void(^)(void))completionBlock {
-    [self animateFancySelectWithRing1:self.ggUpgradeRing0 ring2:self.ggUpgradeRing1 ring3:self.ggUpgradeRing2 ring4:self.ggUpgradeRing3 andCompletion:completionBlock];
+    [self animateFancySelectWithButton:self.ggUpgradeButton ring1:self.ggUpgradeRing0 ring2:self.ggUpgradeRing1 ring3:self.ggUpgradeRing2 ring4:self.ggUpgradeRing3 andCompletion:completionBlock];
 }
 
 -(void)animateGGUpgradesButtonDeselect:(void(^)(void))completionBlock {
-    [self animateFancyDeselectWithRing1:self.ggUpgradeRing0 ring2:self.ggUpgradeRing1 ring3:self.ggUpgradeRing2 ring4:self.ggUpgradeRing3 andCompletion:completionBlock];
+    [self animateFancyDeselectWithButton:self.ggUpgradeButton ring1:self.ggUpgradeRing0 ring2:self.ggUpgradeRing1 ring3:self.ggUpgradeRing2 ring4:self.ggUpgradeRing3 andCompletion:completionBlock];
 }
 
 - (IBAction)ggUpgradeSelect:(id)sender {

@@ -79,11 +79,11 @@
                                 <constraint firstAttribute="height" constant="316" id="QWt-Z4-RNT"/>
                                 <constraint firstAttribute="width" constant="316" id="Qyg-HJ-q7E"/>
                             </constraints>
-                            <state key="normal" image="PlayText_0_iPad">
+                            <inset key="contentEdgeInsets" minX="0.0" minY="15" maxX="0.0" maxY="0.0"/>
+                            <state key="normal" title="PLAY">
+                                <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
-                            <state key="selected" image="PlayText_1_iPad"/>
-                            <state key="highlighted" image="PlayText_1_iPad"/>
                             <connections>
                                 <action selector="playPausedDeselect:" destination="iN0-l3-epB" eventType="touchDragExit" id="b0N-kB-ctl"/>
                                 <action selector="playPausedSelect:" destination="iN0-l3-epB" eventType="touchDown" id="0eN-AT-E2q"/>
@@ -110,11 +110,11 @@
                                 <constraint firstAttribute="width" constant="208" id="1gs-Um-Ffp"/>
                                 <constraint firstAttribute="height" constant="208" id="es1-da-Vwy"/>
                             </constraints>
-                            <state key="normal" image="HighScoresText_0_iPad">
+                            <inset key="titleEdgeInsets" minX="0.0" minY="5" maxX="0.0" maxY="0.0"/>
+                            <state key="normal" title="MAIN MENU">
+                                <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
-                            <state key="selected" image="HighScoresText_1_iPad"/>
-                            <state key="highlighted" image="HighScoresText_1_iPad"/>
                             <connections>
                                 <action selector="mainMenuDeselect:" destination="iN0-l3-epB" eventType="touchDragExit" id="Lr0-iR-gO9"/>
                                 <action selector="mainMenuSelect:" destination="iN0-l3-epB" eventType="touchDown" id="iXG-50-Qm2"/>
@@ -215,10 +215,6 @@
         <image name="HS_1_iPad" width="191" height="191"/>
         <image name="HS_2_iPad" width="191" height="191"/>
         <image name="HS_3_iPad" width="208" height="208"/>
-        <image name="HighScoresText_0_iPad" width="104" height="74"/>
-        <image name="HighScoresText_1_iPad" width="105" height="75"/>
-        <image name="PlayText_0_iPad" width="135" height="74"/>
-        <image name="PlayText_1_iPad" width="138" height="77"/>
         <image name="Play_0_iPad" width="258" height="258"/>
         <image name="Play_1_iPad" width="300" height="300"/>
         <image name="Play_2_iPad" width="300" height="300"/>

@@ -37,11 +37,11 @@
 #pragma mark - Play
 
 -(void)animatePlayButtonSelect:(void(^)(void))completionBlock {
-    [self animateFancySelectWithRing1:self.playRing0 ring2:self.playRing1 ring3:self.playRing2 ring4:self.playRing3 andCompletion:completionBlock];
+    [self animateFancySelectWithButton:self.playButton ring1:self.playRing0 ring2:self.playRing1 ring3:self.playRing2 ring4:self.playRing3 andCompletion:completionBlock];
 }
 
 -(void)animatePlayButtonDeselect:(void(^)(void))completionBlock {
-    [self animateFancyDeselectWithRing1:self.playRing0 ring2:self.playRing1 ring3:self.playRing2 ring4:self.playRing3 andCompletion:completionBlock];
+    [self animateFancyDeselectWithButton:self.playButton ring1:self.playRing0 ring2:self.playRing1 ring3:self.playRing2 ring4:self.playRing3 andCompletion:completionBlock];
 }
 
 - (IBAction)playSelect:(id)sender {
@@ -63,11 +63,11 @@
 
 
 -(void)animateHighScoresButtonSelect:(void(^)(void))completionBlock {
-    [self animateFancySelectWithRing1:self.hsRing0 ring2:self.hsRing1 ring3:self.hsRing2 ring4:self.hsRing3 andCompletion:completionBlock];
+    [self animateFancySelectWithButton:self.highScoreButton ring1:self.hsRing0 ring2:self.hsRing1 ring3:self.hsRing2 ring4:self.hsRing3 andCompletion:completionBlock];
 }
 
 -(void)animateHighScoresButtonDeselect:(void(^)(void))completionBlock {
-    [self animateFancyDeselectWithRing1:self.hsRing0 ring2:self.hsRing1 ring3:self.hsRing2 ring4:self.hsRing3 andCompletion:completionBlock];
+    [self animateFancyDeselectWithButton:self.highScoreButton ring1:self.hsRing0 ring2:self.hsRing1 ring3:self.hsRing2 ring4:self.hsRing3 andCompletion:completionBlock];
 }
 
 - (IBAction)highScoresSelect:(id)sender {
@@ -88,11 +88,11 @@
 #pragma mark - Upgrades
 
 -(void)animateUpgradesButtonSelect:(void(^)(void))completionBlock {
-    [self animateFancySelectWithRing1:self.upgradeRing0 ring2:self.upgradeRing1 ring3:self.upgradeRing2 ring4:self.upgradeRing3 andCompletion:completionBlock];
+    [self animateFancySelectWithButton:self.upgradeButton ring1:self.upgradeRing0 ring2:self.upgradeRing1 ring3:self.upgradeRing2 ring4:self.upgradeRing3 andCompletion:completionBlock];
 }
 
 -(void)animateUpgradesButtonDeselect:(void(^)(void))completionBlock {
-    [self animateFancyDeselectWithRing1:self.upgradeRing0 ring2:self.upgradeRing1 ring3:self.upgradeRing2 ring4:self.upgradeRing3 andCompletion:completionBlock];
+    [self animateFancyDeselectWithButton:self.upgradeButton ring1:self.upgradeRing0 ring2:self.upgradeRing1 ring3:self.upgradeRing2 ring4:self.upgradeRing3 andCompletion:completionBlock];
 }
 
 - (IBAction)upgradesSelect:(id)sender {

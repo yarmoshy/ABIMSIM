@@ -32,7 +32,20 @@
     self.settingsLabel.layer.shadowColor = [UIColor whiteColor].CGColor;
     self.settingsLabel.layer.shadowRadius = 10;
     self.settingsLabel.layer.shadowOpacity = 0.25;
-
+    
+    NSMutableParagraphStyle *paragraphStyle = [NSParagraphStyle defaultParagraphStyle].mutableCopy;
+    paragraphStyle.lineHeightMultiple= 0.8;
+    paragraphStyle.alignment = NSTextAlignmentCenter;
+    paragraphStyle.lineSpacing = 0;
+    paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+    self.mainMenuButton.titleLabel.numberOfLines = 0;
+    [self.mainMenuButton setAttributedTitle:[[NSAttributedString alloc] initWithString:@"MAIN\nMENU" attributes:@{NSFontAttributeName:[UIFont fontWithName:@"Futura-CondensedMedium" size:UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 50 : 25],
+                                                                                                                  NSForegroundColorAttributeName:[UIColor whiteColor],
+                                                                                                                  NSParagraphStyleAttributeName: paragraphStyle}] forState:UIControlStateNormal];
+    self.playPausedButton.titleLabel.numberOfLines = 0;
+    [self.playPausedButton setAttributedTitle:[[NSAttributedString alloc] initWithString:@"PLAY" attributes:@{NSFontAttributeName:[UIFont fontWithName:@"Futura-CondensedMedium" size:UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 90 : 50],
+                                                                                                                  NSForegroundColorAttributeName:[UIColor whiteColor],
+                                                                                                                  NSParagraphStyleAttributeName: paragraphStyle}] forState:UIControlStateNormal];
 }
 
 -(void)setupToggles {
@@ -65,11 +78,11 @@
 
 
 -(void)animatePlayPausedButtonSelect:(void(^)(void))completionBlock {
-    [self animateFancySelectWithRing1:self.playPausedRing0 ring2:self.playPausedRing1 ring3:self.playPausedRing2 ring4:self.playPausedRing3 andCompletion:completionBlock];
+    [self animateFancySelectWithButton:self.playPausedButton ring1:self.playPausedRing0 ring2:self.playPausedRing1 ring3:self.playPausedRing2 ring4:self.playPausedRing3 andCompletion:completionBlock];
 }
 
 -(void)animatePlayPausedButtonDeselect:(void(^)(void))completionBlock {
-    [self animateFancyDeselectWithRing1:self.playPausedRing0 ring2:self.playPausedRing1 ring3:self.playPausedRing2 ring4:self.playPausedRing3 andCompletion:completionBlock];
+    [self animateFancyDeselectWithButton:self.playPausedButton ring1:self.playPausedRing0 ring2:self.playPausedRing1 ring3:self.playPausedRing2 ring4:self.playPausedRing3 andCompletion:completionBlock];
 }
 
 - (IBAction)playPausedSelect:(id)sender {
@@ -92,11 +105,11 @@
 #pragma mark - Main Menu Button
 
 -(void)animateMainMenuButtonSelect:(void(^)(void))completionBlock {
-    [self animateFancySelectWithRing1:self.mmRing0 ring2:self.mmRing2 ring3:self.mmRing1 ring4:self.mmRing0 andCompletion:completionBlock];
+    [self animateFancySelectWithButton:self.mainMenuButton ring1:self.mmRing0 ring2:self.mmRing1 ring3:self.mmRing2 ring4:self.mmRing3 andCompletion:completionBlock];
 }
 
 -(void)animateMainMenuButtonDeselect:(void(^)(void))completionBlock {
-    [self animateFancyDeselectWithRing1:self.mmRing0 ring2:self.mmRing2 ring3:self.mmRing1 ring4:self.mmRing0 andCompletion:completionBlock];
+    [self animateFancyDeselectWithButton:self.mainMenuButton ring1:self.mmRing0 ring2:self.mmRing1 ring3:self.mmRing2 ring4:self.mmRing3 andCompletion:completionBlock];
 }
 
 - (IBAction)mainMenuSelect:(id)sender {

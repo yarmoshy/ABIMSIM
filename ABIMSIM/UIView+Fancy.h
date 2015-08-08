@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface UIView (Fancy)
--(void)animateFancySelectWithRing1:(UIImageView*)ring1 ring2:(UIImageView*)ring2 ring3:(UIImageView*)ring3 ring4:(UIImageView*)ring4 andCompletion:(void(^)(void))completionBlock;
--(void)animateFancyDeselectWithRing1:(UIImageView*)ring1 ring2:(UIImageView*)ring2 ring3:(UIImageView*)ring3 ring4:(UIImageView*)ring4 andCompletion:(void(^)(void))completionBlock;
+-(void)animateFancySelectWithButton:(UIButton*)button ring1:(UIImageView*)ring1 ring2:(UIImageView*)ring2 ring3:(UIImageView*)ring3 ring4:(UIImageView*)ring4 andCompletion:(void(^)(void))completionBlock;
+-(void)animateFancyDeselectWithButton:(UIButton*)button ring1:(UIImageView*)ring1 ring2:(UIImageView*)ring2 ring3:(UIImageView*)ring3 ring4:(UIImageView*)ring4 andCompletion:(void(^)(void))completionBlock;
 @end
