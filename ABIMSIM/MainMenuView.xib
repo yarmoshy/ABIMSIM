@@ -40,11 +40,9 @@
                                 <constraint firstAttribute="height" constant="158" id="EJp-xM-AwU"/>
                                 <constraint firstAttribute="width" constant="158" id="uAM-zs-det"/>
                             </constraints>
-                            <state key="normal" image="PlayText_0">
+                            <state key="normal">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
-                            <state key="selected" image="PlayText_1"/>
-                            <state key="highlighted" image="PlayText_1"/>
                             <connections>
                                 <action selector="playDeselect:" destination="tyn-rH-lKS" eventType="touchDragExit" id="E1o-87-m5Q"/>
                                 <action selector="playSelect:" destination="tyn-rH-lKS" eventType="touchDragEnter" id="T5C-gx-hwO"/>
@@ -71,11 +69,9 @@
                                 <constraint firstAttribute="height" constant="104" id="POY-gr-Ngz"/>
                                 <constraint firstAttribute="width" constant="104" id="gCJ-QJ-VTS"/>
                             </constraints>
-                            <state key="normal" image="HighScoresText_0">
+                            <state key="normal">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
-                            <state key="selected" image="HighScoresText_1"/>
-                            <state key="highlighted" image="HighScoresText_1"/>
                             <connections>
                                 <action selector="highScoresDeselect:" destination="tyn-rH-lKS" eventType="touchDragExit" id="fLg-Yg-AKs"/>
                                 <action selector="highScoresSelect:" destination="tyn-rH-lKS" eventType="touchDragEnter" id="Ef9-83-J3Q"/>
@@ -102,11 +98,9 @@
                                 <constraint firstAttribute="width" constant="124" id="Ahw-R3-pmS"/>
                                 <constraint firstAttribute="height" constant="124" id="zra-bG-yCF"/>
                             </constraints>
-                            <state key="normal" image="UpgradesText_0">
+                            <state key="normal">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
-                            <state key="selected" image="UpgradesText_1"/>
-                            <state key="highlighted" image="UpgradesText_1"/>
                             <connections>
                                 <action selector="upgradesDeselect:" destination="tyn-rH-lKS" eventType="touchDragExit" id="YAQ-Ou-lKc"/>
                                 <action selector="upgradesSelect:" destination="tyn-rH-lKS" eventType="touchDown" id="SBN-BB-byq"/>
@@ -216,17 +210,11 @@
         <image name="HS_2" width="95" height="96"/>
         <image name="HS_3" width="104" height="104"/>
         <image name="HamburgerToClose_000" width="62" height="62"/>
-        <image name="HighScoresText_0" width="54" height="38"/>
-        <image name="HighScoresText_1" width="55" height="39"/>
         <image name="Logo_TitleScreen" width="287" height="45"/>
-        <image name="PlayText_0" width="69" height="39"/>
-        <image name="PlayText_1" width="72" height="42"/>
         <image name="Play_0" width="129" height="129"/>
         <image name="Play_1" width="150" height="150"/>
         <image name="Play_2" width="150" height="150"/>
         <image name="Play_3" width="158" height="158"/>
-        <image name="UpgradesText_0" width="74" height="20"/>
-        <image name="UpgradesText_1" width="75" height="21"/>
         <image name="Upgrades_0" width="96" height="96"/>
         <image name="Upgrades_1" width="115" height="115"/>
         <image name="Upgrades_2" width="115" height="115"/>

@@ -34,10 +34,11 @@
     self.settingsLabel.layer.shadowOpacity = 0.25;
     
     NSMutableParagraphStyle *paragraphStyle = [NSParagraphStyle defaultParagraphStyle].mutableCopy;
-    paragraphStyle.lineHeightMultiple= 0.8;
+    paragraphStyle.lineHeightMultiple= 1;
     paragraphStyle.alignment = NSTextAlignmentCenter;
     paragraphStyle.lineSpacing = 0;
     paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+    paragraphStyle.maximumLineHeight = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 50 : 25;
     self.mainMenuButton.titleLabel.numberOfLines = 0;
     [self.mainMenuButton setAttributedTitle:[[NSAttributedString alloc] initWithString:@"MAIN\nMENU" attributes:@{NSFontAttributeName:[UIFont fontWithName:@"Futura-CondensedMedium" size:UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 50 : 25],
                                                                                                                   NSForegroundColorAttributeName:[UIColor whiteColor],

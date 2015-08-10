@@ -88,10 +88,11 @@
 
 
     NSMutableParagraphStyle *paragraphStyle2 = [NSParagraphStyle defaultParagraphStyle].mutableCopy;
-    paragraphStyle2.lineHeightMultiple= 0.8;
+    paragraphStyle2.lineHeightMultiple= 1;
     paragraphStyle2.alignment = NSTextAlignmentCenter;
     paragraphStyle2.lineSpacing = 0;
     paragraphStyle2.lineBreakMode = NSLineBreakByWordWrapping;
+    paragraphStyle2.maximumLineHeight = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 50 : 25;
     self.ggMainMenuButton.titleLabel.numberOfLines = 0;
     [self.ggMainMenuButton setAttributedTitle:[[NSAttributedString alloc] initWithString:@"MAIN\nMENU" attributes:@{NSFontAttributeName:[UIFont fontWithName:@"Futura-CondensedMedium" size:UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 50 : 25],
                                                                                                                   NSForegroundColorAttributeName:[UIColor whiteColor],
