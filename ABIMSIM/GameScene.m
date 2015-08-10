@@ -2043,7 +2043,18 @@ CGFloat DegreesToRadians(CGFloat degrees)
     ring1.name = powerUpSpaceMineExplodeRingName;
     ring1.alpha = 0;
     [ring1 setScale:0];
-    SKAction *expandRingAction = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? [SKAction scaleTo:3 duration:duration] : [SKAction scaleTo:1.25 duration:duration];
+    SKAction *expandRingAction;
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        expandRingAction = [SKAction scaleTo:3 duration:duration];
+    } else {
+        if (sceneHeight <= 568) {
+            expandRingAction = [SKAction scaleTo:1.25 duration:duration];
+        } else if (sceneHeight < 736) {
+            expandRingAction = [SKAction scaleTo:1.5 duration:duration];
+        } else {
+            expandRingAction = [SKAction scaleTo:1.75 duration:duration];
+        }
+    }
     SKAction *blockAction = [SKAction runBlock:^{
         [ring1 setScale:0];
         [ring1 setAlpha:1];

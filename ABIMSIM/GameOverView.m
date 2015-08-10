@@ -635,6 +635,8 @@
     NSInteger shieldOnStart = [ABIMSIMDefaults integerForKey:kShieldOnStart];
     NSInteger mineOccurance = [ABIMSIMDefaults integerForKey:kMineOccuranceLevel];
     NSInteger mineBlastSpeed = [ABIMSIMDefaults integerForKey:kMineBlastSpeedLevel];
+    NSInteger armoryCapacity = [ABIMSIMDefaults integerForKey:kHolsterCapacity];
+    NSInteger armoryCount = [ABIMSIMDefaults integerForKey:kHolsterNukes];
     NSInteger spaceDuckets = [ABIMSIMDefaults integerForKey:kUserDuckets];
     
     if ((mineOccurance == 0 || shieldOccurance == 0) && spaceDuckets >= 10) {
@@ -683,6 +685,13 @@
         return YES;
     }
     
+    if (armoryCapacity < 10 && spaceDuckets >= (armoryCapacity+1)*200) {
+        return YES;
+    }
+    
+    if (armoryCount < armoryCapacity && spaceDuckets >= 10) {
+        return YES;
+    }
     return false;
 }
 
