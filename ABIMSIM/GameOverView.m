@@ -68,8 +68,39 @@
         self.rectangleImageWidthConstraint.constant = self.frame.size.width;
         self.rectangleSocialImageWidthConstraint.constant = 75;
         self.rectangleImageYConstraint.constant = self.frame.size.height / 3.64;
-
     }
+    NSMutableParagraphStyle *paragraphStyle = [NSParagraphStyle defaultParagraphStyle].mutableCopy;
+    paragraphStyle.lineHeightMultiple= 1;
+    paragraphStyle.alignment = NSTextAlignmentCenter;
+    paragraphStyle.lineSpacing = 0;
+    paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+    self.ggUpgradeButton.titleLabel.numberOfLines = 0;
+    [self.ggUpgradeButton setAttributedTitle:[[NSAttributedString alloc] initWithString:@"UPGRADES" attributes:@{NSFontAttributeName:[UIFont fontWithName:@"Futura-CondensedMedium" size:UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 50 : 25],
+                                                                                                                    NSForegroundColorAttributeName:[UIColor whiteColor],
+                                                                                                                    NSParagraphStyleAttributeName: paragraphStyle}] forState:UIControlStateNormal];
+    [self.upgradesAvailableLabel setAttributedText:[[NSAttributedString alloc] initWithString:@"UPGRADES" attributes:@{NSFontAttributeName:[UIFont fontWithName:@"Futura-CondensedMedium" size:UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 50 : 25],
+                                                                                                                 NSForegroundColorAttributeName:[UIColor whiteColor],
+                                                                                                                 NSParagraphStyleAttributeName: paragraphStyle}] ];
+    self.upgradesAvailableLabel.layer.shadowColor = [UIColor whiteColor].CGColor;
+    self.upgradesAvailableLabel.layer.shadowRadius = 10.0f;
+    self.upgradesAvailableLabel.layer.shadowOpacity = 1.0f;
+    self.upgradesAvailableLabel.layer.shadowOffset = CGSizeMake(0, 0);
+
+
+    NSMutableParagraphStyle *paragraphStyle2 = [NSParagraphStyle defaultParagraphStyle].mutableCopy;
+    paragraphStyle2.lineHeightMultiple= 0.8;
+    paragraphStyle2.alignment = NSTextAlignmentCenter;
+    paragraphStyle2.lineSpacing = 0;
+    paragraphStyle2.lineBreakMode = NSLineBreakByWordWrapping;
+    self.ggMainMenuButton.titleLabel.numberOfLines = 0;
+    [self.ggMainMenuButton setAttributedTitle:[[NSAttributedString alloc] initWithString:@"MAIN\nMENU" attributes:@{NSFontAttributeName:[UIFont fontWithName:@"Futura-CondensedMedium" size:UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 50 : 25],
+                                                                                                                  NSForegroundColorAttributeName:[UIColor whiteColor],
+                                                                                                                  NSParagraphStyleAttributeName: paragraphStyle2}] forState:UIControlStateNormal];
+    self.ggPlayButton.titleLabel.numberOfLines = 0;
+    [self.ggPlayButton setAttributedTitle:[[NSAttributedString alloc] initWithString:@"PLAY" attributes:@{NSFontAttributeName:[UIFont fontWithName:@"Futura-CondensedMedium" size:UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 90 : 50],
+                                                                                                              NSForegroundColorAttributeName:[UIColor whiteColor],
+                                                                                                              NSParagraphStyleAttributeName: paragraphStyle}] forState:UIControlStateNormal];
+
 //    self.largeParsecsImage.layer.shadowColor = self.largeParsecsImage.textColor.CGColor;
 //    self.largeParsecsImage.layer.shadowRadius = 10;
 //    self.largeParsecsImage.layer.shadowOpacity = 0.25;
@@ -578,11 +609,11 @@
     __block GameOverView* weakSelf = self;
     if (pulsatingUpgrade) {
         [UIView animateWithDuration:0.25 animations:^{
-            weakSelf.upgradesAvailableImageView.alpha = 1;
+            weakSelf.upgradesAvailableLabel.alpha = 1;
         } completion:^(BOOL finished) {
             if (finished) {
                 [UIView animateWithDuration:0.75 animations:^{
-                    weakSelf.upgradesAvailableImageView.alpha = 0;
+                    weakSelf.upgradesAvailableLabel.alpha = 0;
                 } completion:^(BOOL finished) {
                     if (finished) {
                         [weakSelf pulsateUpgrade];

@@ -42,10 +42,16 @@
     [self.mainMenuButton setAttributedTitle:[[NSAttributedString alloc] initWithString:@"MAIN\nMENU" attributes:@{NSFontAttributeName:[UIFont fontWithName:@"Futura-CondensedMedium" size:UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 50 : 25],
                                                                                                                   NSForegroundColorAttributeName:[UIColor whiteColor],
                                                                                                                   NSParagraphStyleAttributeName: paragraphStyle}] forState:UIControlStateNormal];
+    
+    NSMutableParagraphStyle *paragraphStyle2 = [NSParagraphStyle defaultParagraphStyle].mutableCopy;
+    paragraphStyle2.lineHeightMultiple= 1;
+    paragraphStyle2.alignment = NSTextAlignmentCenter;
+    paragraphStyle2.lineSpacing = 0;
+    paragraphStyle2.lineBreakMode = NSLineBreakByWordWrapping;
     self.playPausedButton.titleLabel.numberOfLines = 0;
     [self.playPausedButton setAttributedTitle:[[NSAttributedString alloc] initWithString:@"PLAY" attributes:@{NSFontAttributeName:[UIFont fontWithName:@"Futura-CondensedMedium" size:UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 90 : 50],
                                                                                                                   NSForegroundColorAttributeName:[UIColor whiteColor],
-                                                                                                                  NSParagraphStyleAttributeName: paragraphStyle}] forState:UIControlStateNormal];
+                                                                                                                  NSParagraphStyleAttributeName: paragraphStyle2}] forState:UIControlStateNormal];
 }
 
 -(void)setupToggles {

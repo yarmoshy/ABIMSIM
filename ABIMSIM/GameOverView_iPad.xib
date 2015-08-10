@@ -12,61 +12,61 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GAME OVER" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="taQ-2D-ReT">
-                    <rect key="frame" x="247" y="76" width="274" height="91"/>
+                    <rect key="frame" x="247" y="76" width="274" height="90.5"/>
                     <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="75"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="99" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fdZ-FY-znP">
-                    <rect key="frame" x="295" y="382" width="179" height="259"/>
+                    <rect key="frame" x="295" y="382" width="178.5" height="258.5"/>
                     <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="215"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PARSECS" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MSZ-Xa-RNJ">
-                    <rect key="frame" x="269" y="621" width="231" height="103"/>
+                    <rect key="frame" x="269" y="621" width="231" height="102.5"/>
                     <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="85"/>
                     <color key="textColor" red="0.039215686270000001" green="0.28235294119999998" blue="0.93725490199999995" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="99" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zcd-Vk-j7I">
-                    <rect key="frame" x="295" y="198" width="179" height="259"/>
+                    <rect key="frame" x="295" y="198" width="178.5" height="258.5"/>
                     <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="215"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="XP" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dBb-w3-QVp">
-                    <rect key="frame" x="351" y="437" width="66" height="103"/>
+                    <rect key="frame" x="351" y="437" width="66" height="102.5"/>
                     <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="85"/>
                     <color key="textColor" red="0.82745098039999998" green="0.047058823530000002" blue="0.37254901959999998" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BONUS!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t0S-HN-oOU">
-                    <rect key="frame" x="341" y="604" width="87" height="43"/>
+                    <rect key="frame" x="341" y="603" width="87" height="42.5"/>
                     <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="35"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hXd-8q-B49" userLabel="BonusLabelOne">
-                    <rect key="frame" x="365" y="655" width="39" height="28"/>
+                <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hXd-8q-B49" userLabel="BonusLabelOne">
+                    <rect key="frame" x="365" y="653" width="39" height="28"/>
                     <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="23"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U7O-O8-Mjb" userLabel="BonusLabelTwo">
-                    <rect key="frame" x="365" y="690" width="39" height="28"/>
+                <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U7O-O8-Mjb" userLabel="BonusLabelTwo">
+                    <rect key="frame" x="365" y="688" width="39" height="28"/>
                     <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="23"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="akw-Qx-QMb" userLabel="BonusLabelThree">
-                    <rect key="frame" x="365" y="726" width="39" height="28"/>
+                <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="akw-Qx-QMb" userLabel="BonusLabelThree">
+                    <rect key="frame" x="365" y="724" width="39" height="28"/>
                     <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="23"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D40-7b-pCQ" userLabel="BonusLabelFour">
-                    <rect key="frame" x="365" y="762" width="39" height="28"/>
+                <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D40-7b-pCQ" userLabel="BonusLabelFour">
+                    <rect key="frame" x="365" y="760" width="39" height="28"/>
                     <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="23"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
@@ -84,7 +84,7 @@
                     <rect key="frame" x="623" y="149" width="22" height="12"/>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="400" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="goA-G1-xvE" userLabel="smallXPLabel">
-                    <rect key="frame" x="596" y="76" width="75" height="73"/>
+                    <rect key="frame" x="596" y="76" width="75" height="72.5"/>
                     <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="60"/>
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
@@ -93,7 +93,7 @@
                     <rect key="frame" x="478" y="149" width="70" height="12"/>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="400" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q5v-jG-H3M" userLabel="smallParsecsLabel">
-                    <rect key="frame" x="476" y="76" width="75" height="73"/>
+                    <rect key="frame" x="476" y="76" width="75" height="72.5"/>
                     <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="60"/>
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
@@ -147,11 +147,10 @@
                                 <constraint firstAttribute="height" constant="316" id="Frk-KN-yJy"/>
                                 <constraint firstAttribute="width" constant="316" id="ZhR-sY-NVB"/>
                             </constraints>
-                            <state key="normal" image="PlayText_0_iPad">
+                            <state key="normal" title="PLAY">
+                                <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
-                            <state key="selected" image="PlayText_1_iPad"/>
-                            <state key="highlighted" image="PlayText_1_iPad"/>
                             <connections>
                                 <action selector="ggPlayDeselect:" destination="iN0-l3-epB" eventType="touchDragExit" id="kTT-qA-bki"/>
                                 <action selector="ggPlaySelect:" destination="iN0-l3-epB" eventType="touchDragEnter" id="WhT-11-5Cu"/>
@@ -178,11 +177,11 @@
                                 <constraint firstAttribute="height" constant="208" id="8Ld-gW-FKw"/>
                                 <constraint firstAttribute="width" constant="208" id="df6-ZR-aRP"/>
                             </constraints>
-                            <state key="normal" image="HighScoresText_0_iPad">
+                            <inset key="titleEdgeInsets" minX="0.0" minY="5" maxX="0.0" maxY="0.0"/>
+                            <state key="normal" title="HIGH SCORES">
+                                <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
-                            <state key="selected" image="HighScoresText_1_iPad"/>
-                            <state key="highlighted" image="HighScoresText_1_iPad"/>
                             <connections>
                                 <action selector="ggMainMenuDeselect:" destination="iN0-l3-epB" eventType="touchDragExit" id="hAa-q9-lJM"/>
                                 <action selector="ggMainMenuSelect:" destination="iN0-l3-epB" eventType="touchDown" id="ArR-1L-Yg4"/>
@@ -202,9 +201,12 @@
                         <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Upgrades_3_iPad" translatesAutoresizingMaskIntoConstraints="NO" id="9lv-55-blM">
                             <rect key="frame" x="103" y="338" width="251" height="251"/>
                         </imageView>
-                        <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="UpgradesTextNotification_0_iPad" translatesAutoresizingMaskIntoConstraints="NO" id="3Fa-w8-VGV">
-                            <rect key="frame" x="103" y="338" width="251" height="251"/>
-                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="UPGRADES" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sYj-wy-C52">
+                            <rect key="frame" x="182" y="453.5" width="93" height="20.5"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7zN-61-ZCD" userLabel="UpgradesButton">
                             <rect key="frame" x="103" y="338" width="251" height="251"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -212,11 +214,10 @@
                                 <constraint firstAttribute="height" constant="251" id="ATv-95-tLQ"/>
                                 <constraint firstAttribute="width" constant="251" id="RS9-io-5eh"/>
                             </constraints>
-                            <state key="normal" image="UpgradesText_0_iPad">
+                            <state key="normal" title="UPGRADES">
+                                <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
-                            <state key="selected" image="UpgradesText_1_iPad"/>
-                            <state key="highlighted" image="UpgradesText_1_iPad"/>
                             <connections>
                                 <action selector="ggUpgradeDeselect:" destination="iN0-l3-epB" eventType="touchDragExit" id="9wS-W6-jua"/>
                                 <action selector="ggUpgradeSelect:" destination="iN0-l3-epB" eventType="touchDown" id="8Th-7f-SHM"/>
@@ -237,11 +238,11 @@
                         <constraint firstItem="guS-Ui-23t" firstAttribute="centerX" secondItem="VQh-NI-flu" secondAttribute="centerX" id="8xO-q1-A14"/>
                         <constraint firstItem="Nox-i1-5KO" firstAttribute="centerY" secondItem="eHQ-41-Jfd" secondAttribute="centerY" id="Adi-OX-5UD"/>
                         <constraint firstItem="heb-0l-6hO" firstAttribute="centerY" secondItem="CKe-DL-eal" secondAttribute="centerY" id="Ae1-ZD-C6h"/>
+                        <constraint firstItem="sYj-wy-C52" firstAttribute="centerY" secondItem="7zN-61-ZCD" secondAttribute="centerY" id="BHd-7k-CMA"/>
                         <constraint firstItem="heb-0l-6hO" firstAttribute="centerX" secondItem="gSs-zs-REx" secondAttribute="centerX" id="CGM-1p-fzF"/>
                         <constraint firstItem="guS-Ui-23t" firstAttribute="centerY" secondItem="VQh-NI-flu" secondAttribute="centerY" id="D9E-v9-H8e"/>
                         <constraint firstItem="xlG-tD-vek" firstAttribute="centerY" secondItem="eHQ-41-Jfd" secondAttribute="centerY" id="FAL-yF-VHl"/>
                         <constraint firstItem="Nox-i1-5KO" firstAttribute="centerY" secondItem="prI-kL-3WZ" secondAttribute="centerY" id="FvP-GB-hfJ"/>
-                        <constraint firstItem="7zN-61-ZCD" firstAttribute="leading" secondItem="3Fa-w8-VGV" secondAttribute="leading" id="Gfh-jH-dqw"/>
                         <constraint firstItem="CKe-DL-eal" firstAttribute="centerX" secondItem="7cr-Mm-dvP" secondAttribute="centerX" id="GuX-wb-0Gp"/>
                         <constraint firstItem="Nox-i1-5KO" firstAttribute="centerX" secondItem="eHQ-41-Jfd" secondAttribute="centerX" id="Ijx-7n-ZU8"/>
                         <constraint firstItem="guS-Ui-23t" firstAttribute="centerX" secondItem="Q0M-91-wCS" secondAttribute="centerX" id="KTk-gm-WDt"/>
@@ -254,6 +255,7 @@
                         <constraint firstItem="xlG-tD-vek" firstAttribute="centerX" secondItem="aUX-ze-p0W" secondAttribute="centerX" id="Pig-bQ-1P9"/>
                         <constraint firstItem="VQh-NI-flu" firstAttribute="centerX" secondItem="9lv-55-blM" secondAttribute="centerX" id="PwG-Oc-idg"/>
                         <constraint firstItem="CKe-DL-eal" firstAttribute="centerY" secondItem="gSs-zs-REx" secondAttribute="centerY" id="Qkr-3F-zS7"/>
+                        <constraint firstItem="sYj-wy-C52" firstAttribute="centerX" secondItem="7zN-61-ZCD" secondAttribute="centerX" id="UnP-h4-Bgo"/>
                         <constraint firstItem="heb-0l-6hO" firstAttribute="centerY" secondItem="gSs-zs-REx" secondAttribute="centerY" id="WtH-LN-SYs"/>
                         <constraint firstItem="guS-Ui-23t" firstAttribute="centerX" secondItem="7zN-61-ZCD" secondAttribute="centerX" id="Xkh-Da-EK2"/>
                         <constraint firstItem="CKe-DL-eal" firstAttribute="centerY" secondItem="9g5-NH-zUa" secondAttribute="centerY" id="Y52-cv-lvX"/>
@@ -265,7 +267,6 @@
                         <constraint firstItem="VQh-NI-flu" firstAttribute="centerY" secondItem="7zN-61-ZCD" secondAttribute="centerY" id="aHD-J9-gAR"/>
                         <constraint firstItem="heb-0l-6hO" firstAttribute="centerX" secondItem="9g5-NH-zUa" secondAttribute="centerX" id="aHt-33-uFk"/>
                         <constraint firstItem="CKe-DL-eal" firstAttribute="centerY" secondItem="7cr-Mm-dvP" secondAttribute="centerY" id="aRS-Nx-5Ki"/>
-                        <constraint firstItem="7zN-61-ZCD" firstAttribute="bottom" secondItem="3Fa-w8-VGV" secondAttribute="bottom" id="axw-AW-X4o"/>
                         <constraint firstItem="7zN-61-ZCD" firstAttribute="leading" secondItem="sjT-1T-I4P" secondAttribute="leading" constant="103" id="bug-xD-YwV"/>
                         <constraint firstItem="VQh-NI-flu" firstAttribute="centerY" secondItem="guS-Ui-23t" secondAttribute="centerY" id="cz1-WP-YXM"/>
                         <constraint firstItem="heb-0l-6hO" firstAttribute="centerY" secondItem="CKe-DL-eal" secondAttribute="centerY" id="dHk-bz-aCf"/>
@@ -287,11 +288,9 @@
                         <constraint firstItem="xlG-tD-vek" firstAttribute="centerY" secondItem="aUX-ze-p0W" secondAttribute="centerY" id="oZZ-LK-Lbm"/>
                         <constraint firstItem="VQh-NI-flu" firstAttribute="centerY" secondItem="9lv-55-blM" secondAttribute="centerY" id="rWT-Cr-ara"/>
                         <constraint firstItem="7zN-61-ZCD" firstAttribute="top" secondItem="9g5-NH-zUa" secondAttribute="bottom" constant="22" id="sRT-h9-4bg"/>
-                        <constraint firstItem="7zN-61-ZCD" firstAttribute="top" secondItem="3Fa-w8-VGV" secondAttribute="top" id="sdB-AP-tNT"/>
                         <constraint firstItem="xlG-tD-vek" firstAttribute="centerX" secondItem="eHQ-41-Jfd" secondAttribute="centerX" id="tNf-nF-Vpq"/>
                         <constraint firstItem="xlG-tD-vek" firstAttribute="centerX" secondItem="prI-kL-3WZ" secondAttribute="centerX" id="tXg-go-PaF"/>
                         <constraint firstItem="heb-0l-6hO" firstAttribute="centerY" secondItem="7cr-Mm-dvP" secondAttribute="centerY" id="utM-d3-Dvn"/>
-                        <constraint firstItem="7zN-61-ZCD" firstAttribute="trailing" secondItem="3Fa-w8-VGV" secondAttribute="trailing" id="wL1-zZ-NdP"/>
                         <constraint firstItem="aUX-ze-p0W" firstAttribute="top" secondItem="sjT-1T-I4P" secondAttribute="top" constant="190" id="wnu-5q-rPp"/>
                         <constraint firstItem="VQh-NI-flu" firstAttribute="centerX" secondItem="Q0M-91-wCS" secondAttribute="centerX" id="xDK-YK-MeY"/>
                         <constraint firstItem="CKe-DL-eal" firstAttribute="centerX" secondItem="9g5-NH-zUa" secondAttribute="centerX" id="yEJ-O4-2Lf"/>
@@ -422,7 +421,7 @@
                 <outlet property="smallXPLabel" destination="goA-G1-xvE" id="irE-FK-DZ4"/>
                 <outlet property="smallXPLabelHorizonalConstraint" destination="fYV-pI-y7T" id="Qrm-rq-aYJ"/>
                 <outlet property="twitterButton" destination="oT7-CT-w8p" id="KMR-jM-b8i"/>
-                <outlet property="upgradesAvailableImageView" destination="3Fa-w8-VGV" id="NXi-gA-1pW"/>
+                <outlet property="upgradesAvailableLabel" destination="sYj-wy-C52" id="3WO-NS-ODb"/>
                 <outlet property="verticalDivider" destination="1EO-1s-bjI" id="tsK-Ai-qbQ"/>
             </connections>
             <point key="canvasLocation" x="139" y="356"/>
@@ -434,11 +433,7 @@
         <image name="HS_1_iPad" width="191" height="191"/>
         <image name="HS_2_iPad" width="191" height="191"/>
         <image name="HS_3_iPad" width="208" height="208"/>
-        <image name="HighScoresText_0_iPad" width="104" height="74"/>
-        <image name="HighScoresText_1_iPad" width="105" height="75"/>
         <image name="HorizontalDivider" width="46" height="1"/>
-        <image name="PlayText_0_iPad" width="135" height="74"/>
-        <image name="PlayText_1_iPad" width="138" height="77"/>
         <image name="Play_0_iPad" width="258" height="258"/>
         <image name="Play_1_iPad" width="300" height="300"/>
         <image name="Play_2_iPad" width="300" height="300"/>
@@ -448,9 +443,6 @@
         <image name="SmallParsecs" width="70" height="12"/>
         <image name="SmallXP" width="22" height="12"/>
         <image name="TwitterIcon_GameOver" width="23" height="18"/>
-        <image name="UpgradesTextNotification_0_iPad" width="156" height="48"/>
-        <image name="UpgradesText_0_iPad" width="145" height="37"/>
-        <image name="UpgradesText_1_iPad" width="146" height="38"/>
         <image name="Upgrades_0_iPad" width="193" height="193"/>
         <image name="Upgrades_1_iPad" width="231" height="231"/>
         <image name="Upgrades_2_iPad" width="231" height="231"/>
