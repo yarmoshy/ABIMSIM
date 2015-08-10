@@ -215,16 +215,6 @@
                 armoryDescriptionLabel.textColor = [UIColor whiteColor];
                 [typeCell.contentView addSubview:armoryDescriptionLabel];
             }
-//            UIImageView *upgradeTypeImage;
-//            if (indexPath.section == 1) {
-//                upgradeTypeImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ShieldsTitle"]];
-//            } else if (indexPath.section == 2) {
-//                upgradeTypeImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"MinesTitle"]];
-//            } else if (indexPath.section == 3) {
-//                upgradeTypeImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ShipArmoryTitle"]];
-//            }
-//            upgradeTypeImage.frame = CGRectMake(upgradeIconImage.frame.size.width + upgradeIconImage.frame.origin.x + 5, (kTypeCellHeight - upgradeTypeImage.frame.size.height)/2, upgradeTypeImage.frame.size.width, upgradeTypeImage.frame.size.height);
-//            [typeCell.contentView addSubview:upgradeTypeImage];
             
             UIImageView *divider;
             if (indexPath.section == 1) {
