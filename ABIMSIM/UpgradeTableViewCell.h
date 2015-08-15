@@ -46,5 +46,7 @@ typedef enum {
 @property (assign, nonatomic) UpgradeTableViewCellType cellType;
 - (IBAction)descriptionButtonTapped:(id)sender;
 - (IBAction)upgradeButtonTapped:(id)sender;
+- (IBAction)upgradeSelect:(UIButton *)sender;
+- (IBAction)upgradeDeslect:(UIButton *)sender;
 -(void)setupAsIAP;
 @end

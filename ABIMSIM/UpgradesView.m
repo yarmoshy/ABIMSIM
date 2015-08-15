@@ -506,10 +506,10 @@
     cell.cellType = UpgradeTableViewCellTypeUnlockArmory;
     cell.upgradeTypeLabel.text = NSLocalizedString(@"UNLOCK ARMORY",nil);
     cell.unlimitedUpgradesHeightConstraint.constant = 0;
-    cell.xpRequiredLabel.text = @"200 XP";
+    cell.xpRequiredLabel.text = @"100 XP";
     cell.ringImageView.image = [UIImage imageNamed:@"SolidRing_Empty"];
     cell.descriptionLabel.text = @"Unlocking the armory will give you access to on-ship weaponry.";
-    if ([ABIMSIMDefaults integerForKey:kUserDuckets] < 200) {
+    if ([ABIMSIMDefaults integerForKey:kUserDuckets] < 100) {
         cell.upgradeButton.alpha = 1;
         cell.upgradeButton.enabled = NO;
     } else {
@@ -522,14 +522,14 @@
     cell.cellType = UpgradeTableViewCellTypeHolsterCapacity;
     cell.upgradeTypeLabel.text = NSLocalizedString(@"ARMORY CAPACITY",nil);
     cell.unlimitedUpgradesHeightConstraint.constant = 0;
-    cell.xpRequiredLabel.text = [NSString stringWithFormat:@"%ld XP",(holsterCapacity+1)*200];
+    cell.xpRequiredLabel.text = [NSString stringWithFormat:@"%ld XP",(holsterCapacity+1)*100];
     cell.ringImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"Ring_10Pieces_%ld", holsterCapacity]];
     cell.descriptionLabel.text = @"Your ship can be upgraded to hold a max of 10 items.";
     if (holsterCapacity >= 10) {
         cell.upgradeButton.alpha = 0;
         cell.xpRequiredLabel.text = @"FULLY UPGRADED";
         cell.upgradeButton.enabled = NO;
-    } else if ([ABIMSIMDefaults integerForKey:kUserDuckets] < (holsterCapacity+1)*200) {
+    } else if ([ABIMSIMDefaults integerForKey:kUserDuckets] < (holsterCapacity+1)*100) {
         cell.upgradeButton.alpha = 1;
         cell.upgradeButton.enabled = NO;
     } else {

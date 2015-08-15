@@ -16,6 +16,20 @@
 
 - (void)awakeFromNib {
     // Initialization code
+    NSMutableParagraphStyle *paragraphStyle = [NSParagraphStyle defaultParagraphStyle].mutableCopy;
+    paragraphStyle.lineHeightMultiple= 1;
+    paragraphStyle.alignment = NSTextAlignmentCenter;
+    paragraphStyle.lineSpacing = 0;
+    paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+    paragraphStyle.maximumLineHeight = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 45 : 20;
+    self.upgradeButton.titleLabel.numberOfLines = 0;
+    [self.upgradeButton setAttributedTitle:[[NSAttributedString alloc] initWithString:@"UPGRADE" attributes:@{NSFontAttributeName:[UIFont fontWithName:@"Futura-CondensedMedium" size:UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 45 : 20],
+                                                                                                                     NSForegroundColorAttributeName:[UIColor whiteColor],
+                                                                                                                     NSParagraphStyleAttributeName: paragraphStyle}] forState:UIControlStateNormal];
+    [self.upgradeButton setAttributedTitle:[[NSAttributedString alloc] initWithString:@"UPGRADE" attributes:@{NSFontAttributeName:[UIFont fontWithName:@"Futura-CondensedMedium" size:UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 45 : 20],
+                                                                                                              NSForegroundColorAttributeName:[[UIColor whiteColor] colorWithAlphaComponent:0.5],
+                                                                                                              NSParagraphStyleAttributeName: paragraphStyle}] forState:UIControlStateDisabled];
+
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -62,6 +76,17 @@
     [self.delegate upgradeCellTapped:self];
 }
 
+- (IBAction)upgradeSelect:(UIButton *)sender {
+    sender.layer.shadowColor = [UIColor whiteColor].CGColor;
+    sender.layer.shadowRadius = 2.0f;
+    sender.layer.shadowOpacity = 1.0f;
+    sender.layer.shadowOffset = CGSizeMake(0, 0);
+}
+
+- (IBAction)upgradeDeslect:(UIButton *)sender {
+    sender.layer.shadowColor = [UIColor clearColor].CGColor;
+}
+
 -(void)layoutSubviews {
     [super layoutSubviews];
     self.upgradeRing0.center = self.upgradeRing1.center = self.upgradeRing2.center = self.upgradeRing3.center = self.upgradeButton.center;
@@ -90,11 +115,27 @@
     [self.contentView addSubview:self.upgradeRing2];
     [self.contentView addSubview:self.upgradeRing3];
     
-    [self.upgradeButton setImage:[UIImage imageNamed:@"BuyText_0"] forState:UIControlStateNormal];
-    [self.upgradeButton setImage:[UIImage imageNamed:@"BuyText_1"] forState:UIControlStateHighlighted];
-    [self.upgradeButton setImage:[UIImage imageNamed:@"BuyText_1"] forState:UIControlStateSelected];
+    NSMutableParagraphStyle *paragraphStyle = [NSParagraphStyle defaultParagraphStyle].mutableCopy;
+    paragraphStyle.lineHeightMultiple= 1;
+    paragraphStyle.alignment = NSTextAlignmentCenter;
+    paragraphStyle.lineSpacing = 0;
+    paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+    paragraphStyle.maximumLineHeight = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 50 : 25;
+    self.upgradeButton.titleLabel.numberOfLines = 0;
+    [self.upgradeButton setAttributedTitle:[[NSAttributedString alloc] initWithString:@"BUY!" attributes:@{NSFontAttributeName:[UIFont fontWithName:@"Futura-CondensedMedium" size:UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 50 : 25],
+                                                                                                              NSForegroundColorAttributeName:[UIColor whiteColor],
+                                                                                                              NSParagraphStyleAttributeName: paragraphStyle}] forState:UIControlStateNormal];
+    [self.upgradeButton setAttributedTitle:[[NSAttributedString alloc] initWithString:@"BUY!" attributes:@{NSFontAttributeName:[UIFont fontWithName:@"Futura-CondensedMedium" size:UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 50 : 25],
+                                                                                                              NSForegroundColorAttributeName:[[UIColor whiteColor] colorWithAlphaComponent:0.5],
+                                                                                                              NSParagraphStyleAttributeName: paragraphStyle}] forState:UIControlStateDisabled];
+
     
     [self.upgradeButton removeTarget:self action:@selector(upgradeButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [self.upgradeButton removeTarget:self action:@selector(upgradeSelect:) forControlEvents:UIControlEventTouchDown];
+    [self.upgradeButton removeTarget:self action:@selector(upgradeSelect:) forControlEvents:UIControlEventTouchDragEnter];
+    [self.upgradeButton removeTarget:self action:@selector(upgradeDeslect:) forControlEvents:UIControlEventTouchDragExit];
+    [self.upgradeButton removeTarget:self action:@selector(upgradeDeslect:) forControlEvents:UIControlEventTouchUpInside];
+
     [self.upgradeButton addTarget:self action:@selector(upgradesSelect:) forControlEvents:UIControlEventTouchDown];
     [self.upgradeButton addTarget:self action:@selector(upgradesSelect:) forControlEvents:UIControlEventTouchDragEnter];
     [self.upgradeButton addTarget:self action:@selector(upgradesDeselect:) forControlEvents:UIControlEventTouchDragExit];

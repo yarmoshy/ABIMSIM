@@ -94,7 +94,7 @@
     paragraphStyle2.lineBreakMode = NSLineBreakByWordWrapping;
     paragraphStyle2.maximumLineHeight = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 50 : 25;
     self.ggMainMenuButton.titleLabel.numberOfLines = 0;
-    [self.ggMainMenuButton setAttributedTitle:[[NSAttributedString alloc] initWithString:@"MAIN\nMENU" attributes:@{NSFontAttributeName:[UIFont fontWithName:@"Futura-CondensedMedium" size:UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 50 : 25],
+    [self.ggMainMenuButton setAttributedTitle:[[NSAttributedString alloc] initWithString:@"HIGH\nSCORE" attributes:@{NSFontAttributeName:[UIFont fontWithName:@"Futura-CondensedMedium" size:UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 50 : 25],
                                                                                                                   NSForegroundColorAttributeName:[UIColor whiteColor],
                                                                                                                   NSParagraphStyleAttributeName: paragraphStyle2}] forState:UIControlStateNormal];
     self.ggPlayButton.titleLabel.numberOfLines = 0;
@@ -685,7 +685,7 @@
         return YES;
     }
     
-    if (armoryCapacity < 10 && spaceDuckets >= (armoryCapacity+1)*200) {
+    if (armoryCapacity < 10 && spaceDuckets >= (armoryCapacity+1)*100) {
         return YES;
     }
     
