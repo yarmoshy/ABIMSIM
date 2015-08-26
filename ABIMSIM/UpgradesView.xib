@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -43,20 +43,23 @@
                         <action selector="backButtonTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="Ze0-ux-vS5"/>
                     </connections>
                 </button>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="UpgradesHeaderTitle" translatesAutoresizingMaskIntoConstraints="NO" id="qOY-HB-JBK">
-                    <rect key="frame" x="109" y="22" width="102" height="27"/>
-                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="UPGRADES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qBS-Wd-5Hp">
+                    <rect key="frame" x="111.5" y="18" width="97.5" height="35"/>
+                    <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="29"/>
+                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="FdE-VK-S8r" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="0lb-Oi-VEB"/>
+                <constraint firstItem="qBS-Wd-5Hp" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="18" id="2dB-ul-pBX"/>
                 <constraint firstItem="dHm-rb-9KP" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="5F1-C2-aoo"/>
                 <constraint firstItem="dHm-rb-9KP" firstAttribute="centerY" secondItem="eVw-28-GZV" secondAttribute="centerY" id="A0S-ls-lhU"/>
+                <constraint firstAttribute="centerX" secondItem="qBS-Wd-5Hp" secondAttribute="centerX" id="DOe-tH-Oc8"/>
                 <constraint firstAttribute="trailing" secondItem="ROn-Yt-dQR" secondAttribute="trailing" id="H6f-6K-CZn"/>
-                <constraint firstItem="qOY-HB-JBK" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="22" id="QEe-4R-DHX"/>
                 <constraint firstAttribute="trailing" secondItem="FdE-VK-S8r" secondAttribute="trailing" id="QOB-Za-Afn"/>
                 <constraint firstItem="dHm-rb-9KP" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="SVV-ZT-NQf"/>
-                <constraint firstAttribute="centerX" secondItem="qOY-HB-JBK" secondAttribute="centerX" id="TT2-oa-Ehd"/>
                 <constraint firstAttribute="bottom" secondItem="ROn-Yt-dQR" secondAttribute="bottom" id="TtU-yn-nBC"/>
                 <constraint firstItem="ROn-Yt-dQR" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="VSR-u0-9FZ"/>
                 <constraint firstItem="FdE-VK-S8r" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Ytu-qg-EvG"/>
@@ -74,7 +77,6 @@
     <resources>
         <image name="Background_7.png" width="320" height="568"/>
         <image name="UpgradesChevron" width="15" height="23"/>
-        <image name="UpgradesHeaderTitle" width="102" height="27"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

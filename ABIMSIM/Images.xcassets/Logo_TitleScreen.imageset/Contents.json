@@ -11,7 +11,8 @@
     },
     {
       "idiom" : "universal",
-      "scale" : "3x"
+      "scale" : "3x",
+      "filename" : "Logo_TitleScreen@3x.png"
     }
   ],
   "info" : {
