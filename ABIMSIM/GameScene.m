@@ -104,7 +104,6 @@
 }
 
 static NSMutableArray *backgroundTextures;
-static NSMutableArray *backgroundTextureAtlases;
 static NSMutableArray *planetTextures;
 static NSMutableArray *asteroidTextures;
 static NSMutableArray *powerUpTextures;
@@ -165,42 +164,30 @@ CGFloat DegreesToRadians(CGFloat degrees)
                     [backgroundTextures addObject:[SKTexture textureWithImageNamed:textureName]];
                 }
             } else {
-                backgroundTextureAtlases = [NSMutableArray array];
-                for (int i = 0; i < 3; i++) {
-                    SKTextureAtlas *atlas = [SKTextureAtlas atlasNamed:[NSString stringWithFormat:@"Background%d",i]];
-                    [backgroundTextureAtlases addObject:atlas];
-                    for (int j = 0; j < 4; j++) {
-                        NSString *textureName = [NSString stringWithFormat:@"Background_%d", (i*4)+j];
-                        if ((i*4)+j > 8) {
-                            break;
-                        }
-                        NSLog(@"%@",textureName);
-                        [backgroundTextures addObject:[atlas textureNamed:textureName]];
-                    }
+                for (int j = 0; j < 10; j++) {
+                    NSString *textureName = [NSString stringWithFormat:@"Background_%d", j];
+                    NSLog(@"%@",textureName);
+                    [backgroundTextures addObject:[SKTexture textureWithImageNamed:textureName]];
                 }
             }
         }
-        [SKTextureAtlas preloadTextureAtlases:backgroundTextureAtlases withCompletionHandler:^{
-            ;
-        }];
         [SKTexture preloadTextures:backgroundTextures withCompletionHandler:^{
             ;
         }];
         
         if (!planetTextures) {
             planetTextures = [NSMutableArray array];
-            SKTextureAtlas *atlas = [SKTextureAtlas atlasNamed:@"Planets"];
-
             for (int i = 0; i < 6; i++) {
                 for (int j = 0; j < 4; j++) {
                     NSString *textureName = [NSString stringWithFormat:@"Planet_%d_%d", i, j];
                     NSLog(@"%@",textureName);
-                    [planetTextures addObject:[atlas textureNamed:textureName]];
+                    [planetTextures addObject:[SKTexture textureWithImageNamed:textureName]];
                 }
             }
-            [planetTextures addObject:[atlas textureNamed:@"Planet_5_S"]];
-            [planetTextures addObject:[atlas textureNamed:@"AsteroidShield_0"]];
-            [planetTextures addObject:[atlas textureNamed:@"AsteroidShield_1"]];
+            [planetTextures addObject:[SKTexture textureWithImageNamed:@"Planet_4_4"]];
+            [planetTextures addObject:[SKTexture textureWithImageNamed:@"Planet_5_S"]];
+            [planetTextures addObject:[SKTexture textureWithImageNamed:@"AsteroidShield_0"]];
+            [planetTextures addObject:[SKTexture textureWithImageNamed:@"AsteroidShield_1"]];
         }
         [SKTexture preloadTextures:planetTextures withCompletionHandler:^{
             ;
@@ -266,7 +253,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
                     [planetSpritesDictionary setObject:@[sprite].mutableCopy forKey:[NSString stringWithFormat:kPlanetSpriteArrayKey,planetIndex]];
                 }
             }
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < 4; i++) {
                 [planetSpritesDictionary setObject:[NSMutableArray new] forKey:[NSString stringWithFormat:kPlanetSpriteArrayKey,(int)[planetSpritesDictionary allKeys].count]];
             }
         }
@@ -399,7 +386,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         } else {
             shieldHitPoints = 0;
         }
-        shipHitPoints = 1;
+        shipHitPoints = 1000;
         shipSprite = [self createShip];
         [self addSpaceMineExplosionRingAnimationsToSprite:shipSprite];
 
@@ -1439,7 +1426,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     } else {
         shieldHitPoints = 0;
     }
-    shipHitPoints = 1;
+    shipHitPoints = 1000;
 
     levelNode.text = [NSString stringWithFormat:@"%d",self.currentLevel];
     parsecsNode.position = CGPointMake(levelNode.position.x + levelNode.frame.size.width + 1, 16);
@@ -1471,7 +1458,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
                 [asteroidSpritesDictionary setObject:asteroidArray forKey:[NSString stringWithFormat:kAsteroidSpriteArrayKey, [asteroid.userData[asteroidsIndex] intValue]]];
             }
             if ([sprite.name isEqual:planetCategoryName] ||
-                [sprite.name isEqual:sunObjectSpriteName] ||
+                 [sprite.name isEqual:sunObjectSpriteName] ||
                 [sprite.name isEqual:asteroidShieldCategoryName]) {
                 SKSpriteNode *planet = sprite;
                 NSMutableArray *planetArray = [planetSpritesDictionary objectForKey:[NSString stringWithFormat:kPlanetSpriteArrayKey, [planet.userData[planetsIndex] intValue]]];
@@ -2854,7 +2841,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
                 planet.physicsBody.dynamic = NO;
                 planet.physicsBody.collisionBitMask = shipCategory | asteroidCategory | asteroidInShieldCategory | asteroidShieldCategory;
                 planet.physicsBody.allowsRotation = NO;
-                if (![self addRingPhysicsBodyIfApplicableForPlanet:planet] && ![planet.name isEqualToString:sunObjectSpriteName] && [planet.userData[planetNumber] intValue] < 5) {
+                if (![self addRingPhysicsBodyIfApplicableForPlanet:planet] && ![planet.name isEqualToString:sunObjectSpriteName] && [planet.userData[planetNumber] intValue] < 5 && [planet.userData[planetFlavorNumber] intValue] < 4) {
                     planet.userData[moonsArray] = @[[self moonForPlanetNum:[planet.userData[planetNumber] intValue] withPlanet:planet]];
                 }
                 if ([planet.userData[planetNumber] intValue] >= asteroidShield0) {
@@ -3037,6 +3024,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
     int planetNum = arc4random() % [self maxPlanetNumForLevel:level];
     int planetFlavor =  arc4random() % 3;
+    if (planetNum == 4 && ((arc4random() % 4) == 0)) {
+        planetFlavor = 4;
+    }
     if (sunFlavor) {
         planetFlavor = 3;
     }
@@ -3069,6 +3059,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
                 planetIndex = (int)planetTextures.count-2;
             }
             isAsteroidShield = YES;
+        } else if (planetNum == 4 && planetFlavor == 4) {
+            planetIndex = (int)planetTextures.count-4;
         }
     }
     NSMutableArray *planetArray = [planetSpritesDictionary objectForKey:[NSString stringWithFormat:kPlanetSpriteArrayKey, planetIndex]];
