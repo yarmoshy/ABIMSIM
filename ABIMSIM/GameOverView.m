@@ -75,10 +75,10 @@
     paragraphStyle.lineSpacing = 0;
     paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
     self.ggUpgradeButton.titleLabel.numberOfLines = 0;
-    [self.ggUpgradeButton setAttributedTitle:[[NSAttributedString alloc] initWithString:@"UPGRADES" attributes:@{NSFontAttributeName:[UIFont fontWithName:@"Futura-CondensedMedium" size:UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 50 : 25],
+    [self.ggUpgradeButton setAttributedTitle:[[NSAttributedString alloc] initWithString:@"UPGRADES" attributes:@{NSFontAttributeName:[UIFont fontWithName:@"Futura-CondensedMedium" size:UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 43 : 25],
                                                                                                                     NSForegroundColorAttributeName:[UIColor whiteColor],
                                                                                                                     NSParagraphStyleAttributeName: paragraphStyle}] forState:UIControlStateNormal];
-    [self.upgradesAvailableLabel setAttributedText:[[NSAttributedString alloc] initWithString:@"UPGRADES" attributes:@{NSFontAttributeName:[UIFont fontWithName:@"Futura-CondensedMedium" size:UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 50 : 25],
+    [self.upgradesAvailableLabel setAttributedText:[[NSAttributedString alloc] initWithString:@"UPGRADES" attributes:@{NSFontAttributeName:[UIFont fontWithName:@"Futura-CondensedMedium" size:UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 43 : 25],
                                                                                                                  NSForegroundColorAttributeName:[UIColor whiteColor],
                                                                                                                  NSParagraphStyleAttributeName: paragraphStyle}] ];
     self.upgradesAvailableLabel.layer.shadowColor = [UIColor whiteColor].CGColor;
@@ -92,13 +92,13 @@
     paragraphStyle2.alignment = NSTextAlignmentCenter;
     paragraphStyle2.lineSpacing = 0;
     paragraphStyle2.lineBreakMode = NSLineBreakByWordWrapping;
-    paragraphStyle2.maximumLineHeight = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 50 : 25;
+    paragraphStyle2.maximumLineHeight = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 43 : 25;
     self.ggMainMenuButton.titleLabel.numberOfLines = 0;
-    [self.ggMainMenuButton setAttributedTitle:[[NSAttributedString alloc] initWithString:@"HIGH\nSCORE" attributes:@{NSFontAttributeName:[UIFont fontWithName:@"Futura-CondensedMedium" size:UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 50 : 25],
+    [self.ggMainMenuButton setAttributedTitle:[[NSAttributedString alloc] initWithString:@"HIGH\nSCORE" attributes:@{NSFontAttributeName:[UIFont fontWithName:@"Futura-CondensedMedium" size:UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 43 : 25],
                                                                                                                   NSForegroundColorAttributeName:[UIColor whiteColor],
                                                                                                                   NSParagraphStyleAttributeName: paragraphStyle2}] forState:UIControlStateNormal];
     self.ggPlayButton.titleLabel.numberOfLines = 0;
-    [self.ggPlayButton setAttributedTitle:[[NSAttributedString alloc] initWithString:@"PLAY" attributes:@{NSFontAttributeName:[UIFont fontWithName:@"Futura-CondensedMedium" size:UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 90 : 50],
+    [self.ggPlayButton setAttributedTitle:[[NSAttributedString alloc] initWithString:@"PLAY" attributes:@{NSFontAttributeName:[UIFont fontWithName:@"Futura-CondensedMedium" size:UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 93 : 50],
                                                                                                               NSForegroundColorAttributeName:[UIColor whiteColor],
                                                                                                               NSParagraphStyleAttributeName: paragraphStyle}] forState:UIControlStateNormal];
 

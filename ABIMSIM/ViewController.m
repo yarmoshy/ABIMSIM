@@ -48,10 +48,11 @@
     self.mainMenuView.delegate = self;
     
     mainMenuPortalButton=[SMPortalButton buttonWithType:UIButtonTypeCustom];
-    [mainMenuPortalButton.button setImage:[UIImage imageNamed:@"btnSessionM"] forState:UIControlStateNormal];
+    [mainMenuPortalButton.button setImage:[UIImage imageNamed:@"RewardsBox"] forState:UIControlStateNormal];
     [mainMenuPortalButton sizeToFit];
-    mainMenuPortalButton.frame = CGRectMake(self.mainMenuView.buttonContainerView.frame.size.width - 80, 40, mainMenuPortalButton.button.frame.size.width, mainMenuPortalButton.button.frame.size.height);
-    [self.mainMenuView.buttonContainerView addSubview:mainMenuPortalButton];
+    CGRect rect = CGRectMake(self.mainMenuView.frame.size.width - mainMenuPortalButton.button.frame.size.width - 10, self.mainMenuView.frame.size.height - mainMenuPortalButton.button.frame.size.height - 10, mainMenuPortalButton.button.frame.size.width, mainMenuPortalButton.button.frame.size.height);
+    mainMenuPortalButton.frame = rect;
+    [self.mainMenuView addSubview:mainMenuPortalButton];
 
     [self.view addSubview:self.mainMenuView];
     [self.mainMenuView layoutIfNeeded];
@@ -67,10 +68,10 @@
     self.gameOverView.delegate = self;
     
     gameOverPortalButton=[SMPortalButton buttonWithType:UIButtonTypeCustom];
-    [gameOverPortalButton.button setImage:[UIImage imageNamed:@"btnSessionM"] forState:UIControlStateNormal];
+    [gameOverPortalButton.button setImage:[UIImage imageNamed:@"RewardsBox"] forState:UIControlStateNormal];
     [gameOverPortalButton sizeToFit];
-    gameOverPortalButton.frame = CGRectMake(self.mainMenuView.buttonContainerView.frame.size.width - 80, 40, gameOverPortalButton.button.frame.size.width, gameOverPortalButton.button.frame.size.height);
-    [self.gameOverView.gameOverButtonContainer addSubview:gameOverPortalButton];
+    gameOverPortalButton.frame = rect;
+    [self.gameOverView addSubview:gameOverPortalButton];
 
     [self.view insertSubview:self.gameOverView atIndex:1];
 
@@ -216,10 +217,20 @@
 
 -(void)showSettings {
     [self.settingsView showSettings];
+    [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionAllowAnimatedContent animations:^{
+        mainMenuPortalButton.alpha = 0;
+    } completion:^(BOOL finished) {
+        ;
+    }];
 }
 
 -(void)hideSettings {
     [self.settingsView hideSettings];
+    [UIView animateWithDuration:0.25 delay:0.25 options:UIViewAnimationOptionAllowAnimatedContent animations:^{
+        mainMenuPortalButton.alpha = 1;
+    } completion:^(BOOL finished) {
+        ;
+    }];
 }
 
 

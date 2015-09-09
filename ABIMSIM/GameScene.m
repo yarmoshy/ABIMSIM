@@ -386,7 +386,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         } else {
             shieldHitPoints = 0;
         }
-        shipHitPoints = 1000;
+        shipHitPoints = 1;
         shipSprite = [self createShip];
         [self addSpaceMineExplosionRingAnimationsToSprite:shipSprite];
 
@@ -1426,7 +1426,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     } else {
         shieldHitPoints = 0;
     }
-    shipHitPoints = 1000;
+    shipHitPoints = 1;
 
     levelNode.text = [NSString stringWithFormat:@"%d",self.currentLevel];
     parsecsNode.position = CGPointMake(levelNode.position.x + levelNode.frame.size.width + 1, 16);
