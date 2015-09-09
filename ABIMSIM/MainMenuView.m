@@ -37,10 +37,10 @@
     paragraphStyle.lineHeightMultiple= 1;
     paragraphStyle.alignment = NSTextAlignmentCenter;
     paragraphStyle.lineSpacing = 0;
-    paragraphStyle.maximumLineHeight = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 50 : 25;
+    paragraphStyle.maximumLineHeight = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 43 : 25;
     paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
     self.highScoreButton.titleLabel.numberOfLines = 0;
-    [self.highScoreButton setAttributedTitle:[[NSAttributedString alloc] initWithString:@"HIGH\nSCORES" attributes:@{NSFontAttributeName:[UIFont fontWithName:@"Futura-CondensedMedium" size:UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 50 : 25],
+    [self.highScoreButton setAttributedTitle:[[NSAttributedString alloc] initWithString:@"HIGH\nSCORES" attributes:@{NSFontAttributeName:[UIFont fontWithName:@"Futura-CondensedMedium" size:UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 43 : 25],
                                                                                                                   NSForegroundColorAttributeName:[UIColor whiteColor],
                                                                                                                   NSParagraphStyleAttributeName: paragraphStyle}] forState:UIControlStateNormal];
     
@@ -50,12 +50,12 @@
     paragraphStyle2.lineSpacing = 0;
     paragraphStyle2.lineBreakMode = NSLineBreakByWordWrapping;
     self.playButton.titleLabel.numberOfLines = 0;
-    [self.playButton setAttributedTitle:[[NSAttributedString alloc] initWithString:@"PLAY" attributes:@{NSFontAttributeName:[UIFont fontWithName:@"Futura-CondensedMedium" size:UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 90 : 50],
+    [self.playButton setAttributedTitle:[[NSAttributedString alloc] initWithString:@"PLAY" attributes:@{NSFontAttributeName:[UIFont fontWithName:@"Futura-CondensedMedium" size:UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 93 : 50],
                                                                                                               NSForegroundColorAttributeName:[UIColor whiteColor],
                                                                                                               NSParagraphStyleAttributeName: paragraphStyle2}] forState:UIControlStateNormal];
 
     self.upgradeButton.titleLabel.numberOfLines = 0;
-    [self.upgradeButton setAttributedTitle:[[NSAttributedString alloc] initWithString:@"UPGRADES" attributes:@{NSFontAttributeName:[UIFont fontWithName:@"Futura-CondensedMedium" size:UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 50 : 25],
+    [self.upgradeButton setAttributedTitle:[[NSAttributedString alloc] initWithString:@"UPGRADES" attributes:@{NSFontAttributeName:[UIFont fontWithName:@"Futura-CondensedMedium" size:UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 43 : 25],
                                                                                                         NSForegroundColorAttributeName:[UIColor whiteColor],
                                                                                                         NSParagraphStyleAttributeName: paragraphStyle2}] forState:UIControlStateNormal];
 
