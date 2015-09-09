@@ -147,15 +147,16 @@
     }];
     
     [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionAllowAnimatedContent animations:^{
-        self.settingsContainerTopAlignmentConstraint.constant = 0;
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+            self.settingsContainerTopAlignmentConstraint.constant = self.superview.frame.size.height - self.buttonContainerView.frame.origin.y - self.settingsContainerView.frame.size.height;
             self.settingsContainerTrailingConstraint.constant = self.superview.frame.size.width - self.settingsContainerView.frame.size.width;
-            self.hamburgerBottomConstraint.constant = self.superview.frame.size.height - self.buttonContainerView.frame.origin.y - 100;
+            self.hamburgerBottomConstraint.constant = self.settingsContainerView.frame.size.height - self.hamburgerButton.frame.size.height * 1.5;
             self.hamburgerLeadingConstraint.constant = self.settingsContainerView.frame.size.width - 125;
         } else {
+            self.settingsContainerTopAlignmentConstraint.constant = -1 * (self.superview.frame.size.height - self.buttonContainerView.frame.origin.y - self.settingsContainerView.frame.size.height);
             self.settingsContainerTrailingConstraint.constant = 0;
-            self.hamburgerBottomConstraint.constant = self.superview.frame.size.height - self.buttonContainerView.frame.origin.y - 100;
-            self.hamburgerLeadingConstraint.constant = self.buttonContainerView.frame.origin.x + self.buttonContainerView.frame.size.width - 100;
+            self.hamburgerBottomConstraint.constant = self.settingsContainerView.frame.size.height - self.hamburgerButton.frame.size.height * 1.5;
+            self.hamburgerLeadingConstraint.constant = self.settingsContainerView.frame.size.width - 125;// self.buttonContainerView.frame.origin.x + self.buttonContainerView.frame.size.width - 100;
         }
         [self.superview layoutIfNeeded];
     } completion:^(BOOL finished) {

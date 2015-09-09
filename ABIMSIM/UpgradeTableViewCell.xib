@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
@@ -29,11 +29,9 @@
                     </imageView>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TgB-19-HXp">
                         <rect key="frame" x="189" y="7" width="104" height="104"/>
-                        <state key="normal" image="UpgradeText_0">
+                        <state key="normal">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
-                        <state key="selected" image="UpgradeText_1"/>
-                        <state key="highlighted" image="UpgradeText_1"/>
                         <connections>
                             <action selector="upgradeButtonTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="IBU-V8-eRb"/>
                             <action selector="upgradeDeslect:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="9Ym-U5-pcL"/>
@@ -152,7 +150,5 @@
         <image name="UnlimitedUpgradesText" width="82" height="10"/>
         <image name="UpgradeBackgroundLeft" width="180" height="117"/>
         <image name="UpgradeBackgroundRight" width="139" height="117"/>
-        <image name="UpgradeText_0" width="46" height="13"/>
-        <image name="UpgradeText_1" width="48" height="15"/>
     </resources>
 </document>
