@@ -157,18 +157,10 @@ CGFloat DegreesToRadians(CGFloat degrees)
         
         if (!backgroundTextures) {
             backgroundTextures = [NSMutableArray arrayWithCapacity:8];
-            if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-                for (int j = 0; j < 10; j++) {
-                    NSString *textureName = [NSString stringWithFormat:@"Background_%d_iPad", j];
-                    NSLog(@"%@",textureName);
-                    [backgroundTextures addObject:[SKTexture textureWithImageNamed:textureName]];
-                }
-            } else {
-                for (int j = 0; j < 10; j++) {
-                    NSString *textureName = [NSString stringWithFormat:@"Background_%d", j];
-                    NSLog(@"%@",textureName);
-                    [backgroundTextures addObject:[SKTexture textureWithImageNamed:textureName]];
-                }
+            for (int j = 0; j < 10; j++) {
+                NSString *textureName = [NSString stringWithFormat:@"Background_%d", j];
+                NSLog(@"%@",textureName);
+                [backgroundTextures addObject:[SKTexture textureWithImageNamed:textureName]];
             }
         }
         [SKTexture preloadTextures:backgroundTextures withCompletionHandler:^{
