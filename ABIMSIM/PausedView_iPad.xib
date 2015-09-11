@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
@@ -60,16 +60,16 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8dw-Cg-qGK" userLabel="ButtonContainerView">
                     <rect key="frame" x="123" y="312" width="522" height="400"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Play_0_iPad" translatesAutoresizingMaskIntoConstraints="NO" id="G0H-e8-mXh">
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Play_0" translatesAutoresizingMaskIntoConstraints="NO" id="G0H-e8-mXh">
                             <rect key="frame" x="29" y="29" width="258" height="258"/>
                         </imageView>
-                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Play_1_iPad" translatesAutoresizingMaskIntoConstraints="NO" id="osC-jb-sJ1">
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Play_1" translatesAutoresizingMaskIntoConstraints="NO" id="osC-jb-sJ1">
                             <rect key="frame" x="8" y="8" width="300" height="300"/>
                         </imageView>
-                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Play_2_iPad" translatesAutoresizingMaskIntoConstraints="NO" id="ESz-iG-E5P">
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Play_2" translatesAutoresizingMaskIntoConstraints="NO" id="ESz-iG-E5P">
                             <rect key="frame" x="8" y="8" width="300" height="300"/>
                         </imageView>
-                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Play_3_iPad" translatesAutoresizingMaskIntoConstraints="NO" id="wcl-Ss-AGP">
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Play_3" translatesAutoresizingMaskIntoConstraints="NO" id="wcl-Ss-AGP">
                             <rect key="frame" x="0.0" y="0.0" width="316" height="316"/>
                         </imageView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XCN-mn-j9b" userLabel="PlayButton">
@@ -90,16 +90,16 @@
                                 <action selector="playPausedTouchUpInside:" destination="iN0-l3-epB" eventType="touchUpInside" id="1eN-jw-2Cl"/>
                             </connections>
                         </button>
-                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HS_0_iPad" translatesAutoresizingMaskIntoConstraints="NO" id="hXS-kE-Dx4">
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HS_0" translatesAutoresizingMaskIntoConstraints="NO" id="hXS-kE-Dx4">
                             <rect key="frame" x="342" y="218" width="153" height="153"/>
                         </imageView>
-                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HS_1_iPad" translatesAutoresizingMaskIntoConstraints="NO" id="aZo-SA-FDm">
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HS_1" translatesAutoresizingMaskIntoConstraints="NO" id="aZo-SA-FDm">
                             <rect key="frame" x="323" y="199" width="191" height="191"/>
                         </imageView>
-                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HS_2_iPad" translatesAutoresizingMaskIntoConstraints="NO" id="y5O-Dz-dxr">
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HS_2" translatesAutoresizingMaskIntoConstraints="NO" id="y5O-Dz-dxr">
                             <rect key="frame" x="323" y="199" width="191" height="191"/>
                         </imageView>
-                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HS_3_iPad" translatesAutoresizingMaskIntoConstraints="NO" id="JEA-8Q-U69">
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HS_3" translatesAutoresizingMaskIntoConstraints="NO" id="JEA-8Q-U69">
                             <rect key="frame" x="314" y="190" width="208" height="208"/>
                         </imageView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eux-vl-2rL" userLabel="HighScoresButton">
@@ -210,14 +210,14 @@
         </view>
     </objects>
     <resources>
-        <image name="HS_0_iPad" width="153" height="153"/>
-        <image name="HS_1_iPad" width="191" height="191"/>
-        <image name="HS_2_iPad" width="191" height="191"/>
-        <image name="HS_3_iPad" width="208" height="208"/>
-        <image name="Play_0_iPad" width="258" height="258"/>
-        <image name="Play_1_iPad" width="300" height="300"/>
-        <image name="Play_2_iPad" width="300" height="300"/>
-        <image name="Play_3_iPad" width="316" height="316"/>
+        <image name="HS_0" width="153" height="153"/>
+        <image name="HS_1" width="191" height="191"/>
+        <image name="HS_2" width="191" height="191"/>
+        <image name="HS_3" width="208" height="208"/>
+        <image name="Play_0" width="258" height="258"/>
+        <image name="Play_1" width="300" height="300"/>
+        <image name="Play_2" width="300" height="300"/>
+        <image name="Play_3" width="316" height="316"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

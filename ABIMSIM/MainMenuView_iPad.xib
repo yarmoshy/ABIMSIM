@@ -11,22 +11,22 @@
             <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo_TitleScreen_iPad" translatesAutoresizingMaskIntoConstraints="NO" id="0nj-vN-AKl">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo_TitleScreen" translatesAutoresizingMaskIntoConstraints="NO" id="0nj-vN-AKl">
                     <rect key="frame" x="88" y="78" width="593" height="85"/>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="btn-Dc-UEo" userLabel="ButtonContainerView">
                     <rect key="frame" x="140" y="283" width="522" height="589"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Play_0_iPad" translatesAutoresizingMaskIntoConstraints="NO" id="jKe-Wn-fEv">
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Play_0" translatesAutoresizingMaskIntoConstraints="NO" id="jKe-Wn-fEv">
                             <rect key="frame" x="29" y="29" width="258" height="258"/>
                         </imageView>
-                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Play_1_iPad" translatesAutoresizingMaskIntoConstraints="NO" id="cL7-UM-x49">
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Play_1" translatesAutoresizingMaskIntoConstraints="NO" id="cL7-UM-x49">
                             <rect key="frame" x="8" y="8" width="300" height="300"/>
                         </imageView>
-                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Play_2_iPad" translatesAutoresizingMaskIntoConstraints="NO" id="rby-ke-57q">
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Play_2" translatesAutoresizingMaskIntoConstraints="NO" id="rby-ke-57q">
                             <rect key="frame" x="8" y="8" width="300" height="300"/>
                         </imageView>
-                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Play_3_iPad" translatesAutoresizingMaskIntoConstraints="NO" id="igj-T4-gDi">
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Play_3" translatesAutoresizingMaskIntoConstraints="NO" id="igj-T4-gDi">
                             <rect key="frame" x="0.0" y="0.0" width="316" height="316"/>
                         </imageView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7EP-xj-tmz" userLabel="PlayButton">
@@ -47,16 +47,16 @@
                                 <action selector="playTouchUpInside:" destination="iN0-l3-epB" eventType="touchUpInside" id="czC-bq-wL1"/>
                             </connections>
                         </button>
-                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HS_0_iPad" translatesAutoresizingMaskIntoConstraints="NO" id="9DQ-gR-V19">
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HS_0" translatesAutoresizingMaskIntoConstraints="NO" id="9DQ-gR-V19">
                             <rect key="frame" x="342" y="218" width="153" height="153"/>
                         </imageView>
-                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HS_1_iPad" translatesAutoresizingMaskIntoConstraints="NO" id="zeq-b1-9Va">
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HS_1" translatesAutoresizingMaskIntoConstraints="NO" id="zeq-b1-9Va">
                             <rect key="frame" x="323" y="199" width="191" height="191"/>
                         </imageView>
-                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HS_2_iPad" translatesAutoresizingMaskIntoConstraints="NO" id="ZK6-Gw-Z8W">
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HS_2" translatesAutoresizingMaskIntoConstraints="NO" id="ZK6-Gw-Z8W">
                             <rect key="frame" x="323" y="199" width="191" height="191"/>
                         </imageView>
-                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HS_3_iPad" translatesAutoresizingMaskIntoConstraints="NO" id="RBa-jb-vVM">
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HS_3" translatesAutoresizingMaskIntoConstraints="NO" id="RBa-jb-vVM">
                             <rect key="frame" x="314" y="190" width="208" height="208"/>
                         </imageView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A5t-aW-Eyt" userLabel="HighScoresButton">
@@ -77,16 +77,16 @@
                                 <action selector="highScoresTouchUpInside:" destination="iN0-l3-epB" eventType="touchUpInside" id="tSU-vP-DZV"/>
                             </connections>
                         </button>
-                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Upgrades_0_iPad" translatesAutoresizingMaskIntoConstraints="NO" id="qFE-QG-ePU">
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Upgrades_0" translatesAutoresizingMaskIntoConstraints="NO" id="qFE-QG-ePU">
                             <rect key="frame" x="132" y="367" width="193" height="193"/>
                         </imageView>
-                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Upgrades_1_iPad" translatesAutoresizingMaskIntoConstraints="NO" id="fks-k7-VkQ">
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Upgrades_1" translatesAutoresizingMaskIntoConstraints="NO" id="fks-k7-VkQ">
                             <rect key="frame" x="113" y="348" width="231" height="231"/>
                         </imageView>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Upgrades_2_iPad" translatesAutoresizingMaskIntoConstraints="NO" id="15a-e1-BZd">
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Upgrades_2" translatesAutoresizingMaskIntoConstraints="NO" id="15a-e1-BZd">
                             <rect key="frame" x="113" y="348" width="231" height="231"/>
                         </imageView>
-                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Upgrades_3_iPad" translatesAutoresizingMaskIntoConstraints="NO" id="iQO-TC-pWO">
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Upgrades_3" translatesAutoresizingMaskIntoConstraints="NO" id="iQO-TC-pWO">
                             <rect key="frame" x="103" y="338" width="251" height="251"/>
                         </imageView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3FY-vu-qri" userLabel="UpgradesButton">
@@ -237,20 +237,20 @@
         </view>
     </objects>
     <resources>
-        <image name="HS_0_iPad" width="153" height="153"/>
-        <image name="HS_1_iPad" width="191" height="191"/>
-        <image name="HS_2_iPad" width="191" height="191"/>
-        <image name="HS_3_iPad" width="208" height="208"/>
+        <image name="HS_0" width="153" height="153"/>
+        <image name="HS_1" width="191" height="191"/>
+        <image name="HS_2" width="191" height="191"/>
+        <image name="HS_3" width="208" height="208"/>
         <image name="HamburgerToClose_000" width="62" height="62"/>
-        <image name="Logo_TitleScreen_iPad" width="593" height="85"/>
-        <image name="Play_0_iPad" width="258" height="258"/>
-        <image name="Play_1_iPad" width="300" height="300"/>
-        <image name="Play_2_iPad" width="300" height="300"/>
-        <image name="Play_3_iPad" width="316" height="316"/>
-        <image name="Upgrades_0_iPad" width="193" height="193"/>
-        <image name="Upgrades_1_iPad" width="231" height="231"/>
-        <image name="Upgrades_2_iPad" width="231" height="231"/>
-        <image name="Upgrades_3_iPad" width="251" height="251"/>
+        <image name="Logo_TitleScreen" width="593" height="85"/>
+        <image name="Play_0" width="258" height="258"/>
+        <image name="Play_1" width="300" height="300"/>
+        <image name="Play_2" width="300" height="300"/>
+        <image name="Play_3" width="316" height="316"/>
+        <image name="Upgrades_0" width="193" height="193"/>
+        <image name="Upgrades_1" width="231" height="231"/>
+        <image name="Upgrades_2" width="231" height="231"/>
+        <image name="Upgrades_3" width="251" height="251"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
