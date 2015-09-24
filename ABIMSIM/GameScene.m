@@ -283,10 +283,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
         
         if (!impactSpriteArrays) {
             impactSpriteArrays = [NSMutableArray arrayWithCapacity:2];
-            SKTextureAtlas *asteroidShieldAtlas = [SKTextureAtlas atlasNamed:@"AsteroidShield"];
             NSMutableArray *smallerImpactArray = [NSMutableArray arrayWithCapacity:10];
             for (int i = 0; i < 10; i++) {
-                SKSpriteNode *impactSprite = [SKSpriteNode spriteNodeWithTexture:[asteroidShieldAtlas textureNamed:@"AsteroidShield_Impact_0"]];
+                SKSpriteNode *impactSprite = [SKSpriteNode spriteNodeWithTexture:[SKTexture textureWithImageNamed:@"AsteroidShield_Impact_0"]];
                 SKAction *prepair = [SKAction runBlock:^{
                     impactSprite.alpha = 1;
                 }];
@@ -300,7 +299,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
             [impactSpriteArrays addObject:smallerImpactArray];
             NSMutableArray *largerImpactArray = [NSMutableArray arrayWithCapacity:10];
             for (int i = 0; i < 10; i++) {
-                SKSpriteNode *impactSprite = [SKSpriteNode spriteNodeWithTexture:[asteroidShieldAtlas textureNamed:@"AsteroidShield_Impact_1"]];
+                SKSpriteNode *impactSprite = [SKSpriteNode spriteNodeWithTexture:[SKTexture textureWithImageNamed:@"AsteroidShield_Impact_1"]];
                 SKAction *prepair = [SKAction runBlock:^{
                     impactSprite.alpha = 1;
                 }];
@@ -1497,6 +1496,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
     newStarFrontLayer.anchorPoint = CGPointZero;
     newStarBackLayer.anchorPoint = CGPointZero;
     newStarBackLayer.position = newStarFrontLayer.position = CGPointMake(0, 0);
+    [newStarBackLayer removeFromParent];
+    [newStarFrontLayer removeFromParent];
     [self insertChild:newStarBackLayer atIndex:0];
     [self insertChild:newStarFrontLayer atIndex:0];
 

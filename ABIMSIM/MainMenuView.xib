@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -12,11 +12,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo_TitleScreen" translatesAutoresizingMaskIntoConstraints="NO" id="Yua-2N-2Jd">
-                    <rect key="frame" x="0.0" y="32" width="320" height="45"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="320" id="Y5R-6U-uAJ"/>
-                        <constraint firstAttribute="height" constant="45" id="rHI-Jt-Ut4"/>
-                    </constraints>
+                    <rect key="frame" x="17" y="32" width="287" height="45"/>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lUf-dq-MXE" userLabel="ButtonContainerView">
                     <rect key="frame" x="36" y="144" width="261" height="293"/>
@@ -172,11 +168,10 @@
                 <constraint firstItem="Bim-RU-DVf" firstAttribute="leading" secondItem="tyn-rH-lKS" secondAttribute="leading" constant="10" id="AyD-6L-7Da"/>
                 <constraint firstAttribute="centerY" secondItem="lUf-dq-MXE" secondAttribute="centerY" constant="-6.5" id="MNH-nk-X4k"/>
                 <constraint firstItem="hQe-4c-cCB" firstAttribute="leading" secondItem="tyn-rH-lKS" secondAttribute="leading" id="WvH-WP-NEb"/>
-                <constraint firstAttribute="trailing" secondItem="Yua-2N-2Jd" secondAttribute="trailing" id="bGz-4D-Qlh"/>
+                <constraint firstItem="Yua-2N-2Jd" firstAttribute="centerX" secondItem="tyn-rH-lKS" secondAttribute="centerX" id="Zyt-k3-IbQ"/>
                 <constraint firstAttribute="centerX" secondItem="lUf-dq-MXE" secondAttribute="centerX" constant="-6.5" id="dG4-LN-yWA"/>
                 <constraint firstItem="lUf-dq-MXE" firstAttribute="top" secondItem="hQe-4c-cCB" secondAttribute="top" id="fEC-lG-GhE"/>
                 <constraint firstAttribute="bottom" secondItem="Bim-RU-DVf" secondAttribute="bottom" constant="10" id="nAs-Av-AGJ"/>
-                <constraint firstItem="Yua-2N-2Jd" firstAttribute="leading" secondItem="tyn-rH-lKS" secondAttribute="leading" id="x34-aP-oD9"/>
                 <constraint firstItem="Yua-2N-2Jd" firstAttribute="top" secondItem="tyn-rH-lKS" secondAttribute="top" constant="32" id="zIw-aB-HdS"/>
             </constraints>
             <connections>
@@ -221,9 +216,4 @@
         <image name="Upgrades_2" width="115" height="115"/>
         <image name="Upgrades_3" width="123" height="123"/>
     </resources>
-    <simulatedMetricsContainer key="defaultSimulatedMetrics">
-        <simulatedStatusBarMetrics key="statusBar"/>
-        <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4"/>
-    </simulatedMetricsContainer>
 </document>
