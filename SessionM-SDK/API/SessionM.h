@@ -7,7 +7,7 @@
 
 #ifndef __SESSIONM__
 #define __SESSIONM__
-#define __SESSIONM_SDK_VERSION__ @"1.14.4"
+#define __SESSIONM_SDK_VERSION__ @"1.14.7"
 #define __SESSIONM_SDK_MIN_SUPPORTED_DEVICE_VERSION__ 7.0f
 
 #import <UIKit/UIKit.h>
@@ -153,10 +153,16 @@ typedef enum SMUserRegistrationResultType {
     SMUserRegistrationResultTypeUnavailable,
     /*! Successfully processed user registration request. */
     SMUserRegistrationResultTypeSuccess,
-    /*! Received error response from server for user registration request. */
-    SMUserRegistrationResultTypeServerFailure,
-    /*! Received error when processing the server response. Possible processing errors include receiving a blank password or an unknown email. */
-    SMUserRegistrationResultTypeProcessingFailure
+    /*! Received network or processing error response from server for user registration request. */
+    SMUserRegistrationResultTypeFailure,
+    /*! Received error response from server for user registration request.
+     @deprecated This value is deprecated. See @link SMUserRegistrationResultTypeFailure @/link.
+     */
+    SMUserRegistrationResultTypeServerFailure __attribute__((deprecated)),
+    /*! Received error when processing the server response. Possible processing errors include receiving a blank password or an unknown email.
+     @deprecated This value is deprecated. See @link SMUserRegistrationResultTypeFailure @/link.
+     */
+    SMUserRegistrationResultTypeProcessingFailure __attribute__((deprecated))
 } SMUserRegistrationResultType;
 
 
@@ -233,12 +239,21 @@ typedef enum SessionMSessionErrorType {
  */
 - (void)sessionM:(SessionM *)sessionM didFailWithError:(NSError *)error;
 /*!
- @abstract Notifies that the userRegistrationResult property has been updated.
- @discussion This method is called when the server response for a log in or log out request is processed. These requests can made by calling the loginUserWithEmail:password: and logOutUser: methods.
+ @abstract Notifies that the @link userRegistrationResult @/link property has been updated.
+ @discussion This method is called after the server response for an enroll, log in or log out request is processed. These requests can made by calling the @link enrollWithData: @/link , @link logInUserWithEmail:password: @/link and @link logOutUser @/link methods.
  @param sessionM SessionM service object.
- @param result SMUserRegistrationResultType the new value for the userRegistrationResult property.
+ @param result SMUserRegistrationResultType the new value for the <code>userRegistrationResult</code> property.
+ @deprecated This method is deprecated. Use @link sessionM:didUpdateUserRegistrationResult:errorMessages: @/link instead.
  */
 - (void)sessionM:(SessionM *)sessionM didUpdateUserRegistrationResult:(SMUserRegistrationResultType)result;
+/*!
+ @abstract Notifies that the @link userRegistrationResult @/link property has been updated.
+ @discussion This method is called after the server response for a sign up, sign in or sign out request is processed. These requests can made by calling the @link enrollWithData: @/link, @link enrollWithEmail:YOB: @/link, @link signUpUserWithData: @/link, @link logInUserWithEmail:password: @/link and @link logOutUser @/link methods.
+ @param sessionM SessionM service object.
+ @param result SMUserRegistrationResultType the new value for the <code>userRegistrationResult</code> property.
+ @param errorMessages NSArray of error messages (value will be nil for successful registration).
+ */
+- (void)sessionM:(SessionM *)sessionM didUpdateUserRegistrationResult:(SMUserRegistrationResultType)result errorMessages:(NSArray *)errorMessages;
 /*!
  @abstract Indicates if newly earned achievement UI activity should be presented.
  @discussion This method is called when achievement is earned and will occur when application calls @link logAction: @/link or starts a session.
@@ -515,7 +530,7 @@ typedef struct SMLocationCoordinate2D {
  */
 @property(nonatomic) SMLogLevel logLevel;
 /*!
- @property logCategory
+ @property logCategories
  @abstract Log category.
  */
 @property(nonatomic) int logCategories;
@@ -564,17 +579,18 @@ typedef struct SMLocationCoordinate2D {
  */
 @property(nonatomic, readonly) NSInteger sessionCount;
 /*!
- *** Note: this is an advanced feauture subject to change ***
  @property rewards
- @abstract An array of NSDictionary objects; the rewards that can be redeemed through the user portal
+ @abstract <h3>Note: this is an advanced feauture subject to change</h3><br />
+ An array of NSDictionary objects; the rewards that can be redeemed through the user portal<br />
 
- Key - Value type:
- type - NSString
- id - NSNumber
- name - NSString
- points - NSNumber
- image - NSString
- url - NSString
+ <ul><h5>Key - Value type:</h5>
+    <li>type - NSString</li>
+    <li>id - NSNumber</li>
+    <li>name - NSString</li>
+    <li>points - NSNumber</li>
+    <li>image - NSString</li>
+    <li>url - NSString</li>
+ </ul>
  */
 @property(nonatomic, readonly) NSArray *rewards;
 /*!
@@ -674,7 +690,7 @@ typedef struct SMLocationCoordinate2D {
 /*!
  @abstract Sets the SessionM plug-in SDK name and version number.
  @discussion This method should be called from the plug-in SDK before a session is started.
- @param plugin The plug-in SDK name
+ @param sdk The plug-in SDK name
  @param version The plug-in SDK version number
  */
 - (void)setPluginSDK:(NSString *)sdk version:(NSString *)version;
@@ -709,44 +725,57 @@ typedef struct SMLocationCoordinate2D {
 - (void)logError:(NSString *)errorName message:(NSString *)message exception:(NSException *)exception __attribute__((deprecated));
 
 /*!
- *** Note: this is an advanced feauture subject to change ***
- @abstract Enrolls user into SessionM rewards program with specified user data.
- @discussion This method should be used by a developer to enroll a user into the SessionM rewards program if the developer wants to require the user to have an account for their own service before being able to receive rewards.
- Application should call this method only after the user has created the required account.
- @param userData The userData to send to the server when enrolling the user.
- Keys:
-    email - User's email
-    yob - User's year of birth (Should be in the format XXXX (e.g. 1976). Years of birth that put the user's age below 14 or above 120 years old are considered invalid.)
-    gender - User's gender (Accepts "m/f", "male/female". Case insensitive.)
-    profile_image_url - URL to user's profile image
-    first_name - User's first name
-    last_name - User's last name
-    zip - User's zipcode
+ @abstract <h3>Note: this is an advanced feauture subject to change</h3><br />
+ Enrolls user into SessionM rewards program with specified user data.
+ @discussion This method should be used by a developer to require a user to register for the SessionM rewards program. The user should already have an account for the developer's service. If the user does not already have such an account, use @link signUpUserWithData: @/link instead. Once the user is succesfully registered, a verification email will be sent to the user so they can set a password for their account.
+ @param userData The userData to send to the server when enrolling the user.<br />
+ <ul><h5>Keys:</h5>
+    <li>@link SMUserDataEmailKey @/link - User's email (required)</li>
+    <li>@link SMUserDataYOBKey @/link - User's year of birth (optional - should be in the format XXXX (e.g. 1976). Years of birth that put the user's age below 14 or above 120 years old are considered invalid.)</li>
+    <li>@link SMUserDataGenderKey @/link - User's gender (optional - accepts "m/f", "male/female". Case insensitive.)</li>
+    <li>@link SMUserDataProfileImageURLKey @/link - URL to user's profile image (optional)</li>
+    <li>@link SMUserDataFirstNameKey @/link - User's first name (optional)</li>
+    <li>@link SMUserDataLastNameKey @/link - User's last name (optional)</li>
+    <li>@link SMUserDataZipcodeKey @/link - User's zipcode (optional)</li>
+ </ul>
  @result BOOL Returns NO if an input is invalid or session is not online, and YES otherwise.
  */
 - (BOOL)enrollWithData:(NSDictionary *)userData;
 
 /*!
- *** Note: this is an advanced feauture subject to change ***
- @abstract Enrolls user into SessionM rewards program with specified user data.
- @discussion This method should be used by a developer to enroll a user into the SessionM rewards program if the developer wants to require the user to have an account for their own service before being able to receive rewards.
- Application should call this method only after the user has created the required account.
- @param email User's email.
- @param yob User's year of birth. (Should be in the format XXXX (e.g. 1976). Years of birth that put the user's age below 14 or above 120 years old are considered invalid.)
+ @abstract <h3>Note: this is an advanced feauture subject to change</h3><br />
+ Enrolls user into SessionM rewards program with specified email and year of birth.
+ @discussion This method should be used by a developer to require a user to register for the SessionM rewards program. The user should already have an account for the developer's service. If the user does not already have such an account, use @link signUpUserWithData: @/link instead. Once the user is succesfully registered, a verification email will be sent to the user so they can set a password for their account.
+ @param email User's email (required).
+ @param yob User's year of birth (optional - should be in the format XXXX (e.g. 1976). Years of birth that put the user's age below 14 or above 120 years old are considered invalid.).
  @result BOOL Returns NO if an input is invalid or session is not online, and YES otherwise.
  */
 - (BOOL)enrollWithEmail:(NSString *)email YOB:(NSString *)yob;
 /*!
+ @abstract Signs user up for an account in the SessionM rewards program with specified user data.
+ @discussion This method should be used by a developer to require a user to register for the SessionM rewards program. The user should not already have an account for the developer's service. If the user does have such an account, use @link enrollWithData: @/link or @link enrollWithEmail:YOB: @/link instead.
+ @param userData The userData to send to the server when creating an account for the user.<br />
+ <ul><h5>Keys:</h5>
+ <li>@link SMUserDataEmailKey @/link - User's email (required)</li>
+ <li>@link SMUserDataPasswordKey @/link - User's password (required)</li>
+ <li>@link SMUserDataBirthYearKey @/link - User's year of birth (required - should be in the format XXXX (e.g. 1976). Years of birth that put the user's age below 14 or above 120 years old are considered invalid.)</li>
+ <li>@link SMUserDataGenderKey @/link - User's gender (required - accepts "m/f", "male/female". Case insensitive.)</li>
+ <li>@link SMUserDataZipcodeKey @/link - User's zipcode (optional)</li>
+ </ul>
+ @result BOOL Returns NO if an input is invalid or if session has not been authenticated, and YES otherwise.
+ */
+- (BOOL)signUpUserWithData:(NSDictionary *)userData;
+/*!
  @abstract Logs in the user associated with the provided email.
- @discussion Should be used for user accounts created with enrollWithData: or enrollWithEmail:YOB:.
+ @discussion Can be used for user accounts created with @link signUpUserWithData: @/link, @/link enrollWithData: @/link or @link enrollWithEmail:YOB: @/link.
  @param email User's email.
  @param password User's password.
- @result BOOL Returns NO if session is not online or has no authenticity token, and YES otherwise.
+ @result BOOL Returns NO if an input is invalid or if session has not been authenticated, and YES otherwise.
  */
 - (BOOL)logInUserWithEmail:(NSString *)email password:(NSString *)password;
 /*!
  @abstract Logs out the current user.
- @discussion Should be used for user accounts created with enrollWithData: or enrollWithEmail:YOB:.
+ @discussion Can be used for user accounts created with @link signUpUserWithData: @/link, @/link enrollWithData: @/link or @link enrollWithEmail:YOB: @/link.
  */
 - (void)logOutUser;
 /*!
@@ -857,12 +886,12 @@ typedef enum SMAchievementDismissType {
 @property(nonatomic) BOOL isOptedOut;
 /*!
  @property isLoggedIn
- @abstract Returns user's logged in status.
+ @abstract Returns user's logged in status. This value is set to true for a registered user who has also verified their password for the current session through the portal - or when either @link signUpUserWithData: @/link or @link logInUserWithEmail:password: @/link is called.
  */
 @property(nonatomic, readonly) BOOL isLoggedIn;
 /*!
  @property isRegistered
- @abstract Returns user's registered status.
+ @abstract Returns user's registered status. This value is set to true when the account corresponds to a registered user. The user can register for an account through the portal - or when either @link enrollWithData: @/link, @link enrollWithEmail:YOB: @/link, @link signUpUserWithData: @/link or @link logInUserWithEmail:password: @/link is called.
  */
 @property(nonatomic, readonly) BOOL isRegistered;
 /*!
@@ -954,10 +983,20 @@ extern NSString *const SMUserActionRewardNameKey;
  */
 extern NSString *const SMUserDataEmailKey;
 /*!
+ @const SMUserDataPasswordKey
+ @abstract Password key.
+ */
+extern NSString *const SMUserDataPasswordKey;
+/*!
  @const SMUserDataYOBKey
  @abstract Year of birth key.
  */
 extern NSString *const SMUserDataYOBKey;
+/*!
+ @const SMUserDataBirthYearKey
+ @abstract Year of birth key.
+ */
+extern NSString *const SMUserDataBirthYearKey;
 /*!
  @const SMUserDataAgeKey
  @abstract Age key.
