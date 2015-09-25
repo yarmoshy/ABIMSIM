@@ -103,7 +103,7 @@
         return 50+ 72;
     }
     if (indexPath.section > 0 && indexPath.row == 0) {
-        return kTypeCellHeight + (indexPath.section == 3 ? (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 20 : 30) : 0);
+        return kTypeCellHeight + (indexPath.section == 3 ? (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 20 : 55) : 0);
     }
     if (indexPath.section == 1 && indexPath.row == [self tableView:tableView numberOfRowsInSection:indexPath.section]-1) {
         return 117;
@@ -207,9 +207,9 @@
             [typeCell.contentView addSubview:upgradeIconLabel];
             if (indexPath.section == 3) {
                 UILabel *armoryDescriptionLabel = [[UILabel alloc] init];
-                [armoryDescriptionLabel setFont:[UIFont fontWithName:@"Futura-CondensedMedium" size:12]];
-                armoryDescriptionLabel.text = [NSString stringWithFormat:@"Blast nuke shockwaves right from your ship! Once you have a nuke%@in your armory, just tap once when you're in a pinch to fire.", UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? @" " : @"\n"];
-                armoryDescriptionLabel.numberOfLines = 2;
+                [armoryDescriptionLabel setFont:[UIFont fontWithName:@"Futura-CondensedMedium" size:16]];
+                armoryDescriptionLabel.text = @"Blast nuke shockwaves right from your ship! Once you have a nuke in your armory, just tap anywhere when you're in a pinch to fire.";
+                armoryDescriptionLabel.numberOfLines = 3;
                 CGSize descLabelSize = [armoryDescriptionLabel sizeThatFits:CGSizeMake(self.frame.size.width - upgradeIconLabel.frame.origin.x, 400)];
                 armoryDescriptionLabel.frame = CGRectMake(upgradeIconLabel.frame.origin.x, upgradeIconLabel.frame.origin.y + upgradeIconLabel.frame.size.height, descLabelSize.width, descLabelSize.height);
                 armoryDescriptionLabel.textColor = [UIColor whiteColor];
