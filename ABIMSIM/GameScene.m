@@ -187,11 +187,10 @@ CGFloat DegreesToRadians(CGFloat degrees)
         
         if (!asteroidTextures) {
             asteroidTextures = [NSMutableArray array];
-            SKTextureAtlas *atlas = [SKTextureAtlas atlasNamed:@"Asteroids"];
             for (int i = 0; i < 12; i++) {
                 NSString *textureName = [NSString stringWithFormat:@"Asteroid_%d", i];
                 NSLog(@"%@",textureName);
-                [asteroidTextures addObject:[atlas textureNamed:textureName]];
+                [asteroidTextures addObject:[SKTexture textureWithImageNamed:textureName]];
             }
         }
         [SKTexture preloadTextures:asteroidTextures withCompletionHandler:^{

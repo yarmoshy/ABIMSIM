@@ -79,7 +79,6 @@
 		E13D23301B31E8D6006D1E30 /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E13D232E1B31E8D6006D1E30 /* EventKitUI.framework */; };
 		E13D23321B31E97E006D1E30 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E13D23311B31E97E006D1E30 /* ImageIO.framework */; };
 		E18208C51B6BDB8D0029446E /* MainMenuView_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = E18208C41B6BDB8D0029446E /* MainMenuView_iPad.xib */; };
-		E18208C91B6BEA2B0029446E /* Asteroids.atlas in Resources */ = {isa = PBXBuildFile; fileRef = E18208C81B6BEA2B0029446E /* Asteroids.atlas */; };
 		E1C339A31B73C2C800B39439 /* SpaceMine.atlas in Resources */ = {isa = PBXBuildFile; fileRef = E1C339A21B73C2C800B39439 /* SpaceMine.atlas */; };
 		E1C339A71B73C31400B39439 /* Ship.atlas in Resources */ = {isa = PBXBuildFile; fileRef = E1C339A61B73C31400B39439 /* Ship.atlas */; };
 		E1C339A91B73D9B400B39439 /* PausedView_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1C339A81B73D9B400B39439 /* PausedView_iPad.xib */; };
@@ -212,7 +211,6 @@
 		E13D23311B31E97E006D1E30 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		E14F49A919E41F0A008B727A /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		E18208C41B6BDB8D0029446E /* MainMenuView_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenuView_iPad.xib; sourceTree = "<group>"; };
-		E18208C81B6BEA2B0029446E /* Asteroids.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Asteroids.atlas; sourceTree = "<group>"; };
 		E1C339A21B73C2C800B39439 /* SpaceMine.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = SpaceMine.atlas; sourceTree = "<group>"; };
 		E1C339A61B73C31400B39439 /* Ship.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Ship.atlas; sourceTree = "<group>"; };
 		E1C339A81B73D9B400B39439 /* PausedView_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PausedView_iPad.xib; sourceTree = "<group>"; };
@@ -357,7 +355,6 @@
 			isa = PBXGroup;
 			children = (
 				B44730081A714E7C0063B5EA /* Music */,
-				E18208C81B6BEA2B0029446E /* Asteroids.atlas */,
 				E1C339A21B73C2C800B39439 /* SpaceMine.atlas */,
 				E1C339A61B73C31400B39439 /* Ship.atlas */,
 				B47923DB19157805002B8467 /* Voltaire-Regular.ttf */,
@@ -657,7 +654,6 @@
 				B4557EC51AC0D4DD004E097E /* GameOverView.xib in Resources */,
 				B45FF13D18CE8708001662CD /* Main.storyboard in Resources */,
 				B405AA331AED5F990053F794 /* asteroidSun.caf in Resources */,
-				E18208C91B6BEA2B0029446E /* Asteroids.atlas in Resources */,
 				B47923DC19157805002B8467 /* Voltaire-Regular.ttf in Resources */,
 				B49792FA1A86F638005174C1 /* deactivateShieldTrimmed.caf in Resources */,
 				B4557EE01AC3B24D004E097E /* MainMenuView.xib in Resources */,
