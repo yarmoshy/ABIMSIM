@@ -1,17 +1,26 @@
 {
   "images" : [
     {
-      "idiom" : "universal",
+      "idiom" : "iphone",
       "scale" : "1x"
     },
     {
-      "idiom" : "universal",
-      "scale" : "2x",
-      "filename" : "GetMoreButton_Tapped@2x.png"
+      "idiom" : "iphone",
+      "filename" : "GetMoreButton_Tapped@2x.png",
+      "scale" : "2x"
     },
     {
-      "idiom" : "universal",
+      "idiom" : "iphone",
       "scale" : "3x"
+    },
+    {
+      "idiom" : "ipad",
+      "scale" : "1x"
+    },
+    {
+      "idiom" : "ipad",
+      "filename" : "GetMoreButton_Tapped_iPad@2x.png",
+      "scale" : "2x"
     }
   ],
   "info" : {
