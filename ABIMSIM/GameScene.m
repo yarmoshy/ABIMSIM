@@ -173,13 +173,13 @@ CGFloat DegreesToRadians(CGFloat degrees)
                 for (int j = 0; j < 4; j++) {
                     NSString *textureName = [NSString stringWithFormat:@"Planet_%d_%d", i, j];
                     NSLog(@"%@",textureName);
-                    [planetTextures addObject:[SKTexture textureWithImageNamed:textureName]];
+                    [planetTextures addObject:[SKTexture textureWithImage:[UIImage imageNamed:textureName]]];
                 }
             }
-            [planetTextures addObject:[SKTexture textureWithImageNamed:@"Planet_4_4"]];
-            [planetTextures addObject:[SKTexture textureWithImageNamed:@"Planet_5_S"]];
-            [planetTextures addObject:[SKTexture textureWithImageNamed:@"AsteroidShield_0"]];
-            [planetTextures addObject:[SKTexture textureWithImageNamed:@"AsteroidShield_1"]];
+            [planetTextures addObject:[SKTexture textureWithImage:[UIImage imageNamed:@"Planet_4_4"]]];
+            [planetTextures addObject:[SKTexture textureWithImage:[UIImage imageNamed:@"Planet_5_S"]]];
+            [planetTextures addObject:[SKTexture textureWithImage:[UIImage imageNamed:@"AsteroidShield_0"]]];
+            [planetTextures addObject:[SKTexture textureWithImage:[UIImage imageNamed:@"AsteroidShield_1"]]];
         }
         [SKTexture preloadTextures:planetTextures withCompletionHandler:^{
             ;
@@ -190,7 +190,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
             for (int i = 0; i < 12; i++) {
                 NSString *textureName = [NSString stringWithFormat:@"Asteroid_%d", i];
                 NSLog(@"%@",textureName);
-                [asteroidTextures addObject:[SKTexture textureWithImageNamed:textureName]];
+                [asteroidTextures addObject:[SKTexture textureWithImage:[UIImage imageNamed:textureName]]];
             }
         }
         [SKTexture preloadTextures:asteroidTextures withCompletionHandler:^{
@@ -251,11 +251,10 @@ CGFloat DegreesToRadians(CGFloat degrees)
         
         if (!spaceMineTextures) {
             spaceMineTextures = [NSMutableArray array];
-            SKTextureAtlas *atlas = [SKTextureAtlas atlasNamed:@"SpaceMine"];
             for (int i = 0; i < 9; i++) {
                 NSString *textureName = [NSString stringWithFormat:@"SpaceMine_Friendly_%d", i];
                 NSLog(@"%@",textureName);
-                [spaceMineTextures addObject:[atlas textureNamed:textureName]];
+                [spaceMineTextures addObject:[SKTexture textureWithImage:[UIImage imageNamed:textureName]]];
             }
         }
         
@@ -267,14 +266,12 @@ CGFloat DegreesToRadians(CGFloat degrees)
         
         if (!powerUpTextures) {
             powerUpTextures = [NSMutableArray arrayWithCapacity:5];
-            SKTextureAtlas *atlas = [SKTextureAtlas atlasNamed:@"SpaceMine"];
-            [powerUpTextures addObject:[atlas textureNamed:@"SpaceMine_ExplodingRing_0"]];
-            [powerUpTextures addObject:[atlas textureNamed:@"SpaceMine_LargeGlow_0"]];
-            [powerUpTextures addObject:[atlas textureNamed:@"SpaceMine_CenterGlow_0"]];
+            [powerUpTextures addObject:[SKTexture textureWithImage:[UIImage imageNamed:@"SpaceMine_ExplodingRing_0"]]];
+            [powerUpTextures addObject:[SKTexture textureWithImage:[UIImage imageNamed:@"SpaceMine_LargeGlow_0"]]];
+            [powerUpTextures addObject:[SKTexture textureWithImage:[UIImage imageNamed:@"SpaceMine_CenterGlow_0"]]];
             
-            SKTextureAtlas *shipAtlas = [SKTextureAtlas atlasNamed:@"Ship"];
-            [powerUpTextures addObject:[shipAtlas textureNamed:@"ShieldPowerUp"]];
-            [powerUpTextures addObject:[shipAtlas textureNamed:@"ShieldPowerUp_Animated"]];
+            [powerUpTextures addObject:[SKTexture textureWithImage:[UIImage imageNamed:@"ShieldPowerUp"]]];
+            [powerUpTextures addObject:[SKTexture textureWithImage:[UIImage imageNamed:@"ShieldPowerUp_Animated"]]];
         }
         [SKTexture preloadTextures:powerUpTextures withCompletionHandler:^{
             ;
@@ -284,7 +281,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
             impactSpriteArrays = [NSMutableArray arrayWithCapacity:2];
             NSMutableArray *smallerImpactArray = [NSMutableArray arrayWithCapacity:10];
             for (int i = 0; i < 10; i++) {
-                SKSpriteNode *impactSprite = [SKSpriteNode spriteNodeWithTexture:[SKTexture textureWithImageNamed:@"AsteroidShield_Impact_0"]];
+                SKSpriteNode *impactSprite = [SKSpriteNode spriteNodeWithTexture:[SKTexture textureWithImage:[UIImage imageNamed:@"AsteroidShield_Impact_0"]]];
                 SKAction *prepair = [SKAction runBlock:^{
                     impactSprite.alpha = 1;
                 }];
@@ -298,7 +295,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
             [impactSpriteArrays addObject:smallerImpactArray];
             NSMutableArray *largerImpactArray = [NSMutableArray arrayWithCapacity:10];
             for (int i = 0; i < 10; i++) {
-                SKSpriteNode *impactSprite = [SKSpriteNode spriteNodeWithTexture:[SKTexture textureWithImageNamed:@"AsteroidShield_Impact_1"]];
+                SKSpriteNode *impactSprite = [SKSpriteNode spriteNodeWithTexture:[SKTexture textureWithImage:[UIImage imageNamed:@"AsteroidShield_Impact_1"]]];
                 SKAction *prepair = [SKAction runBlock:^{
                     impactSprite.alpha = 1;
                 }];
@@ -448,7 +445,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     for (int i = 0; i < holsterNukes; i++) {
         SKSpriteNode *holsterNuke = holsterNukeSpritesArray[i];
         holsterNuke.alpha = 1;
-        [holsterNuke setTexture:[SKTexture textureWithImageNamed:@"FullHolster_"]];
+        [holsterNuke setTexture:[SKTexture textureWithImage:[UIImage imageNamed:@"FullHolster_"]]];
         if (!holsterNuke.parent) {
             [self addChild:holsterNuke];
         }
@@ -456,7 +453,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     for (int i = holsterNukes; i < holsterCapacity; i++) {
         SKSpriteNode *holsterNuke = holsterNukeSpritesArray[i];
         holsterNuke.alpha = 1;
-        [holsterNuke setTexture:[SKTexture textureWithImageNamed:@"AvailableHolster_"]];
+        [holsterNuke setTexture:[SKTexture textureWithImage:[UIImage imageNamed:@"AvailableHolster_"]]];
         if (!holsterNuke.parent) {
             [self addChild:holsterNuke];
         }
@@ -464,7 +461,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     for (int i = holsterCapacity; i < 10; i++) {
         SKSpriteNode *holsterNuke = holsterNukeSpritesArray[i];
         holsterNuke.alpha = 0.4;
-        [holsterNuke setTexture:[SKTexture textureWithImageNamed:@"AvailableHolster_"]];
+        [holsterNuke setTexture:[SKTexture textureWithImage:[UIImage imageNamed:@"AvailableHolster_"]]];
         if (!holsterNuke.parent) {
             [self addChild:holsterNuke];
         }

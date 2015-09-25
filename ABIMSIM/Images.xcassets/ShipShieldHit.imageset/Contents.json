@@ -6,12 +6,12 @@
     },
     {
       "idiom" : "universal",
-      "filename" : "FBIcon__GameOver@2x.png",
+      "filename" : "ShipShieldHit@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "FBIcon__GameOver@3x.png",
+      "filename" : "ShipShieldHit@3x.png",
       "scale" : "3x"
     }
   ],

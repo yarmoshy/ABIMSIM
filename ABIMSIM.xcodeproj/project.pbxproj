@@ -79,8 +79,6 @@
 		E13D23301B31E8D6006D1E30 /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E13D232E1B31E8D6006D1E30 /* EventKitUI.framework */; };
 		E13D23321B31E97E006D1E30 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E13D23311B31E97E006D1E30 /* ImageIO.framework */; };
 		E18208C51B6BDB8D0029446E /* MainMenuView_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = E18208C41B6BDB8D0029446E /* MainMenuView_iPad.xib */; };
-		E1C339A31B73C2C800B39439 /* SpaceMine.atlas in Resources */ = {isa = PBXBuildFile; fileRef = E1C339A21B73C2C800B39439 /* SpaceMine.atlas */; };
-		E1C339A71B73C31400B39439 /* Ship.atlas in Resources */ = {isa = PBXBuildFile; fileRef = E1C339A61B73C31400B39439 /* Ship.atlas */; };
 		E1C339A91B73D9B400B39439 /* PausedView_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1C339A81B73D9B400B39439 /* PausedView_iPad.xib */; };
 		E1C786071B72A4270016DF45 /* GameOverView_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1C786061B72A4270016DF45 /* GameOverView_iPad.xib */; };
 		E1D4EDF51A5B5E5900676C17 /* DCRoundSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = E1D4EDEE1A5B5E5900676C17 /* DCRoundSwitch.m */; };
@@ -211,8 +209,6 @@
 		E13D23311B31E97E006D1E30 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		E14F49A919E41F0A008B727A /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		E18208C41B6BDB8D0029446E /* MainMenuView_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenuView_iPad.xib; sourceTree = "<group>"; };
-		E1C339A21B73C2C800B39439 /* SpaceMine.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = SpaceMine.atlas; sourceTree = "<group>"; };
-		E1C339A61B73C31400B39439 /* Ship.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Ship.atlas; sourceTree = "<group>"; };
 		E1C339A81B73D9B400B39439 /* PausedView_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PausedView_iPad.xib; sourceTree = "<group>"; };
 		E1C786061B72A4270016DF45 /* GameOverView_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GameOverView_iPad.xib; sourceTree = "<group>"; };
 		E1D4EDED1A5B5E5900676C17 /* DCRoundSwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCRoundSwitch.h; sourceTree = "<group>"; };
@@ -355,8 +351,6 @@
 			isa = PBXGroup;
 			children = (
 				B44730081A714E7C0063B5EA /* Music */,
-				E1C339A21B73C2C800B39439 /* SpaceMine.atlas */,
-				E1C339A61B73C31400B39439 /* Ship.atlas */,
 				B47923DB19157805002B8467 /* Voltaire-Regular.ttf */,
 				B405AA261AEC31E00053F794 /* Moki-Lean.otf */,
 			);
@@ -639,14 +633,12 @@
 				E18208C51B6BDB8D0029446E /* MainMenuView_iPad.xib in Resources */,
 				B49792F81A86F632005174C1 /* activateShieldTrimmed.caf in Resources */,
 				B45CA24E1B25F94E001E07D9 /* MKStoreKitConfigs.plist in Resources */,
-				E1C339A31B73C2C800B39439 /* SpaceMine.atlas in Resources */,
 				B45FF14718CE8708001662CD /* Images.xcassets in Resources */,
 				B45CA2531B25FBE8001E07D9 /* IAPView.xib in Resources */,
 				B4E617161BB4A88A00D577CA /* M_Logo_20x20.png in Resources */,
 				B4D42E861AFEAC4100248BE8 /* upgrade.caf in Resources */,
 				B405AA281AEC31E00053F794 /* Moki-Lean.otf in Resources */,
 				B4E617141BB4A88A00D577CA /* btnSessionM_lg.png in Resources */,
-				E1C339A71B73C31400B39439 /* Ship.atlas in Resources */,
 				B4E617171BB4A88A00D577CA /* Trophy_20x20.png in Resources */,
 				B48AA3881AD043C80054CC65 /* UpgradeTableViewCell.xib in Resources */,
 				B472444F1ACE0441002A8B4B /* UpgradesView.xib in Resources */,
