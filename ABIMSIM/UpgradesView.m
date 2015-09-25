@@ -97,10 +97,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
-        return 136;
-    }
-    if (indexPath.section == 0) {
-        return 50+ 72;
+        return UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 175 : 136;
     }
     if (indexPath.section > 0 && indexPath.row == 0) {
         return kTypeCellHeight + (indexPath.section == 3 ? (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 20 : 55) : 0);
@@ -142,35 +139,38 @@
         
         UIView *xpContainerView = [[UIView alloc] initWithFrame:xpCell.contentView.bounds];
         [xpCell.contentView addSubview:xpContainerView];
+        
+        UILabel *youHaveLabel = [[UILabel alloc] init];
+        youHaveLabel.font = [UIFont fontWithName:@"Futura-CondensedMedium" size:UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 20 : 14];
+        youHaveLabel.textColor = [UIColor whiteColor];
+        youHaveLabel.text = @"YOU HAVE";
+        [youHaveLabel sizeToFit];
+        youHaveLabel.center = CGPointMake(tableView.frame.size.width/3, (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 92 : 87) + youHaveLabel.frame.size.height/2);
+        [xpContainerView addSubview:youHaveLabel];
 
-        UIImageView *youHaveImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"YouHaveTitle"]];
-        youHaveImageView.center = CGPointMake(tableView.frame.size.width/3, 97 + youHaveImageView.frame.size.height/2);
-        [xpContainerView addSubview:youHaveImageView];
         
         UILabel *xpLabel = [[UILabel alloc] init];
-        xpLabel.font = [UIFont fontWithName:@"Futura-CondensedMedium" size:25];
+        xpLabel.font = [UIFont fontWithName:@"Futura-CondensedMedium" size:UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 50 : 25];
         xpLabel.textColor = [UIColor colorWithRed:211.f/255.f green:12.f/255.f blue:95.f/255.f alpha:1];
         xpLabel.text = [NSString stringWithFormat:@"%@ XP",[formatter stringFromNumber:[NSNumber numberWithInteger:[ABIMSIMDefaults integerForKey:kUserDuckets]]]];
         [xpLabel sizeToFit];
-        xpLabel.center = CGPointMake(youHaveImageView.center.x, youHaveImageView.center.y + youHaveImageView.frame.size.height/2 + xpLabel.frame.size.height/2);
+        xpLabel.center = CGPointMake(youHaveLabel.center.x, youHaveLabel.center.y + youHaveLabel.frame.size.height/2 + xpLabel.frame.size.height/2);
         [xpContainerView addSubview:xpLabel];
         
         UIImageView *leftBracket = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"LeftXPBracket"]];
-        leftBracket.center = CGPointMake(xpLabel.frame.origin.x - leftBracket.frame.size.width, (youHaveImageView.frame.origin.y + xpLabel.frame.origin.y + xpLabel.frame.size.height)/2 - 4);
+        leftBracket.center = CGPointMake(xpLabel.frame.origin.x - leftBracket.frame.size.width, (youHaveLabel.frame.origin.y + xpLabel.frame.origin.y + xpLabel.frame.size.height)/2);
         [xpContainerView addSubview:leftBracket];
         
         UIImageView *rightBracket = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"RightXPBracket"]];
-        rightBracket.center = CGPointMake(xpLabel.frame.origin.x + xpLabel.frame.size.width + rightBracket.frame.size.width, (youHaveImageView.frame.origin.y + xpLabel.frame.origin.y + xpLabel.frame.size.height)/2 - 4);
+        rightBracket.center = CGPointMake(xpLabel.frame.origin.x + xpLabel.frame.size.width + rightBracket.frame.size.width, (youHaveLabel.frame.origin.y + xpLabel.frame.origin.y + xpLabel.frame.size.height)/2);
         [xpContainerView addSubview:rightBracket];
 
         UIButton *storeButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [storeButton setImage:[UIImage imageNamed:@"GetMoreButton_Normal"] forState:UIControlStateNormal];
         [storeButton setImage:[UIImage imageNamed:@"GetMoreButton_Tapped"] forState:UIControlStateHighlighted];
         [storeButton setImage:[UIImage imageNamed:@"GetMoreButton_Tapped"] forState:UIControlStateSelected];
-//        [storeButton setTitle:@"Store" forState:UIControlStateNormal];
-//        [storeButton setTitleColor: [UIColor whiteColor] forState: UIControlStateNormal];
         [storeButton sizeToFit];
-        storeButton.center = CGPointMake(tableView.frame.size.width * (2.f/3.f), 72 + (xpCell.frame.size.height-72)/2 + storeButton.frame.size.height/4);
+        storeButton.center = CGPointMake(tableView.frame.size.width * (2.f/3.f), (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 61 : 67 ) + (xpCell.frame.size.height-72)/2 + storeButton.frame.size.height/4);
         [storeButton addTarget:self action:@selector(storeButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
         [xpContainerView addSubview:storeButton];
         
@@ -191,7 +191,7 @@
             upgradeIconLabel.textColor = [UIColor whiteColor];
             upgradeIconLabel.backgroundColor = [UIColor clearColor];
             if (indexPath.section == 1) {
-                upgradeIconLabel.text = NSLocalizedString(@"SHIELD", nil);
+                upgradeIconLabel.text = NSLocalizedString(@"SHIELDS", nil);
                 upgradeIconImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ShipShield"]];
             } else if (indexPath.section == 2) {
                 upgradeIconLabel.text = NSLocalizedString(@"ASTEROID NUKES", nil);
@@ -208,7 +208,8 @@
             if (indexPath.section == 3) {
                 UILabel *armoryDescriptionLabel = [[UILabel alloc] init];
                 [armoryDescriptionLabel setFont:[UIFont fontWithName:@"Futura-CondensedMedium" size:16]];
-                armoryDescriptionLabel.text = @"Blast nuke shockwaves right from your ship! Once you have a nuke in your armory, just tap anywhere when you're in a pinch to fire.";
+                NSString *spaceOrNewLine = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? @" " : @"\n";
+                armoryDescriptionLabel.text = [NSString stringWithFormat:@"Blast nuke shockwaves right from your ship!%@Once you have a nuke in your armory,%@tap anywhere when you're in a pinch to fire.",spaceOrNewLine,spaceOrNewLine];
                 armoryDescriptionLabel.numberOfLines = 3;
                 CGSize descLabelSize = [armoryDescriptionLabel sizeThatFits:CGSizeMake(self.frame.size.width - upgradeIconLabel.frame.origin.x, 400)];
                 armoryDescriptionLabel.frame = CGRectMake(upgradeIconLabel.frame.origin.x, upgradeIconLabel.frame.origin.y + upgradeIconLabel.frame.size.height, descLabelSize.width, descLabelSize.height);

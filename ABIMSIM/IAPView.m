@@ -88,7 +88,9 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
-        return 152;
+        if (indexPath.section == 0) {
+            return UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 195 : 152;
+        }
     }
     return 120;
 }
@@ -116,24 +118,28 @@
         }
         xpCell.backgroundColor = xpCell.contentView.backgroundColor = [UIColor clearColor];
         
-        UIImageView *youHaveImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"YouHaveTitle"]];
-        youHaveImageView.center = CGPointMake(tableView.frame.size.width/2, 97 + youHaveImageView.frame.size.height/2);
-        [xpCell.contentView addSubview:youHaveImageView];
+        UILabel *youHaveLabel = [[UILabel alloc] init];
+        youHaveLabel.font = [UIFont fontWithName:@"Futura-CondensedMedium" size:UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 20 : 14];
+        youHaveLabel.textColor = [UIColor whiteColor];
+        youHaveLabel.text = @"YOU HAVE";
+        [youHaveLabel sizeToFit];
+        youHaveLabel.center = CGPointMake(tableView.frame.size.width/2, (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 92 : 87) + youHaveLabel.frame.size.height/2);
+        [xpCell.contentView addSubview:youHaveLabel];
         
         UILabel *xpLabel = [[UILabel alloc] init];
-        xpLabel.font = [UIFont fontWithName:@"Futura-CondensedMedium" size:25];
+        xpLabel.font = [UIFont fontWithName:@"Futura-CondensedMedium" size:UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 50 : 25];
         xpLabel.textColor = [UIColor whiteColor];
         xpLabel.text = [NSString stringWithFormat:@"%@ XP",[formatter stringFromNumber:[NSNumber numberWithInteger:[ABIMSIMDefaults integerForKey:kUserDuckets]]]];
         [xpLabel sizeToFit];
-        xpLabel.center = CGPointMake(youHaveImageView.center.x, youHaveImageView.center.y + youHaveImageView.frame.size.height/2 + xpLabel.frame.size.height/2);
+        xpLabel.center = CGPointMake(youHaveLabel.center.x, youHaveLabel.center.y + youHaveLabel.frame.size.height/2 + xpLabel.frame.size.height/2);
         [xpCell.contentView addSubview:xpLabel];
         
         UIImageView *leftBracket = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"LeftXPBracket"]];
-        leftBracket.center = CGPointMake(xpLabel.frame.origin.x - leftBracket.frame.size.width, (youHaveImageView.frame.origin.y + xpLabel.frame.origin.y + xpLabel.frame.size.height)/2 - 4);
+        leftBracket.center = CGPointMake(xpLabel.frame.origin.x - leftBracket.frame.size.width, (youHaveLabel.frame.origin.y + xpLabel.frame.origin.y + xpLabel.frame.size.height)/2);
         [xpCell.contentView addSubview:leftBracket];
         
         UIImageView *rightBracket = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"RightXPBracket"]];
-        rightBracket.center = CGPointMake(xpLabel.frame.origin.x + xpLabel.frame.size.width + rightBracket.frame.size.width, (youHaveImageView.frame.origin.y + xpLabel.frame.origin.y + xpLabel.frame.size.height)/2 - 4);
+        rightBracket.center = CGPointMake(xpLabel.frame.origin.x + xpLabel.frame.size.width + rightBracket.frame.size.width, (youHaveLabel.frame.origin.y + xpLabel.frame.origin.y + xpLabel.frame.size.height)/2);
         [xpCell.contentView addSubview:rightBracket];
         
         return xpCell;

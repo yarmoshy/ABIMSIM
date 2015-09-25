@@ -21,12 +21,12 @@
     paragraphStyle.alignment = NSTextAlignmentCenter;
     paragraphStyle.lineSpacing = 0;
     paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
-    paragraphStyle.maximumLineHeight = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 45 : 20;
+    paragraphStyle.maximumLineHeight = 20;
     self.upgradeButton.titleLabel.numberOfLines = 0;
-    [self.upgradeButton setAttributedTitle:[[NSAttributedString alloc] initWithString:@"UPGRADE" attributes:@{NSFontAttributeName:[UIFont fontWithName:@"Futura-CondensedMedium" size:UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 45 : 20],
+    [self.upgradeButton setAttributedTitle:[[NSAttributedString alloc] initWithString:@"UPGRADE" attributes:@{NSFontAttributeName:[UIFont fontWithName:@"Futura-CondensedMedium" size:20],
                                                                                                                      NSForegroundColorAttributeName:[UIColor whiteColor],
                                                                                                                      NSParagraphStyleAttributeName: paragraphStyle}] forState:UIControlStateNormal];
-    [self.upgradeButton setAttributedTitle:[[NSAttributedString alloc] initWithString:@"UPGRADE" attributes:@{NSFontAttributeName:[UIFont fontWithName:@"Futura-CondensedMedium" size:UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 45 : 20],
+    [self.upgradeButton setAttributedTitle:[[NSAttributedString alloc] initWithString:@"UPGRADE" attributes:@{NSFontAttributeName:[UIFont fontWithName:@"Futura-CondensedMedium" size:20],
                                                                                                               NSForegroundColorAttributeName:[[UIColor whiteColor] colorWithAlphaComponent:0.5],
                                                                                                               NSParagraphStyleAttributeName: paragraphStyle}] forState:UIControlStateDisabled];
 
@@ -99,10 +99,10 @@
         return;
     }
     float scale = 0.8;
-    self.upgradeRing0 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Upgrades_0"]];
-    self.upgradeRing1 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Upgrades_1"]];
-    self.upgradeRing2 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Upgrades_2"]];
-    self.upgradeRing3 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Upgrades_3"]];
+    self.upgradeRing0 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"IAP_0"]];
+    self.upgradeRing1 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"IAP_1"]];
+    self.upgradeRing2 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"IAP_2"]];
+    self.upgradeRing3 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"IAP_3"]];
 
     self.upgradeRing0.frame = CGRectMake(0, 0, self.upgradeRing0.frame.size.width * scale, self.upgradeRing0.frame.size.height * scale);
     self.upgradeRing1.frame = CGRectMake(0, 0, self.upgradeRing1.frame.size.width * scale, self.upgradeRing1.frame.size.height * scale);
@@ -120,12 +120,12 @@
     paragraphStyle.alignment = NSTextAlignmentCenter;
     paragraphStyle.lineSpacing = 0;
     paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
-    paragraphStyle.maximumLineHeight = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 50 : 25;
+    paragraphStyle.maximumLineHeight = 25;
     self.upgradeButton.titleLabel.numberOfLines = 0;
-    [self.upgradeButton setAttributedTitle:[[NSAttributedString alloc] initWithString:@"BUY!" attributes:@{NSFontAttributeName:[UIFont fontWithName:@"Futura-CondensedMedium" size:UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 50 : 25],
+    [self.upgradeButton setAttributedTitle:[[NSAttributedString alloc] initWithString:@"BUY!" attributes:@{NSFontAttributeName:[UIFont fontWithName:@"Futura-CondensedMedium" size:25],
                                                                                                               NSForegroundColorAttributeName:[UIColor whiteColor],
                                                                                                               NSParagraphStyleAttributeName: paragraphStyle}] forState:UIControlStateNormal];
-    [self.upgradeButton setAttributedTitle:[[NSAttributedString alloc] initWithString:@"BUY!" attributes:@{NSFontAttributeName:[UIFont fontWithName:@"Futura-CondensedMedium" size:UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 50 : 25],
+    [self.upgradeButton setAttributedTitle:[[NSAttributedString alloc] initWithString:@"BUY!" attributes:@{NSFontAttributeName:[UIFont fontWithName:@"Futura-CondensedMedium" size:25],
                                                                                                               NSForegroundColorAttributeName:[[UIColor whiteColor] colorWithAlphaComponent:0.5],
                                                                                                               NSParagraphStyleAttributeName: paragraphStyle}] forState:UIControlStateDisabled];
 
