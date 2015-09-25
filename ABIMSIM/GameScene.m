@@ -160,7 +160,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
             for (int j = 0; j < 10; j++) {
                 NSString *textureName = [NSString stringWithFormat:@"Background_%d", j];
                 NSLog(@"%@",textureName);
-                [backgroundTextures addObject:[SKTexture textureWithImageNamed:textureName]];
+                [backgroundTextures addObject:[SKTexture textureWithImage:[UIImage imageNamed:textureName]]];
             }
         }
         [SKTexture preloadTextures:backgroundTextures withCompletionHandler:^{
@@ -1814,7 +1814,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         shipDashedLine.alpha = 0;
         shipDashedLine.name = directionsSecondaryBlinkingSpriteName;
         
-        SKSpriteNode *goalDashedLine = [SKSpriteNode spriteNodeWithImageNamed:@"TopDashedLine"];
+        SKSpriteNode *goalDashedLine = [SKSpriteNode spriteNodeWithTexture:[SKTexture textureWithImage:[UIImage imageNamed:@"TopDashedLine"]]];
         goalDashedLine.position = CGPointMake(sceneWidth/2, sceneHeight - goalDashedLine.size.height);
         [self addChild:goalDashedLine];
         goalDashedLine.alpha = 0;
