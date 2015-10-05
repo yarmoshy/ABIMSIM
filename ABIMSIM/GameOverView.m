@@ -440,7 +440,7 @@
         NSAttributedString *widthString = [bonusString attributedSubstringFromRange:rangeToDash];
         CGFloat width = [widthString size].width;
         CGFloat height =[widthString size].height;
-        UIView *divider = [[UIView alloc] initWithFrame:CGRectMake(width - 1, 2, 0.5, height-4)];
+        UIView *divider = [[UIView alloc] initWithFrame:CGRectMake(round(width - 1), 2, 0.5, height-4)];
         divider.backgroundColor =  [[UIColor whiteColor] colorWithAlphaComponent:0.5];
         [self.bonusLabelFour addSubview:divider];
     }

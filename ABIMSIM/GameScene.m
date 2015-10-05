@@ -581,12 +581,12 @@ CGFloat DegreesToRadians(CGFloat degrees)
     if ([UIApplication sharedApplication].applicationState != UIApplicationStateActive) {
         [self pause];
     }
-    if (self.view.paused) {
-        if (self.resuming && !flickRecognizer.enabled) {
-            [self configureGestureRecognizers:YES];
-        }
-        return;
-    }
+//    if (self.view.paused) {
+//        if (self.resuming && !flickRecognizer.enabled) {
+//            [self configureGestureRecognizers:YES];
+//        }
+//        return;
+//    }
     if (pendingVelocity.x || pendingVelocity.y) {
         shipSprite.physicsBody.velocity = CGVectorMake(pendingVelocity.x, -pendingVelocity.y);
         pendingVelocity = CGPointZero;
@@ -1497,8 +1497,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
     newStarFrontLayer.anchorPoint = CGPointZero;
     newStarBackLayer.anchorPoint = CGPointZero;
     newStarBackLayer.position = newStarFrontLayer.position = CGPointMake(0, 0);
-//    [newStarBackLayer removeFromParent];
-//    [newStarFrontLayer removeFromParent];
+    [newStarBackLayer removeFromParent];
+    [newStarFrontLayer removeFromParent];
     [self insertChild:newStarBackLayer atIndex:0];
     [self insertChild:newStarFrontLayer atIndex:0];
 
