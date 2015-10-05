@@ -323,7 +323,7 @@
                 });
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     [self configureButtonsEnabled:YES];
-                    self.scene.resuming = self.scene.paused = NO;
+                    self.scene.resuming = self.scene.view.paused = NO;
                 });
             }
         }];

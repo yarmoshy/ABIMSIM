@@ -480,12 +480,12 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
 -(void)applicationDidBecomeActive {
     if (self.viewController.pausedView.alpha != 0) {
-        self.paused = YES;
+        self.view.paused = YES;
     }
 }
 
 -(void)transitionFromMainMenu {
-    self.paused = NO;
+    self.view.paused = NO;
     [self setDefaultValues];
     [[AudioController sharedController] gameplay];
     
@@ -504,7 +504,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
     if (!walkthroughSeen) {
         [shipSprite runAction:[SKAction moveTo:CGPointMake(sceneWidth/2, shipSize.height*2) duration:0.5] completion:^{
-            self.paused = NO;
+            self.view.paused = NO;
             self.initialPause = YES;
             [self configureGestureRecognizers:YES];
             
@@ -555,7 +555,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     [self.view addGestureRecognizer:tapRecognizer];
     [self configureGestureRecognizers:NO];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        self.paused = NO;
+        self.view.paused = NO;
     });
 }
 
@@ -572,7 +572,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     if ([shipSprite childNodeWithName:shipImageSpriteName].hidden) {
         return;
     }
-    self.paused = YES;
+    self.view.paused = YES;
     [self configureGestureRecognizers:NO];
     [self.viewController showPausedView];
 }
@@ -581,7 +581,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     if ([UIApplication sharedApplication].applicationState != UIApplicationStateActive) {
         [self pause];
     }
-    if (self.paused) {
+    if (self.view.paused) {
         if (self.resuming && !flickRecognizer.enabled) {
             [self configureGestureRecognizers:YES];
         }
@@ -728,7 +728,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     }
     if (self.transitioningToMenu) {
         self.transitioningToMenu = NO;
-        self.paused = YES;
+        self.view.paused = YES;
         self.initialPause = YES;
     }
 }
@@ -919,7 +919,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
 #pragma mark - Touch Handling
 
 -(void)handlePanGesture:(UIPanGestureRecognizer*)recognizer {
-    if (recognizer.state != UIGestureRecognizerStateEnded || (self.paused && !self.initialPause && !self.resuming)) {
+    if (recognizer.state != UIGestureRecognizerStateEnded || (self.view.paused && !self.initialPause && !self.resuming)) {
         return;
     }
     lastLevelPanned = self.currentLevel;
@@ -930,7 +930,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     newVelocity.y = MAX_VELOCITY * ( newVelocity.y / velocity );
     if (self.initialPause) {
         self.initialPause = NO;
-        self.paused = NO;
+        self.view.paused = NO;
         [self removeOverlayChildren];
         self.viewController.pauseButton.hidden = NO;
         [UIView animateWithDuration:0.25 animations:^{
@@ -1261,7 +1261,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     }
 
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        self.paused = YES;
+        self.view.paused = YES;
         [self.viewController showGameOverView];
         self.gameOver = YES;
         [self configureGestureRecognizers:NO];
@@ -1833,7 +1833,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         SKAction *alphaIn = [SKAction fadeAlphaTo:1 duration:0.5];
         SKAction *group = [SKAction group:@[move, alphaIn]];
         [[self childNodeWithName:directionsSpriteName] runAction:group completion:^{
-            self.paused = YES;
+            self.view.paused = YES;
             self.initialPause = YES;
         }];
         [ABIMSIMDefaults setBool:YES forKey:kWalkthroughSeen];
