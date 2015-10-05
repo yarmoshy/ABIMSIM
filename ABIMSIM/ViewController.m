@@ -259,6 +259,7 @@
         }];
     } else if (type == PausedViewViewButtonTypePlay) {
         [self.scene setDefaultValues];
+        [self.scene configureGestureRecognizers:YES];
         self.scene.resuming = YES;
         self.scene.gameOver = NO;
         [self.view insertSubview:[self.pausedView viewWithTag:kBlurBackgroundViewTag] atIndex:1];

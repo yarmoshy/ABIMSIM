@@ -362,8 +362,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
         starFrontLayer.anchorPoint = alternateFrontLayer.anchorPoint = CGPointZero;
         starBackLayer.anchorPoint = alternateBackLayer.anchorPoint = CGPointZero;
         starBackLayer.position = starFrontLayer.position = alternateBackLayer.position = alternateFrontLayer.position = CGPointMake(0, 0);
-        [self addChild:starBackLayer];
-        [self addChild:starFrontLayer];
+//        [self addChild:starBackLayer];
+//        [self addChild:starFrontLayer];
 
         lastShieldLevel = lastMineLevel = 0;
         
@@ -1403,6 +1403,11 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
     [self removeOverlayChildren];
     [self removeCurrentSprites];
+    [starFrontLayer removeFromParent];
+    [starBackLayer removeFromParent];
+    [alternateFrontLayer removeFromParent];
+    [alternateBackLayer removeFromParent];
+    
     self.currentLevel = 0;
     self.bubblesPopped = 0;
     self.sunsSurvived = 0;
@@ -1492,8 +1497,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
     newStarFrontLayer.anchorPoint = CGPointZero;
     newStarBackLayer.anchorPoint = CGPointZero;
     newStarBackLayer.position = newStarFrontLayer.position = CGPointMake(0, 0);
-    [newStarBackLayer removeFromParent];
-    [newStarFrontLayer removeFromParent];
+//    [newStarBackLayer removeFromParent];
+//    [newStarFrontLayer removeFromParent];
     [self insertChild:newStarBackLayer atIndex:0];
     [self insertChild:newStarFrontLayer atIndex:0];
 
@@ -1561,9 +1566,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
             [star setScale:0];
             star.colorBlendFactor = 1.0;
             if (i < halfStars) {
-                [newStarBackLayer addChild:star];
+                [oldStarBackLayer addChild:star];
             } else {
-                [newStarFrontLayer addChild:star];
+                [oldStarFrontLayer addChild:star];
             }
         }
     } else {
@@ -1581,12 +1586,12 @@ CGFloat DegreesToRadians(CGFloat degrees)
             float scale = 0;
             if ((shrinkBackHalf && half == 0) ||
                 (!shrinkBackHalf && half == 1)) {
-                [star removeFromParent];
-                if (i < halfStars) {
-                    [newStarBackLayer addChild:star];
-                } else {
-                    [newStarFrontLayer addChild:star];
-                }
+//                [star removeFromParent];
+//                if (i < halfStars) {
+//                    [newStarBackLayer addChild:star];
+//                } else {
+//                    [newStarFrontLayer addChild:star];
+//                }
                 star.position = CGPointMake(x, y);
                 int size = arc4random() % 3;
                 switch (size) {
@@ -1620,17 +1625,17 @@ CGFloat DegreesToRadians(CGFloat degrees)
                 star.physicsBody = nil;
                 star.position = CGPointMake(x, y);
                 [star runAction:[SKAction scaleTo:scale duration:0.5] completion:^{
-                star.name = starSpriteName;
+                    star.name = starSpriteName;
                 }];
             } else {
                 SKAction *spawnAction = [SKAction group:@[[SKAction moveByX:0 y:yVelocity * 0.125 duration:0.5],
                                                           [SKAction runBlock:^{
                     [star runAction:[SKAction scaleTo:0 duration:0.5] completion:^{
-                        [star removeFromParent];
+//                        [star removeFromParent];
                         if (i < UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 24 : 6) {
-                            [newStarBackLayer addChild:star];
+//                            [newStarBackLayer addChild:star];
                         } else {
-                            [newStarFrontLayer addChild:star];
+//                            [newStarFrontLayer addChild:star];
                         }
                         [oldStarFrontLayer removeFromParent];
                         [oldStarBackLayer removeFromParent];

@@ -25,4 +25,5 @@
 -(void)transitionFromMainMenu;
 -(void)pause;
 -(void)setDefaultValues;
+-(void)configureGestureRecognizers:(BOOL)enabled;
 @end
