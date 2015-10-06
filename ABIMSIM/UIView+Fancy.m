@@ -68,8 +68,10 @@
             [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseOut animations:^{
                 [ring4 setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1, 1)];
             } completion:^(BOOL finished) {
-                if (completionBlock) {
-                    completionBlock();
+                if (finished) {
+                    if (completionBlock) {
+                        completionBlock();
+                    }
                 }
             }];
         }

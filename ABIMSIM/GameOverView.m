@@ -244,6 +244,7 @@
     if (showingGameOver) {
         return;
     }
+    [self configureButtonsEnabled:NO];
     showingGameOver = YES;
     killAnimations = NO;
     self.rectangleImage.alpha = 0;
@@ -591,7 +592,12 @@
                 self.quitButton.alpha = 1;
                 self.gameOverButtonContainer.alpha = 1;
             } completion:^(BOOL finished) {
-                [self pulsateUpgradeIfApplicable];
+                if (finished) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self pulsateUpgradeIfApplicable];
+                        [self configureButtonsEnabled:YES];
+                    });
+                }
             }];
         }
     }];
@@ -733,19 +739,24 @@
     showingGameOver = NO;
     pulsatingUpgrade = NO;
     self.delegate.scene.reset = YES;
-    self.delegate.scene.gameOver = NO;
     self.delegate.scene.view.paused = NO;
-    [UIView animateWithDuration:0.5 animations:^{
-        self.alpha = 0;
-        [self.superview viewWithTag:kBlurBackgroundViewTag].alpha = 0;
-    } completion:^(BOOL finished) {
-        [[self.superview viewWithTag:kBlurBackgroundViewTag] removeFromSuperview];
-        [self configureButtonsEnabled:YES];
-    }];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        self.delegate.scene.view.paused = YES;
+        [UIView animateWithDuration:0.5 animations:^{
+            self.alpha = 0;
+            [self.superview viewWithTag:kBlurBackgroundViewTag].alpha = 0;
+        } completion:^(BOOL finished) {
+            [self configureButtonsEnabled:YES];
+            [[self.superview viewWithTag:kBlurBackgroundViewTag] removeFromSuperview];
+            self.delegate.scene.view.paused = NO;
+            self.delegate.scene.gameOver = NO;
+            [self.delegate.scene startShipVelocity];
+        }];
+    });
 }
 
 -(void)handleTap:(UITapGestureRecognizer*)recognizer {
-    if (recognizer.state == UIGestureRecognizerStateRecognized) {
+    if (recognizer.state == UIGestureRecognizerStateRecognized && !killAnimations) {
         killAnimations = YES;
         [self.superview.layer removeAllAnimations];
         [self showGameOverButtons];

@@ -401,9 +401,12 @@ CGFloat DegreesToRadians(CGFloat degrees)
         parsecsNode.name = levelParsecsNodeName;
         parsecsNode.hidden = YES;
         [self addChild:parsecsNode];
+        
+        shipWarping = YES;
 
         [self addChild:shipSprite];
         [self updateShipPhysics];
+
         shipSprite.physicsBody.collisionBitMask = borderCategory | asteroidCategory | planetCategory | planetRingCategory;
         
         CGRect goalRect;
@@ -416,7 +419,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
         [self generateInitialLevelsAndShowSprites:NO];
         safeToTransition = @YES;
-        shipWarping = YES;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActive) name:UIApplicationWillResignActiveNotification object:nil];
     }
     return self;
@@ -602,7 +604,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         hasShield = YES;
         [self updateShipPhysics];
     }
-    
+        
     if (shipSprite.physicsBody.velocity.dx!=0 || shipSprite.physicsBody.velocity.dy!=0)
         shipSprite.zRotation = atan2f(-shipSprite.physicsBody.velocity.dx, shipSprite.physicsBody.velocity.dy);
     
@@ -612,7 +614,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     }
 
     /* Called before each frame is rendered */
-    if (shipWarping && shipSprite.position.y > shipSprite.frame.size.height/2) {
+    if (shipWarping && shipSprite.position.y > shipSprite.frame.size.height/2 && !self.gameOver) {
         shipWarping = NO;
         shipSprite.physicsBody.collisionBitMask = borderCategory | secondaryBorderCategory | asteroidCategory | planetCategory | planetRingCategory;
     }
@@ -1434,7 +1436,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     [shipSprite childNodeWithName:shipImageSpriteName].hidden = NO;
     [shipSprite childNodeWithName:shipThrusterSpriteName].hidden = NO;
     [self updateShipPhysics];
-    shipSprite.physicsBody.velocity = CGVectorMake(0, MAX_VELOCITY);
+    shipSprite.physicsBody.velocity = CGVectorMake(0, 0);
     
     shipSprite.physicsBody.collisionBitMask = borderCategory | asteroidCategory | planetCategory | planetRingCategory;
     shipSprite.position = CGPointMake(sceneWidth/2, -kExtraSpaceOffScreen + shipSprite.size.height/2);
@@ -2118,6 +2120,22 @@ CGFloat DegreesToRadians(CGFloat degrees)
     return shieldPowerUpSprite;
 }
 
+-(void)startShipVelocity {
+    shipSprite.physicsBody.velocity = CGVectorMake(0, 10);
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        shipSprite.physicsBody.velocity = CGVectorMake(0, MAX_VELOCITY);
+        for (SKSpriteNode* sprite in self.children) {
+            if ([sprite.name isEqualToString:asteroidCategoryName]) {
+                float velocity = arc4random() % (MAX_VELOCITY/2);
+                if (velocity < 20.f) {
+                    velocity = 20.f;
+                }
+                sprite.physicsBody.velocity = CGVectorMake(velocity * cosf(sprite.zRotation), velocity * -sinf(sprite.zRotation));
+            }
+        }
+    });
+}
+
 -(void)updateShipPhysics {
     CGVector velocity = shipSprite.physicsBody.velocity;
     float width = 40;
@@ -2206,9 +2224,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
         if (level == 1) {
             asteroid.position = CGPointMake(asteroid.position.x, sceneHeight/4 * 3);
-            if (![ABIMSIMDefaults boolForKey:kWalkthroughSeen]) {
+//            if (![ABIMSIMDefaults boolForKey:kWalkthroughSeen]) {
                 asteroid.physicsBody.velocity = CGVectorMake(0, 0);
-            }
+//            }
         }
         asteroid.hidden = YES;
         [asteroids addObject:asteroid];

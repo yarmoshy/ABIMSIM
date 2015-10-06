@@ -26,4 +26,5 @@
 -(void)pause;
 -(void)setDefaultValues;
 -(void)configureGestureRecognizers:(BOOL)enabled;
+-(void)startShipVelocity;
 @end
