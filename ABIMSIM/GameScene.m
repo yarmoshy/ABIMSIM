@@ -930,18 +930,20 @@ CGFloat DegreesToRadians(CGFloat degrees)
     float velocity = sqrtf(powf(newVelocity.x, 2) + powf(newVelocity.y, 2));
     newVelocity.x = MAX_VELOCITY * ( newVelocity.x / velocity );
     newVelocity.y = MAX_VELOCITY * ( newVelocity.y / velocity );
+    pendingVelocity = newVelocity;
+    if (shipSprite.physicsBody) {
+        [[shipSprite childNodeWithName:shipThrusterSpriteName] runAction:shipSprite.userData[shipThrusterAnimation] withKey:shipThrusterAnimation];
+    }
     if (self.initialPause) {
         self.initialPause = NO;
-        self.view.paused = NO;
         [self removeOverlayChildren];
         self.viewController.pauseButton.hidden = NO;
         [UIView animateWithDuration:0.25 animations:^{
             self.viewController.pauseButton.alpha = 0.7;
         }];
-    }
-    pendingVelocity = newVelocity;
-    if (shipSprite.physicsBody) {
-        [[shipSprite childNodeWithName:shipThrusterSpriteName] runAction:shipSprite.userData[shipThrusterAnimation] withKey:shipThrusterAnimation];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.view.paused = NO;
+        });
     }
 }
 
