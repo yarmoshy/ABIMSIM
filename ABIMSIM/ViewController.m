@@ -238,34 +238,28 @@
 
 -(void)pausedViewViewDidSelectButtonType:(PausedViewViewButtonType)type {
     if (type == PausedViewViewButtonTypeMainMenu) {
-        self.scene = [GameScene sceneWithSize:self.view.bounds.size];
-        self.scene.gameOver = NO;
-        self.scene.size = self.view.bounds.size;
-        self.scene.scaleMode = SKSceneScaleModeAspectFill;
-        self.scene.viewController = self;
-        // Present the scene.
-        [(SKView*)self.view presentScene:self.scene];
+        self.scene.reset = YES;
+        self.scene.transitioningToMenu = YES;
+        self.scene.view.paused = NO;
         self.pauseButton.alpha = 0;
-        
-        [UIView animateKeyframesWithDuration:0.5 delay:0.25 options:0 animations:^{
-            self.pausedView.alpha = 0;
-        } completion:^(BOOL finished) {
-            [[self.pausedView viewWithTag:kBlurBackgroundViewTag] removeFromSuperview];
-            [UIView animateKeyframesWithDuration:0.5 delay:0 options:0 animations:^{
-                self.mainMenuView.alpha = 1;
+        [self.scene configureGestureRecognizers:NO];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            self.scene.view.paused = YES;
+            [UIView animateWithDuration:0.5 animations:^{
+                self.pausedView.alpha = 0;
+                [self.pausedView viewWithTag:kBlurBackgroundViewTag].alpha = 0;
             } completion:^(BOOL finished) {
                 if (finished) {
-                    [self configureButtonsEnabled:YES];
-                    self.scene = [GameScene sceneWithSize:self.view.bounds.size];
-                    self.scene.gameOver = NO;
-                    self.scene.size = self.view.bounds.size;
-                    self.scene.scaleMode = SKSceneScaleModeAspectFill;
-                    self.scene.viewController = self;
-                    // Present the scene.
-                    [(SKView*)self.view presentScene:self.scene];
+                    [UIView animateKeyframesWithDuration:0.5 delay:0 options:0 animations:^{
+                        self.mainMenuView.alpha = 1;
+                    } completion:^(BOOL finished) {
+                        if (finished) {
+                            [self configureButtonsEnabled:YES];
+                        }
+                    }];
                 }
             }];
-        }];
+        });
     } else if (type == PausedViewViewButtonTypePlay) {
         [self.scene setDefaultValues];
         [self.scene configureGestureRecognizers:YES];
@@ -379,35 +373,28 @@
 
 -(void)gameOverViewDidSelectButtonType:(GameOverViewButtonType)type {
     if (type == GameOverViewButtonTypeMainMenu) {
-        self.scene = [GameScene sceneWithSize:self.view.bounds.size];
-        self.scene.gameOver = NO;
-        self.scene.size = self.view.bounds.size;
-        self.scene.scaleMode = SKSceneScaleModeAspectFill;
-        self.scene.viewController = self;
-        // Present the scene.
-        [(SKView*)self.view presentScene:self.scene];
+        self.scene.reset = YES;
+        self.scene.transitioningToMenu = YES;
+        self.scene.view.paused = NO;
         self.pauseButton.alpha = 0;
-        
-        [UIView animateKeyframesWithDuration:0.5 delay:0.25 options:0 animations:^{
-            self.gameOverView.alpha = 0;
-            [self.gameOverView.superview viewWithTag:kBlurBackgroundViewTag].alpha = 0;
-        } completion:^(BOOL finished) {
-            [[self.gameOverView.superview viewWithTag:kBlurBackgroundViewTag] removeFromSuperview];
-            [UIView animateKeyframesWithDuration:0.5 delay:0 options:0 animations:^{
-                self.mainMenuView.alpha = 1;
+        [self.scene configureGestureRecognizers:NO];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            self.scene.view.paused = YES;
+            [UIView animateWithDuration:0.5 animations:^{
+                self.gameOverView.alpha = 0;
+                [self.gameOverView.superview viewWithTag:kBlurBackgroundViewTag].alpha = 0;
             } completion:^(BOOL finished) {
                 if (finished) {
-                    [self configureButtonsEnabled:YES];
-                    self.scene = [GameScene sceneWithSize:self.view.bounds.size];
-                    self.scene.gameOver = NO;
-                    self.scene.size = self.view.bounds.size;
-                    self.scene.scaleMode = SKSceneScaleModeAspectFill;
-                    self.scene.viewController = self;
-                    // Present the scene.
-                    [(SKView*)self.view presentScene:self.scene];
+                    [UIView animateKeyframesWithDuration:0.5 delay:0 options:0 animations:^{
+                        self.mainMenuView.alpha = 1;
+                    } completion:^(BOOL finished) {
+                        if (finished) {
+                            [self configureButtonsEnabled:YES];
+                        }
+                    }];
                 }
             }];
-        }];
+        });
     } else if (type == GameOverViewButtonTypePlay) {
         [[AudioController sharedController] gameplay];
         [self hideGameOverView];

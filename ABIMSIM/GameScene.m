@@ -731,7 +731,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     if (self.transitioningToMenu) {
         self.transitioningToMenu = NO;
         self.view.paused = YES;
-        self.initialPause = YES;
+//        self.initialPause = YES;
     }
 }
 
@@ -1468,10 +1468,20 @@ CGFloat DegreesToRadians(CGFloat degrees)
     if (!self.transitioningToMenu) {
         [self transitionStars];
         [self generateInitialLevelsAndShowSprites:YES];
+        [self configureGestureRecognizers:YES];
+    } else {
+        [self generateInitialLevelsAndShowSprites:NO];
+        [self configureGestureRecognizers:NO];
+        levelNode.hidden = NO;
+        levelNode.alpha = 0;
+        parsecsNode.hidden = NO;
+        parsecsNode.alpha = 0;
+        for (SKSpriteNode *holsterNuke in holsterNukeSpritesArray) {
+            holsterNuke.alpha = 0;
+        }
     }
     shipWarping = YES;
     self.reset = NO;
-    [self configureGestureRecognizers:YES];
 }
 
 -(void)transitionStars {
