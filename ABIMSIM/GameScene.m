@@ -1160,6 +1160,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
             }
         }
         if ([secondBody.node.name isEqualToString:blackHoleCategoryName]) {
+            if ([firstBody.node.remove boolValue]) {
+                return;
+            }
             CGPoint p1 = [self childNodeWithName:blackHoleCategoryName].position;
             CGPoint p2 = firstBody.node.position;
             CGFloat r = DegreesToRadians([self pointPairToBearingDegrees:p1 secondPoint:p2]);
