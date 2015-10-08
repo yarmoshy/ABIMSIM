@@ -20,6 +20,19 @@
 	<string>1.1</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.gracefulgames.ABIMSIM</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>sessionm76a75bec6be6cd72ac61f90cc3ab22651f17641a</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>9</string>
 	<key>Fabric</key>
@@ -40,9 +53,11 @@
 	<true/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
-		<key>NSAllowArbitraryLoads</key>
+		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string></string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Voltaire-Regular.ttf</string>
