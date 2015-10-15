@@ -546,12 +546,6 @@
         });
         return;
     }
-
-    self.delegate.scene.reset = YES;
-    self.delegate.scene.view.paused = NO;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        self.delegate.scene.view.paused = YES;
-    });
     
     int pointsEarned = self.delegate.scene.currentLevel;
     pointsEarned += self.delegate.scene.currentLevel / 10;
@@ -600,6 +594,11 @@
             } completion:^(BOOL finished) {
                 if (finished) {
                     dispatch_async(dispatch_get_main_queue(), ^{
+                        self.delegate.scene.reset = YES;
+                        self.delegate.scene.view.paused = NO;
+                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                            self.delegate.scene.view.paused = YES;
+                        });
                         [self pulsateUpgradeIfApplicable];
                         [self configureButtonsEnabled:YES];
                     });

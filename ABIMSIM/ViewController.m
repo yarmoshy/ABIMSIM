@@ -378,7 +378,7 @@
         self.scene.view.paused = NO;
         self.pauseButton.alpha = 0;
         [self.scene configureGestureRecognizers:NO];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             self.scene.view.paused = YES;
             [UIView animateWithDuration:0.5 animations:^{
                 self.gameOverView.alpha = 0;
@@ -437,6 +437,12 @@
 -(void)hideUpgradesView {
     if (showingUpgradesFromGameOver) {
         showingUpgradesFromGameOver = NO;
+        self.upgradesView.delegate.scene.reset = YES;
+        self.upgradesView.delegate.scene.view.paused = NO;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            self.upgradesView.delegate.scene.view.paused = YES;
+        });
+
         [UIView animateKeyframesWithDuration:0.5 delay:0 options:0 animations:^{
             self.upgradesView.alpha = 0;
         } completion:^(BOOL finished) {
