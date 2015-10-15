@@ -1939,6 +1939,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
     float x = arc4random() % (int)sceneWidth * 1;
     float maxHeight = sceneHeight - bufferZoneHeight - (sprite.size.height/2.0);
     float y = (arc4random() % ((int)maxHeight)) + bufferZoneHeight + (sprite.size.height/2.0);
+    if (maxHeight < 0) {
+        y = sceneHeight;
+    }
     sprite.position = CGPointMake(x, y);
     if ([sprite.name isEqualToString:asteroidCategoryName]) {
         sprite.zRotation = DegreesToRadians(arc4random() % 360);
@@ -3432,7 +3435,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
 }
 
 -(int)iPhoneRoundedAdjustedNumberForScreenSize:(int)number {
-    return roundf(number * ((self.size.width * self.size.height) / 181760));
+    return roundf(number * ((self.size.width * self.size.height) / 181760)); // based on area of iPhone 5.
 }
 
 
