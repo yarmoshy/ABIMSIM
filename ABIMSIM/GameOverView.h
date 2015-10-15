@@ -94,6 +94,9 @@ typedef enum {
 
 @property (weak, nonatomic) IBOutlet UILabel *upgradesAvailableLabel;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *buttonContainerTopConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *gameOverContainerYAlignConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *gameOverLabelTopConstraint;
 - (IBAction)ggPlaySelect:(id)sender;
 - (IBAction)ggPlayDeselect:(id)sender;
 - (IBAction)ggPlayTouchUpInside:(id)sender;

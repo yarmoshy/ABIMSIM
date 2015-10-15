@@ -68,6 +68,11 @@
         self.rectangleImageWidthConstraint.constant = self.frame.size.width;
         self.rectangleSocialImageWidthConstraint.constant = 75;
         self.rectangleImageYConstraint.constant = self.frame.size.height / 3.64;
+        if (self.frame.size.height <= 480) {
+            self.gameOverLabelTopConstraint.constant = 10;
+            self.gameOverContainerYAlignConstraint.constant = 120;
+            self.buttonContainerTopConstraint.constant = 5;
+        }
     }
     NSMutableParagraphStyle *paragraphStyle = [NSParagraphStyle defaultParagraphStyle].mutableCopy;
     paragraphStyle.lineHeightMultiple= 1;
