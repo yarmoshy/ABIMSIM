@@ -547,6 +547,12 @@
         return;
     }
 
+    self.delegate.scene.reset = YES;
+    self.delegate.scene.view.paused = NO;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        self.delegate.scene.view.paused = YES;
+    });
+    
     int pointsEarned = self.delegate.scene.currentLevel;
     pointsEarned += self.delegate.scene.currentLevel / 10;
     pointsEarned += self.delegate.scene.bubblesPopped * 5;
@@ -738,23 +744,21 @@
 -(void)hide {
     showingGameOver = NO;
     pulsatingUpgrade = NO;
-    self.delegate.scene.reset = YES;
-    self.delegate.scene.view.paused = NO;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        self.delegate.scene.view.paused = YES;
-        [UIView animateWithDuration:0.5 animations:^{
-            self.alpha = 0;
-            [self.superview viewWithTag:kBlurBackgroundViewTag].alpha = 0;
-        } completion:^(BOOL finished) {
-            if (finished) {
-                [self configureButtonsEnabled:YES];
-                [[self.superview viewWithTag:kBlurBackgroundViewTag] removeFromSuperview];
+    self.delegate.scene.view.paused = YES;
+    [UIView animateWithDuration:0.5 animations:^{
+        self.alpha = 0;
+        [self.superview viewWithTag:kBlurBackgroundViewTag].alpha = 0;
+    } completion:^(BOOL finished) {
+        if (finished) {
+            [self configureButtonsEnabled:YES];
+            [[self.superview viewWithTag:kBlurBackgroundViewTag] removeFromSuperview];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [self.delegate.scene startShipVelocity];
                 self.delegate.scene.view.paused = NO;
                 self.delegate.scene.gameOver = NO;
-            }
-        }];
-    });
+            });
+        }
+    }];
 }
 
 -(void)handleTap:(UITapGestureRecognizer*)recognizer {
