@@ -272,10 +272,10 @@
         } completion:^(BOOL finished) {
             ;
         }];
-        UIImageView *ring3 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[NSString stringWithFormat:@"Play_3%@", UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? @"_iPad" : @""]]];
-        UIImageView *ring2 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[NSString stringWithFormat:@"Play_2%@", UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? @"_iPad" : @""]]];
-        UIImageView *ring1 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[NSString stringWithFormat:@"Play_1%@", UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? @"_iPad" : @""]]];
-        UIImageView *ring0 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[NSString stringWithFormat:@"Play_0%@", UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? @"_iPad" : @""]]];
+        UIImageView *ring3 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Play_3"]];
+        UIImageView *ring2 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Play_2"]];
+        UIImageView *ring1 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Play_1"]];
+        UIImageView *ring0 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Play_0"]];
         __block UILabel *countDownLabel = [[UILabel alloc] init];
         countDownLabel.font = [UIFont fontWithName:@"Futura-CondensedMedium" size:UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 150 : 75];
         countDownLabel.textAlignment = NSTextAlignmentCenter;
