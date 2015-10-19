@@ -1279,7 +1279,11 @@ CGFloat DegreesToRadians(CGFloat degrees)
         [ABIMSIMDefaults setInteger:[ABIMSIMDefaults integerForKey:kUserDuckets]+pointsEarned forKey:kUserDuckets];
         [ABIMSIMDefaults synchronize];
 
-        GKScore *newScore = [[GKScore alloc] initWithLeaderboardIdentifier:@"distance"];
+        NSString *leaderBoardID = @"distance";
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+            leaderBoardID = @"distance_iPad";
+        }
+        GKScore *newScore = [[GKScore alloc] initWithLeaderboardIdentifier:leaderBoardID];
         newScore.value = self.currentLevel;
         [GKScore reportScores:@[newScore] withCompletionHandler:^(NSError *error) {
             if (error) {
@@ -1474,7 +1478,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     if (!self.transitioningToMenu) {
         [self transitionStars];
         [self generateInitialLevelsAndShowSprites:YES];
-        [self configureGestureRecognizers:YES];
+//        [self configureGestureRecognizers:YES];
     } else {
         [self generateInitialLevelsAndShowSprites:NO];
         [self configureGestureRecognizers:NO];
@@ -1851,7 +1855,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
         SKAction *alphaIn = [SKAction fadeAlphaTo:1 duration:0.5];
         SKAction *group = [SKAction group:@[move, alphaIn]];
         [[self childNodeWithName:directionsSpriteName] runAction:group completion:^{
-//            self.view.paused = YES;
             self.physicsWorld.speed = 0;
             self.initialPause = YES;
         }];

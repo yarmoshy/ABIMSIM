@@ -749,6 +749,7 @@
     showingGameOver = NO;
     pulsatingUpgrade = NO;
     self.delegate.scene.view.paused = YES;
+    [self.delegate.scene configureGestureRecognizers:YES];
     [UIView animateWithDuration:0.5 animations:^{
         self.alpha = 0;
         [self.superview viewWithTag:kBlurBackgroundViewTag].alpha = 0;
