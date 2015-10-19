@@ -940,10 +940,11 @@ CGFloat DegreesToRadians(CGFloat degrees)
         self.viewController.pauseButton.hidden = NO;
         [UIView animateWithDuration:0.25 animations:^{
             self.viewController.pauseButton.alpha = 0.7;
+        } completion:^(BOOL finished) {
+            if(finished) {
+                self.physicsWorld.speed = 1;
+            }
         }];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            self.view.paused = NO;
-        });
     }
 }
 
@@ -1850,7 +1851,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
         SKAction *alphaIn = [SKAction fadeAlphaTo:1 duration:0.5];
         SKAction *group = [SKAction group:@[move, alphaIn]];
         [[self childNodeWithName:directionsSpriteName] runAction:group completion:^{
-            self.view.paused = YES;
+//            self.view.paused = YES;
+            self.physicsWorld.speed = 0;
             self.initialPause = YES;
         }];
         [ABIMSIMDefaults setBool:YES forKey:kWalkthroughSeen];
