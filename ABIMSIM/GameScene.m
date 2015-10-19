@@ -1089,8 +1089,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
             [secondBody.node runAction:secondBody.node.userData[powerUpSpaceMineExplosionGlowAnimation] completion:^{
                 ;
             }];
-
-            SKAction *sequenceAction = [SKAction sequence:@[[SKAction waitForDuration:0.5],secondBody.node.userData[powerUpSpaceMineExplosionRingAnimation],[SKAction waitForDuration:1.75 - (mineBlastSpeedLevel * 0.25)]]];
+            float durationTotal = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 5.25 : 1.75;
+            float durationReduction = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 0.85 : 0.25;
+            SKAction *sequenceAction = [SKAction sequence:@[[SKAction waitForDuration:0.5],secondBody.node.userData[powerUpSpaceMineExplosionRingAnimation],[SKAction waitForDuration:durationTotal - (mineBlastSpeedLevel * durationReduction)]]];
             [secondBody.node runAction:sequenceAction completion:^{
                 secondBody.node.name = explodedSpaceMine;
                 explodedMine = (SKSpriteNode*)secondBody.node;
@@ -2043,7 +2044,10 @@ CGFloat DegreesToRadians(CGFloat degrees)
         sprite.userData = [NSMutableDictionary new];
     }
     BOOL isShipSprite = [sprite isEqual:shipSprite];
-    float duration = isShipSprite ? 0.5 : 1.75 - (mineBlastSpeedLevel * 0.25);
+    float durationTotal = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 5.25 : 1.75;
+    float durationReduction = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 0.85 : 0.25;
+    float shipDuration = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 1.0 : 0.5;
+    float duration = isShipSprite ? shipDuration : durationTotal - (mineBlastSpeedLevel * durationReduction);
     SKSpriteNode *ring1 = [SKSpriteNode spriteNodeWithTexture:powerUpTextures[0]];
     [sprite addChild:ring1];
     ring1.name = powerUpSpaceMineExplodeRingName;
@@ -2088,9 +2092,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
         largeGlow.name = powerUpSpaceMineExplodeGlowName;
         largeGlow.alpha = 0;
         [largeGlow setScale:0];
-        SKAction *expandRingActionB = [SKAction scaleTo:1 duration:duration/2.f];
-        SKAction *alphaInRingActionB = [SKAction fadeAlphaTo:1 duration:duration/2.f];
-        SKAction *alphaOutRingActionB = [SKAction fadeAlphaTo:0 duration:duration];
+        SKAction *expandRingActionB = [SKAction scaleTo:1 duration:0.5];
+        SKAction *alphaInRingActionB = [SKAction fadeAlphaTo:1 duration:0.5];
+        SKAction *alphaOutRingActionB = [SKAction fadeAlphaTo:0 duration:0.5];
         SKAction *removeImageAction = [SKAction runBlock:^{
             [sprite setTexture:nil];
         }];
