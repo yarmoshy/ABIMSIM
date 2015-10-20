@@ -10,5 +10,5 @@
 #import <SpriteKit/SpriteKit.h>
 
 @interface BaseSprite : SKSpriteNode
-
+@property (assign, nonatomic) BOOL remove;
 @end
