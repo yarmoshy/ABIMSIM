@@ -543,14 +543,14 @@
     cell.cellType = UpgradeTableViewCellTypeHolsterNuke;
     cell.upgradeTypeLabel.text = NSLocalizedString(@"ASTEROID NUKE",nil);
     cell.unlimitedUpgradesHeightConstraint.constant = 0;
-    cell.xpRequiredLabel.text = [NSString stringWithFormat:@"%d XP",10];
+    cell.xpRequiredLabel.text = [NSString stringWithFormat:@"%d XP",5];
     cell.ringImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"Ring_10Pieces_%ld", holsterNukes]];
     cell.descriptionLabel.text = @"Add a nuke to your armory when there is capacity.";
     if (holsterNukes >= holsterCapacity && holsterCapacity > 0) {
         cell.upgradeButton.alpha = 0;
         cell.xpRequiredLabel.text = @"FULL CAPACITY";
         cell.upgradeButton.enabled = NO;
-    } else if ([ABIMSIMDefaults integerForKey:kUserDuckets] < 10) {
+    } else if ([ABIMSIMDefaults integerForKey:kUserDuckets] < 5) {
         cell.upgradeButton.alpha = 1;
         cell.upgradeButton.enabled = NO;
     } else {

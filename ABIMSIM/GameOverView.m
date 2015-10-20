@@ -14,6 +14,7 @@
     BOOL killAnimations, showingGameOver, pulsatingUpgrade;
     UILabel *incrementingLabel;
     int totalPointDifferential, currentIncrementingLabelPoints, targetPoints, currentPoints;
+    BOOL showingButtons;
 }
 
 -(id)initWithCoder:(NSCoder *)aDecoder {
@@ -249,6 +250,7 @@
     if (showingGameOver) {
         return;
     }
+    showingButtons = NO;
     [self configureButtonsEnabled:NO];
     showingGameOver = YES;
     killAnimations = NO;
@@ -551,7 +553,10 @@
         });
         return;
     }
-    
+    if (showingButtons) {
+        return;
+    }
+    showingButtons = YES;
     int pointsEarned = self.delegate.scene.currentLevel;
     pointsEarned += self.delegate.scene.currentLevel / 10;
     pointsEarned += self.delegate.scene.bubblesPopped * 5;
@@ -705,7 +710,7 @@
         return YES;
     }
     
-    if (armoryCount < armoryCapacity && spaceDuckets >= 10) {
+    if (armoryCount < armoryCapacity && spaceDuckets >= 5) {
         return YES;
     }
     return false;
