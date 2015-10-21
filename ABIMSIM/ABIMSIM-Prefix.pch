@@ -52,5 +52,6 @@
 #define kSFXToggleChanged @"kSFXToggleChanged"
 #define kSessionMToggleChanged @"kSessionMToggleChanged"
 #define kSessionMStateChanged @"kSessionMStateChanged"
+#define kSessionMErrored @"kSessionMErrored"
 
 #endif

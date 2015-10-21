@@ -19,6 +19,7 @@
     NSMutableArray *hamburgerToOriginalImages;
     BOOL showingSettings;
     BOOL showingUpgradesFromGameOver;
+    BOOL sessionMError;
     SMPortalButton *mainMenuPortalButton, *gameOverPortalButton;
 }
 
@@ -120,6 +121,8 @@
     }
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sessionMStateChanged:) name:kSessionMStateChanged object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sessionMOptOutChanged:) name:kSessionMToggleChanged object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sessionMErrored:) name:kSessionMErrored object:nil];
+
 }
 
 -(void)sessionMStateChanged:(NSNotification*)notif {
@@ -130,14 +133,20 @@
     [self setupSessionMButtons:notif];
 }
 
+-(void)sessionMErrored:(NSNotification*)notif {
+    sessionMError = YES;
+    [self setupSessionMButtons:notif];
+}
+
 -(void)setupSessionMButtons:(NSNotification*)notif {
     if ([SessionM sharedInstance].sessionState != SessionMStateStartedOnline) {
         mainMenuPortalButton.button.enabled = gameOverPortalButton.button.enabled = NO;
     } else {
         mainMenuPortalButton.button.enabled = gameOverPortalButton.button.enabled = YES;
+        sessionMError = NO;
     }
     
-    if ([SessionM sharedInstance].user.isOptedOut) {
+    if ([SessionM sharedInstance].user.isOptedOut || sessionMError) {
         mainMenuPortalButton.hidden = gameOverPortalButton.hidden = YES;
     } else {
         mainMenuPortalButton.hidden = gameOverPortalButton.hidden = NO;
@@ -155,7 +164,7 @@
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
-    return UIInterfaceOrientationMaskPortrait;
+    return UIInterfaceOrientationMaskPortrait|UIInterfaceOrientationMaskPortraitUpsideDown;
 }
 
 - (void)didReceiveMemoryWarning

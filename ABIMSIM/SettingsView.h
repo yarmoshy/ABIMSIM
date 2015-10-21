@@ -25,6 +25,7 @@
 @property (weak, nonatomic) IBOutlet DCRoundSwitch *musicSettingsToggle;
 @property (weak, nonatomic) IBOutlet DCRoundSwitch *sfxSettingsToggle;
 @property (weak, nonatomic) IBOutlet DCRoundSwitch *sessionMSettingsToggle;
+@property (weak, nonatomic) IBOutlet UIImageView *sessionMToggleLogo;
 
 - (IBAction)twitterTapped:(id)sender;
 - (IBAction)facebookTapped:(id)sender;

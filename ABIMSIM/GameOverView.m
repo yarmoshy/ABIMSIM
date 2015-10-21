@@ -195,7 +195,7 @@
     if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
         SLComposeViewController *composeController = [SLComposeViewController
                                                       composeViewControllerForServiceType:SLServiceTypeFacebook];
-        NSString *text = [NSString stringWithFormat:@"I just travelled %d parsecs through space! Think you can beat me? Check it out: http://bit.ly/parsecs", self.delegate.scene.currentLevel];
+        NSString *text = [NSString stringWithFormat:@"I just travelled %@ parsecs through space! Think you can beat me? Check it out: http://bit.ly/parsecs", self.smallParsecsLabel.text];
         [composeController setInitialText:text];
         [composeController addURL: [NSURL URLWithString:
                                     @"http://bit.ly/parsecs"]];
@@ -208,7 +208,7 @@
             alert = [[UIAlertView alloc] initWithTitle:@"Facebook Unavailable" message:@"There are no Facebook accounts configured. You can add or create a Facebook account in Settings." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Settings", nil];
             
         } else {
-            alert = [[UIAlertView alloc] initWithTitle:@"Twitter Unavailable" message:@"There are no Facebook accounts configured. You can add or create a Facebook account in Settings." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles: nil];
+            alert = [[UIAlertView alloc] initWithTitle:@"Facebook Unavailable" message:@"There are no Facebook accounts configured. You can add or create a Facebook account in Settings." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles: nil];
         }
         [alert show];
     }
@@ -218,7 +218,7 @@
     if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]) {
         SLComposeViewController *composeController = [SLComposeViewController
                                                       composeViewControllerForServiceType:SLServiceTypeTwitter];
-        NSString *text = [NSString stringWithFormat:@"I just travelled %d parsecs through space! Think you can beat me? Check it out!", self.delegate.scene.currentLevel];
+        NSString *text = [NSString stringWithFormat:@"I just travelled %@ parsecs through space! Think you can beat me? Check it out!", self.smallParsecsLabel.text];
         [composeController setInitialText:text];
         [composeController addURL: [NSURL URLWithString:
                                     @"http://bit.ly/parsecs"]];

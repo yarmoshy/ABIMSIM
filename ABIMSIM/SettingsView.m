@@ -22,6 +22,9 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setupMusicToggle) name:kMusicToggleChanged object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setupSFXToggle) name:kSFXToggleChanged object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setupSessionMToggle) name:kSessionMToggleChanged object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sessionMStateChanged:) name:kSessionMStateChanged object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sessionMErrored:) name:kSessionMErrored object:nil];
+
     }
     return self;
 }
@@ -54,6 +57,17 @@
     self.sessionMSettingsToggle.ignoreTap = NO;
 }
 
+-(void)sessionMErrored:(NSNotification*)notif {
+    self.sessionMSettingsToggle.hidden = YES;
+    self.sessionMToggleLogo.hidden = YES;
+}
+
+-(void)sessionMStateChanged:(NSNotification*)notif {
+    if ([SessionM sharedInstance].sessionState == SessionMStateStartedOnline) {
+        self.sessionMSettingsToggle.hidden = NO;
+        self.sessionMToggleLogo.hidden = NO;
+    }
+}
 
 -(void)showSettings {
     [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionAllowAnimatedContent animations:^{
