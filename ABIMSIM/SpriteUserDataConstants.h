@@ -35,4 +35,7 @@
 
 #define blackHoleAnimation @"blackHoleAnimation"
 
+#define backgroundNodeAlphaInAction @"backgroundNodeAlphaInAction"
+#define backgroundNodeAlphaOutAction @"backgroundNodeAlphaOutAction"
+
 #endif

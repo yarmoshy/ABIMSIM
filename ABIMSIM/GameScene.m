@@ -59,6 +59,7 @@
     NSMutableArray *starSprites;
     NSMutableArray *currentSpriteArray;
     NSMutableArray *backgroundNodes;
+    NSMutableArray *planetPreRenderArray;
     NSNumber *safeToTransition;
     BaseSprite *starBackLayer;
     BaseSprite *starFrontLayer;
@@ -182,7 +183,13 @@ CGFloat DegreesToRadians(CGFloat degrees)
             [planetTextures addObject:[SKTexture textureWithImage:[UIImage imageNamed:@"AsteroidShield_1"]]];
         }
         [SKTexture preloadTextures:planetTextures withCompletionHandler:^{
-            ;
+            planetPreRenderArray = [NSMutableArray new];
+            for (SKTexture *planetTexture in planetTextures) {
+                BaseSprite *planet = [[BaseSprite alloc] initWithTexture:planetTexture];
+                planet.zPosition = -1000;
+                [self insertChild:planet atIndex:0];
+                [planetPreRenderArray addObject:planet];
+            }
         }];
         
         if (!asteroidTextures) {
@@ -337,11 +344,14 @@ CGFloat DegreesToRadians(CGFloat degrees)
         backgroundNodes = [NSMutableArray new];
         for (int i = 0; i < backgroundTextures.count; i++) {
             BaseSprite *backgroundNode = [BaseSprite spriteNodeWithTexture:backgroundTextures[i]];
-            backgroundNode.alpha = i == 0;
+            backgroundNode.alpha = 1;
             backgroundNode.size = self.size;
             backgroundNode.anchorPoint = CGPointZero;
             backgroundNode.zPosition = -1;
-            [self addChild:backgroundNode];
+            backgroundNode.userData = [NSMutableDictionary new];
+            backgroundNode.userData[backgroundNodeAlphaInAction] = [SKAction fadeAlphaTo:1 duration:0.5];
+            backgroundNode.userData[backgroundNodeAlphaOutAction] = [SKAction fadeAlphaTo:0 duration:0.5];
+            [self insertChild:backgroundNode atIndex:0];
             [backgroundNodes addObject:backgroundNode];
         }
         
@@ -558,6 +568,14 @@ CGFloat DegreesToRadians(CGFloat degrees)
     [self configureGestureRecognizers:NO];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         self.view.paused = NO;
+        for (int i = 0; i < backgroundNodes.count; i++) {
+            BaseSprite *backgroundNode = backgroundNodes[i];
+            backgroundNode.alpha = i == 0;
+        }
+        for (BaseSprite *planet in planetPreRenderArray) {
+            [planet removeFromParent];
+        }
+        planetPreRenderArray = nil;
     });
 }
 
@@ -1798,8 +1816,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
         
         BaseSprite *backgroundNode = backgroundNodes[backgroundNumber];
         BaseSprite *previousBackground = backgroundNodes[previousBackgroudNumber];
-        [backgroundNode runAction:[SKAction fadeAlphaTo:1 duration:0.5]];
-        [previousBackground runAction:[SKAction fadeAlphaTo:0 duration:0.5]];
+        [backgroundNode runAction:backgroundNode.userData[backgroundNodeAlphaInAction]];
+        [previousBackground runAction:backgroundNode.userData[backgroundNodeAlphaOutAction]];
     }
     
     levelNode.text = [NSString stringWithFormat:@"%d",self.currentLevel];
