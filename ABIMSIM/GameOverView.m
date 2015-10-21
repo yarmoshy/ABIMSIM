@@ -57,7 +57,7 @@
 -(void)didMoveToSuperview {
     self.ggPlayButton.exclusiveTouch = self.ggUpgradeButton.exclusiveTouch = self.ggMainMenuButton.exclusiveTouch = YES;
     self.bonusLabelOne.layer.borderColor = self.bonusLabelTwo.layer.borderColor = self.bonusLabelThree.layer.borderColor = self.bonusLabelFour.layer.borderColor = [[UIColor whiteColor] colorWithAlphaComponent:0.5].CGColor;
-    self.bonusLabelOne.layer.borderWidth = self.bonusLabelTwo.layer.borderWidth = self.bonusLabelThree.layer.borderWidth = self.bonusLabelFour.layer.borderWidth = 0.5;
+    self.bonusLabelOne.layer.borderWidth = self.bonusLabelTwo.layer.borderWidth = self.bonusLabelThree.layer.borderWidth = self.bonusLabelFour.layer.borderWidth = 1;
     self.gameOverLabel.layer.shadowColor = [UIColor whiteColor].CGColor;
     self.gameOverLabel.layer.shadowRadius = 10;
     self.gameOverLabel.layer.shadowOpacity = 0.25;
@@ -376,7 +376,7 @@
         NSAttributedString *widthString = [bonusString attributedSubstringFromRange:rangeToDash];
         CGFloat width = [widthString size].width;
         CGFloat height =[widthString size].height;
-        UIView *divider = [[UIView alloc] initWithFrame:CGRectMake(width - 1, 2, 0.5, height-4)];
+        UIView *divider = [[UIView alloc] initWithFrame:CGRectMake(width - 1, 2, 1, height-4)];
         divider.backgroundColor =  [[UIColor whiteColor] colorWithAlphaComponent:0.5];
         [self.bonusLabelOne addSubview:divider];
     }
@@ -400,7 +400,7 @@
         NSAttributedString *widthString = [bonusString attributedSubstringFromRange:rangeToDash];
         CGFloat width = [widthString size].width;
         CGFloat height =[widthString size].height;
-        UIView *divider = [[UIView alloc] initWithFrame:CGRectMake(width - 1, 2, 0.5, height-4)];
+        UIView *divider = [[UIView alloc] initWithFrame:CGRectMake(width - 1, 2, 1, height-4)];
         divider.backgroundColor =  [[UIColor whiteColor] colorWithAlphaComponent:0.5];
         [self.bonusLabelTwo addSubview:divider];
     }
@@ -424,7 +424,7 @@
         NSAttributedString *widthString = [bonusString attributedSubstringFromRange:rangeToDash];
         CGFloat width = [widthString size].width;
         CGFloat height =[widthString size].height;
-        UIView *divider = [[UIView alloc] initWithFrame:CGRectMake(width - 1, 2, 0.5, height-4)];
+        UIView *divider = [[UIView alloc] initWithFrame:CGRectMake(width - 1, 2, 1, height-4)];
         divider.backgroundColor =  [[UIColor whiteColor] colorWithAlphaComponent:0.5];
         [self.bonusLabelThree addSubview:divider];
     }
@@ -448,7 +448,7 @@
         NSAttributedString *widthString = [bonusString attributedSubstringFromRange:rangeToDash];
         CGFloat width = [widthString size].width;
         CGFloat height =[widthString size].height;
-        UIView *divider = [[UIView alloc] initWithFrame:CGRectMake(round(width - 1), 2, 0.5, height-4)];
+        UIView *divider = [[UIView alloc] initWithFrame:CGRectMake(round(width - 1), 2, 1, height-4)];
         divider.backgroundColor =  [[UIColor whiteColor] colorWithAlphaComponent:0.5];
         [self.bonusLabelFour addSubview:divider];
     }
