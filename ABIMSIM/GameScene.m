@@ -1908,6 +1908,10 @@ CGFloat DegreesToRadians(CGFloat degrees)
             if ([sprite.name isEqual:sunObjectSpriteName]) {
                 showingSun = YES;
             }
+            sprite.xScale = sprite.yScale = 1;
+            for (BaseSprite *child in sprite.children) {
+                child.xScale = child.yScale = 1;
+            }
             sprite.hidden = NO;
             [self addChild:sprite];
             if (sprite.position.y < sceneHeight - sprite.size.height/2 - 10) {
