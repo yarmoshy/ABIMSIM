@@ -57,7 +57,7 @@
 -(void)didMoveToSuperview {
     self.ggPlayButton.exclusiveTouch = self.ggUpgradeButton.exclusiveTouch = self.ggMainMenuButton.exclusiveTouch = YES;
     self.bonusLabelOne.layer.borderColor = self.bonusLabelTwo.layer.borderColor = self.bonusLabelThree.layer.borderColor = self.bonusLabelFour.layer.borderColor = [[UIColor whiteColor] colorWithAlphaComponent:0.5].CGColor;
-    self.bonusLabelOne.layer.borderWidth = self.bonusLabelTwo.layer.borderWidth = self.bonusLabelThree.layer.borderWidth = self.bonusLabelFour.layer.borderWidth = 1;
+    self.bonusLabelOne.layer.borderWidth = self.bonusLabelTwo.layer.borderWidth = self.bonusLabelThree.layer.borderWidth = self.bonusLabelFour.layer.borderWidth = 0.5;
     self.gameOverLabel.layer.shadowColor = [UIColor whiteColor].CGColor;
     self.gameOverLabel.layer.shadowRadius = 10;
     self.gameOverLabel.layer.shadowOpacity = 0.25;
@@ -343,6 +343,7 @@
 
     NSMutableArray *bonusStrings = [NSMutableArray array];
     NSMutableArray *bonusAmounts = [NSMutableArray array];
+    NSMutableArray *bonusLengthsToDash = [NSMutableArray array];
     UIFont *boldFont = [UIFont fontWithName:@"Futura-CondensedExtraBold" size:UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 23 :  18];
     UIFont *regularFont = [UIFont fontWithName:@"Futura-CondensedMedium" size:UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 23 : 18];
     NSArray *labels = @[self.bonusLabelOne, self.bonusLabelTwo, self.bonusLabelThree, self.bonusLabelFour];
@@ -351,10 +352,10 @@
             [subview removeFromSuperview];
         }
     }
-//    self.delegate.scene.currentLevel = 10;
-//    self.delegate.scene.blackHolesSurvived = 10;
-//    self.delegate.scene.bubblesPopped = 10;
-//    self.delegate.scene.sunsSurvived = 10;
+    self.delegate.scene.currentLevel = 3;
+    self.delegate.scene.blackHolesSurvived = 3;
+    self.delegate.scene.bubblesPopped = 3;
+    self.delegate.scene.sunsSurvived = 3;
     if (self.delegate.scene.currentLevel / 10 > 0) {
         [bonusAmounts addObject:@(self.delegate.scene.currentLevel / 10)];
         NSMutableAttributedString *bonusString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"   +%d    %d PARSECS TRAVELLED   ", self.delegate.scene.currentLevel / 10, self.delegate.scene.currentLevel]];
@@ -372,13 +373,7 @@
         [bonusString addAttribute:NSFontAttributeName value:regularFont range:remainingRange];
         
         [bonusStrings addObject:bonusString];
-        
-        NSAttributedString *widthString = [bonusString attributedSubstringFromRange:rangeToDash];
-        CGFloat width = [widthString size].width;
-        CGFloat height =[widthString size].height;
-        UIView *divider = [[UIView alloc] initWithFrame:CGRectMake(width - 1, 2, 1, height-4)];
-        divider.backgroundColor =  [[UIColor whiteColor] colorWithAlphaComponent:0.5];
-        [self.bonusLabelOne addSubview:divider];
+        [bonusLengthsToDash addObject:@(rangeToDash.length)];
     }
     if (self.delegate.scene.bubblesPopped > 0) {
         [bonusAmounts addObject:@(self.delegate.scene.bubblesPopped * 5)];
@@ -396,13 +391,7 @@
         [bonusString addAttribute:NSFontAttributeName value:regularFont range:remainingRange];
         
         [bonusStrings addObject:bonusString];
-        
-        NSAttributedString *widthString = [bonusString attributedSubstringFromRange:rangeToDash];
-        CGFloat width = [widthString size].width;
-        CGFloat height =[widthString size].height;
-        UIView *divider = [[UIView alloc] initWithFrame:CGRectMake(width - 1, 2, 1, height-4)];
-        divider.backgroundColor =  [[UIColor whiteColor] colorWithAlphaComponent:0.5];
-        [self.bonusLabelTwo addSubview:divider];
+        [bonusLengthsToDash addObject:@(rangeToDash.length)];
     }
     if (self.delegate.scene.blackHolesSurvived > 0) {
         [bonusAmounts addObject:@(self.delegate.scene.blackHolesSurvived * 4)];
@@ -420,13 +409,7 @@
         [bonusString addAttribute:NSFontAttributeName value:regularFont range:remainingRange];
         
         [bonusStrings addObject:bonusString];
-        
-        NSAttributedString *widthString = [bonusString attributedSubstringFromRange:rangeToDash];
-        CGFloat width = [widthString size].width;
-        CGFloat height =[widthString size].height;
-        UIView *divider = [[UIView alloc] initWithFrame:CGRectMake(width - 1, 2, 1, height-4)];
-        divider.backgroundColor =  [[UIColor whiteColor] colorWithAlphaComponent:0.5];
-        [self.bonusLabelThree addSubview:divider];
+        [bonusLengthsToDash addObject:@(rangeToDash.length)];
     }
     if (self.delegate.scene.sunsSurvived > 0) {
         [bonusAmounts addObject:@(self.delegate.scene.sunsSurvived * 3)];
@@ -444,31 +427,61 @@
         [bonusString addAttribute:NSFontAttributeName value:regularFont range:remainingRange];
         
         [bonusStrings addObject:bonusString];
-        
-        NSAttributedString *widthString = [bonusString attributedSubstringFromRange:rangeToDash];
-        CGFloat width = [widthString size].width;
-        CGFloat height =[widthString size].height;
-        UIView *divider = [[UIView alloc] initWithFrame:CGRectMake(round(width - 1), 2, 1, height-4)];
-        divider.backgroundColor =  [[UIColor whiteColor] colorWithAlphaComponent:0.5];
-        [self.bonusLabelFour addSubview:divider];
+        [bonusLengthsToDash addObject:@(rangeToDash.length)];
     }
     
     if (bonusAmounts.count) {
         self.bonusBubbleOneTopConstraint.constant = 40;
         self.bonusLabelOne.attributedText = bonusStrings[0];
         [self.bonusLabelOne sizeToFit];
+        NSRange rangeToDash;
+        rangeToDash.location = 0;
+        rangeToDash.length = [bonusLengthsToDash[0] integerValue];
+        NSAttributedString *widthString = [bonusStrings[0] attributedSubstringFromRange:rangeToDash];
+        CGFloat width = [widthString size].width;
+        CGFloat height =[widthString size].height;
+        UIView *divider = [[UIView alloc] initWithFrame:CGRectMake(width - 1, 2, 0.5, height-4)];
+        divider.backgroundColor =  [[UIColor whiteColor] colorWithAlphaComponent:0.5];
+        [self.bonusLabelOne addSubview:divider];
         if (bonusAmounts.count > 1) {
             self.bonusBubbleTwoTopConstraint.constant = 35;
             self.bonusLabelTwo.attributedText = bonusStrings[1];
             [self.bonusLabelTwo sizeToFit];
+            NSRange rangeToDash;
+            rangeToDash.location = 0;
+            rangeToDash.length = [bonusLengthsToDash[1] integerValue];
+            NSAttributedString *widthString = [bonusStrings[1] attributedSubstringFromRange:rangeToDash];
+            CGFloat width = [widthString size].width;
+            CGFloat height =[widthString size].height;
+            UIView *divider = [[UIView alloc] initWithFrame:CGRectMake(width - 1, 2, 0.5, height-4)];
+            divider.backgroundColor =  [[UIColor whiteColor] colorWithAlphaComponent:0.5];
+            [self.bonusLabelTwo addSubview:divider];
             if (bonusAmounts.count > 2) {
                 self.bonusBubbleThreeTopConstraint.constant = 35;
                 self.bonusLabelThree.attributedText = bonusStrings[2];
                 [self.bonusLabelThree sizeToFit];
+                NSRange rangeToDash;
+                rangeToDash.location = 0;
+                rangeToDash.length = [bonusLengthsToDash[2] integerValue];
+                NSAttributedString *widthString = [bonusStrings[2] attributedSubstringFromRange:rangeToDash];
+                CGFloat width = [widthString size].width;
+                CGFloat height =[widthString size].height;
+                UIView *divider = [[UIView alloc] initWithFrame:CGRectMake(width - 1, 2, 0.5, height-4)];
+                divider.backgroundColor =  [[UIColor whiteColor] colorWithAlphaComponent:0.5];
+                [self.bonusLabelThree addSubview:divider];
                 if (bonusAmounts.count > 3) {
                     self.bonusBubbleFourTopConstraint.constant = 35;
                     self.bonusLabelFour.attributedText = bonusStrings[3];
                     [self.bonusLabelFour sizeToFit];
+                    NSRange rangeToDash;
+                    rangeToDash.location = 0;
+                    rangeToDash.length = [bonusLengthsToDash[3] integerValue];
+                    NSAttributedString *widthString = [bonusStrings[3] attributedSubstringFromRange:rangeToDash];
+                    CGFloat width = [widthString size].width;
+                    CGFloat height =[widthString size].height;
+                    UIView *divider = [[UIView alloc] initWithFrame:CGRectMake(width - 1, 2, 0.5, height-4)];
+                    divider.backgroundColor =  [[UIColor whiteColor] colorWithAlphaComponent:0.5];
+                    [self.bonusLabelFour addSubview:divider];
                 }
             }
         }

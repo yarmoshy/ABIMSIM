@@ -1911,6 +1911,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
             sprite.xScale = sprite.yScale = 1;
             for (BaseSprite *child in sprite.children) {
                 child.xScale = child.yScale = 1;
+                child.hidden = NO;
             }
             sprite.hidden = NO;
             [self addChild:sprite];
