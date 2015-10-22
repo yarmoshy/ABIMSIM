@@ -1912,6 +1912,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
             for (BaseSprite *child in sprite.children) {
                 child.xScale = child.yScale = 1;
                 child.hidden = NO;
+                if ([sprite.name isEqual:planetCategoryName]) {
+                    child.position = CGPointZero;
+                }
             }
             sprite.hidden = NO;
             [self addChild:sprite];
