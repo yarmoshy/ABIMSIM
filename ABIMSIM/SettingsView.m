@@ -58,8 +58,10 @@
 }
 
 -(void)sessionMErrored:(NSNotification*)notif {
-    self.sessionMSettingsToggle.hidden = YES;
-    self.sessionMToggleLogo.hidden = YES;
+    if (![SessionM sharedInstance].user.isOptedOut) {
+        self.sessionMSettingsToggle.hidden = YES;
+        self.sessionMToggleLogo.hidden = YES;
+    }
 }
 
 -(void)sessionMStateChanged:(NSNotification*)notif {
