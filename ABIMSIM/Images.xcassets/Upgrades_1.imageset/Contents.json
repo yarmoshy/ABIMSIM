@@ -6,22 +6,23 @@
     },
     {
       "idiom" : "iphone",
-      "scale" : "2x",
-      "filename" : "Upgrades_1@2x.png"
+      "filename" : "Upgrades_1@2x.png",
+      "scale" : "2x"
     },
     {
       "idiom" : "iphone",
-      "scale" : "3x",
-      "filename" : "Upgrades_1@3x.png"
+      "filename" : "Upgrades_1@3x.png",
+      "scale" : "3x"
     },
     {
       "idiom" : "ipad",
+      "filename" : "Upgrades_1_iPad@1x.png",
       "scale" : "1x"
     },
     {
       "idiom" : "ipad",
-      "scale" : "2x",
-      "filename" : "Upgrades_1_iPad@2x.png"
+      "filename" : "Upgrades_1_iPad@2x.png",
+      "scale" : "2x"
     }
   ],
   "info" : {
