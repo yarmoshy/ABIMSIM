@@ -193,19 +193,22 @@
             if (indexPath.section == 1) {
                 upgradeIconLabel.text = NSLocalizedString(@"SHIELDS", nil);
                 upgradeIconImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ShipShield"]];
+                upgradeIconImage.frame = CGRectMake(15, 12.5, 30, 30);
             } else if (indexPath.section == 2) {
                 upgradeIconLabel.text = NSLocalizedString(@"ASTEROID NUKES", nil);
                 upgradeIconImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"MineIcon"]];
+                upgradeIconImage.frame = CGRectMake(15, 12.5, 30, 30);
             } else if (indexPath.section == 3) {
                 upgradeIconLabel.text = NSLocalizedString(@"SHIP ARMORY", nil);
-                upgradeIconImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"MineIcon"]];
+                upgradeIconImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Ship"]];
+                upgradeIconImage.frame = CGRectMake(11, 7, upgradeIconImage.frame.size.width*0.75, upgradeIconImage.frame.size.height*0.75);
             }
-            upgradeIconImage.frame = CGRectMake(15, 12.5, 30, 30);
             [upgradeIconLabel sizeToFit];
             upgradeIconLabel.frame = CGRectMake(upgradeIconImage.frame.size.width + upgradeIconImage.frame.origin.x + 5, (kTypeCellHeight - upgradeIconLabel.frame.size.height)/2, upgradeIconLabel.frame.size.width, upgradeIconLabel.frame.size.height);
             [typeCell.contentView addSubview:upgradeIconImage];
             [typeCell.contentView addSubview:upgradeIconLabel];
             if (indexPath.section == 3) {
+                upgradeIconLabel.frame = CGRectMake(upgradeIconLabel.frame.origin.x - 5, upgradeIconLabel.frame.origin.y, upgradeIconLabel.frame.size.width, upgradeIconLabel.frame.size.height);
                 UILabel *armoryDescriptionLabel = [[UILabel alloc] init];
                 [armoryDescriptionLabel setFont:[UIFont fontWithName:@"Futura-CondensedMedium" size:16]];
                 NSString *spaceOrNewLine = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? @" " : @"\n";
