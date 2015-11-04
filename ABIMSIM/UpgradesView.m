@@ -141,12 +141,14 @@
         UIView *xpContainerView = [[UIView alloc] initWithFrame:xpCell.contentView.bounds];
         [xpCell.contentView addSubview:xpContainerView];
         
+        UIImageView *leftBracket = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"LeftXPBracket"]];
+        
         UILabel *youHaveLabel = [[UILabel alloc] init];
         youHaveLabel.font = [UIFont fontWithName:@"Futura-CondensedMedium" size:UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 20 : 14];
         youHaveLabel.textColor = [UIColor whiteColor];
         youHaveLabel.text = @"YOU HAVE";
         [youHaveLabel sizeToFit];
-        youHaveLabel.center = CGPointMake(tableView.frame.size.width/3, (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 92 : 87) + youHaveLabel.frame.size.height/2);
+        youHaveLabel.center = CGPointMake(youHaveLabel.frame.size.width/2 + leftBracket.frame.size.width, (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 92 : 87) + youHaveLabel.frame.size.height/2);
         [xpContainerView addSubview:youHaveLabel];
 
         
@@ -154,11 +156,11 @@
         xpLabel.font = [UIFont fontWithName:@"Futura-CondensedMedium" size:UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 50 : 25];
         xpLabel.textColor = [UIColor colorWithRed:211.f/255.f green:12.f/255.f blue:95.f/255.f alpha:1];
         xpLabel.text = [NSString stringWithFormat:@"%@ XP",[formatter stringFromNumber:[NSNumber numberWithInteger:[ABIMSIMDefaults integerForKey:kUserDuckets]]]];
+
         [xpLabel sizeToFit];
         xpLabel.center = CGPointMake(youHaveLabel.center.x, youHaveLabel.center.y + youHaveLabel.frame.size.height/2 + xpLabel.frame.size.height/2);
         [xpContainerView addSubview:xpLabel];
         
-        UIImageView *leftBracket = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"LeftXPBracket"]];
         leftBracket.center = CGPointMake(xpLabel.frame.origin.x - leftBracket.frame.size.width, (youHaveLabel.frame.origin.y + xpLabel.frame.origin.y + xpLabel.frame.size.height)/2);
         [xpContainerView addSubview:leftBracket];
         
@@ -171,7 +173,7 @@
         [storeButton setImage:[UIImage imageNamed:@"GetMoreButton_Tapped"] forState:UIControlStateHighlighted];
         [storeButton setImage:[UIImage imageNamed:@"GetMoreButton_Tapped"] forState:UIControlStateSelected];
         [storeButton sizeToFit];
-        storeButton.center = CGPointMake(tableView.frame.size.width * (2.f/3.f), (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 61 : 67 ) + (xpCell.frame.size.height-72)/2 + storeButton.frame.size.height/4);
+        storeButton.center = CGPointMake(rightBracket.frame.origin.x + rightBracket.frame.size.width + 15 + storeButton.frame.size.width/2, (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 61 : 67 ) + (xpCell.frame.size.height-72)/2 + storeButton.frame.size.height/4);
         [storeButton addTarget:self action:@selector(storeButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
         [xpContainerView addSubview:storeButton];
         
