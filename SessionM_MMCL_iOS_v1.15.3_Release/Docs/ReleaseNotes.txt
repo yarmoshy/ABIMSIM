@@ -1,0 +1,9 @@
+SessionM Mobile Marketing Cloud iOS SDK Release Notes
+
+Copyright: 2015 SessionM. All rights reserved.
+Date: 10/26/2015
+Version: 1.15.3
+
+Changes:
+- Changes to portal loading screen design.
+- Removed iOS 7 support.

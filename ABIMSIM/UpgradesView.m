@@ -38,6 +38,7 @@
 
 -(void)storeButtonTapped:(id)sender {
     ((IAPView*)IAPController.view).presentingViewController = ((UIViewController*)self.delegate);
+    [iapView.tableView reloadData];
     [iapView.tableView setContentOffset:CGPointZero];
     [((UIViewController*)self.delegate) presentViewController:IAPController animated:YES completion:^{
         ;
