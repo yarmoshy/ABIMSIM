@@ -11,7 +11,7 @@
 //#import <Crashlytics/Crashlytics.h>
 #import "MKStoreKit.h"
 #import "SessionM.h"
-
+#import "Appirater.h"
 @interface AppDelegate () <SessionMDelegate>
 
 @end
@@ -21,6 +21,13 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    [Appirater setAppId:@"876062426"];
+    [Appirater setDaysUntilPrompt:-1];
+    [Appirater setUsesUntilPrompt:5];
+    [Appirater setSignificantEventsUntilPrompt:-1];
+    [Appirater setTimeBeforeReminding:2];
+    [Appirater setDebug:NO];
+    
 //    [Fabric with:@[CrashlyticsKit]];
     [SessionM sharedInstance].delegate = self;
 //    [SessionM sharedInstance].logLevel = SMLogLevelDebug;
@@ -97,7 +104,7 @@
                                                       NSLog(@"Purchase failed with error: %@", [note object]);
                                                       [[NSNotificationCenter defaultCenter] postNotificationName:kStoreKitPurchaseFinished object:nil];
                                                   }];
-
+    [Appirater appLaunched:YES];
     return YES;
 }
 							
@@ -116,6 +123,7 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    [Appirater appEnteredForeground:YES];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
