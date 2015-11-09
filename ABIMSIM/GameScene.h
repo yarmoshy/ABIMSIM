@@ -7,7 +7,9 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
+#ifndef TARGET_OS_TV
 #import <Social/Social.h>
+#endif
 #import "ViewController.h"
 
 @interface GameScene : SKScene <SKPhysicsContactDelegate>

@@ -19,7 +19,7 @@
 @class GameScene;
 @class DCRoundSwitch;
 
-@interface ViewController : UIViewController <GKGameCenterControllerDelegate, UIAlertViewDelegate, GameOverViewDelegate, PausedViewDelegate, SettingsViewDelegate, MainMenuViewDelegate, UpgradesViewDelegate>
+@interface ViewController : UIViewController <GKGameCenterControllerDelegate, GameOverViewDelegate, PausedViewDelegate, SettingsViewDelegate, MainMenuViewDelegate, UpgradesViewDelegate>
 
 @property (strong, nonatomic) GameScene *scene;
 @property (weak, nonatomic) IBOutlet UIButton *pauseButton;

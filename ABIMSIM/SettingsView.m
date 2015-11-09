@@ -10,9 +10,11 @@
 #import "AudioController.h"
 #import "UIView+Fancy.h"
 #import "DCRoundSwitch.h"
+#ifndef TARGET_OS_TV
 #import <Social/Social.h>
+#endif
 #import "SessionM.h"
-
+#import "AppDelegate.h"
 @implementation SettingsView {
     BOOL showingSettings;
 }
@@ -113,6 +115,9 @@
 }
 
 - (IBAction)twitterTapped:(id)sender {
+#ifdef TARGET_OS_TV
+    return;
+#else
     if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]) {
         SLComposeViewController *composeController = [SLComposeViewController
                                                       composeViewControllerForServiceType:SLServiceTypeTwitter];
@@ -133,9 +138,13 @@
         }
         [alert show];
     }
+#endif
 }
 
 - (IBAction)facebookTapped:(id)sender {
+#ifdef TARGET_OS_TV
+    return;
+#else
     if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
         SLComposeViewController *composeController = [SLComposeViewController
                                                       composeViewControllerForServiceType:SLServiceTypeFacebook];
@@ -156,14 +165,38 @@
         }
         [alert show];
     }
+#endif
 }
 
 - (IBAction)resetTapped:(id)sender {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"WARNING" message:@"Are you sure you want to reset all game data? This includes all upgrades and XP earned. This cannot be undone." delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
-    alert.tag = 777;
-    [alert show];
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"WARNING"
+                                                                   message:@"Are you sure you want to reset all game data? This includes all upgrades and XP earned. This cannot be undone."
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * action) {
+                                                              [ABIMSIMDefaults setInteger:0 forKey:kShieldOccuranceLevel];
+                                                              [ABIMSIMDefaults setInteger:0 forKey:kShieldDurabilityLevel];
+                                                              [ABIMSIMDefaults setBool:NO forKey:kShieldOnStart];
+                                                              [ABIMSIMDefaults setInteger:0 forKey:kMineOccuranceLevel];
+                                                              [ABIMSIMDefaults setInteger:0 forKey:kMineBlastSpeedLevel];
+                                                              [ABIMSIMDefaults setInteger:0 forKey:kHolsterCapacity];
+                                                              [ABIMSIMDefaults setInteger:0 forKey:kHolsterNukes];
+                                                              [ABIMSIMDefaults setInteger:0 forKey:kUserDuckets];
+                                                              [ABIMSIMDefaults setBool:NO forKey:kWalkthroughSeen];
+                                                              [ABIMSIMDefaults synchronize];
+                                                              [self.delegate settingsDidReset];
+                                                          }];
+    UIAlertAction* defaultAction2 = [UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * action) {}];
+    
+    [alert addAction:defaultAction];
+    [alert addAction:defaultAction2];
+
+    [((AppDelegate*)[UIApplication sharedApplication].delegate).window.rootViewController presentViewController:alert animated:YES completion:nil];
 }
 
+#ifndef TARGET_OS_TV
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 0) { //do nothing
         ;
@@ -185,7 +218,7 @@
         }
     }
 }
-
+#endif
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.

@@ -31,8 +31,9 @@
     [hamburgerToXImages enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         [hamburgerToOriginalImages addObject:obj];
     }];
+#ifndef TARGET_OS_TV
     self.playButton.exclusiveTouch = self.upgradeButton.exclusiveTouch = self.highScoreButton.exclusiveTouch = self.hamburgerButton.exclusiveTouch = YES;
-    
+#endif
     NSMutableParagraphStyle *paragraphStyle = [NSParagraphStyle defaultParagraphStyle].mutableCopy;
     paragraphStyle.lineHeightMultiple= 1;
     paragraphStyle.alignment = NSTextAlignmentCenter;

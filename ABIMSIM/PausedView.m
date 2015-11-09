@@ -22,7 +22,9 @@
 }
 
 -(void)didMoveToSuperview {
+#ifndef TARGET_OS_TV
     self.playPausedButton.exclusiveTouch = self.mainMenuButton.exclusiveTouch = YES;
+#endif
     [self setupToggles];
     [self.musicPausedSwitch addTarget:self action:@selector(musicSwitchToggled:) forControlEvents:UIControlEventValueChanged];
     [self.sfxPausedSwitch addTarget:self action:@selector(sfxSwitchToggled:) forControlEvents:UIControlEventValueChanged];

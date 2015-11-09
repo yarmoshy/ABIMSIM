@@ -37,6 +37,7 @@
 //	if you are re-publishing after editing, please retain the above copyright notices
 
 #import "MKStoreKit.h"
+#import "AppDelegate.h"
 
 @import StoreKit;
 NSString *const kMKStoreKitProductsAvailableNotification = @"com.mugunthkumar.mkstorekit.productsavailable";
@@ -240,11 +241,15 @@ static NSDictionary *errorDictionary;
   
   if (![SKPaymentQueue canMakePayments]) {
 #if TARGET_OS_IPHONE
-    [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"In App Purchasing Disabled", @"")
-                                message:NSLocalizedString(@"Check your parental control settings and try again later", @"")
-                               delegate:self
-                      cancelButtonTitle:NSLocalizedString(@"Okay", @"")
-                      otherButtonTitles:nil] show];
+      UIAlertController* alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"In App Purchasing Disabled", @"")
+                                                                     message:NSLocalizedString(@"Check your parental control settings and try again later", @"")
+                                                              preferredStyle:UIAlertControllerStyleAlert];
+      
+      UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Okay", @"") style:UIAlertActionStyleDefault
+                                                            handler:^(UIAlertAction * action) {}];
+      
+      [alert addAction:defaultAction];
+      [((AppDelegate*)[UIApplication sharedApplication].delegate).window.rootViewController presentViewController:alert animated:YES completion:nil];
 #elif TARGET_OS_MAC
     NSAlert *alert = [[NSAlert alloc] init];
     alert.messageText = NSLocalizedString(@"In App Purchasing Disabled", @"");

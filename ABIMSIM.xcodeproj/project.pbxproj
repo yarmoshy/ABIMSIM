@@ -11,6 +11,84 @@
 		B405AA281AEC31E00053F794 /* Moki-Lean.otf in Resources */ = {isa = PBXBuildFile; fileRef = B405AA261AEC31E00053F794 /* Moki-Lean.otf */; };
 		B405AA2F1AED54980053F794 /* gamePlay.caf in Resources */ = {isa = PBXBuildFile; fileRef = B405AA2E1AED54980053F794 /* gamePlay.caf */; };
 		B405AA331AED5F990053F794 /* asteroidSun.caf in Resources */ = {isa = PBXBuildFile; fileRef = B405AA321AED5F990053F794 /* asteroidSun.caf */; };
+		B40EC8E51BF154F500144357 /* MKStoreKit.m in Sources */ = {isa = PBXBuildFile; fileRef = B45CA2491B25F5CD001E07D9 /* MKStoreKit.m */; };
+		B40EC8E61BF154FA00144357 /* MKStoreKitConfigs.plist in Resources */ = {isa = PBXBuildFile; fileRef = B45CA24D1B25F94E001E07D9 /* MKStoreKitConfigs.plist */; };
+		B40EC8E71BF154FF00144357 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B45FF13918CE8708001662CD /* AppDelegate.m */; };
+		B40EC8E81BF1551100144357 /* GGViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B45CAE2D1B5F35240076916A /* GGViewController.m */; };
+		B40EC8E91BF1551400144357 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B45FF13F18CE8708001662CD /* ViewController.m */; };
+		B40EC8EA1BF1551700144357 /* AudioController.m in Sources */ = {isa = PBXBuildFile; fileRef = B49792691A844756005174C1 /* AudioController.m */; };
+		B40EC8EB1BF1558E00144357 /* GameOverView.m in Sources */ = {isa = PBXBuildFile; fileRef = B4557EC21AC0D4C8004E097E /* GameOverView.m */; };
+		B40EC8EC1BF1558E00144357 /* GameOverView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B4557EC41AC0D4DD004E097E /* GameOverView.xib */; };
+		B40EC8ED1BF1558E00144357 /* GameOverView_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1C786061B72A4270016DF45 /* GameOverView_iPad.xib */; };
+		B40EC8EE1BF1558E00144357 /* PausedView.m in Sources */ = {isa = PBXBuildFile; fileRef = B4557ED41AC0EF47004E097E /* PausedView.m */; };
+		B40EC8EF1BF1558E00144357 /* PausedView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B4557ED61AC0EF57004E097E /* PausedView.xib */; };
+		B40EC8F01BF1558E00144357 /* PausedView_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1C339A81B73D9B400B39439 /* PausedView_iPad.xib */; };
+		B40EC8F11BF1558E00144357 /* SettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = B4557EDD1AC37C5A004E097E /* SettingsView.m */; };
+		B40EC8F21BF1558E00144357 /* SettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B4557EDA1AC37B8A004E097E /* SettingsView.xib */; };
+		B40EC8F31BF1558E00144357 /* MainMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = B4557EE21AC3B26B004E097E /* MainMenuView.m */; };
+		B40EC8F41BF1558E00144357 /* MainMenuView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B4557EDF1AC3B24D004E097E /* MainMenuView.xib */; };
+		B40EC8F51BF1558E00144357 /* MainMenuView_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = E18208C41B6BDB8D0029446E /* MainMenuView_iPad.xib */; };
+		B40EC8F61BF1558E00144357 /* UpgradesView.m in Sources */ = {isa = PBXBuildFile; fileRef = B472444C1ACE0433002A8B4B /* UpgradesView.m */; };
+		B40EC8F71BF1558E00144357 /* UpgradesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B472444E1ACE0441002A8B4B /* UpgradesView.xib */; };
+		B40EC8F81BF1558E00144357 /* UpgradeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B48AA3851AD043C80054CC65 /* UpgradeTableViewCell.m */; };
+		B40EC8F91BF1558E00144357 /* UpgradeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B48AA3861AD043C80054CC65 /* UpgradeTableViewCell.xib */; };
+		B40EC8FA1BF1558E00144357 /* IAPView.m in Sources */ = {isa = PBXBuildFile; fileRef = B45CA2501B25FBD9001E07D9 /* IAPView.m */; };
+		B40EC8FB1BF1558E00144357 /* IAPView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B45CA2521B25FBE8001E07D9 /* IAPView.xib */; };
+		B40EC8FC1BF1559500144357 /* GameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B45FF14218CE8708001662CD /* GameScene.m */; };
+		B40EC8FD1BF1559500144357 /* UpgradeScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B400F40F191AFCA100A483E2 /* UpgradeScene.m */; };
+		B40EC8FE1BF1559A00144357 /* BlackHole.m in Sources */ = {isa = PBXBuildFile; fileRef = B47244421ACB710C002A8B4B /* BlackHole.m */; };
+		B40EC8FF1BF1559A00144357 /* BaseSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = B47244471ACB71F8002A8B4B /* BaseSprite.m */; };
+		B40EC9001BF155AF00144357 /* HexColor.m in Sources */ = {isa = PBXBuildFile; fileRef = B45865EB18DA3ACA005C9566 /* HexColor.m */; };
+		B40EC9011BF155AF00144357 /* UIView+Screenshot.m in Sources */ = {isa = PBXBuildFile; fileRef = B4557EC71AC0DD95004E097E /* UIView+Screenshot.m */; };
+		B40EC9021BF155AF00144357 /* UIImage+Effects.m in Sources */ = {isa = PBXBuildFile; fileRef = B4557ECB1AC0DDF1004E097E /* UIImage+Effects.m */; };
+		B40EC9031BF155AF00144357 /* SKScene+Unarchive.m in Sources */ = {isa = PBXBuildFile; fileRef = B4557ECE1AC0DE55004E097E /* SKScene+Unarchive.m */; };
+		B40EC9041BF155AF00144357 /* UIView+Fancy.m in Sources */ = {isa = PBXBuildFile; fileRef = B4557ED11AC0E8A3004E097E /* UIView+Fancy.m */; };
+		B40EC9051BF155AF00144357 /* SKNode+Removed.m in Sources */ = {isa = PBXBuildFile; fileRef = B43358601AF834FF00DB6444 /* SKNode+Removed.m */; };
+		B40EC9061BF155AF00144357 /* DCRoundSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = E1D4EDEE1A5B5E5900676C17 /* DCRoundSwitch.m */; };
+		B40EC9071BF155AF00144357 /* DCRoundSwitchKnobLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E1D4EDF01A5B5E5900676C17 /* DCRoundSwitchKnobLayer.m */; };
+		B40EC9081BF155AF00144357 /* DCRoundSwitchOutlineLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E1D4EDF21A5B5E5900676C17 /* DCRoundSwitchOutlineLayer.m */; };
+		B40EC9091BF155AF00144357 /* DCRoundSwitchToggleLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E1D4EDF41A5B5E5900676C17 /* DCRoundSwitchToggleLayer.m */; };
+		B40EC90B1BF155AF00144357 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B45FF13518CE8708001662CD /* main.m */; };
+		B40EC90C1BF155B800144357 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = B485E7D41BEAC41A00541190 /* README.md */; };
+		B40EC90D1BF155BB00144357 /* CHANGELOG.md in Sources */ = {isa = PBXBuildFile; fileRef = B485E7BF1BEAC41A00541190 /* CHANGELOG.md */; };
+		B40EC90E1BF155C000144357 /* AppiraterLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B485E7BC1BEAC41A00541190 /* AppiraterLocalizable.strings */; };
+		B40EC90F1BF155C300144357 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B45FF13218CE8708001662CD /* InfoPlist.strings */; };
+		B40EC9101BF155D000144357 /* Appirater.podspec.json in Resources */ = {isa = PBXBuildFile; fileRef = B485E7BA1BEAC41A00541190 /* Appirater.podspec.json */; };
+		B40EC9111BF155D500144357 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = B485E7B71BEAC41A00541190 /* .gitignore */; };
+		B40EC9121BF155DA00144357 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B45FF14618CE8708001662CD /* Images.xcassets */; };
+		B40EC9131BF155DF00144357 /* Moki-Lean.otf in Resources */ = {isa = PBXBuildFile; fileRef = B405AA261AEC31E00053F794 /* Moki-Lean.otf */; };
+		B40EC9151BF155E400144357 /* Voltaire-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B47923DB19157805002B8467 /* Voltaire-Regular.ttf */; };
+		B40EC9161BF155EA00144357 /* upgrade.caf in Resources */ = {isa = PBXBuildFile; fileRef = B4D42E851AFEAC4100248BE8 /* upgrade.caf */; };
+		B40EC9171BF155EA00144357 /* asteroidSun.caf in Resources */ = {isa = PBXBuildFile; fileRef = B405AA321AED5F990053F794 /* asteroidSun.caf */; };
+		B40EC9181BF155EA00144357 /* activateShieldTrimmed.caf in Resources */ = {isa = PBXBuildFile; fileRef = B49792F71A86F632005174C1 /* activateShieldTrimmed.caf */; };
+		B40EC9191BF155EA00144357 /* deactivateShieldTrimmed.caf in Resources */ = {isa = PBXBuildFile; fileRef = B49792F91A86F638005174C1 /* deactivateShieldTrimmed.caf */; };
+		B40EC91A1BF155EA00144357 /* explosionMineTrimmed.caf in Resources */ = {isa = PBXBuildFile; fileRef = B49792F11A86E617005174C1 /* explosionMineTrimmed.caf */; };
+		B40EC91B1BF155EA00144357 /* explosionTrimmed.caf in Resources */ = {isa = PBXBuildFile; fileRef = B49792ED1A86E3AC005174C1 /* explosionTrimmed.caf */; };
+		B40EC91C1BF155EA00144357 /* gamePlay.caf in Resources */ = {isa = PBXBuildFile; fileRef = B405AA2E1AED54980053F794 /* gamePlay.caf */; };
+		B40EC91D1BF155FD00144357 /* libSessionMLocation.1.15.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B485E7691BEAB15100541190 /* libSessionMLocation.1.15.3.a */; };
+		B40EC91E1BF1560400144357 /* btnSessionM.png in Resources */ = {isa = PBXBuildFile; fileRef = B485E7641BEAB15100541190 /* btnSessionM.png */; };
+		B40EC91F1BF1560400144357 /* btnSessionM_lg.png in Resources */ = {isa = PBXBuildFile; fileRef = B485E7651BEAB15100541190 /* btnSessionM_lg.png */; };
+		B40EC9201BF1560400144357 /* GiftBox_20x20.png in Resources */ = {isa = PBXBuildFile; fileRef = B485E7661BEAB15100541190 /* GiftBox_20x20.png */; };
+		B40EC9211BF1560400144357 /* M_Logo_20x20.png in Resources */ = {isa = PBXBuildFile; fileRef = B485E7671BEAB15100541190 /* M_Logo_20x20.png */; };
+		B40EC9221BF1560400144357 /* Trophy_20x20.png in Resources */ = {isa = PBXBuildFile; fileRef = B485E7681BEAB15100541190 /* Trophy_20x20.png */; };
+		B40EC9231BF1560B00144357 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = B485E7511BEAB15100541190 /* LICENSE */; };
+		B40EC9241BF1560E00144357 /* ReleaseNotes.txt in Resources */ = {isa = PBXBuildFile; fileRef = B485E7521BEAB15100541190 /* ReleaseNotes.txt */; };
+		B40EC9251BF1562400144357 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E13D23311B31E97E006D1E30 /* ImageIO.framework */; };
+		B40EC9261BF1562400144357 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E13D232D1B31E8D6006D1E30 /* EventKit.framework */; };
+		B40EC9271BF1562400144357 /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E13D232E1B31E8D6006D1E30 /* EventKitUI.framework */; };
+		B40EC9281BF1562400144357 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E13D232A1B31E8CA006D1E30 /* MediaPlayer.framework */; };
+		B40EC9291BF1562400144357 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E13D23281B31E8C3006D1E30 /* SystemConfiguration.framework */; };
+		B40EC92A1BF1562400144357 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E13D23261B31E8BB006D1E30 /* CoreMedia.framework */; };
+		B40EC92B1BF1562400144357 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E13D23241B31E8B5006D1E30 /* CoreData.framework */; };
+		B40EC92C1BF1562400144357 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E13D23211B31E87D006D1E30 /* AVFoundation.framework */; };
+		B40EC9301BF1562400144357 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E13D23191B31E85F006D1E30 /* AdSupport.framework */; };
+		B40EC9341BF1562400144357 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B45CA24B1B25F5D5001E07D9 /* StoreKit.framework */; };
+		B40EC9361BF1562400144357 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B47BCFC61921879000C22D22 /* Social.framework */; };
+		B40EC9371BF1562400144357 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4A792A6191C2B92005317AD /* GameKit.framework */; };
+		B40EC9381BF1562400144357 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B45FF12718CE8708001662CD /* Foundation.framework */; };
+		B40EC9391BF1562400144357 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B45FF12918CE8708001662CD /* CoreGraphics.framework */; };
+		B40EC93A1BF1562400144357 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B45FF12B18CE8708001662CD /* UIKit.framework */; };
+		B40EC93B1BF1562400144357 /* SpriteKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B45FF12D18CE8708001662CD /* SpriteKit.framework */; };
 		B43358611AF834FF00DB6444 /* SKNode+Removed.m in Sources */ = {isa = PBXBuildFile; fileRef = B43358601AF834FF00DB6444 /* SKNode+Removed.m */; };
 		B4557EC31AC0D4C8004E097E /* GameOverView.m in Sources */ = {isa = PBXBuildFile; fileRef = B4557EC21AC0D4C8004E097E /* GameOverView.m */; };
 		B4557EC51AC0D4DD004E097E /* GameOverView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B4557EC41AC0D4DD004E097E /* GameOverView.xib */; };
@@ -164,6 +242,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		B40EC8CB1BF154D000144357 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B45FF11C18CE8708001662CD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B40EC8AD1BF154CF00144357;
+			remoteInfo = ABIMSIMTV;
+		};
+		B40EC8D61BF154D000144357 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B45FF11C18CE8708001662CD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B40EC8AD1BF154CF00144357;
+			remoteInfo = ABIMSIMTV;
+		};
 		B45FF15118CE8708001662CD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B45FF11C18CE8708001662CD /* Project object */;
@@ -179,6 +271,9 @@
 		B405AA261AEC31E00053F794 /* Moki-Lean.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Moki-Lean.otf"; sourceTree = "<group>"; };
 		B405AA2E1AED54980053F794 /* gamePlay.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = gamePlay.caf; sourceTree = "<group>"; };
 		B405AA321AED5F990053F794 /* asteroidSun.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = asteroidSun.caf; sourceTree = "<group>"; };
+		B40EC8AE1BF154CF00144357 /* ABIMSIMTV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ABIMSIMTV.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B40EC8CA1BF154D000144357 /* ABIMSIMTVTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ABIMSIMTVTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B40EC8D51BF154D000144357 /* ABIMSIMTVUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ABIMSIMTVUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B433585F1AF834FF00DB6444 /* SKNode+Removed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SKNode+Removed.h"; sourceTree = "<group>"; };
 		B43358601AF834FF00DB6444 /* SKNode+Removed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKNode+Removed.m"; sourceTree = "<group>"; };
 		B4557EC11AC0D4C8004E097E /* GameOverView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameOverView.h; sourceTree = "<group>"; };
@@ -415,6 +510,44 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		B40EC8AB1BF154CF00144357 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B40EC9271BF1562400144357 /* EventKitUI.framework in Frameworks */,
+				B40EC92B1BF1562400144357 /* CoreData.framework in Frameworks */,
+				B40EC92C1BF1562400144357 /* AVFoundation.framework in Frameworks */,
+				B40EC9361BF1562400144357 /* Social.framework in Frameworks */,
+				B40EC93A1BF1562400144357 /* UIKit.framework in Frameworks */,
+				B40EC9281BF1562400144357 /* MediaPlayer.framework in Frameworks */,
+				B40EC9301BF1562400144357 /* AdSupport.framework in Frameworks */,
+				B40EC9251BF1562400144357 /* ImageIO.framework in Frameworks */,
+				B40EC9261BF1562400144357 /* EventKit.framework in Frameworks */,
+				B40EC93B1BF1562400144357 /* SpriteKit.framework in Frameworks */,
+				B40EC9291BF1562400144357 /* SystemConfiguration.framework in Frameworks */,
+				B40EC91D1BF155FD00144357 /* libSessionMLocation.1.15.3.a in Frameworks */,
+				B40EC9341BF1562400144357 /* StoreKit.framework in Frameworks */,
+				B40EC92A1BF1562400144357 /* CoreMedia.framework in Frameworks */,
+				B40EC9381BF1562400144357 /* Foundation.framework in Frameworks */,
+				B40EC9391BF1562400144357 /* CoreGraphics.framework in Frameworks */,
+				B40EC9371BF1562400144357 /* GameKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B40EC8C71BF154D000144357 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B40EC8D21BF154D000144357 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B45FF12118CE8708001662CD /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -565,6 +698,9 @@
 			children = (
 				B45FF12418CE8708001662CD /* ABIMSIM.app */,
 				B45FF14C18CE8708001662CD /* ABIMSIMTests.xctest */,
+				B40EC8AE1BF154CF00144357 /* ABIMSIMTV.app */,
+				B40EC8CA1BF154D000144357 /* ABIMSIMTVTests.xctest */,
+				B40EC8D51BF154D000144357 /* ABIMSIMTVUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1236,6 +1372,59 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		B40EC8AD1BF154CF00144357 /* ABIMSIMTV */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B40EC8E21BF154D000144357 /* Build configuration list for PBXNativeTarget "ABIMSIMTV" */;
+			buildPhases = (
+				B40EC8AA1BF154CF00144357 /* Sources */,
+				B40EC8AB1BF154CF00144357 /* Frameworks */,
+				B40EC8AC1BF154CF00144357 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ABIMSIMTV;
+			productName = ABIMSIMTV;
+			productReference = B40EC8AE1BF154CF00144357 /* ABIMSIMTV.app */;
+			productType = "com.apple.product-type.application";
+		};
+		B40EC8C91BF154D000144357 /* ABIMSIMTVTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B40EC8E31BF154D000144357 /* Build configuration list for PBXNativeTarget "ABIMSIMTVTests" */;
+			buildPhases = (
+				B40EC8C61BF154D000144357 /* Sources */,
+				B40EC8C71BF154D000144357 /* Frameworks */,
+				B40EC8C81BF154D000144357 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B40EC8CC1BF154D000144357 /* PBXTargetDependency */,
+			);
+			name = ABIMSIMTVTests;
+			productName = ABIMSIMTVTests;
+			productReference = B40EC8CA1BF154D000144357 /* ABIMSIMTVTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		B40EC8D41BF154D000144357 /* ABIMSIMTVUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B40EC8E41BF154D000144357 /* Build configuration list for PBXNativeTarget "ABIMSIMTVUITests" */;
+			buildPhases = (
+				B40EC8D11BF154D000144357 /* Sources */,
+				B40EC8D21BF154D000144357 /* Frameworks */,
+				B40EC8D31BF154D000144357 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B40EC8D71BF154D000144357 /* PBXTargetDependency */,
+			);
+			name = ABIMSIMTVUITests;
+			productName = ABIMSIMTVUITests;
+			productReference = B40EC8D51BF154D000144357 /* ABIMSIMTVUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		B45FF12318CE8708001662CD /* ABIMSIM */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B45FF15D18CE8708001662CD /* Build configuration list for PBXNativeTarget "ABIMSIM" */;
@@ -1280,6 +1469,17 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Kevin Yarmosh";
 				TargetAttributes = {
+					B40EC8AD1BF154CF00144357 = {
+						CreatedOnToolsVersion = 7.1;
+					};
+					B40EC8C91BF154D000144357 = {
+						CreatedOnToolsVersion = 7.1;
+						TestTargetID = B40EC8AD1BF154CF00144357;
+					};
+					B40EC8D41BF154D000144357 = {
+						CreatedOnToolsVersion = 7.1;
+						TestTargetID = B40EC8AD1BF154CF00144357;
+					};
 					B45FF12318CE8708001662CD = {
 						DevelopmentTeam = 6QXVXEAWF9;
 						SystemCapabilities = {
@@ -1346,11 +1546,67 @@
 			targets = (
 				B45FF12318CE8708001662CD /* ABIMSIM */,
 				B45FF14B18CE8708001662CD /* ABIMSIMTests */,
+				B40EC8AD1BF154CF00144357 /* ABIMSIMTV */,
+				B40EC8C91BF154D000144357 /* ABIMSIMTVTests */,
+				B40EC8D41BF154D000144357 /* ABIMSIMTVUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		B40EC8AC1BF154CF00144357 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B40EC8FB1BF1558E00144357 /* IAPView.xib in Resources */,
+				B40EC91C1BF155EA00144357 /* gamePlay.caf in Resources */,
+				B40EC9131BF155DF00144357 /* Moki-Lean.otf in Resources */,
+				B40EC9121BF155DA00144357 /* Images.xcassets in Resources */,
+				B40EC8F51BF1558E00144357 /* MainMenuView_iPad.xib in Resources */,
+				B40EC9101BF155D000144357 /* Appirater.podspec.json in Resources */,
+				B40EC9161BF155EA00144357 /* upgrade.caf in Resources */,
+				B40EC9211BF1560400144357 /* M_Logo_20x20.png in Resources */,
+				B40EC9241BF1560E00144357 /* ReleaseNotes.txt in Resources */,
+				B40EC90E1BF155C000144357 /* AppiraterLocalizable.strings in Resources */,
+				B40EC9231BF1560B00144357 /* LICENSE in Resources */,
+				B40EC90F1BF155C300144357 /* InfoPlist.strings in Resources */,
+				B40EC9171BF155EA00144357 /* asteroidSun.caf in Resources */,
+				B40EC9201BF1560400144357 /* GiftBox_20x20.png in Resources */,
+				B40EC9151BF155E400144357 /* Voltaire-Regular.ttf in Resources */,
+				B40EC8F41BF1558E00144357 /* MainMenuView.xib in Resources */,
+				B40EC8EF1BF1558E00144357 /* PausedView.xib in Resources */,
+				B40EC9191BF155EA00144357 /* deactivateShieldTrimmed.caf in Resources */,
+				B40EC8EC1BF1558E00144357 /* GameOverView.xib in Resources */,
+				B40EC91E1BF1560400144357 /* btnSessionM.png in Resources */,
+				B40EC8ED1BF1558E00144357 /* GameOverView_iPad.xib in Resources */,
+				B40EC91B1BF155EA00144357 /* explosionTrimmed.caf in Resources */,
+				B40EC91A1BF155EA00144357 /* explosionMineTrimmed.caf in Resources */,
+				B40EC8F71BF1558E00144357 /* UpgradesView.xib in Resources */,
+				B40EC9111BF155D500144357 /* .gitignore in Resources */,
+				B40EC8F91BF1558E00144357 /* UpgradeTableViewCell.xib in Resources */,
+				B40EC91F1BF1560400144357 /* btnSessionM_lg.png in Resources */,
+				B40EC8F21BF1558E00144357 /* SettingsView.xib in Resources */,
+				B40EC9221BF1560400144357 /* Trophy_20x20.png in Resources */,
+				B40EC8E61BF154FA00144357 /* MKStoreKitConfigs.plist in Resources */,
+				B40EC9181BF155EA00144357 /* activateShieldTrimmed.caf in Resources */,
+				B40EC8F01BF1558E00144357 /* PausedView_iPad.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B40EC8C81BF154D000144357 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B40EC8D31BF154D000144357 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B45FF12218CE8708001662CD /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1470,6 +1726,56 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		B40EC8AA1BF154CF00144357 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B40EC90D1BF155BB00144357 /* CHANGELOG.md in Sources */,
+				B40EC8F81BF1558E00144357 /* UpgradeTableViewCell.m in Sources */,
+				B40EC8FA1BF1558E00144357 /* IAPView.m in Sources */,
+				B40EC8EA1BF1551700144357 /* AudioController.m in Sources */,
+				B40EC9071BF155AF00144357 /* DCRoundSwitchKnobLayer.m in Sources */,
+				B40EC8E71BF154FF00144357 /* AppDelegate.m in Sources */,
+				B40EC9061BF155AF00144357 /* DCRoundSwitch.m in Sources */,
+				B40EC9021BF155AF00144357 /* UIImage+Effects.m in Sources */,
+				B40EC8EB1BF1558E00144357 /* GameOverView.m in Sources */,
+				B40EC9041BF155AF00144357 /* UIView+Fancy.m in Sources */,
+				B40EC8FE1BF1559A00144357 /* BlackHole.m in Sources */,
+				B40EC8FD1BF1559500144357 /* UpgradeScene.m in Sources */,
+				B40EC9091BF155AF00144357 /* DCRoundSwitchToggleLayer.m in Sources */,
+				B40EC90C1BF155B800144357 /* README.md in Sources */,
+				B40EC8F61BF1558E00144357 /* UpgradesView.m in Sources */,
+				B40EC9051BF155AF00144357 /* SKNode+Removed.m in Sources */,
+				B40EC8F31BF1558E00144357 /* MainMenuView.m in Sources */,
+				B40EC8FF1BF1559A00144357 /* BaseSprite.m in Sources */,
+				B40EC8E81BF1551100144357 /* GGViewController.m in Sources */,
+				B40EC8E91BF1551400144357 /* ViewController.m in Sources */,
+				B40EC8F11BF1558E00144357 /* SettingsView.m in Sources */,
+				B40EC9031BF155AF00144357 /* SKScene+Unarchive.m in Sources */,
+				B40EC8FC1BF1559500144357 /* GameScene.m in Sources */,
+				B40EC8EE1BF1558E00144357 /* PausedView.m in Sources */,
+				B40EC9001BF155AF00144357 /* HexColor.m in Sources */,
+				B40EC9011BF155AF00144357 /* UIView+Screenshot.m in Sources */,
+				B40EC9081BF155AF00144357 /* DCRoundSwitchOutlineLayer.m in Sources */,
+				B40EC90B1BF155AF00144357 /* main.m in Sources */,
+				B40EC8E51BF154F500144357 /* MKStoreKit.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B40EC8C61BF154D000144357 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B40EC8D11BF154D000144357 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B45FF12018CE8708001662CD /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1519,6 +1825,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		B40EC8CC1BF154D000144357 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B40EC8AD1BF154CF00144357 /* ABIMSIMTV */;
+			targetProxy = B40EC8CB1BF154D000144357 /* PBXContainerItemProxy */;
+		};
+		B40EC8D71BF154D000144357 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B40EC8AD1BF154CF00144357 /* ABIMSIMTV */;
+			targetProxy = B40EC8D61BF154D000144357 /* PBXContainerItemProxy */;
+		};
 		B45FF15218CE8708001662CD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = B45FF12318CE8708001662CD /* ABIMSIM */;
@@ -1593,6 +1909,148 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		B40EC8DC1BF154D000144357 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "Brand Assets";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ABIMSIM/ABIMSIM-Prefix.pch";
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = "$(SRCROOT)/ABIMSIM/ABIMSIM-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/SessionM_MMCL_iOS_v1.15.3_Release/SessionMLocation-SDK",
+				);
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = GracefulGamesLLC.ABIMSIMTV;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
+			};
+			name = Debug;
+		};
+		B40EC8DD1BF154D000144357 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "Brand Assets";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ABIMSIM/ABIMSIM-Prefix.pch";
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = "$(SRCROOT)/ABIMSIM/ABIMSIM-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/SessionM_MMCL_iOS_v1.15.3_Release/SessionMLocation-SDK",
+				);
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = GracefulGamesLLC.ABIMSIMTV;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
+			};
+			name = Release;
+		};
+		B40EC8DE1BF154D000144357 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = ABIMSIMTVTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = GracefulGamesLLC.ABIMSIMTVTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ABIMSIMTV.app/ABIMSIMTV";
+				TVOS_DEPLOYMENT_TARGET = 9.0;
+			};
+			name = Debug;
+		};
+		B40EC8DF1BF154D000144357 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = ABIMSIMTVTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = GracefulGamesLLC.ABIMSIMTVTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ABIMSIMTV.app/ABIMSIMTV";
+				TVOS_DEPLOYMENT_TARGET = 9.0;
+			};
+			name = Release;
+		};
+		B40EC8E01BF154D000144357 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = ABIMSIMTVUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = GracefulGamesLLC.ABIMSIMTVUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "1EDC6C10-D4AF-4800-A0DB-758438395B8E";
+				SDKROOT = appletvos;
+				TEST_TARGET_NAME = ABIMSIMTV;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
+				USES_XCTRUNNER = YES;
+			};
+			name = Debug;
+		};
+		B40EC8E11BF154D000144357 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = ABIMSIMTVUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = GracefulGamesLLC.ABIMSIMTVUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "1EDC6C10-D4AF-4800-A0DB-758438395B8E";
+				SDKROOT = appletvos;
+				TEST_TARGET_NAME = ABIMSIMTV;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
+				USES_XCTRUNNER = YES;
+			};
+			name = Release;
+		};
 		B45FF15B18CE8708001662CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1776,6 +2234,30 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		B40EC8E21BF154D000144357 /* Build configuration list for PBXNativeTarget "ABIMSIMTV" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B40EC8DC1BF154D000144357 /* Debug */,
+				B40EC8DD1BF154D000144357 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		B40EC8E31BF154D000144357 /* Build configuration list for PBXNativeTarget "ABIMSIMTVTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B40EC8DE1BF154D000144357 /* Debug */,
+				B40EC8DF1BF154D000144357 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		B40EC8E41BF154D000144357 /* Build configuration list for PBXNativeTarget "ABIMSIMTVUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B40EC8E01BF154D000144357 /* Debug */,
+				B40EC8E11BF154D000144357 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		B45FF11F18CE8708001662CD /* Build configuration list for PBXProject "ABIMSIM" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

@@ -11,7 +11,9 @@
 //#import <Crashlytics/Crashlytics.h>
 #import "MKStoreKit.h"
 #import "SessionM.h"
+#ifndef TARGET_OS_TV
 #import "Appirater.h"
+#endif
 @interface AppDelegate () <SessionMDelegate>
 
 @end
@@ -21,12 +23,14 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+#ifndef TARGET_OS_TV
     [Appirater setAppId:@"876062426"];
     [Appirater setDaysUntilPrompt:-1];
     [Appirater setUsesUntilPrompt:5];
     [Appirater setSignificantEventsUntilPrompt:-1];
     [Appirater setTimeBeforeReminding:2];
     [Appirater setDebug:NO];
+#endif
     
 //    [Fabric with:@[CrashlyticsKit]];
     [SessionM sharedInstance].delegate = self;
@@ -34,8 +38,9 @@
     SMStart(@"76a75bec6be6cd72ac61f90cc3ab22651f17641a")
 
     [ABIMSIMDefaults registerDefaults:@{kMusicSetting:@(YES),kSFXSetting:@(YES)}];
-    
+#ifndef TARGET_OS_TV
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationNone];
+#endif
     GKLocalPlayer *localPlayer = [GKLocalPlayer localPlayer];
     
     localPlayer.authenticateHandler = ^(UIViewController *loginVC, NSError *error) {
@@ -104,7 +109,9 @@
                                                       NSLog(@"Purchase failed with error: %@", [note object]);
                                                       [[NSNotificationCenter defaultCenter] postNotificationName:kStoreKitPurchaseFinished object:nil];
                                                   }];
+#ifndef TARGET_OS_TV
     [Appirater appLaunched:YES];
+#endif
     return YES;
 }
 							
@@ -123,7 +130,9 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+#ifndef TARGET_OS_TV
     [Appirater appEnteredForeground:YES];
+#endif
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application

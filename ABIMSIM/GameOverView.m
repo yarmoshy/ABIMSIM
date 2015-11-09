@@ -55,7 +55,9 @@
 }
 
 -(void)didMoveToSuperview {
+#ifndef TARGET_OS_TV
     self.ggPlayButton.exclusiveTouch = self.ggUpgradeButton.exclusiveTouch = self.ggMainMenuButton.exclusiveTouch = YES;
+#endif
     self.bonusLabelOne.layer.borderColor = self.bonusLabelTwo.layer.borderColor = self.bonusLabelThree.layer.borderColor = self.bonusLabelFour.layer.borderColor = [[UIColor whiteColor] colorWithAlphaComponent:0.5].CGColor;
     self.bonusLabelOne.layer.borderWidth = self.bonusLabelTwo.layer.borderWidth = self.bonusLabelThree.layer.borderWidth = self.bonusLabelFour.layer.borderWidth = 0.5;
     self.gameOverLabel.layer.shadowColor = [UIColor whiteColor].CGColor;
@@ -192,6 +194,9 @@
 #pragma mark - Social
 
 - (IBAction)facebookTapped:(id)sender {
+#ifdef TARGET_OS_TV
+    return;
+#else
     if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
         SLComposeViewController *composeController = [SLComposeViewController
                                                       composeViewControllerForServiceType:SLServiceTypeFacebook];
@@ -235,6 +240,7 @@
         }
         [alert show];
     }
+#endif
 }
 
 #pragma mark - Game Over

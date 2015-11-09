@@ -30,7 +30,9 @@
         iapView.frame = self.frame;
         IAPController = [[GGViewController alloc] init];
         IAPController.view = iapView;
+#ifndef TARGET_OS_TV
         IAPController.modalPresentationStyle = UIModalPresentationFormSheet;
+#endif
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(IAPPurchaseComplete) name:kStoreKitPurchaseFinished object:nil];
     }
     return self;
