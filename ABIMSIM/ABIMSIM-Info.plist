@@ -68,7 +68,7 @@
 		<string>Moki-Lean.otf</string>
 	</array>
 	<key>UIMainStoryboardFile</key>
-	<string>Main</string>
+	<string>MainTV</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>

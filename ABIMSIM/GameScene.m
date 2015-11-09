@@ -51,8 +51,10 @@
 #import "PhysicsContstants.h"
 #import "SpriteUserDataConstants.h"
 #import "BlackHole.h"
-#import "SessionM.h"
 #import "BaseSprite.h"
+#ifndef TARGET_OS_TV
+#import "SessionM.h"
+#endif
 
 @implementation GameScene  {
     NSMutableArray *spritesArrays;
@@ -837,53 +839,60 @@ CGFloat DegreesToRadians(CGFloat degrees)
 -(void)checkLevelAchievements {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
         NSString *identifier = @"";
+        NSString *action = @"";
         switch (self.currentLevel) {
             case 10:
                 identifier = @"learningToFly";
-                SMAction(@"parsecs10");
+                action = @"parsecs10";
                 break;
             case 20:
                 identifier = @"explorerReporting";
-                SMAction(@"parsecs20");
+                action = @"parsecs20";
                 break;
             case 30:
                 identifier = @"adventureIsOutThere";
-                SMAction(@"parsecs30");
+                action = @"parsecs30";
                 break;
             case 40:
                 identifier = @"gettinKindaHectic";
-                SMAction(@"parsecs40");
+                action = @"parsecs40";
                 break;
             case 50:
                 identifier = @"deepSpace";
-                SMAction(@"parsecs50");
+                action = @"parsecs50";
                 break;
             case 60:
                 identifier = @"toBoldyGo";
-                SMAction(@"parsecs60");
+                action = @"parsecs60";
                 break;
             case 70:
                 identifier = @"whereNoManHasGoneBefore";
-                SMAction(@"parsecs70");
+                action = @"parsecs70";
                 break;
             case 80:
                 identifier = @"acrossTheCosmos";
-                SMAction(@"parsecs80");
+                action = @"parsecs80";
                 break;
             case 90:
                 identifier = @"theObservableUniverse";
-                SMAction(@"parsecs90");
+                action = @"parsecs90";
                 break;
             case 100:
                 identifier = @"theEdgeOfSpace";
-                SMAction(@"parsecs100");
+                action = @"parsecs100";
                 break;
             default:
                 identifier = @"";
+                action = @"";
                 break;
         }
         if (![identifier isEqualToString:@""]) {
             [self sendAchievementWithIdentifier:identifier];
+        }
+        if (![action isEqualToString:@""]) {
+#ifndef TARGET_OS_TV
+            SMAction(action);
+#endif
         }
         if (self.currentLevel - lastLevelPanned >= 5) {
             identifier = @"Autopilot";
@@ -921,6 +930,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
 }
 
 -(void)smActionForIdentifier:(NSString*)identifier {
+#ifndef TARGET_OS_TV
     if ([identifier isEqualToString:@"setTheControlsForTheHeartOfTheSun"]) {
         SMAction(@"sunDeath");
     } else if ([identifier isEqualToString:@"Autopilot"]) {
@@ -934,6 +944,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     } else if ([identifier isEqualToString:@"tripleDouble"]) {
         SMAction(@"tripleDouble");
     }
+#endif
 }
 
 #pragma mark - Touch Handling

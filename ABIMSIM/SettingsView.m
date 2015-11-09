@@ -12,8 +12,8 @@
 #import "DCRoundSwitch.h"
 #ifndef TARGET_OS_TV
 #import <Social/Social.h>
-#endif
 #import "SessionM.h"
+#endif
 #import "AppDelegate.h"
 @implementation SettingsView {
     BOOL showingSettings;
@@ -26,7 +26,6 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setupSessionMToggle) name:kSessionMToggleChanged object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sessionMStateChanged:) name:kSessionMStateChanged object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sessionMErrored:) name:kSessionMErrored object:nil];
-
     }
     return self;
 }
@@ -55,22 +54,37 @@
 }
 
 -(void)setupSessionMToggle {
+#ifndef TARGET_OS_TV
     self.sessionMSettingsToggle.on = ![SessionM sharedInstance].user.isOptedOut;
     self.sessionMSettingsToggle.ignoreTap = NO;
+#else
+    self.sessionMSettingsToggle.hidden = YES;
+    self.sessionMToggleLogo.hidden = YES;
+#endif
 }
 
 -(void)sessionMErrored:(NSNotification*)notif {
+#ifndef TARGET_OS_TV
     if (![SessionM sharedInstance].user.isOptedOut) {
         self.sessionMSettingsToggle.hidden = YES;
         self.sessionMToggleLogo.hidden = YES;
     }
+#else
+    self.sessionMSettingsToggle.hidden = YES;
+    self.sessionMToggleLogo.hidden = YES;
+#endif
 }
 
 -(void)sessionMStateChanged:(NSNotification*)notif {
+#ifndef TARGET_OS_TV
     if ([SessionM sharedInstance].sessionState == SessionMStateStartedOnline) {
         self.sessionMSettingsToggle.hidden = NO;
         self.sessionMToggleLogo.hidden = NO;
     }
+#else
+    self.sessionMSettingsToggle.hidden = YES;
+    self.sessionMToggleLogo.hidden = YES;
+#endif
 }
 
 -(void)showSettings {
@@ -109,7 +123,9 @@
 }
 
 -(void)sessionMSwitchToggled:(DCRoundSwitch*)toggle {
+#ifndef TARGET_OS_TV
     [SessionM sharedInstance].user.isOptedOut = !toggle.on;
+#endif
     self.sessionMSettingsToggle.on = toggle.on;
     [[NSNotificationCenter defaultCenter] postNotificationName:kSessionMToggleChanged object:nil];
 }

@@ -217,9 +217,13 @@
         }
         [alert show];
     }
+#endif
 }
 
 - (IBAction)twitterTapped:(id)sender {
+#ifdef TARGET_OS_TV
+    return;
+#else
     if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]) {
         SLComposeViewController *composeController = [SLComposeViewController
                                                       composeViewControllerForServiceType:SLServiceTypeTwitter];

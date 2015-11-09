@@ -18,22 +18,12 @@
 		B40EC8E91BF1551400144357 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B45FF13F18CE8708001662CD /* ViewController.m */; };
 		B40EC8EA1BF1551700144357 /* AudioController.m in Sources */ = {isa = PBXBuildFile; fileRef = B49792691A844756005174C1 /* AudioController.m */; };
 		B40EC8EB1BF1558E00144357 /* GameOverView.m in Sources */ = {isa = PBXBuildFile; fileRef = B4557EC21AC0D4C8004E097E /* GameOverView.m */; };
-		B40EC8EC1BF1558E00144357 /* GameOverView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B4557EC41AC0D4DD004E097E /* GameOverView.xib */; };
-		B40EC8ED1BF1558E00144357 /* GameOverView_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1C786061B72A4270016DF45 /* GameOverView_iPad.xib */; };
 		B40EC8EE1BF1558E00144357 /* PausedView.m in Sources */ = {isa = PBXBuildFile; fileRef = B4557ED41AC0EF47004E097E /* PausedView.m */; };
-		B40EC8EF1BF1558E00144357 /* PausedView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B4557ED61AC0EF57004E097E /* PausedView.xib */; };
-		B40EC8F01BF1558E00144357 /* PausedView_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1C339A81B73D9B400B39439 /* PausedView_iPad.xib */; };
 		B40EC8F11BF1558E00144357 /* SettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = B4557EDD1AC37C5A004E097E /* SettingsView.m */; };
-		B40EC8F21BF1558E00144357 /* SettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B4557EDA1AC37B8A004E097E /* SettingsView.xib */; };
 		B40EC8F31BF1558E00144357 /* MainMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = B4557EE21AC3B26B004E097E /* MainMenuView.m */; };
-		B40EC8F41BF1558E00144357 /* MainMenuView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B4557EDF1AC3B24D004E097E /* MainMenuView.xib */; };
-		B40EC8F51BF1558E00144357 /* MainMenuView_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = E18208C41B6BDB8D0029446E /* MainMenuView_iPad.xib */; };
 		B40EC8F61BF1558E00144357 /* UpgradesView.m in Sources */ = {isa = PBXBuildFile; fileRef = B472444C1ACE0433002A8B4B /* UpgradesView.m */; };
-		B40EC8F71BF1558E00144357 /* UpgradesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B472444E1ACE0441002A8B4B /* UpgradesView.xib */; };
 		B40EC8F81BF1558E00144357 /* UpgradeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B48AA3851AD043C80054CC65 /* UpgradeTableViewCell.m */; };
-		B40EC8F91BF1558E00144357 /* UpgradeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B48AA3861AD043C80054CC65 /* UpgradeTableViewCell.xib */; };
 		B40EC8FA1BF1558E00144357 /* IAPView.m in Sources */ = {isa = PBXBuildFile; fileRef = B45CA2501B25FBD9001E07D9 /* IAPView.m */; };
-		B40EC8FB1BF1558E00144357 /* IAPView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B45CA2521B25FBE8001E07D9 /* IAPView.xib */; };
 		B40EC8FC1BF1559500144357 /* GameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B45FF14218CE8708001662CD /* GameScene.m */; };
 		B40EC8FD1BF1559500144357 /* UpgradeScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B400F40F191AFCA100A483E2 /* UpgradeScene.m */; };
 		B40EC8FE1BF1559A00144357 /* BlackHole.m in Sources */ = {isa = PBXBuildFile; fileRef = B47244421ACB710C002A8B4B /* BlackHole.m */; };
@@ -65,14 +55,6 @@
 		B40EC91A1BF155EA00144357 /* explosionMineTrimmed.caf in Resources */ = {isa = PBXBuildFile; fileRef = B49792F11A86E617005174C1 /* explosionMineTrimmed.caf */; };
 		B40EC91B1BF155EA00144357 /* explosionTrimmed.caf in Resources */ = {isa = PBXBuildFile; fileRef = B49792ED1A86E3AC005174C1 /* explosionTrimmed.caf */; };
 		B40EC91C1BF155EA00144357 /* gamePlay.caf in Resources */ = {isa = PBXBuildFile; fileRef = B405AA2E1AED54980053F794 /* gamePlay.caf */; };
-		B40EC91D1BF155FD00144357 /* libSessionMLocation.1.15.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B485E7691BEAB15100541190 /* libSessionMLocation.1.15.3.a */; };
-		B40EC91E1BF1560400144357 /* btnSessionM.png in Resources */ = {isa = PBXBuildFile; fileRef = B485E7641BEAB15100541190 /* btnSessionM.png */; };
-		B40EC91F1BF1560400144357 /* btnSessionM_lg.png in Resources */ = {isa = PBXBuildFile; fileRef = B485E7651BEAB15100541190 /* btnSessionM_lg.png */; };
-		B40EC9201BF1560400144357 /* GiftBox_20x20.png in Resources */ = {isa = PBXBuildFile; fileRef = B485E7661BEAB15100541190 /* GiftBox_20x20.png */; };
-		B40EC9211BF1560400144357 /* M_Logo_20x20.png in Resources */ = {isa = PBXBuildFile; fileRef = B485E7671BEAB15100541190 /* M_Logo_20x20.png */; };
-		B40EC9221BF1560400144357 /* Trophy_20x20.png in Resources */ = {isa = PBXBuildFile; fileRef = B485E7681BEAB15100541190 /* Trophy_20x20.png */; };
-		B40EC9231BF1560B00144357 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = B485E7511BEAB15100541190 /* LICENSE */; };
-		B40EC9241BF1560E00144357 /* ReleaseNotes.txt in Resources */ = {isa = PBXBuildFile; fileRef = B485E7521BEAB15100541190 /* ReleaseNotes.txt */; };
 		B40EC9251BF1562400144357 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E13D23311B31E97E006D1E30 /* ImageIO.framework */; };
 		B40EC9261BF1562400144357 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E13D232D1B31E8D6006D1E30 /* EventKit.framework */; };
 		B40EC9271BF1562400144357 /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E13D232E1B31E8D6006D1E30 /* EventKitUI.framework */; };
@@ -89,6 +71,7 @@
 		B40EC9391BF1562400144357 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B45FF12918CE8708001662CD /* CoreGraphics.framework */; };
 		B40EC93A1BF1562400144357 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B45FF12B18CE8708001662CD /* UIKit.framework */; };
 		B40EC93B1BF1562400144357 /* SpriteKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B45FF12D18CE8708001662CD /* SpriteKit.framework */; };
+		B40EC9441BF15D0500144357 /* MainTV.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B40EC9431BF15D0500144357 /* MainTV.storyboard */; };
 		B43358611AF834FF00DB6444 /* SKNode+Removed.m in Sources */ = {isa = PBXBuildFile; fileRef = B43358601AF834FF00DB6444 /* SKNode+Removed.m */; };
 		B4557EC31AC0D4C8004E097E /* GameOverView.m in Sources */ = {isa = PBXBuildFile; fileRef = B4557EC21AC0D4C8004E097E /* GameOverView.m */; };
 		B4557EC51AC0D4DD004E097E /* GameOverView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B4557EC41AC0D4DD004E097E /* GameOverView.xib */; };
@@ -274,6 +257,7 @@
 		B40EC8AE1BF154CF00144357 /* ABIMSIMTV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ABIMSIMTV.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B40EC8CA1BF154D000144357 /* ABIMSIMTVTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ABIMSIMTVTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B40EC8D51BF154D000144357 /* ABIMSIMTVUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ABIMSIMTVUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B40EC9431BF15D0500144357 /* MainTV.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainTV.storyboard; sourceTree = "<group>"; };
 		B433585F1AF834FF00DB6444 /* SKNode+Removed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SKNode+Removed.h"; sourceTree = "<group>"; };
 		B43358601AF834FF00DB6444 /* SKNode+Removed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKNode+Removed.m"; sourceTree = "<group>"; };
 		B4557EC11AC0D4C8004E097E /* GameOverView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameOverView.h; sourceTree = "<group>"; };
@@ -525,7 +509,6 @@
 				B40EC9261BF1562400144357 /* EventKit.framework in Frameworks */,
 				B40EC93B1BF1562400144357 /* SpriteKit.framework in Frameworks */,
 				B40EC9291BF1562400144357 /* SystemConfiguration.framework in Frameworks */,
-				B40EC91D1BF155FD00144357 /* libSessionMLocation.1.15.3.a in Frameworks */,
 				B40EC9341BF1562400144357 /* StoreKit.framework in Frameworks */,
 				B40EC92A1BF1562400144357 /* CoreMedia.framework in Frameworks */,
 				B40EC9381BF1562400144357 /* Foundation.framework in Frameworks */,
@@ -747,6 +730,7 @@
 				B45FF13818CE8708001662CD /* AppDelegate.h */,
 				B45FF13918CE8708001662CD /* AppDelegate.m */,
 				B45FF13B18CE8708001662CD /* Main.storyboard */,
+				B40EC9431BF15D0500144357 /* MainTV.storyboard */,
 				B4557ED81AC0FEC6004E097E /* Controllers */,
 				B4557EC01AC0D489004E097E /* Views */,
 				B4557ED91AC0FEF8004E097E /* Scenes */,
@@ -1558,38 +1542,22 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B40EC8FB1BF1558E00144357 /* IAPView.xib in Resources */,
 				B40EC91C1BF155EA00144357 /* gamePlay.caf in Resources */,
 				B40EC9131BF155DF00144357 /* Moki-Lean.otf in Resources */,
 				B40EC9121BF155DA00144357 /* Images.xcassets in Resources */,
-				B40EC8F51BF1558E00144357 /* MainMenuView_iPad.xib in Resources */,
 				B40EC9101BF155D000144357 /* Appirater.podspec.json in Resources */,
 				B40EC9161BF155EA00144357 /* upgrade.caf in Resources */,
-				B40EC9211BF1560400144357 /* M_Logo_20x20.png in Resources */,
-				B40EC9241BF1560E00144357 /* ReleaseNotes.txt in Resources */,
 				B40EC90E1BF155C000144357 /* AppiraterLocalizable.strings in Resources */,
-				B40EC9231BF1560B00144357 /* LICENSE in Resources */,
 				B40EC90F1BF155C300144357 /* InfoPlist.strings in Resources */,
 				B40EC9171BF155EA00144357 /* asteroidSun.caf in Resources */,
-				B40EC9201BF1560400144357 /* GiftBox_20x20.png in Resources */,
+				B40EC9441BF15D0500144357 /* MainTV.storyboard in Resources */,
 				B40EC9151BF155E400144357 /* Voltaire-Regular.ttf in Resources */,
-				B40EC8F41BF1558E00144357 /* MainMenuView.xib in Resources */,
-				B40EC8EF1BF1558E00144357 /* PausedView.xib in Resources */,
 				B40EC9191BF155EA00144357 /* deactivateShieldTrimmed.caf in Resources */,
-				B40EC8EC1BF1558E00144357 /* GameOverView.xib in Resources */,
-				B40EC91E1BF1560400144357 /* btnSessionM.png in Resources */,
-				B40EC8ED1BF1558E00144357 /* GameOverView_iPad.xib in Resources */,
 				B40EC91B1BF155EA00144357 /* explosionTrimmed.caf in Resources */,
 				B40EC91A1BF155EA00144357 /* explosionMineTrimmed.caf in Resources */,
-				B40EC8F71BF1558E00144357 /* UpgradesView.xib in Resources */,
 				B40EC9111BF155D500144357 /* .gitignore in Resources */,
-				B40EC8F91BF1558E00144357 /* UpgradeTableViewCell.xib in Resources */,
-				B40EC91F1BF1560400144357 /* btnSessionM_lg.png in Resources */,
-				B40EC8F21BF1558E00144357 /* SettingsView.xib in Resources */,
-				B40EC9221BF1560400144357 /* Trophy_20x20.png in Resources */,
 				B40EC8E61BF154FA00144357 /* MKStoreKitConfigs.plist in Resources */,
 				B40EC9181BF155EA00144357 /* activateShieldTrimmed.caf in Resources */,
-				B40EC8F01BF1558E00144357 /* PausedView_iPad.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

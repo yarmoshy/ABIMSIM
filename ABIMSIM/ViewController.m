@@ -11,8 +11,10 @@
 #import "DCRoundSwitch.h"
 #import <objc/runtime.h>
 #import "AudioController.h"
+#ifndef TARGET_OS_TV
 #import "SMPortalButton.h"
 #import "SessionM.h"
+#endif
 
 @implementation ViewController {
     NSMutableArray *hamburgerToXImages;
@@ -20,7 +22,9 @@
     BOOL showingSettings;
     BOOL showingUpgradesFromGameOver;
     BOOL sessionMError;
+#ifndef TARGET_OS_TV
     SMPortalButton *mainMenuPortalButton, *gameOverPortalButton;
+#endif
 }
 
 - (void)viewDidLoad
@@ -47,13 +51,15 @@
     self.mainMenuView = [mainMenuNib instantiateWithOwner:self options:nil][0];
     self.mainMenuView.frame = self.view.frame;
     self.mainMenuView.delegate = self;
-    
+
+#ifndef TARGET_OS_TV
     mainMenuPortalButton=[SMPortalButton buttonWithType:UIButtonTypeCustom];
     [mainMenuPortalButton.button setImage:[UIImage imageNamed:@"RewardsBox"] forState:UIControlStateNormal];
     [mainMenuPortalButton sizeToFit];
     CGRect rect = CGRectMake(self.mainMenuView.frame.size.width - mainMenuPortalButton.button.frame.size.width - 10, self.mainMenuView.frame.size.height - mainMenuPortalButton.button.frame.size.height - 10, mainMenuPortalButton.button.frame.size.width, mainMenuPortalButton.button.frame.size.height);
     mainMenuPortalButton.frame = rect;
     [self.mainMenuView addSubview:mainMenuPortalButton];
+#endif
 
     [self.view addSubview:self.mainMenuView];
     [self.mainMenuView layoutIfNeeded];
@@ -67,12 +73,14 @@
     self.gameOverView = [gameOverViewNib instantiateWithOwner:self options:nil][0];
     self.gameOverView.frame = self.view.frame;
     self.gameOverView.delegate = self;
-    
+
+#ifndef TARGET_OS_TV
     gameOverPortalButton=[SMPortalButton buttonWithType:UIButtonTypeCustom];
     [gameOverPortalButton.button setImage:[UIImage imageNamed:@"RewardsBox"] forState:UIControlStateNormal];
     [gameOverPortalButton sizeToFit];
     gameOverPortalButton.frame = rect;
     [self.gameOverView addSubview:gameOverPortalButton];
+#endif
 
     [self.view insertSubview:self.gameOverView atIndex:1];
 
@@ -114,11 +122,14 @@
     // Present the scene.
     [skView presentScene:self.scene];
     
+#ifndef TARGET_OS_TV
     if ([SessionM sharedInstance].user.isOptedOut) {
         mainMenuPortalButton.hidden = gameOverPortalButton.hidden = YES;
     } else if ([SessionM sharedInstance].sessionState != SessionMStateStartedOnline) {
         mainMenuPortalButton.button.enabled = NO;
     }
+#endif
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sessionMStateChanged:) name:kSessionMStateChanged object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sessionMOptOutChanged:) name:kSessionMToggleChanged object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sessionMErrored:) name:kSessionMErrored object:nil];
@@ -139,6 +150,7 @@
 }
 
 -(void)setupSessionMButtons:(NSNotification*)notif {
+#ifndef TARGET_OS_TV
     if ([SessionM sharedInstance].sessionState != SessionMStateStartedOnline) {
         mainMenuPortalButton.button.enabled = gameOverPortalButton.button.enabled = NO;
     } else {
@@ -151,6 +163,7 @@
     } else {
         mainMenuPortalButton.hidden = gameOverPortalButton.hidden = NO;
     }
+#endif
 }
 
 - (BOOL)prefersStatusBarHidden {
@@ -226,20 +239,24 @@
 
 -(void)showSettings {
     [self.settingsView showSettings];
+#ifndef TARGET_OS_TV
     [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionAllowAnimatedContent animations:^{
         mainMenuPortalButton.alpha = 0;
     } completion:^(BOOL finished) {
         ;
     }];
+#endif
 }
 
 -(void)hideSettings {
     [self.settingsView hideSettings];
+#ifndef TARGET_OS_TV
     [UIView animateWithDuration:0.25 delay:0.25 options:UIViewAnimationOptionAllowAnimatedContent animations:^{
         mainMenuPortalButton.alpha = 1;
     } completion:^(BOOL finished) {
         ;
     }];
+#endif
 }
 
 

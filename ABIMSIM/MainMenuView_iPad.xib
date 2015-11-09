@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="9059" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -47,17 +47,17 @@
                                 <action selector="playTouchUpInside:" destination="iN0-l3-epB" eventType="touchUpInside" id="czC-bq-wL1"/>
                             </connections>
                         </button>
-                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HS_0" translatesAutoresizingMaskIntoConstraints="NO" id="9DQ-gR-V19">
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="HS_0" translatesAutoresizingMaskIntoConstraints="NO" id="9DQ-gR-V19">
                             <rect key="frame" x="342" y="218" width="153" height="153"/>
                         </imageView>
-                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HS_1" translatesAutoresizingMaskIntoConstraints="NO" id="zeq-b1-9Va">
-                            <rect key="frame" x="323" y="199" width="191" height="191"/>
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="HS_1" translatesAutoresizingMaskIntoConstraints="NO" id="zeq-b1-9Va">
+                            <rect key="frame" x="323" y="199" width="192" height="192"/>
                         </imageView>
-                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HS_2" translatesAutoresizingMaskIntoConstraints="NO" id="ZK6-Gw-Z8W">
-                            <rect key="frame" x="323" y="199" width="191" height="191"/>
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="HS_2" translatesAutoresizingMaskIntoConstraints="NO" id="ZK6-Gw-Z8W">
+                            <rect key="frame" x="323" y="199" width="192" height="192"/>
                         </imageView>
-                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HS_3" translatesAutoresizingMaskIntoConstraints="NO" id="RBa-jb-vVM">
-                            <rect key="frame" x="314" y="190" width="208" height="208"/>
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="HS_3" translatesAutoresizingMaskIntoConstraints="NO" id="RBa-jb-vVM">
+                            <rect key="frame" x="314" y="190" width="209" height="209"/>
                         </imageView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A5t-aW-Eyt" userLabel="HighScoresButton">
                             <rect key="frame" x="314" y="190" width="208" height="208"/>
@@ -81,10 +81,10 @@
                             <rect key="frame" x="132" y="367" width="193" height="193"/>
                         </imageView>
                         <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Upgrades_1" translatesAutoresizingMaskIntoConstraints="NO" id="fks-k7-VkQ">
-                            <rect key="frame" x="113" y="348" width="231" height="231"/>
+                            <rect key="frame" x="113" y="348" width="232" height="232"/>
                         </imageView>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Upgrades_2" translatesAutoresizingMaskIntoConstraints="NO" id="15a-e1-BZd">
-                            <rect key="frame" x="113" y="348" width="231" height="231"/>
+                            <rect key="frame" x="113" y="348" width="232" height="232"/>
                         </imageView>
                         <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Upgrades_3" translatesAutoresizingMaskIntoConstraints="NO" id="iQO-TC-pWO">
                             <rect key="frame" x="103" y="338" width="251" height="251"/>
@@ -238,9 +238,9 @@
     </objects>
     <resources>
         <image name="HS_0" width="153" height="153"/>
-        <image name="HS_1" width="191" height="191"/>
-        <image name="HS_2" width="191" height="191"/>
-        <image name="HS_3" width="208" height="208"/>
+        <image name="HS_1" width="192" height="192"/>
+        <image name="HS_2" width="192" height="192"/>
+        <image name="HS_3" width="209" height="209"/>
         <image name="HamburgerToClose_000" width="62" height="62"/>
         <image name="Logo_TitleScreen" width="593" height="85"/>
         <image name="Play_0" width="258" height="258"/>
@@ -248,8 +248,8 @@
         <image name="Play_2" width="300" height="300"/>
         <image name="Play_3" width="316" height="316"/>
         <image name="Upgrades_0" width="193" height="193"/>
-        <image name="Upgrades_1" width="231" height="231"/>
-        <image name="Upgrades_2" width="231" height="231"/>
+        <image name="Upgrades_1" width="232" height="232"/>
+        <image name="Upgrades_2" width="232" height="232"/>
         <image name="Upgrades_3" width="251" height="251"/>
     </resources>
 </document>

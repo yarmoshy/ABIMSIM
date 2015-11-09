@@ -17,7 +17,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="424"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="topRight" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="Ring_0" translatesAutoresizingMaskIntoConstraints="NO" id="fBt-qS-vki">
+                <imageView userInteractionEnabled="NO" contentMode="topRight" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Ring_0" translatesAutoresizingMaskIntoConstraints="NO" id="fBt-qS-vki">
                     <rect key="frame" x="-159" y="11" width="468" height="468"/>
                 </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="topRight" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Ring_1" translatesAutoresizingMaskIntoConstraints="NO" id="eQb-fy-Ik1">
@@ -26,7 +26,7 @@
                 <imageView userInteractionEnabled="NO" contentMode="topRight" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Ring_2" translatesAutoresizingMaskIntoConstraints="NO" id="kmn-MX-nKa">
                     <rect key="frame" x="-164" y="5" width="479" height="479"/>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="SFX" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iAu-nQ-hDg">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SFX" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iAu-nQ-hDg">
                     <rect key="frame" x="135" y="124" width="22" height="22"/>
                     <fontDescription key="fontDescription" name="Voltaire" family="Voltaire" pointSize="17"/>
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -111,7 +111,7 @@
                         <action selector="twitterTapped:" destination="uom-KZ-6EE" eventType="touchUpInside" id="lBp-Kt-0g4"/>
                     </connections>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="MUSIC" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SK2-f3-oKl">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MUSIC" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SK2-f3-oKl">
                     <rect key="frame" x="31" y="124" width="38" height="22"/>
                     <fontDescription key="fontDescription" name="Voltaire" family="Voltaire" pointSize="17"/>
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -201,6 +201,6 @@
         <image name="Ring_1" width="468" height="468"/>
         <image name="Ring_2" width="479" height="479"/>
         <image name="TwitterIcon" width="40" height="32"/>
-        <image name="mpointsLogo_settings" width="83" height="25"/>
+        <image name="mpointsLogo_settings" width="104" height="25"/>
     </resources>
 </document>

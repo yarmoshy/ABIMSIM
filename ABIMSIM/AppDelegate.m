@@ -10,11 +10,13 @@
 //#import <Fabric/Fabric.h>
 //#import <Crashlytics/Crashlytics.h>
 #import "MKStoreKit.h"
-#import "SessionM.h"
 #ifndef TARGET_OS_TV
 #import "Appirater.h"
-#endif
+#import "SessionM.h"
 @interface AppDelegate () <SessionMDelegate>
+#else
+@interface AppDelegate ()
+#endif
 
 @end
 
@@ -33,9 +35,11 @@
 #endif
     
 //    [Fabric with:@[CrashlyticsKit]];
+#ifndef TARGET_OS_TV
     [SessionM sharedInstance].delegate = self;
 //    [SessionM sharedInstance].logLevel = SMLogLevelDebug;
     SMStart(@"76a75bec6be6cd72ac61f90cc3ab22651f17641a")
+#endif
 
     [ABIMSIMDefaults registerDefaults:@{kMusicSetting:@(YES),kSFXSetting:@(YES)}];
 #ifndef TARGET_OS_TV
@@ -144,7 +148,7 @@
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
-
+#ifndef TARGET_OS_TV
 - (void)sessionM: (SessionM *)session didTransitionToState: (SessionMState)state {
     [[NSNotificationCenter defaultCenter] postNotificationName:kSessionMStateChanged object:nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:kSessionMToggleChanged object:nil];
@@ -158,5 +162,6 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kSessionMStateChanged object:nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:kSessionMToggleChanged object:nil];
 }
+#endif
 
 @end
