@@ -11,6 +11,7 @@
 		B405AA281AEC31E00053F794 /* Moki-Lean.otf in Resources */ = {isa = PBXBuildFile; fileRef = B405AA261AEC31E00053F794 /* Moki-Lean.otf */; };
 		B405AA2F1AED54980053F794 /* gamePlay.caf in Resources */ = {isa = PBXBuildFile; fileRef = B405AA2E1AED54980053F794 /* gamePlay.caf */; };
 		B405AA331AED5F990053F794 /* asteroidSun.caf in Resources */ = {isa = PBXBuildFile; fileRef = B405AA321AED5F990053F794 /* asteroidSun.caf */; };
+		B40735DD1BF170830047F26C /* SettingsView_TV.xib in Resources */ = {isa = PBXBuildFile; fileRef = B40735DC1BF170830047F26C /* SettingsView_TV.xib */; };
 		B40EC8E51BF154F500144357 /* MKStoreKit.m in Sources */ = {isa = PBXBuildFile; fileRef = B45CA2491B25F5CD001E07D9 /* MKStoreKit.m */; };
 		B40EC8E61BF154FA00144357 /* MKStoreKitConfigs.plist in Resources */ = {isa = PBXBuildFile; fileRef = B45CA24D1B25F94E001E07D9 /* MKStoreKitConfigs.plist */; };
 		B40EC8E71BF154FF00144357 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B45FF13918CE8708001662CD /* AppDelegate.m */; };
@@ -72,6 +73,7 @@
 		B40EC93A1BF1562400144357 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B45FF12B18CE8708001662CD /* UIKit.framework */; };
 		B40EC93B1BF1562400144357 /* SpriteKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B45FF12D18CE8708001662CD /* SpriteKit.framework */; };
 		B40EC9441BF15D0500144357 /* MainTV.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B40EC9431BF15D0500144357 /* MainTV.storyboard */; };
+		B40EC9491BF1692000144357 /* MainMenuView_TV.xib in Resources */ = {isa = PBXBuildFile; fileRef = B40EC9481BF1692000144357 /* MainMenuView_TV.xib */; };
 		B43358611AF834FF00DB6444 /* SKNode+Removed.m in Sources */ = {isa = PBXBuildFile; fileRef = B43358601AF834FF00DB6444 /* SKNode+Removed.m */; };
 		B4557EC31AC0D4C8004E097E /* GameOverView.m in Sources */ = {isa = PBXBuildFile; fileRef = B4557EC21AC0D4C8004E097E /* GameOverView.m */; };
 		B4557EC51AC0D4DD004E097E /* GameOverView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B4557EC41AC0D4DD004E097E /* GameOverView.xib */; };
@@ -254,10 +256,12 @@
 		B405AA261AEC31E00053F794 /* Moki-Lean.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Moki-Lean.otf"; sourceTree = "<group>"; };
 		B405AA2E1AED54980053F794 /* gamePlay.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = gamePlay.caf; sourceTree = "<group>"; };
 		B405AA321AED5F990053F794 /* asteroidSun.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = asteroidSun.caf; sourceTree = "<group>"; };
+		B40735DC1BF170830047F26C /* SettingsView_TV.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsView_TV.xib; sourceTree = "<group>"; };
 		B40EC8AE1BF154CF00144357 /* ABIMSIMTV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ABIMSIMTV.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B40EC8CA1BF154D000144357 /* ABIMSIMTVTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ABIMSIMTVTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B40EC8D51BF154D000144357 /* ABIMSIMTVUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ABIMSIMTVUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B40EC9431BF15D0500144357 /* MainTV.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainTV.storyboard; sourceTree = "<group>"; };
+		B40EC9481BF1692000144357 /* MainMenuView_TV.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenuView_TV.xib; sourceTree = "<group>"; };
 		B433585F1AF834FF00DB6444 /* SKNode+Removed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SKNode+Removed.h"; sourceTree = "<group>"; };
 		B43358601AF834FF00DB6444 /* SKNode+Removed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKNode+Removed.m"; sourceTree = "<group>"; };
 		B4557EC11AC0D4C8004E097E /* GameOverView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameOverView.h; sourceTree = "<group>"; };
@@ -596,10 +600,12 @@
 				B4557EDC1AC37C5A004E097E /* SettingsView.h */,
 				B4557EDD1AC37C5A004E097E /* SettingsView.m */,
 				B4557EDA1AC37B8A004E097E /* SettingsView.xib */,
+				B40735DC1BF170830047F26C /* SettingsView_TV.xib */,
 				B4557EE11AC3B26B004E097E /* MainMenuView.h */,
 				B4557EE21AC3B26B004E097E /* MainMenuView.m */,
 				B4557EDF1AC3B24D004E097E /* MainMenuView.xib */,
 				E18208C41B6BDB8D0029446E /* MainMenuView_iPad.xib */,
+				B40EC9481BF1692000144357 /* MainMenuView_TV.xib */,
 				B472444B1ACE0433002A8B4B /* UpgradesView.h */,
 				B472444C1ACE0433002A8B4B /* UpgradesView.m */,
 				B472444E1ACE0441002A8B4B /* UpgradesView.xib */,
@@ -1549,11 +1555,13 @@
 				B40EC9161BF155EA00144357 /* upgrade.caf in Resources */,
 				B40EC90E1BF155C000144357 /* AppiraterLocalizable.strings in Resources */,
 				B40EC90F1BF155C300144357 /* InfoPlist.strings in Resources */,
+				B40735DD1BF170830047F26C /* SettingsView_TV.xib in Resources */,
 				B40EC9171BF155EA00144357 /* asteroidSun.caf in Resources */,
 				B40EC9441BF15D0500144357 /* MainTV.storyboard in Resources */,
 				B40EC9151BF155E400144357 /* Voltaire-Regular.ttf in Resources */,
 				B40EC9191BF155EA00144357 /* deactivateShieldTrimmed.caf in Resources */,
 				B40EC91B1BF155EA00144357 /* explosionTrimmed.caf in Resources */,
+				B40EC9491BF1692000144357 /* MainMenuView_TV.xib in Resources */,
 				B40EC91A1BF155EA00144357 /* explosionMineTrimmed.caf in Resources */,
 				B40EC9111BF155D500144357 /* .gitignore in Resources */,
 				B40EC8E61BF154FA00144357 /* MKStoreKitConfigs.plist in Resources */,
@@ -2209,6 +2217,7 @@
 				B40EC8DD1BF154D000144357 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B40EC8E31BF154D000144357 /* Build configuration list for PBXNativeTarget "ABIMSIMTVTests" */ = {
 			isa = XCConfigurationList;
@@ -2217,6 +2226,7 @@
 				B40EC8DF1BF154D000144357 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B40EC8E41BF154D000144357 /* Build configuration list for PBXNativeTarget "ABIMSIMTVUITests" */ = {
 			isa = XCConfigurationList;
@@ -2225,6 +2235,7 @@
 				B40EC8E11BF154D000144357 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B45FF11F18CE8708001662CD /* Build configuration list for PBXProject "ABIMSIM" */ = {
 			isa = XCConfigurationList;

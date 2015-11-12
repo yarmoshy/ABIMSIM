@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="9059" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -12,60 +12,60 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GAME OVER" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="taQ-2D-ReT">
-                    <rect key="frame" x="247" y="76" width="274" height="90.5"/>
+                    <rect key="frame" x="247" y="76" width="274" height="91"/>
                     <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="75"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="99" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fdZ-FY-znP">
-                    <rect key="frame" x="295" y="382" width="178.5" height="258.5"/>
+                    <rect key="frame" x="295" y="382" width="179" height="259"/>
                     <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="215"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PARSECS" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MSZ-Xa-RNJ">
-                    <rect key="frame" x="269" y="621" width="231" height="102.5"/>
+                    <rect key="frame" x="269" y="621" width="231" height="103"/>
                     <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="85"/>
                     <color key="textColor" red="0.039215686270000001" green="0.28235294119999998" blue="0.93725490199999995" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="99" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zcd-Vk-j7I">
-                    <rect key="frame" x="295" y="198" width="178.5" height="258.5"/>
+                    <rect key="frame" x="295" y="198" width="179" height="259"/>
                     <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="215"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="XP" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dBb-w3-QVp">
-                    <rect key="frame" x="351" y="437" width="66" height="102.5"/>
+                    <rect key="frame" x="351" y="437" width="66" height="103"/>
                     <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="85"/>
                     <color key="textColor" red="0.82745098039999998" green="0.047058823530000002" blue="0.37254901959999998" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BONUS!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t0S-HN-oOU">
-                    <rect key="frame" x="341" y="603" width="87" height="42.5"/>
+                <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="BONUS!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t0S-HN-oOU">
+                    <rect key="frame" x="341" y="603" width="87" height="43"/>
                     <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="35"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hXd-8q-B49" userLabel="BonusLabelOne">
+                <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hXd-8q-B49" userLabel="BonusLabelOne">
                     <rect key="frame" x="365" y="653" width="39" height="28"/>
                     <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="23"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U7O-O8-Mjb" userLabel="BonusLabelTwo">
+                <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U7O-O8-Mjb" userLabel="BonusLabelTwo">
                     <rect key="frame" x="365" y="688" width="39" height="28"/>
                     <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="23"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="akw-Qx-QMb" userLabel="BonusLabelThree">
+                <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="akw-Qx-QMb" userLabel="BonusLabelThree">
                     <rect key="frame" x="365" y="724" width="39" height="28"/>
                     <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="23"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D40-7b-pCQ" userLabel="BonusLabelFour">
+                <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D40-7b-pCQ" userLabel="BonusLabelFour">
                     <rect key="frame" x="365" y="760" width="39" height="28"/>
                     <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="23"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -84,7 +84,7 @@
                     <rect key="frame" x="623" y="149" width="22" height="12"/>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="400" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="goA-G1-xvE" userLabel="smallXPLabel">
-                    <rect key="frame" x="596" y="76" width="75" height="72.5"/>
+                    <rect key="frame" x="596" y="76" width="75" height="73"/>
                     <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="60"/>
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
@@ -93,7 +93,7 @@
                     <rect key="frame" x="478" y="149" width="70" height="12"/>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="400" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q5v-jG-H3M" userLabel="smallParsecsLabel">
-                    <rect key="frame" x="476" y="76" width="75" height="72.5"/>
+                    <rect key="frame" x="476" y="76" width="75" height="73"/>
                     <fontDescription key="fontDescription" name="Futura-CondensedMedium" family="Futura" pointSize="60"/>
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
@@ -126,7 +126,7 @@
                     </connections>
                 </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sjT-1T-I4P" userLabel="ButtonContainerView">
-                    <rect key="frame" x="140" y="283.5" width="522" height="589"/>
+                    <rect key="frame" x="140" y="284" width="522" height="589"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Play_0" translatesAutoresizingMaskIntoConstraints="NO" id="heb-0l-6hO">
                             <rect key="frame" x="29" y="29" width="258" height="258"/>
@@ -158,17 +158,17 @@
                                 <action selector="ggPlayTouchUpInside:" destination="iN0-l3-epB" eventType="touchUpInside" id="fuX-CT-1vf"/>
                             </connections>
                         </button>
-                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HS_0" translatesAutoresizingMaskIntoConstraints="NO" id="eHQ-41-Jfd">
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="HS_0" translatesAutoresizingMaskIntoConstraints="NO" id="eHQ-41-Jfd">
                             <rect key="frame" x="342" y="218" width="153" height="153"/>
                         </imageView>
-                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HS_1" translatesAutoresizingMaskIntoConstraints="NO" id="xlG-tD-vek">
-                            <rect key="frame" x="323" y="199" width="191" height="191"/>
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="HS_1" translatesAutoresizingMaskIntoConstraints="NO" id="xlG-tD-vek">
+                            <rect key="frame" x="323" y="198" width="192" height="192"/>
                         </imageView>
-                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HS_2" translatesAutoresizingMaskIntoConstraints="NO" id="Nox-i1-5KO">
-                            <rect key="frame" x="323" y="199" width="191" height="191"/>
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="HS_2" translatesAutoresizingMaskIntoConstraints="NO" id="Nox-i1-5KO">
+                            <rect key="frame" x="323" y="198" width="192" height="192"/>
                         </imageView>
-                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HS_3" translatesAutoresizingMaskIntoConstraints="NO" id="prI-kL-3WZ">
-                            <rect key="frame" x="314" y="190" width="208" height="208"/>
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="HS_3" translatesAutoresizingMaskIntoConstraints="NO" id="prI-kL-3WZ">
+                            <rect key="frame" x="314" y="189" width="209" height="209"/>
                         </imageView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aUX-ze-p0W" userLabel="MainMenuButton">
                             <rect key="frame" x="314" y="190" width="208" height="208"/>
@@ -193,16 +193,16 @@
                             <rect key="frame" x="132" y="367" width="193" height="193"/>
                         </imageView>
                         <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Upgrades_1" translatesAutoresizingMaskIntoConstraints="NO" id="VQh-NI-flu">
-                            <rect key="frame" x="113" y="348" width="231" height="231"/>
+                            <rect key="frame" x="113" y="347" width="232" height="232"/>
                         </imageView>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Upgrades_2" translatesAutoresizingMaskIntoConstraints="NO" id="guS-Ui-23t">
-                            <rect key="frame" x="113" y="348" width="231" height="231"/>
+                            <rect key="frame" x="113" y="347" width="232" height="232"/>
                         </imageView>
                         <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Upgrades_3" translatesAutoresizingMaskIntoConstraints="NO" id="9lv-55-blM">
                             <rect key="frame" x="103" y="338" width="251" height="251"/>
                         </imageView>
-                        <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="UPGRADES" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sYj-wy-C52">
-                            <rect key="frame" x="182" y="453.5" width="93" height="20.5"/>
+                        <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="UPGRADES" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sYj-wy-C52">
+                            <rect key="frame" x="182" y="454" width="93" height="21"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
@@ -430,9 +430,9 @@
     <resources>
         <image name="FBIcon__GameOver" width="23" height="22"/>
         <image name="HS_0" width="153" height="153"/>
-        <image name="HS_1" width="191" height="191"/>
-        <image name="HS_2" width="191" height="191"/>
-        <image name="HS_3" width="208" height="208"/>
+        <image name="HS_1" width="192" height="192"/>
+        <image name="HS_2" width="192" height="192"/>
+        <image name="HS_3" width="209" height="209"/>
         <image name="HorizontalDivider" width="46" height="1"/>
         <image name="Play_0" width="258" height="258"/>
         <image name="Play_1" width="300" height="300"/>
@@ -444,14 +444,9 @@
         <image name="SmallXP" width="22" height="12"/>
         <image name="TwitterIcon_GameOver" width="23" height="18"/>
         <image name="Upgrades_0" width="193" height="193"/>
-        <image name="Upgrades_1" width="231" height="231"/>
-        <image name="Upgrades_2" width="231" height="231"/>
+        <image name="Upgrades_1" width="232" height="232"/>
+        <image name="Upgrades_2" width="232" height="232"/>
         <image name="Upgrades_3" width="251" height="251"/>
         <image name="VerticalDivider" width="1" height="64"/>
     </resources>
-    <simulatedMetricsContainer key="defaultSimulatedMetrics">
-        <simulatedStatusBarMetrics key="statusBar"/>
-        <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination"/>
-    </simulatedMetricsContainer>
 </document>

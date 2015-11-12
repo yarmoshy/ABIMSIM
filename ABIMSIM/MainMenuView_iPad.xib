@@ -197,6 +197,9 @@
                         <action selector="hamburgerTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="2Q3-3g-azL"/>
                     </connections>
                 </button>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Logo_TitleScreen" translatesAutoresizingMaskIntoConstraints="NO" id="FFS-SK-Zrk">
+                    <rect key="frame" x="-44" y="192" width="593" height="85"/>
+                </imageView>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
