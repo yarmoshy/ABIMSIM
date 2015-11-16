@@ -838,21 +838,57 @@ CGFloat DegreesToRadians(CGFloat degrees)
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
         NSString *identifier = @"";
         switch (self.currentLevel) {
+            case 2:
+                SMAction(@"parsecs2");
+                break;
+            case 3:
+                SMAction(@"parsecs3");
+                break;
+            case 4:
+                SMAction(@"parsecs4");
+                break;
+            case 5:
+                SMAction(@"parsecs5");
+                break;
+            case 6:
+                SMAction(@"parsecs6");
+                break;
+            case 7:
+                SMAction(@"parsecs7");
+                break;
+            case 8:
+                SMAction(@"parsecs8");
+                break;
+            case 9:
+                SMAction(@"parsecs9");
+                break;
             case 10:
                 identifier = @"learningToFly";
                 SMAction(@"parsecs10");
+                break;
+            case 15:
+                SMAction(@"parsecs15");
                 break;
             case 20:
                 identifier = @"explorerReporting";
                 SMAction(@"parsecs20");
                 break;
+            case 25:
+                SMAction(@"parsecs25");
+                break;
             case 30:
                 identifier = @"adventureIsOutThere";
                 SMAction(@"parsecs30");
                 break;
+            case 35:
+                SMAction(@"parsecs35");
+                break;
             case 40:
                 identifier = @"gettinKindaHectic";
                 SMAction(@"parsecs40");
+                break;
+            case 45:
+                SMAction(@"parsecs45");
                 break;
             case 50:
                 identifier = @"deepSpace";
