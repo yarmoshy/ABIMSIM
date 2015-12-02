@@ -624,6 +624,9 @@
                         });
                         [self pulsateUpgradeIfApplicable];
                         [self configureButtonsEnabled:YES];
+                        if ([self.delegate.scene previewIsAvailable]) {
+                            [self.delegate.scene showPreview];
+                        }
                     });
                 }
             }];

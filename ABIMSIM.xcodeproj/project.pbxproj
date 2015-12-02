@@ -145,6 +145,7 @@
 		B49792FA1A86F638005174C1 /* deactivateShieldTrimmed.caf in Resources */ = {isa = PBXBuildFile; fileRef = B49792F91A86F638005174C1 /* deactivateShieldTrimmed.caf */; };
 		B4A792A7191C2B92005317AD /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4A792A6191C2B92005317AD /* GameKit.framework */; };
 		B4D42E861AFEAC4100248BE8 /* upgrade.caf in Resources */ = {isa = PBXBuildFile; fileRef = B4D42E851AFEAC4100248BE8 /* upgrade.caf */; };
+		B4DFF8331C0F890F00C55B36 /* ReplayKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4DFF8321C0F890F00C55B36 /* ReplayKit.framework */; };
 		E13D23231B31E8AE006D1E30 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E13D23211B31E87D006D1E30 /* AVFoundation.framework */; };
 		E13D23251B31E8B5006D1E30 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E13D23241B31E8B5006D1E30 /* CoreData.framework */; };
 		E13D23271B31E8BB006D1E30 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E13D23261B31E8BB006D1E30 /* CoreMedia.framework */; };
@@ -385,6 +386,7 @@
 		B49792F91A86F638005174C1 /* deactivateShieldTrimmed.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = deactivateShieldTrimmed.caf; sourceTree = "<group>"; };
 		B4A792A6191C2B92005317AD /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		B4D42E851AFEAC4100248BE8 /* upgrade.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = upgrade.caf; sourceTree = "<group>"; };
+		B4DFF8321C0F890F00C55B36 /* ReplayKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReplayKit.framework; path = System/Library/Frameworks/ReplayKit.framework; sourceTree = SDKROOT; };
 		E13D23131B31E853006D1E30 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		E13D23151B31E859006D1E30 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		E13D23161B31E859006D1E30 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
@@ -419,6 +421,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B4DFF8331C0F890F00C55B36 /* ReplayKit.framework in Frameworks */,
 				E13D23321B31E97E006D1E30 /* ImageIO.framework in Frameworks */,
 				E13D232F1B31E8D6006D1E30 /* EventKit.framework in Frameworks */,
 				E13D23301B31E8D6006D1E30 /* EventKitUI.framework in Frameworks */,
@@ -572,6 +575,7 @@
 		B45FF12618CE8708001662CD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B4DFF8321C0F890F00C55B36 /* ReplayKit.framework */,
 				B485E6D91BEAB15000541190 /* SessionM_MMCL_iOS_v1.15.3_Release */,
 				E13D23311B31E97E006D1E30 /* ImageIO.framework */,
 				E13D232D1B31E8D6006D1E30 /* EventKit.framework */,

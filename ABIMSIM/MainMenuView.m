@@ -9,6 +9,8 @@
 #import "MainMenuView.h"
 #import "UIView+Fancy.h"
 #import "GameScene.h"
+#import <ReplayKit/ReplayKit.h>
+#import "DCRoundSwitch.h"
 
 @implementation MainMenuView {
     BOOL showingSettings;
@@ -23,6 +25,8 @@
 }
 
 -(void)didMoveToSuperview {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setupAutoRecordToggle) name:kAutoRecordToggleChanged object:nil];
+
     hamburgerToXImages = [NSMutableArray array];
     hamburgerToOriginalImages = [NSMutableArray array];
     for (int i = 0; i <= 17; i++) {
@@ -58,8 +62,29 @@
     [self.upgradeButton setAttributedTitle:[[NSAttributedString alloc] initWithString:@"UPGRADES" attributes:@{NSFontAttributeName:[UIFont fontWithName:@"Futura-CondensedMedium" size:UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 43 : 25],
                                                                                                         NSForegroundColorAttributeName:[UIColor whiteColor],
                                                                                                         NSParagraphStyleAttributeName: paragraphStyle2}] forState:UIControlStateNormal];
-
+    
+    if ([RPScreenRecorder class]) {
+        [self.autoReplaySwitch addTarget:self action:@selector(autoReplayToggled:) forControlEvents:UIControlEventValueChanged];
+        [self setupAutoRecordToggle];
+    } else {
+        [ABIMSIMDefaults setBool:NO forKey:kAutoRecordingSetting];
+        [ABIMSIMDefaults synchronize];
+        self.autoReplaySwitch.hidden = YES;
+    }
 }
+
+-(void)setupAutoRecordToggle {
+    self.autoReplaySwitch.on = [ABIMSIMDefaults boolForKey:kAutoRecordingSetting];
+}
+
+-(void)autoReplayToggled:(DCRoundSwitch*)toggle {
+    [ABIMSIMDefaults setBool:toggle.on forKey:kAutoRecordingSetting];
+    [ABIMSIMDefaults synchronize];
+    self.autoReplaySwitch.on = toggle.on;
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kAutoRecordToggleChanged object:nil];
+}
+
 
 #pragma mark - Play
 

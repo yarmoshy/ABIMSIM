@@ -10,7 +10,8 @@
 #import <Social/Social.h>
 #import "ViewController.h"
 
-@interface GameScene : SKScene <SKPhysicsContactDelegate>
+
+@interface GameScene : SKScene <SKPhysicsContactDelegate, RPPreviewViewControllerDelegate, RPScreenRecorderDelegate>
 @property (strong, nonatomic) ViewController *viewController;
 @property (assign, nonatomic) BOOL reset;
 @property (assign, nonatomic) BOOL initialPause;
@@ -27,4 +28,6 @@
 -(void)setDefaultValues;
 -(void)configureGestureRecognizers:(BOOL)enabled;
 -(void)startShipVelocity;
+-(BOOL)previewIsAvailable;
+-(void)showPreview;
 @end

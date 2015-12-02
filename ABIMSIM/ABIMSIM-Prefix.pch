@@ -43,13 +43,14 @@
 
     #define kMusicSetting @"kMusicSetting"
     #define kSFXSetting @"kSFXSetting"
-
+    #define kAutoRecordingSetting @"kAutoRecordSetting"
     #define ABIMSIMDefaults [NSUserDefaults standardUserDefaults]
 
     #define kBlurBackgroundViewTag 777
 
 #define kMusicToggleChanged @"kMusicToggleChanged"
 #define kSFXToggleChanged @"kSFXToggleChanged"
+#define kAutoRecordToggleChanged @"kAutoRecordToggleChanged"
 #define kSessionMToggleChanged @"kSessionMToggleChanged"
 #define kSessionMStateChanged @"kSessionMStateChanged"
 #define kSessionMErrored @"kSessionMErrored"

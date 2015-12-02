@@ -53,8 +53,12 @@
 #import "BlackHole.h"
 #import "SessionM.h"
 #import "BaseSprite.h"
+#import <ReplayKit/ReplayKit.h>
 
 @implementation GameScene  {
+    RPScreenRecorder *sharedRecorder;
+    RPPreviewViewController *previewViewController;
+    
     NSMutableArray *spritesArrays;
     NSMutableArray *starSprites;
     NSMutableArray *currentSpriteArray;
@@ -499,7 +503,6 @@ CGFloat DegreesToRadians(CGFloat degrees)
 -(void)transitionFromMainMenu {
     self.view.paused = NO;
     [self setDefaultValues];
-    [[AudioController sharedController] gameplay];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive) name:UIApplicationDidBecomeActiveNotification object:nil];
     self.currentLevel = 0;
@@ -514,44 +517,63 @@ CGFloat DegreesToRadians(CGFloat degrees)
     parsecsNode.hidden = NO;
     parsecsNode.alpha = 0;
 
-    if (!walkthroughSeen) {
-        [shipSprite runAction:[SKAction moveTo:CGPointMake(sceneWidth/2, shipSize.height*2) duration:0.5] completion:^{
-            self.view.paused = NO;
-            self.initialPause = YES;
-            [self configureGestureRecognizers:YES];
-            
-        }];
-        SKAction *move = [SKAction moveTo:CGPointMake(sceneWidth/2, sceneHeight/2) duration:0.5];
-        SKAction *alphaIn = [SKAction fadeAlphaTo:1 duration:0.5];
-        SKAction *group = [SKAction group:@[move, alphaIn]];
-        [[self childNodeWithName:directionsSpriteName] runAction:group completion:^{
-            for (BaseSprite *direction in [self children]) {
-                if ([direction.name isEqualToString:directionsSecondarySpriteName]) {
-                    [direction runAction:[SKAction sequence:@[[SKAction waitForDuration:0.5],alphaIn]]];
-                } else if ([direction.name isEqualToString:directionsSecondaryBlinkingSpriteName]) {
-                    SKAction *wait = [SKAction waitForDuration:0.5];
-                    SKAction *alphaIn = [SKAction fadeAlphaTo:1 duration:1];
-                    SKAction *alphaOut = [SKAction fadeAlphaTo:0 duration:1];
-                    SKAction *sequence = [SKAction sequence:@[alphaIn, alphaOut, [SKAction waitForDuration:0.5]]];
-                    [direction runAction:[SKAction sequence:@[wait,[SKAction repeatActionForever:sequence]]]];
-                }
-            }
-        }];
-    } else {
-        [self configureGestureRecognizers:YES];
-        shipSprite.physicsBody.velocity = CGVectorMake(0, MAX_VELOCITY);
-    }
+    void(^startGameBlock)(void) = ^(void) {
+        [[AudioController sharedController] gameplay];
 
-    [UIView animateWithDuration:0.25 delay:0 options:0 animations:^{
-        if ([ABIMSIMDefaults boolForKey:kWalkthroughSeen]) {
-            self.viewController.pauseButton.alpha = 0.7;
+        if (!walkthroughSeen) {
+            [shipSprite runAction:[SKAction moveTo:CGPointMake(sceneWidth/2, shipSize.height*2) duration:0.5] completion:^{
+                self.view.paused = NO;
+                self.initialPause = YES;
+                [self configureGestureRecognizers:YES];
+                
+            }];
+            SKAction *move = [SKAction moveTo:CGPointMake(sceneWidth/2, sceneHeight/2) duration:0.5];
+            SKAction *alphaIn = [SKAction fadeAlphaTo:1 duration:0.5];
+            SKAction *group = [SKAction group:@[move, alphaIn]];
+            [[self childNodeWithName:directionsSpriteName] runAction:group completion:^{
+                for (BaseSprite *direction in [self children]) {
+                    if ([direction.name isEqualToString:directionsSecondarySpriteName]) {
+                        [direction runAction:[SKAction sequence:@[[SKAction waitForDuration:0.5],alphaIn]]];
+                    } else if ([direction.name isEqualToString:directionsSecondaryBlinkingSpriteName]) {
+                        SKAction *wait = [SKAction waitForDuration:0.5];
+                        SKAction *alphaIn = [SKAction fadeAlphaTo:1 duration:1];
+                        SKAction *alphaOut = [SKAction fadeAlphaTo:0 duration:1];
+                        SKAction *sequence = [SKAction sequence:@[alphaIn, alphaOut, [SKAction waitForDuration:0.5]]];
+                        [direction runAction:[SKAction sequence:@[wait,[SKAction repeatActionForever:sequence]]]];
+                    }
+                }
+            }];
+        } else {
+            [self configureGestureRecognizers:YES];
+            shipSprite.physicsBody.velocity = CGVectorMake(0, MAX_VELOCITY);
         }
-        levelNode.alpha = 0.7;
-        parsecsNode.alpha = 0.7;
-        [self configureHolsterNukeSprites];
-    } completion:^(BOOL finished) {
-        ;
-    }];
+        [UIView animateWithDuration:0.25 delay:0 options:0 animations:^{
+            if ([ABIMSIMDefaults boolForKey:kWalkthroughSeen]) {
+                self.viewController.pauseButton.alpha = 0.7;
+            }
+            levelNode.alpha = 0.7;
+            parsecsNode.alpha = 0.7;
+            [self configureHolsterNukeSprites];
+        } completion:^(BOOL finished) {
+            ;
+        }];
+    };
+    
+    if ([RPScreenRecorder class]) {
+        if (!sharedRecorder) {
+            sharedRecorder = [RPScreenRecorder sharedRecorder];
+            sharedRecorder.delegate = self;
+        }
+        if ([ABIMSIMDefaults boolForKey:kAutoRecordingSetting]) {
+            [sharedRecorder startRecordingWithMicrophoneEnabled:YES handler:^(NSError * _Nullable error) {
+                startGameBlock();
+            }];
+        } else {
+            startGameBlock();
+        }
+    } else {
+        startGameBlock();
+    }
 //    self.currentLevel = 100;
 //    self.bubblesPopped = 10;
 //    self.sunsSurvived = 10;
@@ -782,6 +804,41 @@ CGFloat DegreesToRadians(CGFloat degrees)
         }
         [sprite runAction:[SKAction moveBy:CGVectorMake(-x * (magnitude/100), -y*(magnitude/100)) duration:0]];
     }
+}
+
+#pragma mark - ReplayKit
+
+- (void)screenRecorder:(RPScreenRecorder *)screenRecorder didStopRecordingWithError:(NSError *)error previewViewController:(nullable RPPreviewViewController *)aPreviewViewController {
+    if (error) {
+        previewViewController = nil;
+    }
+}
+
+- (void)screenRecorderDidChangeAvailability:(RPScreenRecorder *)screenRecorder {
+    
+}
+
+- (void)previewControllerDidFinish:(RPPreviewViewController *)previewController {
+    [previewController.presentingViewController dismissViewControllerAnimated:YES completion:^{
+        [self discardPreview];
+    }];
+}
+
+-(BOOL)previewIsAvailable {
+    return !!previewViewController;
+}
+
+-(void)showPreview {
+    [self.viewController presentViewController:previewViewController animated:YES completion:^{
+        ;
+    }];
+}
+
+-(void)discardPreview {
+    [sharedRecorder discardRecordingWithHandler:^{
+        ;
+    }];
+    previewViewController = nil;
 }
 
 #pragma mark - Achievements
@@ -1325,6 +1382,22 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         self.view.paused = YES;
+        
+        if ([RPScreenRecorder class]) {
+            if (!sharedRecorder) {
+                sharedRecorder = [RPScreenRecorder sharedRecorder];
+                sharedRecorder.delegate = self;
+            }
+            if ([ABIMSIMDefaults boolForKey:kAutoRecordingSetting]) {
+                [sharedRecorder stopRecordingWithHandler:^(RPPreviewViewController * _Nullable aPreviewViewController, NSError * _Nullable error) {
+                    if (!error) {
+                        previewViewController = aPreviewViewController;
+                        previewViewController.previewControllerDelegate = self;
+                    }
+                }];
+            }
+        }
+        
         [self.viewController showGameOverView];
         self.gameOver = YES;
         [self configureGestureRecognizers:NO];
@@ -2210,19 +2283,39 @@ CGFloat DegreesToRadians(CGFloat degrees)
 }
 
 -(void)startShipVelocity {
-    shipSprite.physicsBody.velocity = CGVectorMake(0, 10);
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        shipSprite.physicsBody.velocity = CGVectorMake(0, MAX_VELOCITY);
-        for (BaseSprite* sprite in self.children) {
-            if ([sprite.name isEqualToString:asteroidCategoryName]) {
-                float velocity = arc4random() % (MAX_VELOCITY/2);
-                if (velocity < 20.f) {
-                    velocity = 20.f;
+    void(^startGameBlock)(void) = ^(void) {
+        shipSprite.physicsBody.velocity = CGVectorMake(0, 10);
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [[AudioController sharedController] gameplay];
+            shipSprite.physicsBody.velocity = CGVectorMake(0, MAX_VELOCITY);
+            for (BaseSprite* sprite in self.children) {
+                if ([sprite.name isEqualToString:asteroidCategoryName]) {
+                    float velocity = arc4random() % (MAX_VELOCITY/2);
+                    if (velocity < 20.f) {
+                        velocity = 20.f;
+                    }
+                    sprite.physicsBody.velocity = CGVectorMake(velocity * cosf(sprite.zRotation), velocity * -sinf(sprite.zRotation));
                 }
-                sprite.physicsBody.velocity = CGVectorMake(velocity * cosf(sprite.zRotation), velocity * -sinf(sprite.zRotation));
             }
+        });
+    };
+
+    if ([RPScreenRecorder class]) {
+        if (!sharedRecorder) {
+            sharedRecorder = [RPScreenRecorder sharedRecorder];
+            sharedRecorder.delegate = self;
         }
-    });
+        if ([ABIMSIMDefaults boolForKey:kAutoRecordingSetting]) {
+            [sharedRecorder startRecordingWithMicrophoneEnabled:YES handler:^(NSError * _Nullable error) {
+                startGameBlock();
+            }];
+        } else {
+            startGameBlock();
+        }
+    } else {
+        startGameBlock();
+    }
+
 }
 
 -(void)updateShipPhysics {

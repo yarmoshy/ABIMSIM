@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-@class GameScene;
+@class GameScene, DCRoundSwitch;
 
 typedef enum {
     MainMenuViewButtonTypePlay,
@@ -57,6 +57,7 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *settingsContainerTopAlignmentConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *settingsContainerTrailingConstraint;
 
+@property (weak, nonatomic) IBOutlet DCRoundSwitch *autoReplaySwitch;
 
 - (IBAction)playSelect:(id)sender;
 - (IBAction)playDeselect:(id)sender;

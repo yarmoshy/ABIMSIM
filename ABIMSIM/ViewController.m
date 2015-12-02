@@ -405,7 +405,6 @@
             }];
         });
     } else if (type == GameOverViewButtonTypePlay) {
-        [[AudioController sharedController] gameplay];
         [self hideGameOverView];
     } else if (type == GameOverViewButtonTypeUpgrades) {
         showingUpgradesFromGameOver = YES;
