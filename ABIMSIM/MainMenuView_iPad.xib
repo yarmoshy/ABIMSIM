@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.iPad.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1509" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -47,17 +47,17 @@
                                 <action selector="playTouchUpInside:" destination="iN0-l3-epB" eventType="touchUpInside" id="czC-bq-wL1"/>
                             </connections>
                         </button>
-                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HS_0" translatesAutoresizingMaskIntoConstraints="NO" id="9DQ-gR-V19">
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="HS_0" translatesAutoresizingMaskIntoConstraints="NO" id="9DQ-gR-V19">
                             <rect key="frame" x="342" y="218" width="153" height="153"/>
                         </imageView>
-                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HS_1" translatesAutoresizingMaskIntoConstraints="NO" id="zeq-b1-9Va">
-                            <rect key="frame" x="323" y="199" width="191" height="191"/>
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="HS_1" translatesAutoresizingMaskIntoConstraints="NO" id="zeq-b1-9Va">
+                            <rect key="frame" x="323" y="199" width="192" height="192"/>
                         </imageView>
-                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HS_2" translatesAutoresizingMaskIntoConstraints="NO" id="ZK6-Gw-Z8W">
-                            <rect key="frame" x="323" y="199" width="191" height="191"/>
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="HS_2" translatesAutoresizingMaskIntoConstraints="NO" id="ZK6-Gw-Z8W">
+                            <rect key="frame" x="323" y="199" width="192" height="192"/>
                         </imageView>
-                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HS_3" translatesAutoresizingMaskIntoConstraints="NO" id="RBa-jb-vVM">
-                            <rect key="frame" x="314" y="190" width="208" height="208"/>
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="HS_3" translatesAutoresizingMaskIntoConstraints="NO" id="RBa-jb-vVM">
+                            <rect key="frame" x="314" y="190" width="209" height="209"/>
                         </imageView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A5t-aW-Eyt" userLabel="HighScoresButton">
                             <rect key="frame" x="314" y="190" width="208" height="208"/>
@@ -81,10 +81,10 @@
                             <rect key="frame" x="132" y="367" width="193" height="193"/>
                         </imageView>
                         <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Upgrades_1" translatesAutoresizingMaskIntoConstraints="NO" id="fks-k7-VkQ">
-                            <rect key="frame" x="113" y="348" width="231" height="231"/>
+                            <rect key="frame" x="113" y="348" width="232" height="232"/>
                         </imageView>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Upgrades_2" translatesAutoresizingMaskIntoConstraints="NO" id="15a-e1-BZd">
-                            <rect key="frame" x="113" y="348" width="231" height="231"/>
+                            <rect key="frame" x="113" y="348" width="232" height="232"/>
                         </imageView>
                         <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Upgrades_3" translatesAutoresizingMaskIntoConstraints="NO" id="iQO-TC-pWO">
                             <rect key="frame" x="103" y="338" width="251" height="251"/>
@@ -197,6 +197,60 @@
                         <action selector="hamburgerTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="2Q3-3g-azL"/>
                     </connections>
                 </button>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pUN-fo-fxJ" userLabel="ReplayContainerView">
+                    <rect key="frame" x="356" y="955" width="56" height="56"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AutoRecord_Camera" translatesAutoresizingMaskIntoConstraints="NO" id="0YE-dD-y12">
+                            <rect key="frame" x="0.0" y="0.0" width="56" height="56"/>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AutoRecord_RedCircle" translatesAutoresizingMaskIntoConstraints="NO" id="Din-ad-D2q">
+                            <rect key="frame" x="0.0" y="0.0" width="56" height="56"/>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AutoRecord_0" translatesAutoresizingMaskIntoConstraints="NO" id="WJZ-eR-wis">
+                            <rect key="frame" x="0.0" y="0.0" width="56" height="56"/>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AutoRecord_1" translatesAutoresizingMaskIntoConstraints="NO" id="ROz-5R-xNT">
+                            <rect key="frame" x="0.0" y="0.0" width="56" height="56"/>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AutoRecord_2" translatesAutoresizingMaskIntoConstraints="NO" id="76X-Ex-Ioh">
+                            <rect key="frame" x="0.0" y="0.0" width="56" height="56"/>
+                        </imageView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5aO-s1-cuv" userLabel="ReplayButton">
+                            <rect key="frame" x="0.0" y="0.0" width="56" height="56"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="56" id="1FA-WL-Zdo"/>
+                                <constraint firstAttribute="width" constant="56" id="7gL-Yx-UYG"/>
+                            </constraints>
+                            <state key="normal">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="replayDeselect:" destination="iN0-l3-epB" eventType="touchDragExit" id="Zv4-wu-x9A"/>
+                                <action selector="replaySelect:" destination="iN0-l3-epB" eventType="touchDragEnter" id="cXY-bg-xPz"/>
+                                <action selector="replaySelect:" destination="iN0-l3-epB" eventType="touchDown" id="drZ-Va-ckh"/>
+                                <action selector="replayTouchUpInside:" destination="iN0-l3-epB" eventType="touchUpInside" id="P5o-Td-Hde"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="5aO-s1-cuv" firstAttribute="centerY" secondItem="0YE-dD-y12" secondAttribute="centerY" id="1yV-Fy-K4F"/>
+                        <constraint firstItem="WJZ-eR-wis" firstAttribute="centerY" secondItem="5aO-s1-cuv" secondAttribute="centerY" id="3ua-Ze-8hJ"/>
+                        <constraint firstAttribute="height" constant="56" id="OU7-Vd-S8j"/>
+                        <constraint firstItem="WJZ-eR-wis" firstAttribute="centerX" secondItem="5aO-s1-cuv" secondAttribute="centerX" id="SNf-ce-kt6"/>
+                        <constraint firstItem="5aO-s1-cuv" firstAttribute="centerX" secondItem="Din-ad-D2q" secondAttribute="centerX" id="bf7-fF-CIM"/>
+                        <constraint firstItem="5aO-s1-cuv" firstAttribute="centerY" secondItem="Din-ad-D2q" secondAttribute="centerY" id="frI-KD-qBG"/>
+                        <constraint firstItem="76X-Ex-Ioh" firstAttribute="centerY" secondItem="5aO-s1-cuv" secondAttribute="centerY" id="gY9-Gq-CAa"/>
+                        <constraint firstItem="ROz-5R-xNT" firstAttribute="centerX" secondItem="5aO-s1-cuv" secondAttribute="centerX" id="gdF-h4-bmJ"/>
+                        <constraint firstItem="5aO-s1-cuv" firstAttribute="centerX" secondItem="0YE-dD-y12" secondAttribute="centerX" id="ohf-rx-PJa"/>
+                        <constraint firstItem="5aO-s1-cuv" firstAttribute="centerX" secondItem="pUN-fo-fxJ" secondAttribute="centerX" id="q5E-gQ-7Pq"/>
+                        <constraint firstItem="76X-Ex-Ioh" firstAttribute="centerX" secondItem="5aO-s1-cuv" secondAttribute="centerX" id="qFq-if-dCX"/>
+                        <constraint firstItem="5aO-s1-cuv" firstAttribute="centerY" secondItem="pUN-fo-fxJ" secondAttribute="centerY" id="qb0-Eh-Y4h"/>
+                        <constraint firstItem="ROz-5R-xNT" firstAttribute="centerY" secondItem="5aO-s1-cuv" secondAttribute="centerY" id="rkj-2M-yqT"/>
+                        <constraint firstAttribute="width" constant="56" id="t4Y-V1-WXG"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
@@ -204,7 +258,9 @@
                 <constraint firstAttribute="trailing" secondItem="XDg-mZ-mEj" secondAttribute="trailing" constant="448" id="1aw-hu-UiU"/>
                 <constraint firstItem="XDg-mZ-mEj" firstAttribute="top" secondItem="btn-Dc-UEo" secondAttribute="top" id="8AO-FZ-X1e"/>
                 <constraint firstItem="Nt6-DV-dR5" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="10" id="8QE-X2-ING"/>
+                <constraint firstItem="pUN-fo-fxJ" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="Hk8-nH-FqP"/>
                 <constraint firstItem="0nj-vN-AKl" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="78" id="QMW-Zk-dg4"/>
+                <constraint firstAttribute="bottom" secondItem="pUN-fo-fxJ" secondAttribute="bottom" constant="13" id="S2t-xb-Jri"/>
                 <constraint firstAttribute="bottom" secondItem="Nt6-DV-dR5" secondAttribute="bottom" constant="10" id="ZQH-LT-Afn"/>
                 <constraint firstAttribute="centerY" secondItem="btn-Dc-UEo" secondAttribute="centerY" constant="-66" id="fzd-Qd-TNH"/>
                 <constraint firstAttribute="centerX" secondItem="0nj-vN-AKl" secondAttribute="centerX" id="x2R-sM-cP2"/>
@@ -224,6 +280,12 @@
                 <outlet property="playRing1" destination="cL7-UM-x49" id="zd5-nN-Rge"/>
                 <outlet property="playRing2" destination="rby-ke-57q" id="ruS-D8-0nt"/>
                 <outlet property="playRing3" destination="igj-T4-gDi" id="L12-sE-sl2"/>
+                <outlet property="replayButton" destination="5aO-s1-cuv" id="WyR-1l-Ph0"/>
+                <outlet property="replayContainerView" destination="pUN-fo-fxJ" id="h9O-vi-hle"/>
+                <outlet property="replayRedCircle" destination="Din-ad-D2q" id="0yd-IE-aCC"/>
+                <outlet property="replayRing0" destination="WJZ-eR-wis" id="U5k-Bg-n8I"/>
+                <outlet property="replayRing1" destination="ROz-5R-xNT" id="T0f-QU-PKT"/>
+                <outlet property="replayRing2" destination="76X-Ex-Ioh" id="XVt-ci-1BI"/>
                 <outlet property="settingsContainerTopAlignmentConstraint" destination="8AO-FZ-X1e" id="RIi-X8-EE8"/>
                 <outlet property="settingsContainerTrailingConstraint" destination="1aw-hu-UiU" id="XoB-k3-A4c"/>
                 <outlet property="settingsContainerView" destination="XDg-mZ-mEj" id="A2j-Wm-2N6"/>
@@ -237,10 +299,15 @@
         </view>
     </objects>
     <resources>
+        <image name="AutoRecord_0" width="56" height="56"/>
+        <image name="AutoRecord_1" width="56" height="56"/>
+        <image name="AutoRecord_2" width="56" height="56"/>
+        <image name="AutoRecord_Camera" width="56" height="56"/>
+        <image name="AutoRecord_RedCircle" width="56" height="56"/>
         <image name="HS_0" width="153" height="153"/>
-        <image name="HS_1" width="191" height="191"/>
-        <image name="HS_2" width="191" height="191"/>
-        <image name="HS_3" width="208" height="208"/>
+        <image name="HS_1" width="192" height="192"/>
+        <image name="HS_2" width="192" height="192"/>
+        <image name="HS_3" width="209" height="209"/>
         <image name="HamburgerToClose_000" width="62" height="62"/>
         <image name="Logo_TitleScreen" width="593" height="85"/>
         <image name="Play_0" width="258" height="258"/>
@@ -248,8 +315,8 @@
         <image name="Play_2" width="300" height="300"/>
         <image name="Play_3" width="316" height="316"/>
         <image name="Upgrades_0" width="193" height="193"/>
-        <image name="Upgrades_1" width="231" height="231"/>
-        <image name="Upgrades_2" width="231" height="231"/>
+        <image name="Upgrades_1" width="232" height="232"/>
+        <image name="Upgrades_2" width="232" height="232"/>
         <image name="Upgrades_3" width="251" height="251"/>
     </resources>
 </document>

@@ -102,8 +102,10 @@
         
         [[NSNotificationCenter defaultCenter] postNotificationName:kAutoRecordToggleChanged object:nil];
         
-        if ([ABIMSIMDefaults boolForKey:kAutoRecordingSetting] && !settingUpRecordToggle) {
-            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Auto Recording Enabled" message:@"Would you like to record with microphone enabled? (Toggle off and on to change preferences later.)" preferredStyle:UIAlertControllerStyleActionSheet];
+        if ([ABIMSIMDefaults boolForKey:kAutoRecordingSetting] && !settingUpRecordToggle && !((UIViewController*)self.delegate).presentedViewController) {
+            UIAlertControllerStyle style = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? UIAlertControllerStyleAlert : UIAlertControllerStyleActionSheet;
+        
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Auto Recording Enabled" message:@"Would you like to record with microphone enabled? (Toggle off and on to change preferences later.)" preferredStyle:style];
             [alert addAction:[UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 [ABIMSIMDefaults setBool:YES forKey:kAutoRecordingMicrophoneSetting];
                 [ABIMSIMDefaults synchronize];
