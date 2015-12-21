@@ -559,21 +559,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
         }];
     };
     
-    if ([RPScreenRecorder class]) {
-        if (!sharedRecorder) {
-            sharedRecorder = [RPScreenRecorder sharedRecorder];
-            sharedRecorder.delegate = self;
-        }
-        if ([ABIMSIMDefaults boolForKey:kAutoRecordingSetting] && sharedRecorder.available) {
-            [sharedRecorder startRecordingWithMicrophoneEnabled:[ABIMSIMDefaults boolForKey:kAutoRecordingMicrophoneSetting] handler:^(NSError * _Nullable error) {
-                startGameBlock();
-            }];
-        } else {
-            startGameBlock();
-        }
-    } else {
-        startGameBlock();
-    }
+    [self startRecordingIfApplicableWithCompletionBlock:startGameBlock];
 //    self.currentLevel = 100;
 //    self.bubblesPopped = 10;
 //    self.sunsSurvived = 10;
@@ -854,6 +840,25 @@ CGFloat DegreesToRadians(CGFloat degrees)
         }
     }
 }
+
+-(void)startRecordingIfApplicableWithCompletionBlock:(void(^)(void))completionBlock {
+    if ([RPScreenRecorder class]) {
+        if (!sharedRecorder) {
+            sharedRecorder = [RPScreenRecorder sharedRecorder];
+            sharedRecorder.delegate = self;
+        }
+        if ([ABIMSIMDefaults boolForKey:kAutoRecordingSetting] && sharedRecorder.available) {
+            [sharedRecorder startRecordingWithMicrophoneEnabled:[ABIMSIMDefaults boolForKey:kAutoRecordingMicrophoneSetting] handler:^(NSError * _Nullable error) {
+                completionBlock();
+            }];
+        } else {
+            completionBlock();
+        }
+    } else {
+        completionBlock();
+    }
+}
+
 
 #pragma mark - Achievements
 -(void)checkPlanetHitAchievement:(int)planetNum {
@@ -2313,23 +2318,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
             }
         });
     };
-
-    if ([RPScreenRecorder class]) {
-        if (!sharedRecorder) {
-            sharedRecorder = [RPScreenRecorder sharedRecorder];
-            sharedRecorder.delegate = self;
-        }
-        if ([ABIMSIMDefaults boolForKey:kAutoRecordingSetting] && sharedRecorder.available) {
-            [sharedRecorder startRecordingWithMicrophoneEnabled:[ABIMSIMDefaults boolForKey:kAutoRecordingMicrophoneSetting] handler:^(NSError * _Nullable error) {
-                startGameBlock();
-            }];
-        } else {
-            startGameBlock();
-        }
-    } else {
-        startGameBlock();
-    }
-
+    
+    [self startRecordingIfApplicableWithCompletionBlock:startGameBlock];
 }
 
 -(void)updateShipPhysics {
