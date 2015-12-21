@@ -16,6 +16,7 @@
     BOOL showingSettings, settingUpRecordToggle;
     NSMutableArray *hamburgerToXImages;
     NSMutableArray *hamburgerToOriginalImages;
+    UILabel *autoRecordLabel;
 }
 
 -(id)initWithCoder:(NSCoder *)aDecoder {
@@ -77,6 +78,17 @@
 
 -(void)setupAutoRecordToggle {
     self.replayRedCircle.hidden = ![ABIMSIMDefaults boolForKey:kAutoRecordingSetting];
+    if (!autoRecordLabel) {
+        autoRecordLabel = [[UILabel alloc] init];
+        autoRecordLabel.font = [UIFont fontWithName:@"Futura-CondensedMedium" size:15];
+        autoRecordLabel.textColor = [UIColor whiteColor];
+        autoRecordLabel.backgroundColor = [UIColor clearColor];
+        autoRecordLabel.numberOfLines = 3;
+        [self.replayContainerView addSubview:autoRecordLabel];
+    }
+    autoRecordLabel.text = [NSString stringWithFormat:@"AUTO\nRECORD\n%@",self.replayRedCircle.hidden ? @"OFF" : @"ON"];
+    [autoRecordLabel sizeToFit];
+    autoRecordLabel.frame = CGRectMake(60, 2, autoRecordLabel.frame.size.width, autoRecordLabel.frame.size.height);
 }
 
 -(void)animateReplayButtonSelect:(void(^)(void))completionBlock {
