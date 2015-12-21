@@ -200,6 +200,7 @@
     [self.delegate showSettings];
     [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionAllowAnimatedContent animations:^{
         self.buttonContainerView.alpha = 0;
+        self.replayContainerView.alpha = 0;
     } completion:^(BOOL finished) {
         ;
     }];
@@ -225,8 +226,9 @@
 
 -(void)hideSettings {
     [self.delegate hideSettings];
-    [UIView animateWithDuration:0.25 delay:0.25 options:UIViewAnimationOptionAllowAnimatedContent animations:^{
+    [UIView animateWithDuration:0.25 delay:0.3 options:UIViewAnimationOptionAllowAnimatedContent animations:^{
         self.buttonContainerView.alpha = 1;
+        self.replayContainerView.alpha = 1;
     } completion:^(BOOL finished) {
         ;
     }];

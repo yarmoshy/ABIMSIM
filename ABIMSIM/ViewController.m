@@ -383,6 +383,7 @@
 
 -(void)gameOverViewDidSelectButtonType:(GameOverViewButtonType)type {
     if (type == GameOverViewButtonTypeMainMenu) {
+        [self.scene discardPreviewWithCompletionBlock:nil];
         self.scene.reset = YES;
         self.scene.transitioningToMenu = YES;
         self.scene.view.paused = NO;

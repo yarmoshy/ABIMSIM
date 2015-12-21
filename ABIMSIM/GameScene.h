@@ -28,7 +28,10 @@
 -(void)setDefaultValues;
 -(void)configureGestureRecognizers:(BOOL)enabled;
 -(void)startShipVelocity;
+
+#pragma mark - ReplayKit
 -(BOOL)previewIsAvailable;
 -(void)showPreview;
 -(void)cancelRecording;
+-(void)discardPreviewWithCompletionBlock:(void(^)(void))completionBlock;
 @end

@@ -805,9 +805,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
 }
 
 - (void)previewControllerDidFinish:(RPPreviewViewController *)previewController {
-    [previewController.presentingViewController dismissViewControllerAnimated:YES completion:^{
-        [self discardPreview];
-    }];
+    [previewController.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 -(BOOL)previewIsAvailable {
@@ -820,9 +818,11 @@ CGFloat DegreesToRadians(CGFloat degrees)
     }];
 }
 
--(void)discardPreview {
+-(void)discardPreviewWithCompletionBlock:(void(^)(void))completionBlock {
     [sharedRecorder discardRecordingWithHandler:^{
-        ;
+        if (completionBlock) {
+            completionBlock();
+        }
     }];
     previewViewController = nil;
 }
@@ -835,7 +835,24 @@ CGFloat DegreesToRadians(CGFloat degrees)
         }
         if ([ABIMSIMDefaults boolForKey:kAutoRecordingSetting]) {
             [sharedRecorder stopRecordingWithHandler:^(RPPreviewViewController * _Nullable aPreviewViewController, NSError * _Nullable error) {
-                previewViewController = nil;
+                [self discardPreviewWithCompletionBlock:nil];
+            }];
+        }
+    }
+}
+
+-(void)stopRecording {
+    if ([RPScreenRecorder class]) {
+        if (!sharedRecorder) {
+            sharedRecorder = [RPScreenRecorder sharedRecorder];
+            sharedRecorder.delegate = self;
+        }
+        if ([ABIMSIMDefaults boolForKey:kAutoRecordingSetting]) {
+            [sharedRecorder stopRecordingWithHandler:^(RPPreviewViewController * _Nullable aPreviewViewController, NSError * _Nullable error) {
+                if (!error) {
+                    previewViewController = aPreviewViewController;
+                    previewViewController.previewControllerDelegate = self;
+                }
             }];
         }
     }
@@ -849,13 +866,19 @@ CGFloat DegreesToRadians(CGFloat degrees)
         }
         if ([ABIMSIMDefaults boolForKey:kAutoRecordingSetting] && sharedRecorder.available) {
             [sharedRecorder startRecordingWithMicrophoneEnabled:[ABIMSIMDefaults boolForKey:kAutoRecordingMicrophoneSetting] handler:^(NSError * _Nullable error) {
-                completionBlock();
+                if (completionBlock) {
+                    completionBlock();
+                }
             }];
         } else {
-            completionBlock();
+            if (completionBlock) {
+                completionBlock();
+            }
         }
     } else {
-        completionBlock();
+        if (completionBlock) {
+            completionBlock();
+        }
     }
 }
 
@@ -1401,25 +1424,10 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         self.view.paused = YES;
-        
-        if ([RPScreenRecorder class]) {
-            if (!sharedRecorder) {
-                sharedRecorder = [RPScreenRecorder sharedRecorder];
-                sharedRecorder.delegate = self;
-            }
-            if ([ABIMSIMDefaults boolForKey:kAutoRecordingSetting]) {
-                [sharedRecorder stopRecordingWithHandler:^(RPPreviewViewController * _Nullable aPreviewViewController, NSError * _Nullable error) {
-                    if (!error) {
-                        previewViewController = aPreviewViewController;
-                        previewViewController.previewControllerDelegate = self;
-                    }
-                }];
-            }
-        }
-        
         [self.viewController showGameOverView];
         self.gameOver = YES;
         [self configureGestureRecognizers:NO];
+        [self stopRecording];
     });
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
