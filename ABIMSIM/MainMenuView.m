@@ -64,42 +64,59 @@
                                                                                                         NSParagraphStyleAttributeName: paragraphStyle2}] forState:UIControlStateNormal];
     
     if ([RPScreenRecorder class] && [RPScreenRecorder sharedRecorder].available) {
-        [self.autoReplaySwitch addTarget:self action:@selector(autoReplayToggled:) forControlEvents:UIControlEventValueChanged];
         settingUpRecordToggle = YES;
         [self setupAutoRecordToggle];
     } else {
         [ABIMSIMDefaults setBool:NO forKey:kAutoRecordingSetting];
         [ABIMSIMDefaults synchronize];
-        self.autoReplaySwitch.hidden = YES;
+        self.replayContainerView.hidden = YES;
     }
 }
+
+#pragma mark - Auto Replay
 
 -(void)setupAutoRecordToggle {
-    self.autoReplaySwitch.on = [ABIMSIMDefaults boolForKey:kAutoRecordingSetting];
+    self.replayRedCircle.hidden = ![ABIMSIMDefaults boolForKey:kAutoRecordingSetting];
 }
 
--(void)autoReplayToggled:(DCRoundSwitch*)toggle {
-    [ABIMSIMDefaults setBool:toggle.on forKey:kAutoRecordingSetting];
-    [ABIMSIMDefaults synchronize];
-    self.autoReplaySwitch.on = toggle.on;
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:kAutoRecordToggleChanged object:nil];
-    
-    if (toggle.on && !settingUpRecordToggle) {
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Auto Recording Enabled" message:@"Would you like to record with microphone enabled? (Toggle off and on to change preferences later.)" preferredStyle:UIAlertControllerStyleActionSheet];
-        [alert addAction:[UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            [ABIMSIMDefaults setBool:YES forKey:kAutoRecordingMicrophoneSetting];
-            [ABIMSIMDefaults synchronize];
-        }]];
-        [alert addAction:[UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            [ABIMSIMDefaults setBool:NO forKey:kAutoRecordingMicrophoneSetting];
-            [ABIMSIMDefaults synchronize];
-        }]];
-        [((UIViewController*)self.delegate) presentViewController:alert animated:YES completion:nil];
-    }
-    settingUpRecordToggle = NO;
+-(void)animateReplayButtonSelect:(void(^)(void))completionBlock {
+    [self animateFancySelectWithButton:self.replayButton ring1:self.replayRing0 ring2:self.replayRing1 ring3:self.replayRing2 ring4:nil andCompletion:completionBlock];
 }
 
+-(void)animateReplayButtonDeselect:(void(^)(void))completionBlock {
+    [self animateFancyDeselectWithButton:self.replayButton ring1:self.replayRing0 ring2:self.replayRing1 ring3:self.replayRing2 ring4:nil andCompletion:completionBlock];
+}
+
+- (IBAction)replaySelect:(id)sender {
+    [self animateReplayButtonSelect:nil];
+}
+
+- (IBAction)replayDeselect:(id)sender {
+    [self animateReplayButtonDeselect:nil];
+}
+
+- (IBAction)replayTouchUpInside:(id)sender {
+    [self animateReplayButtonDeselect:^{
+        [ABIMSIMDefaults setBool:![ABIMSIMDefaults boolForKey:kAutoRecordingSetting] forKey:kAutoRecordingSetting];
+        [ABIMSIMDefaults synchronize];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:kAutoRecordToggleChanged object:nil];
+        
+        if ([ABIMSIMDefaults boolForKey:kAutoRecordingSetting] && !settingUpRecordToggle) {
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Auto Recording Enabled" message:@"Would you like to record with microphone enabled? (Toggle off and on to change preferences later.)" preferredStyle:UIAlertControllerStyleActionSheet];
+            [alert addAction:[UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                [ABIMSIMDefaults setBool:YES forKey:kAutoRecordingMicrophoneSetting];
+                [ABIMSIMDefaults synchronize];
+            }]];
+            [alert addAction:[UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                [ABIMSIMDefaults setBool:NO forKey:kAutoRecordingMicrophoneSetting];
+                [ABIMSIMDefaults synchronize];
+            }]];
+            [((UIViewController*)self.delegate) presentViewController:alert animated:YES completion:nil];
+        }
+        settingUpRecordToggle = NO;
+    }];
+}
 
 #pragma mark - Play
 
@@ -175,6 +192,7 @@
         [self.delegate mainMenuViewDidSelectButtonType:MainMenuViewButtonTypeUpgrades];
     }];
 }
+
 
 #pragma mark - Settings
 

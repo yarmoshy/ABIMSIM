@@ -45,6 +45,13 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet UIImageView *upgradeRing3;
 @property (weak, nonatomic) IBOutlet UIButton *upgradeButton;
 
+@property (weak, nonatomic) IBOutlet UIImageView *replayRing0;
+@property (weak, nonatomic) IBOutlet UIImageView *replayRing1;
+@property (weak, nonatomic) IBOutlet UIImageView *replayRing2;
+@property (weak, nonatomic) IBOutlet UIButton *replayButton;
+@property (weak, nonatomic) IBOutlet UIView *replayContainerView;
+@property (weak, nonatomic) IBOutlet UIImageView *replayRedCircle;
+
 @property (weak, nonatomic) IBOutlet UIView *buttonContainerView;
 
 @property (weak, nonatomic) IBOutlet UIButton *hamburgerButton;
@@ -57,8 +64,6 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *settingsContainerTopAlignmentConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *settingsContainerTrailingConstraint;
 
-@property (weak, nonatomic) IBOutlet DCRoundSwitch *autoReplaySwitch;
-
 - (IBAction)playSelect:(id)sender;
 - (IBAction)playDeselect:(id)sender;
 - (IBAction)playTouchUpInside:(id)sender;
@@ -70,6 +75,10 @@ typedef enum {
 - (IBAction)upgradesSelect:(id)sender;
 - (IBAction)upgradesDeselect:(id)sender;
 - (IBAction)upgradesTouchUpInside:(id)sender;
+
+- (IBAction)replaySelect:(id)sender;
+- (IBAction)replayDeselect:(id)sender;
+- (IBAction)replayTouchUpInside:(id)sender;
 
 - (IBAction)hamburgerTapped:(id)sender;
 - (void)configureButtonsEnabled:(BOOL)enabled;

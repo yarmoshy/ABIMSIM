@@ -162,30 +162,75 @@
                         <action selector="hamburgerTapped:" destination="tyn-rH-lKS" eventType="touchUpInside" id="7zc-50-O0v"/>
                     </connections>
                 </button>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qHQ-aQ-u5E" customClass="DCRoundSwitch">
-                    <rect key="frame" x="125" y="523" width="70" height="30"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wKN-yX-XFr" userLabel="ReplayContainerView">
+                    <rect key="frame" x="132" y="499" width="56" height="56"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AutoRecord_Camera" translatesAutoresizingMaskIntoConstraints="NO" id="oVB-C9-2Rh">
+                            <rect key="frame" x="0.0" y="0.0" width="56" height="56"/>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AutoRecord_RedCircle" translatesAutoresizingMaskIntoConstraints="NO" id="nj8-2O-kgY">
+                            <rect key="frame" x="0.0" y="0.0" width="56" height="56"/>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AutoRecord_0" translatesAutoresizingMaskIntoConstraints="NO" id="MF2-VN-2bw">
+                            <rect key="frame" x="0.0" y="0.0" width="56" height="56"/>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AutoRecord_1" translatesAutoresizingMaskIntoConstraints="NO" id="5wA-AR-sBV">
+                            <rect key="frame" x="0.0" y="0.0" width="56" height="56"/>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AutoRecord_2" translatesAutoresizingMaskIntoConstraints="NO" id="1gF-65-6F1">
+                            <rect key="frame" x="0.0" y="0.0" width="56" height="56"/>
+                        </imageView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wq0-WJ-Ozs" userLabel="ReplayButton">
+                            <rect key="frame" x="0.0" y="0.0" width="56" height="56"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="56" id="kTC-HY-OLX"/>
+                                <constraint firstAttribute="width" constant="56" id="l7U-Vw-90J"/>
+                            </constraints>
+                            <state key="normal">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="replayDeselect:" destination="tyn-rH-lKS" eventType="touchDragExit" id="Mar-o3-Dfm"/>
+                                <action selector="replaySelect:" destination="tyn-rH-lKS" eventType="touchDown" id="Jkx-yX-fu5"/>
+                                <action selector="replaySelect:" destination="tyn-rH-lKS" eventType="touchDragEnter" id="bb0-sj-0ox"/>
+                                <action selector="replayTouchUpInside:" destination="tyn-rH-lKS" eventType="touchUpInside" id="exi-6O-3vp"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="30" id="3js-fl-Tf7"/>
-                        <constraint firstAttribute="width" constant="70" id="7h9-Ki-7NQ"/>
+                        <constraint firstAttribute="width" constant="56" id="1w2-mo-KxB"/>
+                        <constraint firstItem="MF2-VN-2bw" firstAttribute="centerY" secondItem="wq0-WJ-Ozs" secondAttribute="centerY" id="4TT-oM-LBa"/>
+                        <constraint firstItem="wq0-WJ-Ozs" firstAttribute="centerX" secondItem="oVB-C9-2Rh" secondAttribute="centerX" id="6x0-OI-L9W"/>
+                        <constraint firstItem="wq0-WJ-Ozs" firstAttribute="centerX" secondItem="nj8-2O-kgY" secondAttribute="centerX" id="Iwx-1n-dTE"/>
+                        <constraint firstItem="wq0-WJ-Ozs" firstAttribute="centerY" secondItem="nj8-2O-kgY" secondAttribute="centerY" id="JOD-CZ-bwr"/>
+                        <constraint firstItem="1gF-65-6F1" firstAttribute="centerX" secondItem="wq0-WJ-Ozs" secondAttribute="centerX" id="KGw-0l-aaP"/>
+                        <constraint firstAttribute="height" constant="56" id="QDq-4Q-h6e"/>
+                        <constraint firstItem="MF2-VN-2bw" firstAttribute="centerX" secondItem="wq0-WJ-Ozs" secondAttribute="centerX" id="ZMW-Uc-0Xp"/>
+                        <constraint firstItem="5wA-AR-sBV" firstAttribute="centerY" secondItem="wq0-WJ-Ozs" secondAttribute="centerY" id="bOK-3x-FUC"/>
+                        <constraint firstItem="wq0-WJ-Ozs" firstAttribute="centerY" secondItem="oVB-C9-2Rh" secondAttribute="centerY" id="dLb-ks-Hsu"/>
+                        <constraint firstItem="wq0-WJ-Ozs" firstAttribute="centerX" secondItem="wKN-yX-XFr" secondAttribute="centerX" id="jpL-zM-b76"/>
+                        <constraint firstItem="5wA-AR-sBV" firstAttribute="centerX" secondItem="wq0-WJ-Ozs" secondAttribute="centerX" id="k1C-a8-bUD"/>
+                        <constraint firstItem="wq0-WJ-Ozs" firstAttribute="centerY" secondItem="wKN-yX-XFr" secondAttribute="centerY" id="lbL-q8-kuy"/>
+                        <constraint firstItem="1gF-65-6F1" firstAttribute="centerY" secondItem="wq0-WJ-Ozs" secondAttribute="centerY" id="phf-NG-H92"/>
                     </constraints>
                 </view>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="qHQ-aQ-u5E" secondAttribute="bottom" constant="15" id="5uu-24-po5"/>
                 <constraint firstItem="Bim-RU-DVf" firstAttribute="leading" secondItem="tyn-rH-lKS" secondAttribute="leading" constant="10" id="AyD-6L-7Da"/>
+                <constraint firstAttribute="bottom" secondItem="wKN-yX-XFr" secondAttribute="bottom" constant="13" id="BgV-xw-IK5"/>
                 <constraint firstAttribute="centerY" secondItem="lUf-dq-MXE" secondAttribute="centerY" constant="-6.5" id="MNH-nk-X4k"/>
-                <constraint firstItem="qHQ-aQ-u5E" firstAttribute="centerX" secondItem="tyn-rH-lKS" secondAttribute="centerX" id="V14-TR-LXS"/>
                 <constraint firstItem="hQe-4c-cCB" firstAttribute="leading" secondItem="tyn-rH-lKS" secondAttribute="leading" id="WvH-WP-NEb"/>
                 <constraint firstItem="Yua-2N-2Jd" firstAttribute="centerX" secondItem="tyn-rH-lKS" secondAttribute="centerX" id="Zyt-k3-IbQ"/>
                 <constraint firstAttribute="centerX" secondItem="lUf-dq-MXE" secondAttribute="centerX" constant="-6.5" id="dG4-LN-yWA"/>
                 <constraint firstItem="lUf-dq-MXE" firstAttribute="top" secondItem="hQe-4c-cCB" secondAttribute="top" id="fEC-lG-GhE"/>
+                <constraint firstItem="wKN-yX-XFr" firstAttribute="centerX" secondItem="tyn-rH-lKS" secondAttribute="centerX" id="luV-do-JGE"/>
                 <constraint firstAttribute="bottom" secondItem="Bim-RU-DVf" secondAttribute="bottom" constant="10" id="nAs-Av-AGJ"/>
                 <constraint firstItem="Yua-2N-2Jd" firstAttribute="top" secondItem="tyn-rH-lKS" secondAttribute="top" constant="32" id="zIw-aB-HdS"/>
             </constraints>
             <connections>
-                <outlet property="autoReplaySwitch" destination="qHQ-aQ-u5E" id="aCf-9f-I6s"/>
                 <outlet property="buttonContainerView" destination="lUf-dq-MXE" id="nxl-wp-Zd7"/>
                 <outlet property="hamburgerBottomConstraint" destination="nAs-Av-AGJ" id="k0H-uU-n5F"/>
                 <outlet property="hamburgerButton" destination="Bim-RU-DVf" id="LnM-hJ-cqh"/>
@@ -200,6 +245,12 @@
                 <outlet property="playRing1" destination="K4B-Ms-dDK" id="rrq-yc-ruT"/>
                 <outlet property="playRing2" destination="LW1-W8-aRi" id="oFk-q8-zrE"/>
                 <outlet property="playRing3" destination="9FG-Ig-BC2" id="6HD-bV-Iya"/>
+                <outlet property="replayButton" destination="wq0-WJ-Ozs" id="yUA-u7-3yc"/>
+                <outlet property="replayContainerView" destination="wKN-yX-XFr" id="qFW-db-tF3"/>
+                <outlet property="replayRedCircle" destination="nj8-2O-kgY" id="hUo-ki-dtO"/>
+                <outlet property="replayRing0" destination="MF2-VN-2bw" id="7lR-5e-3in"/>
+                <outlet property="replayRing1" destination="5wA-AR-sBV" id="Pm8-ab-uyb"/>
+                <outlet property="replayRing2" destination="1gF-65-6F1" id="jpY-cf-mv0"/>
                 <outlet property="settingsContainerTopAlignmentConstraint" destination="fEC-lG-GhE" id="37m-Rx-Dgl"/>
                 <outlet property="settingsContainerView" destination="hQe-4c-cCB" id="sMQ-Mi-yut"/>
                 <outlet property="upgradeButton" destination="6sh-oa-F4s" id="5gF-9N-Y6r"/>
@@ -212,6 +263,11 @@
         </view>
     </objects>
     <resources>
+        <image name="AutoRecord_0" width="56" height="56"/>
+        <image name="AutoRecord_1" width="56" height="56"/>
+        <image name="AutoRecord_2" width="56" height="56"/>
+        <image name="AutoRecord_Camera" width="56" height="56"/>
+        <image name="AutoRecord_RedCircle" width="56" height="56"/>
         <image name="HS_0" width="76" height="76"/>
         <image name="HS_1" width="95" height="96"/>
         <image name="HS_2" width="95" height="96"/>
