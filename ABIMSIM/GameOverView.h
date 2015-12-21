@@ -71,6 +71,7 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet UIButton *facebookButton;
 @property (weak, nonatomic) IBOutlet UIButton *twitterButton;
 @property (weak, nonatomic) IBOutlet UIButton *quitButton;
+@property (weak, nonatomic) IBOutlet UIButton *editReplayButton;
 
 @property (weak, nonatomic) IBOutlet UIView *gameOverButtonContainer;
 
@@ -111,6 +112,7 @@ typedef enum {
 
 - (IBAction)facebookTapped:(id)sender;
 - (IBAction)twitterTapped:(id)sender;
+- (IBAction)editReplayButtonTapped:(id)sender;
 - (IBAction)quitTapped:(id)sender;
 
 -(void)show;

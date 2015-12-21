@@ -237,6 +237,10 @@
     }
 }
 
+- (IBAction)editReplayButtonTapped:(id)sender {
+    [self.delegate.scene showPreview];
+}
+
 #pragma mark - Game Over
 
 - (IBAction)quitTapped:(id)sender {
@@ -264,6 +268,7 @@
     self.horizontalDivider.alpha = 0;
     self.facebookButton.alpha = 0;
     self.twitterButton.alpha = 0;
+    self.editReplayButton.alpha = 0;
     self.quitButton.alpha = 0;
     self.gameOverButtonContainer.alpha = 0;
     self.gameOverLabelHorizonalConstraint.constant = 0;
@@ -603,15 +608,20 @@
         if (finished) {
             [UIView animateWithDuration:0.5 delay:0.25 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
                 self.rectangleImage.alpha = 1;
-                self.rectangleSocialImage.alpha = 1;
                 self.smallParsecsLabel.alpha = 1;
                 self.smallParsecsImage.alpha = 1;
                 self.smallXPLabel.alpha = 1;
                 self.smallXPImage.alpha = 1;
                 self.verticalDivider.alpha = 1;
                 self.horizontalDivider.alpha = 1;
-                self.facebookButton.alpha = 1;
-                self.twitterButton.alpha = 1;
+                
+                if ([self.delegate.scene previewIsAvailable]) {
+                    self.editReplayButton.alpha = 1;
+                } else {
+                    self.rectangleSocialImage.alpha = 1;
+                    self.facebookButton.alpha = 1;
+                    self.twitterButton.alpha = 1;
+                }
                 self.quitButton.alpha = 1;
                 self.gameOverButtonContainer.alpha = 1;
             } completion:^(BOOL finished) {
@@ -624,9 +634,6 @@
                         });
                         [self pulsateUpgradeIfApplicable];
                         [self configureButtonsEnabled:YES];
-                        if ([self.delegate.scene previewIsAvailable]) {
-                            [self.delegate.scene showPreview];
-                        }
                     });
                 }
             }];

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1509" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -47,8 +47,8 @@
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1dc-iq-eUa" userLabel="BonusLabelOne">
-                    <rect key="frame" x="139" y="352" width="42" height="21"/>
+                <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1dc-iq-eUa" userLabel="BonusLabelOne">
+                    <rect key="frame" x="139" y="353" width="42" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
@@ -266,6 +266,13 @@
                         <action selector="twitterTapped:" destination="HfH-Pa-XmW" eventType="touchUpInside" id="9d7-bU-Sbc"/>
                     </connections>
                 </button>
+                <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7TO-XH-k7d">
+                    <rect key="frame" x="232" y="80" width="78" height="95"/>
+                    <state key="normal" image="PlayRecording"/>
+                    <connections>
+                        <action selector="editReplayButtonTapped:" destination="HfH-Pa-XmW" eventType="touchUpInside" id="CzF-bH-uGw"/>
+                    </connections>
+                </button>
                 <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4lc-xw-tfm">
                     <rect key="frame" x="5" y="523" width="40" height="40"/>
                     <constraints>
@@ -298,6 +305,7 @@
                 <constraint firstAttribute="centerX" secondItem="oju-Tm-vha" secondAttribute="centerX" id="3rg-LJ-Umm"/>
                 <constraint firstItem="zBT-3D-UQT" firstAttribute="top" secondItem="IcI-dD-uzd" secondAttribute="bottom" constant="34" id="6Yk-EY-fFO"/>
                 <constraint firstItem="tyu-i4-NY3" firstAttribute="centerY" secondItem="IcI-dD-uzd" secondAttribute="centerY" constant="-10" id="6xP-l9-iQY"/>
+                <constraint firstItem="7TO-XH-k7d" firstAttribute="trailing" secondItem="B7x-wb-hLl" secondAttribute="trailing" constant="-10" id="8KF-b2-KZV"/>
                 <constraint firstAttribute="centerX" secondItem="VBp-BT-04Z" secondAttribute="centerX" id="8eF-p3-yL4"/>
                 <constraint firstAttribute="centerX" secondItem="zBT-3D-UQT" secondAttribute="centerX" id="8m7-i7-Y4B"/>
                 <constraint firstItem="Qb5-YS-JmM" firstAttribute="bottom" secondItem="4rg-0s-B8Y" secondAttribute="bottom" id="8mX-1E-Oa7"/>
@@ -340,6 +348,7 @@
                 <constraint firstAttribute="centerY" secondItem="ktF-KM-fsN" secondAttribute="centerY" constant="10" id="sdH-eV-7gM"/>
                 <constraint firstItem="4rg-0s-B8Y" firstAttribute="leading" secondItem="B7x-wb-hLl" secondAttribute="leading" id="uwS-Zc-o80"/>
                 <constraint firstItem="Qb5-YS-JmM" firstAttribute="leading" secondItem="4rg-0s-B8Y" secondAttribute="leading" id="vxQ-gF-jKS"/>
+                <constraint firstItem="7TO-XH-k7d" firstAttribute="centerY" secondItem="h2r-Pf-PyK" secondAttribute="centerY" id="x9V-8q-LeI"/>
                 <constraint firstItem="tyu-i4-NY3" firstAttribute="centerX" secondItem="uOk-um-5rs" secondAttribute="centerX" id="xbC-ml-bOy"/>
             </constraints>
             <connections>
@@ -354,6 +363,7 @@
                 <outlet property="bonusLabelThree" destination="oju-Tm-vha" id="EeG-m1-l7R"/>
                 <outlet property="bonusLabelTwo" destination="49D-TM-SC5" id="Y5j-Ao-pFW"/>
                 <outlet property="buttonContainerTopConstraint" destination="6Yk-EY-fFO" id="EaG-Nq-I2j"/>
+                <outlet property="editReplayButton" destination="7TO-XH-k7d" id="uDu-Jq-IHT"/>
                 <outlet property="facebookButton" destination="B7x-wb-hLl" id="bB7-hV-Kvv"/>
                 <outlet property="gameOverButtonContainer" destination="zBT-3D-UQT" id="xWB-83-sfv"/>
                 <outlet property="gameOverContainerYAlignConstraint" destination="g4h-Ng-0Bp" id="OUI-KU-T7G"/>
@@ -405,6 +415,7 @@
         <image name="HS_2" width="95" height="96"/>
         <image name="HS_3" width="104" height="104"/>
         <image name="HorizontalDivider" width="46" height="1"/>
+        <image name="PlayRecording" width="78" height="95"/>
         <image name="Play_0" width="129" height="129"/>
         <image name="Play_1" width="150" height="150"/>
         <image name="Play_2" width="150" height="150"/>
