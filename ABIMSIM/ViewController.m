@@ -247,6 +247,7 @@
 
 -(void)pausedViewViewDidSelectButtonType:(PausedViewViewButtonType)type {
     if (type == PausedViewViewButtonTypeMainMenu) {
+        [self.scene cancelRecording];
         self.scene.reset = YES;
         self.scene.transitioningToMenu = YES;
         self.scene.view.paused = NO;

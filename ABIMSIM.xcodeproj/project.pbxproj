@@ -145,7 +145,7 @@
 		B49792FA1A86F638005174C1 /* deactivateShieldTrimmed.caf in Resources */ = {isa = PBXBuildFile; fileRef = B49792F91A86F638005174C1 /* deactivateShieldTrimmed.caf */; };
 		B4A792A7191C2B92005317AD /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4A792A6191C2B92005317AD /* GameKit.framework */; };
 		B4D42E861AFEAC4100248BE8 /* upgrade.caf in Resources */ = {isa = PBXBuildFile; fileRef = B4D42E851AFEAC4100248BE8 /* upgrade.caf */; };
-		B4DFF8331C0F890F00C55B36 /* ReplayKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4DFF8321C0F890F00C55B36 /* ReplayKit.framework */; };
+		B4DFF8331C0F890F00C55B36 /* ReplayKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4DFF8321C0F890F00C55B36 /* ReplayKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		E13D23231B31E8AE006D1E30 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E13D23211B31E87D006D1E30 /* AVFoundation.framework */; };
 		E13D23251B31E8B5006D1E30 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E13D23241B31E8B5006D1E30 /* CoreData.framework */; };
 		E13D23271B31E8BB006D1E30 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E13D23261B31E8BB006D1E30 /* CoreMedia.framework */; };

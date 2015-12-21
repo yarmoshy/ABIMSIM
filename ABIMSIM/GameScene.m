@@ -564,8 +564,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
             sharedRecorder = [RPScreenRecorder sharedRecorder];
             sharedRecorder.delegate = self;
         }
-        if ([ABIMSIMDefaults boolForKey:kAutoRecordingSetting]) {
-            [sharedRecorder startRecordingWithMicrophoneEnabled:YES handler:^(NSError * _Nullable error) {
+        if ([ABIMSIMDefaults boolForKey:kAutoRecordingSetting] && sharedRecorder.available) {
+            [sharedRecorder startRecordingWithMicrophoneEnabled:[ABIMSIMDefaults boolForKey:kAutoRecordingMicrophoneSetting] handler:^(NSError * _Nullable error) {
                 startGameBlock();
             }];
         } else {
@@ -839,6 +839,20 @@ CGFloat DegreesToRadians(CGFloat degrees)
         ;
     }];
     previewViewController = nil;
+}
+
+-(void)cancelRecording {
+    if ([RPScreenRecorder class]) {
+        if (!sharedRecorder) {
+            sharedRecorder = [RPScreenRecorder sharedRecorder];
+            sharedRecorder.delegate = self;
+        }
+        if ([ABIMSIMDefaults boolForKey:kAutoRecordingSetting]) {
+            [sharedRecorder stopRecordingWithHandler:^(RPPreviewViewController * _Nullable aPreviewViewController, NSError * _Nullable error) {
+                previewViewController = nil;
+            }];
+        }
+    }
 }
 
 #pragma mark - Achievements
@@ -2305,8 +2319,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
             sharedRecorder = [RPScreenRecorder sharedRecorder];
             sharedRecorder.delegate = self;
         }
-        if ([ABIMSIMDefaults boolForKey:kAutoRecordingSetting]) {
-            [sharedRecorder startRecordingWithMicrophoneEnabled:YES handler:^(NSError * _Nullable error) {
+        if ([ABIMSIMDefaults boolForKey:kAutoRecordingSetting] && sharedRecorder.available) {
+            [sharedRecorder startRecordingWithMicrophoneEnabled:[ABIMSIMDefaults boolForKey:kAutoRecordingMicrophoneSetting] handler:^(NSError * _Nullable error) {
                 startGameBlock();
             }];
         } else {

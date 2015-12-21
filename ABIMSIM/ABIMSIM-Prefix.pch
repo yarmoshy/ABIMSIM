@@ -44,6 +44,8 @@
     #define kMusicSetting @"kMusicSetting"
     #define kSFXSetting @"kSFXSetting"
     #define kAutoRecordingSetting @"kAutoRecordSetting"
+    #define kAutoRecordingMicrophoneSetting @"kAutoRecordingMicrophoneSetting"
+
     #define ABIMSIMDefaults [NSUserDefaults standardUserDefaults]
 
     #define kBlurBackgroundViewTag 777

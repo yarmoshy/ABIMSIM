@@ -30,4 +30,5 @@
 -(void)startShipVelocity;
 -(BOOL)previewIsAvailable;
 -(void)showPreview;
+-(void)cancelRecording;
 @end

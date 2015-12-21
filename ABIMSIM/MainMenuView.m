@@ -13,7 +13,7 @@
 #import "DCRoundSwitch.h"
 
 @implementation MainMenuView {
-    BOOL showingSettings;
+    BOOL showingSettings, settingUpRecordToggle;
     NSMutableArray *hamburgerToXImages;
     NSMutableArray *hamburgerToOriginalImages;
 }
@@ -63,8 +63,9 @@
                                                                                                         NSForegroundColorAttributeName:[UIColor whiteColor],
                                                                                                         NSParagraphStyleAttributeName: paragraphStyle2}] forState:UIControlStateNormal];
     
-    if ([RPScreenRecorder class]) {
+    if ([RPScreenRecorder class] && [RPScreenRecorder sharedRecorder].available) {
         [self.autoReplaySwitch addTarget:self action:@selector(autoReplayToggled:) forControlEvents:UIControlEventValueChanged];
+        settingUpRecordToggle = YES;
         [self setupAutoRecordToggle];
     } else {
         [ABIMSIMDefaults setBool:NO forKey:kAutoRecordingSetting];
@@ -83,6 +84,20 @@
     self.autoReplaySwitch.on = toggle.on;
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kAutoRecordToggleChanged object:nil];
+    
+    if (toggle.on && !settingUpRecordToggle) {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Auto Recording Enabled" message:@"Would you like to record with microphone enabled? (Toggle off and on to change preferences later.)" preferredStyle:UIAlertControllerStyleActionSheet];
+        [alert addAction:[UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [ABIMSIMDefaults setBool:YES forKey:kAutoRecordingMicrophoneSetting];
+            [ABIMSIMDefaults synchronize];
+        }]];
+        [alert addAction:[UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [ABIMSIMDefaults setBool:NO forKey:kAutoRecordingMicrophoneSetting];
+            [ABIMSIMDefaults synchronize];
+        }]];
+        [((UIViewController*)self.delegate) presentViewController:alert animated:YES completion:nil];
+    }
+    settingUpRecordToggle = NO;
 }
 
 
