@@ -3,6 +3,7 @@ platform :ios, "7.0"
 
 target "ABIMSIM" do
 pod 'Crashlytics'
+pod 'FBSDKCoreKit'
 end
 
 target "ABIMSIMTests" do

@@ -9,6 +9,8 @@
 #import "AppDelegate.h"
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+
 #import "MKStoreKit.h"
 #import "SessionM.h"
 #import "Appirater.h"
@@ -29,8 +31,10 @@
     [Appirater setDebug:NO];
     
     [Fabric with:@[[Crashlytics class]]];
+    [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
+    
     [SessionM sharedInstance].delegate = self;
-//    [SessionM sharedInstance].logLevel = SMLogLevelDebug;
+    //    [SessionM sharedInstance].logLevel = SMLogLevelDebug;
     SMStart(@"76a75bec6be6cd72ac61f90cc3ab22651f17641a")
 
     [ABIMSIMDefaults registerDefaults:@{kMusicSetting:@(YES),kSFXSetting:@(YES)}];
@@ -129,6 +133,7 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    [FBSDKAppEvents activateApp];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
