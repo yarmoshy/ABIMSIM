@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6A8D0A715465587DCFB22955 /* libPods-ABIMSIM.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 93B154AA3D904F865EAD6CA4 /* libPods-ABIMSIM.a */; };
 		B400F410191AFCA100A483E2 /* UpgradeScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B400F40F191AFCA100A483E2 /* UpgradeScene.m */; };
 		B405AA281AEC31E00053F794 /* Moki-Lean.otf in Resources */ = {isa = PBXBuildFile; fileRef = B405AA261AEC31E00053F794 /* Moki-Lean.otf */; };
 		B405AA2F1AED54980053F794 /* gamePlay.caf in Resources */ = {isa = PBXBuildFile; fileRef = B405AA2E1AED54980053F794 /* gamePlay.caf */; };
@@ -144,6 +145,8 @@
 		B49792F81A86F632005174C1 /* activateShieldTrimmed.caf in Resources */ = {isa = PBXBuildFile; fileRef = B49792F71A86F632005174C1 /* activateShieldTrimmed.caf */; };
 		B49792FA1A86F638005174C1 /* deactivateShieldTrimmed.caf in Resources */ = {isa = PBXBuildFile; fileRef = B49792F91A86F638005174C1 /* deactivateShieldTrimmed.caf */; };
 		B4A792A7191C2B92005317AD /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4A792A6191C2B92005317AD /* GameKit.framework */; };
+		B4D2C6AE1C2905950082BB3D /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = B4D2C6AD1C2905940082BB3D /* Podfile */; };
+		B4D2C6B01C2908BB0082BB3D /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4D2C6AF1C2908BB0082BB3D /* CoreLocation.framework */; };
 		B4D42E861AFEAC4100248BE8 /* upgrade.caf in Resources */ = {isa = PBXBuildFile; fileRef = B4D42E851AFEAC4100248BE8 /* upgrade.caf */; };
 		B4DFF8331C0F890F00C55B36 /* ReplayKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4DFF8321C0F890F00C55B36 /* ReplayKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		E13D23231B31E8AE006D1E30 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E13D23211B31E87D006D1E30 /* AVFoundation.framework */; };
@@ -175,6 +178,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		93B154AA3D904F865EAD6CA4 /* libPods-ABIMSIM.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ABIMSIM.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B400F40E191AFCA100A483E2 /* UpgradeScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpgradeScene.h; sourceTree = "<group>"; };
 		B400F40F191AFCA100A483E2 /* UpgradeScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpgradeScene.m; sourceTree = "<group>"; };
 		B405AA261AEC31E00053F794 /* Moki-Lean.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Moki-Lean.otf"; sourceTree = "<group>"; };
@@ -385,8 +389,12 @@
 		B49792F71A86F632005174C1 /* activateShieldTrimmed.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = activateShieldTrimmed.caf; sourceTree = "<group>"; };
 		B49792F91A86F638005174C1 /* deactivateShieldTrimmed.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = deactivateShieldTrimmed.caf; sourceTree = "<group>"; };
 		B4A792A6191C2B92005317AD /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
+		B4D2C6AD1C2905940082BB3D /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		B4D2C6AF1C2908BB0082BB3D /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		B4D42E851AFEAC4100248BE8 /* upgrade.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = upgrade.caf; sourceTree = "<group>"; };
 		B4DFF8321C0F890F00C55B36 /* ReplayKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReplayKit.framework; path = System/Library/Frameworks/ReplayKit.framework; sourceTree = SDKROOT; };
+		BB1CAF09F622BA6ACD3EF231 /* Pods-ABIMSIM.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ABIMSIM.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ABIMSIM/Pods-ABIMSIM.debug.xcconfig"; sourceTree = "<group>"; };
+		D41295452AF9847492CB35BF /* Pods-ABIMSIM.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ABIMSIM.release.xcconfig"; path = "Pods/Target Support Files/Pods-ABIMSIM/Pods-ABIMSIM.release.xcconfig"; sourceTree = "<group>"; };
 		E13D23131B31E853006D1E30 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		E13D23151B31E859006D1E30 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		E13D23161B31E859006D1E30 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
@@ -421,12 +429,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E13D232C1B31E8D1006D1E30 /* AdSupport.framework in Frameworks */,
+				B4D2C6B01C2908BB0082BB3D /* CoreLocation.framework in Frameworks */,
 				B4DFF8331C0F890F00C55B36 /* ReplayKit.framework in Frameworks */,
 				E13D23321B31E97E006D1E30 /* ImageIO.framework in Frameworks */,
 				E13D232F1B31E8D6006D1E30 /* EventKit.framework in Frameworks */,
 				E13D23301B31E8D6006D1E30 /* EventKitUI.framework in Frameworks */,
 				B485E7B51BEAB15100541190 /* libSessionMLocation.1.15.3.a in Frameworks */,
-				E13D232C1B31E8D1006D1E30 /* AdSupport.framework in Frameworks */,
 				E13D232B1B31E8CA006D1E30 /* MediaPlayer.framework in Frameworks */,
 				E13D23291B31E8C3006D1E30 /* SystemConfiguration.framework in Frameworks */,
 				E13D23271B31E8BB006D1E30 /* CoreMedia.framework in Frameworks */,
@@ -439,6 +448,7 @@
 				B45FF12E18CE8708001662CD /* SpriteKit.framework in Frameworks */,
 				B45FF12818CE8708001662CD /* Foundation.framework in Frameworks */,
 				B4A792A7191C2B92005317AD /* GameKit.framework in Frameworks */,
+				6A8D0A715465587DCFB22955 /* libPods-ABIMSIM.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -455,6 +465,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		409E628610BC5CCC8A9BDA87 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				BB1CAF09F622BA6ACD3EF231 /* Pods-ABIMSIM.debug.xcconfig */,
+				D41295452AF9847492CB35BF /* Pods-ABIMSIM.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		B44730081A714E7C0063B5EA /* Music */ = {
 			isa = PBXGroup;
 			children = (
@@ -556,10 +575,12 @@
 		B45FF11B18CE8708001662CD = {
 			isa = PBXGroup;
 			children = (
+				B4D2C6AD1C2905940082BB3D /* Podfile */,
 				B45FF12F18CE8708001662CD /* ABIMSIM */,
 				B45FF15318CE8708001662CD /* ABIMSIMTests */,
 				B45FF12618CE8708001662CD /* Frameworks */,
 				B45FF12518CE8708001662CD /* Products */,
+				409E628610BC5CCC8A9BDA87 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -575,6 +596,7 @@
 		B45FF12618CE8708001662CD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B4D2C6AF1C2908BB0082BB3D /* CoreLocation.framework */,
 				B4DFF8321C0F890F00C55B36 /* ReplayKit.framework */,
 				B485E6D91BEAB15000541190 /* SessionM_MMCL_iOS_v1.15.3_Release */,
 				E13D23311B31E97E006D1E30 /* ImageIO.framework */,
@@ -601,6 +623,7 @@
 				B45FF12B18CE8708001662CD /* UIKit.framework */,
 				B45FF12D18CE8708001662CD /* SpriteKit.framework */,
 				B45FF14D18CE8708001662CD /* XCTest.framework */,
+				93B154AA3D904F865EAD6CA4 /* libPods-ABIMSIM.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1244,9 +1267,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B45FF15D18CE8708001662CD /* Build configuration list for PBXNativeTarget "ABIMSIM" */;
 			buildPhases = (
+				03C838021FB61AA04F21F4A5 /* Check Pods Manifest.lock */,
 				B45FF12018CE8708001662CD /* Sources */,
 				B45FF12118CE8708001662CD /* Frameworks */,
 				B45FF12218CE8708001662CD /* Resources */,
+				CF8A447B2DCBA25DA432197B /* Embed Pods Frameworks */,
+				688096A5FE73191415FA193D /* Copy Pods Resources */,
+				B4D2C6B21C290CE70082BB3D /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1359,6 +1386,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B4D2C6AE1C2905950082BB3D /* Podfile in Resources */,
 				B485E7751BEAB15100541190 /* index.html in Resources */,
 				B485E77E1BEAB15100541190 /* index.html in Resources */,
 				B45FF13418CE8708001662CD /* InfoPlist.strings in Resources */,
@@ -1472,6 +1500,67 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		03C838021FB61AA04F21F4A5 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		688096A5FE73191415FA193D /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ABIMSIM/Pods-ABIMSIM-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B4D2C6B21C290CE70082BB3D /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Fabric.framework/run 066787c672b57a8fd2a11bcf1e72df26be8cbed5 a660d2c57d7c77313e746ea1a4dc8f93816e89802870c8a5e0664ad0d97c6573";
+		};
+		CF8A447B2DCBA25DA432197B /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ABIMSIM/Pods-ABIMSIM-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		B45FF12018CE8708001662CD /* Sources */ = {
@@ -1673,9 +1762,11 @@
 		};
 		B45FF15E18CE8708001662CD /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BB1CAF09F622BA6ACD3EF231 /* Pods-ABIMSIM.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = YES;
@@ -1688,8 +1779,6 @@
 				INFOPLIST_FILE = "ABIMSIM/ABIMSIM-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/SessionM-SDK",
-					"$(PROJECT_DIR)/SessionMLocation-SDK",
 					"$(PROJECT_DIR)/SessionM_MMCL_iOS_v1.15.3_Release/SessionMLocation-SDK",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = GracefulGamesLLC.ABIMSIM;
@@ -1703,9 +1792,11 @@
 		};
 		B45FF15F18CE8708001662CD /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D41295452AF9847492CB35BF /* Pods-ABIMSIM.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = YES;
@@ -1718,8 +1809,6 @@
 				INFOPLIST_FILE = "ABIMSIM/ABIMSIM-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/SessionM-SDK",
-					"$(PROJECT_DIR)/SessionMLocation-SDK",
 					"$(PROJECT_DIR)/SessionM_MMCL_iOS_v1.15.3_Release/SessionMLocation-SDK",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = GracefulGamesLLC.ABIMSIM;

@@ -7,8 +7,8 @@
 //
 
 #import "AppDelegate.h"
-//#import <Fabric/Fabric.h>
-//#import <Crashlytics/Crashlytics.h>
+#import <Fabric/Fabric.h>
+#import <Crashlytics/Crashlytics.h>
 #import "MKStoreKit.h"
 #import "SessionM.h"
 #import "Appirater.h"
@@ -28,7 +28,7 @@
     [Appirater setTimeBeforeReminding:2];
     [Appirater setDebug:NO];
     
-//    [Fabric with:@[CrashlyticsKit]];
+    [Fabric with:@[[Crashlytics class]]];
     [SessionM sharedInstance].delegate = self;
 //    [SessionM sharedInstance].logLevel = SMLogLevelDebug;
     SMStart(@"76a75bec6be6cd72ac61f90cc3ab22651f17641a")
