@@ -641,6 +641,13 @@
     }];
 }
 
+-(void)showSocialButtons {
+    self.editReplayButton.alpha = 0;
+    self.rectangleSocialImage.alpha = 1;
+    self.facebookButton.alpha = 1;
+    self.twitterButton.alpha = 1;
+}
+
 -(void)pulsateUpgradeIfApplicable {
     if ([self upgradeAvailable]) {
         pulsatingUpgrade = YES;

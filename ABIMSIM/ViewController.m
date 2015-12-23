@@ -122,7 +122,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sessionMStateChanged:) name:kSessionMStateChanged object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sessionMOptOutChanged:) name:kSessionMToggleChanged object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sessionMErrored:) name:kSessionMErrored object:nil];
-
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
 }
 
 -(void)sessionMStateChanged:(NSNotification*)notif {
@@ -171,6 +171,15 @@
 {
     [super didReceiveMemoryWarning];
     // Release any cached data, images, etc that aren't in use.
+}
+
+-(void)willEnterForeground:(NSNotification*)notif {
+    if ([self.presentedViewController isKindOfClass:[RPPreviewViewController class]]) {
+//        [self.gameOverView showSocialButtons];
+        [self dismissViewControllerAnimated:YES completion:^{
+//            [self.scene discardPreviewWithCompletionBlock:nil];
+        }];
+    }
 }
 
 #pragma mark - Main Menu

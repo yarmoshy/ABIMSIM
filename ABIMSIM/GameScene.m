@@ -164,7 +164,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
             backgroundTextures = [NSMutableArray arrayWithCapacity:8];
             for (int j = 0; j < 10; j++) {
                 NSString *textureName = [NSString stringWithFormat:@"Background_%d", j];
-                NSLog(@"%@",textureName);
+//                NSLog(@"%@",textureName);
                 [backgroundTextures addObject:[SKTexture textureWithImage:[UIImage imageNamed:textureName]]];
             }
         }
@@ -177,7 +177,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
             for (int i = 0; i < 6; i++) {
                 for (int j = 0; j < 4; j++) {
                     NSString *textureName = [NSString stringWithFormat:@"Planet_%d_%d", i, j];
-                    NSLog(@"%@",textureName);
+//                    NSLog(@"%@",textureName);
                     [planetTextures addObject:[SKTexture textureWithImage:[UIImage imageNamed:textureName]]];
                 }
             }
@@ -200,7 +200,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
             asteroidTextures = [NSMutableArray array];
             for (int i = 0; i < 12; i++) {
                 NSString *textureName = [NSString stringWithFormat:@"Asteroid_%d", i];
-                NSLog(@"%@",textureName);
+//                NSLog(@"%@",textureName);
                 [asteroidTextures addObject:[SKTexture textureWithImage:[UIImage imageNamed:textureName]]];
             }
         }
@@ -264,7 +264,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
             spaceMineTextures = [NSMutableArray array];
             for (int i = 0; i < 9; i++) {
                 NSString *textureName = [NSString stringWithFormat:@"SpaceMine_Friendly_%d", i];
-                NSLog(@"%@",textureName);
+//                NSLog(@"%@",textureName);
                 [spaceMineTextures addObject:[SKTexture textureWithImage:[UIImage imageNamed:textureName]]];
             }
         }
@@ -806,6 +806,10 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
 - (void)previewControllerDidFinish:(RPPreviewViewController *)previewController {
     [previewController.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)previewController:(RPPreviewViewController *)previewController didFinishWithActivityTypes:(NSSet <NSString *> *)activityTypes {
+    
 }
 
 -(BOOL)previewIsAvailable {

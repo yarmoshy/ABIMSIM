@@ -17,7 +17,7 @@ static NSMutableArray *blackHoleTextures;
         blackHoleTextures = [NSMutableArray array];
         for (int i = 0; i < 8; i++) {
             NSString *textureName = [NSString stringWithFormat:@"blackHole%d", i];
-            NSLog(@"%@",textureName);
+//            NSLog(@"%@",textureName);
             [blackHoleTextures addObject:[SKTexture textureWithImageNamed:textureName]];
         }
         [SKTexture preloadTextures:blackHoleTextures withCompletionHandler:^{

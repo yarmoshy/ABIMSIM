@@ -117,5 +117,6 @@ typedef enum {
 
 -(void)show;
 -(void)hide;
+-(void)showSocialButtons;
 -(void)configureButtonsEnabled:(BOOL)enabled;
 @end
