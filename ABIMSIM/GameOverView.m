@@ -12,7 +12,7 @@
 
 @implementation GameOverView {
     BOOL killAnimations, showingGameOver, pulsatingUpgrade;
-    UILabel *incrementingLabel;
+    UILabel *incrementingLabel, *autoRecordLabel;
     int totalPointDifferential, currentIncrementingLabelPoints, targetPoints, currentPoints;
     BOOL showingButtons;
 }
@@ -55,6 +55,19 @@
 }
 
 -(void)didMoveToSuperview {
+    autoRecordLabel = [[UILabel alloc] init];
+    autoRecordLabel.font = [UIFont fontWithName:@"Futura-CondensedMedium" size:14];
+    autoRecordLabel.textColor = [UIColor blackColor];
+    autoRecordLabel.backgroundColor = [UIColor clearColor];
+    autoRecordLabel.numberOfLines = 1;
+    autoRecordLabel.text = @"PLAY RECORDING";
+    [autoRecordLabel sizeToFit];
+    [self.editReplayButton addSubview:autoRecordLabel];
+    autoRecordLabel.frame = CGRectMake((self.editReplayButton.frame.size.width - autoRecordLabel.frame.size.width)/2,
+                                       self.editReplayButton.frame.size.height - autoRecordLabel.frame.size.height - 2,
+                                       autoRecordLabel.frame.size.width,
+                                       autoRecordLabel.frame.size.height);
+
     self.ggPlayButton.exclusiveTouch = self.ggUpgradeButton.exclusiveTouch = self.ggMainMenuButton.exclusiveTouch = YES;
     self.bonusLabelOne.layer.borderColor = self.bonusLabelTwo.layer.borderColor = self.bonusLabelThree.layer.borderColor = self.bonusLabelFour.layer.borderColor = [[UIColor whiteColor] colorWithAlphaComponent:0.5].CGColor;
     self.bonusLabelOne.layer.borderWidth = self.bonusLabelTwo.layer.borderWidth = self.bonusLabelThree.layer.borderWidth = self.bonusLabelFour.layer.borderWidth = 0.5;
