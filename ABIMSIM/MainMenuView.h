@@ -64,6 +64,8 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *settingsContainerTopAlignmentConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *settingsContainerTrailingConstraint;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *replayCenterXAlignmentConstraint;
+
 - (IBAction)playSelect:(id)sender;
 - (IBAction)playDeselect:(id)sender;
 - (IBAction)playTouchUpInside:(id)sender;

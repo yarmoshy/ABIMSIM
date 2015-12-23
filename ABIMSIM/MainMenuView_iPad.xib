@@ -281,6 +281,7 @@
                 <outlet property="playRing2" destination="rby-ke-57q" id="ruS-D8-0nt"/>
                 <outlet property="playRing3" destination="igj-T4-gDi" id="L12-sE-sl2"/>
                 <outlet property="replayButton" destination="5aO-s1-cuv" id="WyR-1l-Ph0"/>
+                <outlet property="replayCenterXAlignmentConstraint" destination="Hk8-nH-FqP" id="SEh-VC-UGE"/>
                 <outlet property="replayContainerView" destination="pUN-fo-fxJ" id="h9O-vi-hle"/>
                 <outlet property="replayRedCircle" destination="Din-ad-D2q" id="0yd-IE-aCC"/>
                 <outlet property="replayRing0" destination="WJZ-eR-wis" id="U5k-Bg-n8I"/>

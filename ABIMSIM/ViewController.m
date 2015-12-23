@@ -148,8 +148,10 @@
     
     if ([SessionM sharedInstance].user.isOptedOut || sessionMError) {
         mainMenuPortalButton.hidden = gameOverPortalButton.hidden = YES;
+        self.mainMenuView.replayCenterXAlignmentConstraint.constant = self.view.frame.size.width/2 - self.mainMenuView.replayContainerView.frame.size.width - 19;
     } else {
         mainMenuPortalButton.hidden = gameOverPortalButton.hidden = NO;
+        self.mainMenuView.replayCenterXAlignmentConstraint.constant = -19;
     }
 }
 
