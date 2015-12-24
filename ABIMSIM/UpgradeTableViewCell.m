@@ -23,10 +23,10 @@
     paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
     paragraphStyle.maximumLineHeight = 20;
     self.upgradeButton.titleLabel.numberOfLines = 0;
-    [self.upgradeButton setAttributedTitle:[[NSAttributedString alloc] initWithString:@"UPGRADE" attributes:@{NSFontAttributeName:[UIFont fontWithName:@"Futura-CondensedMedium" size:20],
+    [self.upgradeButton setAttributedTitle:[[NSAttributedString alloc] initWithString:@"POWER UP" attributes:@{NSFontAttributeName:[UIFont fontWithName:@"Futura-CondensedMedium" size:20],
                                                                                                                      NSForegroundColorAttributeName:[UIColor whiteColor],
                                                                                                                      NSParagraphStyleAttributeName: paragraphStyle}] forState:UIControlStateNormal];
-    [self.upgradeButton setAttributedTitle:[[NSAttributedString alloc] initWithString:@"UPGRADE" attributes:@{NSFontAttributeName:[UIFont fontWithName:@"Futura-CondensedMedium" size:20],
+    [self.upgradeButton setAttributedTitle:[[NSAttributedString alloc] initWithString:@"POWER UP" attributes:@{NSFontAttributeName:[UIFont fontWithName:@"Futura-CondensedMedium" size:20],
                                                                                                               NSForegroundColorAttributeName:[[UIColor whiteColor] colorWithAlphaComponent:0.5],
                                                                                                               NSParagraphStyleAttributeName: paragraphStyle}] forState:UIControlStateDisabled];
 

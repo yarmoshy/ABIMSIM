@@ -49,6 +49,12 @@
                                                                                                                   NSForegroundColorAttributeName:[UIColor whiteColor],
                                                                                                                   NSParagraphStyleAttributeName: paragraphStyle}] forState:UIControlStateNormal];
     
+    self.upgradeButton.titleLabel.numberOfLines = 0;
+    [self.upgradeButton setTitleEdgeInsets:UIEdgeInsetsMake(8.0f, 0.0f, 0.0f, 0.0f)];
+    [self.upgradeButton setAttributedTitle:[[NSAttributedString alloc] initWithString:@"POWER\nUPS" attributes:@{NSFontAttributeName:[UIFont fontWithName:@"Futura-CondensedMedium" size:UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 43 : 25],
+                                                                                                                 NSForegroundColorAttributeName:[UIColor whiteColor],
+                                                                                                                 NSParagraphStyleAttributeName: paragraphStyle}] forState:UIControlStateNormal];
+
     NSMutableParagraphStyle *paragraphStyle2 = [NSParagraphStyle defaultParagraphStyle].mutableCopy;
     paragraphStyle2.lineHeightMultiple= 1;
     paragraphStyle2.alignment = NSTextAlignmentCenter;
@@ -59,10 +65,6 @@
                                                                                                               NSForegroundColorAttributeName:[UIColor whiteColor],
                                                                                                               NSParagraphStyleAttributeName: paragraphStyle2}] forState:UIControlStateNormal];
 
-    self.upgradeButton.titleLabel.numberOfLines = 0;
-    [self.upgradeButton setAttributedTitle:[[NSAttributedString alloc] initWithString:@"UPGRADES" attributes:@{NSFontAttributeName:[UIFont fontWithName:@"Futura-CondensedMedium" size:UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? 43 : 25],
-                                                                                                        NSForegroundColorAttributeName:[UIColor whiteColor],
-                                                                                                        NSParagraphStyleAttributeName: paragraphStyle2}] forState:UIControlStateNormal];
     
     if ([RPScreenRecorder class] && [RPScreenRecorder sharedRecorder].available) {
         settingUpRecordToggle = YES;

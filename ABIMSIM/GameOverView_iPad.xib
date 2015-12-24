@@ -209,7 +209,7 @@
                             <rect key="frame" x="103" y="338" width="251" height="251"/>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="UPGRADES" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sYj-wy-C52">
-                            <rect key="frame" x="184" y="453" width="89" height="21"/>
+                            <rect key="frame" x="184" y="457" width="89" height="21"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
@@ -245,7 +245,7 @@
                         <constraint firstItem="guS-Ui-23t" firstAttribute="centerX" secondItem="VQh-NI-flu" secondAttribute="centerX" id="8xO-q1-A14"/>
                         <constraint firstItem="Nox-i1-5KO" firstAttribute="centerY" secondItem="eHQ-41-Jfd" secondAttribute="centerY" id="Adi-OX-5UD"/>
                         <constraint firstItem="heb-0l-6hO" firstAttribute="centerY" secondItem="CKe-DL-eal" secondAttribute="centerY" id="Ae1-ZD-C6h"/>
-                        <constraint firstItem="sYj-wy-C52" firstAttribute="centerY" secondItem="7zN-61-ZCD" secondAttribute="centerY" id="BHd-7k-CMA"/>
+                        <constraint firstItem="sYj-wy-C52" firstAttribute="centerY" secondItem="7zN-61-ZCD" secondAttribute="centerY" constant="4" id="BHd-7k-CMA"/>
                         <constraint firstItem="heb-0l-6hO" firstAttribute="centerX" secondItem="gSs-zs-REx" secondAttribute="centerX" id="CGM-1p-fzF"/>
                         <constraint firstItem="guS-Ui-23t" firstAttribute="centerY" secondItem="VQh-NI-flu" secondAttribute="centerY" id="D9E-v9-H8e"/>
                         <constraint firstItem="xlG-tD-vek" firstAttribute="centerY" secondItem="eHQ-41-Jfd" secondAttribute="centerY" id="FAL-yF-VHl"/>

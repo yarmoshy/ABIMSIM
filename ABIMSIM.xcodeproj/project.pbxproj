@@ -13,6 +13,7 @@
 		B405AA2F1AED54980053F794 /* gamePlay.caf in Resources */ = {isa = PBXBuildFile; fileRef = B405AA2E1AED54980053F794 /* gamePlay.caf */; };
 		B405AA331AED5F990053F794 /* asteroidSun.caf in Resources */ = {isa = PBXBuildFile; fileRef = B405AA321AED5F990053F794 /* asteroidSun.caf */; };
 		B43358611AF834FF00DB6444 /* SKNode+Removed.m in Sources */ = {isa = PBXBuildFile; fileRef = B43358601AF834FF00DB6444 /* SKNode+Removed.m */; };
+		B44FE20E1C2B6D7E00818EAF /* libSessionMLocation.1.15.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B44FE20D1C2B6D7E00818EAF /* libSessionMLocation.1.15.3.a */; };
 		B4557EC31AC0D4C8004E097E /* GameOverView.m in Sources */ = {isa = PBXBuildFile; fileRef = B4557EC21AC0D4C8004E097E /* GameOverView.m */; };
 		B4557EC51AC0D4DD004E097E /* GameOverView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B4557EC41AC0D4DD004E097E /* GameOverView.xib */; };
 		B4557EC81AC0DD95004E097E /* UIView+Screenshot.m in Sources */ = {isa = PBXBuildFile; fileRef = B4557EC71AC0DD95004E097E /* UIView+Screenshot.m */; };
@@ -74,7 +75,6 @@
 		B4A792A7191C2B92005317AD /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4A792A6191C2B92005317AD /* GameKit.framework */; };
 		B4D2C6AE1C2905950082BB3D /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = B4D2C6AD1C2905940082BB3D /* Podfile */; };
 		B4D2C6B01C2908BB0082BB3D /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4D2C6AF1C2908BB0082BB3D /* CoreLocation.framework */; };
-		B4D2C6B41C29A7380082BB3D /* libSessionMLocation.1.15.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B4D2C6B31C29A7380082BB3D /* libSessionMLocation.1.15.3.a */; };
 		B4D42E861AFEAC4100248BE8 /* upgrade.caf in Resources */ = {isa = PBXBuildFile; fileRef = B4D42E851AFEAC4100248BE8 /* upgrade.caf */; };
 		B4DFF8331C0F890F00C55B36 /* ReplayKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4DFF8321C0F890F00C55B36 /* ReplayKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		E13D23231B31E8AE006D1E30 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E13D23211B31E87D006D1E30 /* AVFoundation.framework */; };
@@ -114,6 +114,7 @@
 		B405AA321AED5F990053F794 /* asteroidSun.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = asteroidSun.caf; sourceTree = "<group>"; };
 		B433585F1AF834FF00DB6444 /* SKNode+Removed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SKNode+Removed.h"; sourceTree = "<group>"; };
 		B43358601AF834FF00DB6444 /* SKNode+Removed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKNode+Removed.m"; sourceTree = "<group>"; };
+		B44FE20D1C2B6D7E00818EAF /* libSessionMLocation.1.15.3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSessionMLocation.1.15.3.a; sourceTree = "<group>"; };
 		B4557EC11AC0D4C8004E097E /* GameOverView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameOverView.h; sourceTree = "<group>"; };
 		B4557EC21AC0D4C8004E097E /* GameOverView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameOverView.m; sourceTree = "<group>"; };
 		B4557EC41AC0D4DD004E097E /* GameOverView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GameOverView.xib; sourceTree = "<group>"; };
@@ -246,7 +247,6 @@
 		B4A792A6191C2B92005317AD /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		B4D2C6AD1C2905940082BB3D /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		B4D2C6AF1C2908BB0082BB3D /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		B4D2C6B31C29A7380082BB3D /* libSessionMLocation.1.15.3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSessionMLocation.1.15.3.a; sourceTree = "<group>"; };
 		B4D42E851AFEAC4100248BE8 /* upgrade.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = upgrade.caf; sourceTree = "<group>"; };
 		B4DFF8321C0F890F00C55B36 /* ReplayKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReplayKit.framework; path = System/Library/Frameworks/ReplayKit.framework; sourceTree = SDKROOT; };
 		BB1CAF09F622BA6ACD3EF231 /* Pods-ABIMSIM.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ABIMSIM.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ABIMSIM/Pods-ABIMSIM.debug.xcconfig"; sourceTree = "<group>"; };
@@ -285,7 +285,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B4D2C6B41C29A7380082BB3D /* libSessionMLocation.1.15.3.a in Frameworks */,
+				B44FE20E1C2B6D7E00818EAF /* libSessionMLocation.1.15.3.a in Frameworks */,
 				E13D232C1B31E8D1006D1E30 /* AdSupport.framework in Frameworks */,
 				B4D2C6B01C2908BB0082BB3D /* CoreLocation.framework in Frameworks */,
 				B4DFF8331C0F890F00C55B36 /* ReplayKit.framework in Frameworks */,
@@ -568,7 +568,7 @@
 		B485E7531BEAB15100541190 /* SessionMLocation-SDK */ = {
 			isa = PBXGroup;
 			children = (
-				B4D2C6B31C29A7380082BB3D /* libSessionMLocation.1.15.3.a */,
+				B44FE20D1C2B6D7E00818EAF /* libSessionMLocation.1.15.3.a */,
 				B485E7541BEAB15100541190 /* API */,
 				B485E7631BEAB15100541190 /* Assets */,
 			);
