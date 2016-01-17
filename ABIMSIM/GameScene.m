@@ -817,6 +817,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
 }
 
 -(void)showPreview {
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        previewViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+    }
     [self.viewController presentViewController:previewViewController animated:YES completion:^{
         ;
     }];
