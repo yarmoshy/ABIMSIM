@@ -74,9 +74,9 @@
     }
     if (section == 1) {
         if (shieldOccurance > 0) {
-            return 4;
+            return 3;
         } else {
-            return 5;
+            return 4;
         }
     }
     if (section == 2) {
@@ -244,12 +244,9 @@
                 if (shieldOccurance > 0) {
                     switch (indexPath.row) {
                         case 1:
-                            [self configureStartWithShieldCell:cell];
-                            break;
-                        case 2:
                             [self configureShieldOccuranceCell:cell];
                             break;
-                        case 3:
+                        case 2:
                             [self configureShieldStrengthCell:cell];
                             break;
                         default:
@@ -261,12 +258,9 @@
                             [self configureUnlockShieldCell:cell];
                             break;
                         case 2:
-                            [self configureStartWithShieldCell:cell];
-                            break;
-                        case 3:
                             [self configureShieldOccuranceCell:cell];
                             break;
-                        case 4:
+                        case 3:
                             [self configureShieldStrengthCell:cell];
                             break;
                         default:

@@ -22,7 +22,7 @@
 
     #define kShieldOccuranceLevel @"kShieldOccuranceLevel"
     #define kShieldDurabilityLevel @"kShieldDurabilityLevel"
-    #define kShieldOnStart @"kShieldOnStart"
+    #define kShieldOnStart @"kShieldOccuranceLevel"
 
     #define kMineOccuranceLevel @"kMineOccuranceLevel"
     #define kMineBlastSpeedLevel @"kMineBlastSpeedLevel"

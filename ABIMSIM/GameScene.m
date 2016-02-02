@@ -809,7 +809,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
 }
 
 - (void)previewController:(RPPreviewViewController *)previewController didFinishWithActivityTypes:(NSSet <NSString *> *)activityTypes {
-    
+    if (activityTypes.count) {
+        [self smActionForIdentifier:@"sharedPlaythrough"];
+    }
 }
 
 -(BOOL)previewIsAvailable {
@@ -1075,6 +1077,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
         SMAction(@"tripleCrown");
     } else if ([identifier isEqualToString:@"tripleDouble"]) {
         SMAction(@"tripleDouble");
+    } else if ([identifier isEqualToString:@"sharedPlaythrough"]) {
+        SMAction(@"sharedPlaythrough");
     }
 }
 
