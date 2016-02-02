@@ -470,6 +470,7 @@
             [UIView animateKeyframesWithDuration:0.5 delay:0 options:0 animations:^{
                 self.gameOverView.alpha = 1;
             } completion:^(BOOL finished) {
+                [self.gameOverView pulsateUpgradeIfApplicable];
                 [self configureButtonsEnabled:YES];
             }];
         }];

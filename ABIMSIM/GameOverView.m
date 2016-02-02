@@ -673,6 +673,7 @@
         [self pulsateUpgrade];
     } else {
         pulsatingUpgrade = NO;
+        self.upgradesAvailableLabel.alpha = 0;
     }
 }
 
