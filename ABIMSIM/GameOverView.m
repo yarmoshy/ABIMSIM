@@ -12,7 +12,7 @@
 
 @implementation GameOverView {
     BOOL killAnimations, showingGameOver, pulsatingUpgrade;
-    UILabel *incrementingLabel, *autoRecordLabel;
+    UILabel *incrementingLabel, *autoRecordLabel, *header, *body;
     int totalPointDifferential, currentIncrementingLabelPoints, targetPoints, currentPoints;
     BOOL showingButtons;
 }
@@ -55,6 +55,9 @@
 }
 
 -(void)didMoveToSuperview {
+    for (UIView *view in self.blackViews) {
+        view.alpha = 0;
+    }
     autoRecordLabel = [[UILabel alloc] init];
     autoRecordLabel.font = [UIFont fontWithName:@"Futura-CondensedMedium" size:14];
     autoRecordLabel.textColor = [UIColor blackColor];
@@ -710,7 +713,17 @@
     NSInteger armoryCount = [ABIMSIMDefaults integerForKey:kHolsterNukes];
     NSInteger spaceDuckets = [ABIMSIMDefaults integerForKey:kUserDuckets];
     
-    if ((mineOccurance == 0 || shieldOccurance == 0) && spaceDuckets >= 10) {
+    if (shieldOccurance == 0 && spaceDuckets >= 5) {
+        [self showBlackViews];
+    } else {
+        [self hideBlackViews];
+    }
+    
+    if (shieldOccurance == 0 && spaceDuckets >= 5) {
+        return true;
+    }
+    
+    if (mineOccurance == 0 && spaceDuckets >= 10) {
         return true;
     }
     
@@ -764,6 +777,61 @@
         return YES;
     }
     return false;
+}
+
+-(void)showBlackViews {
+    if (!body || !header) {
+        header = [[UILabel alloc] init];
+        header.backgroundColor = [UIColor clearColor];
+        header.textColor = [UIColor whiteColor];
+        header.font = [UIFont fontWithName:@"Futura-CondensedMedium" size:30];
+        header.text = @"CONGRATULATIONS";
+        //    header.text = NSLocalizedString(@"CONGRATULATIONS",nil);
+        header.alpha = 0;
+        [header sizeToFit];
+        
+        body = [[UILabel alloc] init];
+        body.backgroundColor = [UIColor clearColor];
+        body.textColor = [UIColor whiteColor];
+        body.font = [UIFont fontWithName:@"Futura-CondensedMedium" size:20];
+        //    body.text = NSLocalizedString(@"UpgradeUnlockedBody",nil);
+        body.text = @"You have earned enough XP\nto unlock a power up!\nTap POWER UPS and unlock\nSHIELDS to continue.";
+        body.alpha = 0;
+        body.numberOfLines = 0;
+        body.textAlignment = NSTextAlignmentCenter;
+        [body sizeToFit];
+        
+        [self addSubview:header];
+        [self addSubview:body];
+        
+        header.frame = CGRectMake((self.frame.size.width-header.frame.size.width)/2.f, self.gameOverButtonContainer.frame.origin.y - 45, header.frame.size.width, header.frame.size.height);
+        body.frame = CGRectMake((self.frame.size.width-body.frame.size.width)/2.f, header.frame.origin.y + header.frame.size.height + 10, body.frame.size.width, body.frame.size.height);
+    }
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        for (UIView *view in self.blackViews) {
+            self.ggMMRing0.alpha = self.ggMMRing1.alpha = self.ggMMRing2.alpha = self.ggMMRing3.alpha = self.ggMainMenuButton.alpha = 0;
+            self.ggPlayRing0.alpha = self.ggPlayRing1.alpha = self.ggPlayRing2.alpha = self.ggPlayRing3.alpha = self.ggPlayButton.alpha =  0;
+            view.alpha = 0.75f;
+        }
+    } completion:nil];
+    
+    [UIView animateWithDuration:0.5 delay:0.25 options:UIViewAnimationOptionLayoutSubviews animations:^{
+        header.alpha = body.alpha = 0.75f;
+        header.frame = CGRectMake((self.frame.size.width-header.frame.size.width)/2.f, self.gameOverButtonContainer.frame.origin.y, header.frame.size.width, header.frame.size.height);
+        body.frame = CGRectMake((self.frame.size.width-body.frame.size.width)/2.f, header.frame.origin.y + header.frame.size.height + 10, body.frame.size.width, body.frame.size.height);
+    } completion:nil];
+}
+
+-(void)hideBlackViews {
+    [UIView animateWithDuration:0.25 animations:^{
+        for (UIView *view in self.blackViews) {
+            self.ggMMRing0.alpha = self.ggMMRing1.alpha = self.ggMMRing2.alpha = self.ggMMRing3.alpha = self.ggMainMenuButton.alpha = 1;
+            self.ggPlayRing0.alpha = self.ggPlayRing1.alpha = self.ggPlayRing2.alpha = self.ggPlayRing3.alpha = self.ggPlayButton.alpha =  1;
+            view.alpha = 0.0f;
+        }
+        header.alpha = body.alpha = 0;
+    }];
 }
 
 - (void)animatePointDifference:(int)pointDifference withIncrementingLabel:(UILabel*)label andCompletionBlock:(void (^)(void))completionBlock {

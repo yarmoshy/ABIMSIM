@@ -98,6 +98,9 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *buttonContainerTopConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *gameOverContainerYAlignConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *gameOverLabelTopConstraint;
+
+@property (strong, nonatomic) IBOutletCollection(UIView) NSArray *blackViews;
+
 - (IBAction)ggPlaySelect:(id)sender;
 - (IBAction)ggPlayDeselect:(id)sender;
 - (IBAction)ggPlayTouchUpInside:(id)sender;
@@ -120,4 +123,5 @@ typedef enum {
 -(void)showSocialButtons;
 -(void)configureButtonsEnabled:(BOOL)enabled;
 -(void)pulsateUpgradeIfApplicable;
+-(void)hideBlackViews;
 @end

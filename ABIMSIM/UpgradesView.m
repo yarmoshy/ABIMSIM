@@ -299,7 +299,7 @@
                         default:
                             break;
                     }
-                    if (indexPath.row > 1) {
+                    if (indexPath.row > 1 || shieldOccurance == 0) {
                         cell.contentView.alpha = 0.4;
                         cell.upgradeTypeLabel.alpha = 0.4;
                         cell.xpRequiredLabel.alpha = 0.4;
@@ -332,7 +332,7 @@
                         default:
                             break;
                     }
-                    if (indexPath.row > 1) {
+                    if (indexPath.row > 1 || shieldOccurance == 0) {
                         cell.contentView.alpha = 0.4;
                         cell.upgradeTypeLabel.alpha = 0.4;
                         cell.xpRequiredLabel.alpha = 0.4;
@@ -355,10 +355,10 @@
     cell.cellType = UpgradeTableViewCellTypeUnlockShield;
     cell.upgradeTypeLabel.text = NSLocalizedString(@"UNLOCK SHIELD", nil);
     cell.unlimitedUpgradesHeightConstraint.constant = 0;
-    cell.xpRequiredLabel.text = @"10 XP";
+    cell.xpRequiredLabel.text = @"5 XP";
     cell.ringImageView.image = [UIImage imageNamed:@"SolidRing_Empty"];
     cell.descriptionLabel.text = @"The shield will become available to use and upgrade.";
-    if ([ABIMSIMDefaults integerForKey:kUserDuckets] < 10) {
+    if ([ABIMSIMDefaults integerForKey:kUserDuckets] < 5) {
         cell.upgradeButton.enabled = NO;
     } else {
         cell.upgradeButton.alpha = 1;

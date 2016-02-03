@@ -28,7 +28,7 @@
     [super viewDidLoad];
     
     [AudioController sharedController];
-//    [ABIMSIMDefaults setInteger:30000 forKey:kUserDuckets];
+    [ABIMSIMDefaults setInteger:30000 forKey:kUserDuckets];
     
     showingSettings = NO;
     
@@ -457,6 +457,10 @@
 
 -(void)hideUpgradesView {
     if (showingUpgradesFromGameOver) {
+        if ([ABIMSIMDefaults integerForKey:kShieldOccuranceLevel] > 0) {
+            [self.gameOverView hideBlackViews];
+        }
+
         showingUpgradesFromGameOver = NO;
         self.upgradesView.delegate.scene.reset = YES;
         self.upgradesView.delegate.scene.view.paused = NO;
