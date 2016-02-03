@@ -784,7 +784,11 @@
         header = [[UILabel alloc] init];
         header.backgroundColor = [UIColor clearColor];
         header.textColor = [UIColor whiteColor];
-        header.font = [UIFont fontWithName:@"Futura-CondensedMedium" size:30];
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+            header.font = [UIFont fontWithName:@"Futura-CondensedMedium" size:50];
+        } else {
+            header.font = [UIFont fontWithName:@"Futura-CondensedMedium" size:30];
+        }
         header.text = @"CONGRATULATIONS";
         //    header.text = NSLocalizedString(@"CONGRATULATIONS",nil);
         header.alpha = 0;
@@ -793,7 +797,11 @@
         body = [[UILabel alloc] init];
         body.backgroundColor = [UIColor clearColor];
         body.textColor = [UIColor whiteColor];
-        body.font = [UIFont fontWithName:@"Futura-CondensedMedium" size:20];
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+            body.font = [UIFont fontWithName:@"Futura-CondensedMedium" size:40];
+        } else {
+            body.font = [UIFont fontWithName:@"Futura-CondensedMedium" size:20];
+        }
         //    body.text = NSLocalizedString(@"UpgradeUnlockedBody",nil);
         body.text = @"You have earned enough XP\nto unlock a power up!\nTap POWER UPS and unlock\nSHIELDS to continue.";
         body.alpha = 0;
