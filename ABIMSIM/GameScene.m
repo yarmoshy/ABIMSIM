@@ -433,6 +433,9 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
         [self generateInitialLevelsAndShowSprites:NO];
         safeToTransition = @YES;
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidEnterBackground) name:UIApplicationDidEnterBackgroundNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillEnterForeground) name:UIApplicationWillEnterForegroundNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive) name:UIApplicationDidBecomeActiveNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActive) name:UIApplicationWillResignActiveNotification object:nil];
     }
     return self;
@@ -484,7 +487,8 @@ CGFloat DegreesToRadians(CGFloat degrees)
     }
 }
 
--(void)applicationWillResignActive {
+
+-(void)applicationDidEnterBackground {
     if (self.viewController.mainMenuView.alpha == 0 &&
         self.viewController.pausedView.alpha == 0 &&
         self.viewController.gameOverView.alpha == 0 &&
@@ -494,9 +498,29 @@ CGFloat DegreesToRadians(CGFloat degrees)
     }
 }
 
+-(void)applicationWillEnterForeground{
+
+}
+
+-(void)applicationWillResignActive {
+    if (self.viewController.mainMenuView.alpha == 0 &&
+        self.viewController.pausedView.alpha == 0 &&
+        self.viewController.gameOverView.alpha == 0 &&
+        self.viewController.upgradesView.alpha == 0 &&
+        !self.initialPause) {
+        [self pauseButNoNotShow];
+    }
+}
+
 -(void)applicationDidBecomeActive {
     if (self.viewController.pausedView.alpha != 0) {
         self.view.paused = YES;
+    } else if (self.viewController.mainMenuView.alpha == 0 &&
+               self.viewController.pausedView.alpha == 0 &&
+               self.viewController.gameOverView.alpha == 0 &&
+               self.viewController.upgradesView.alpha == 0 &&
+               !self.initialPause) {
+        [self unpauseOnly];
     }
 }
 
@@ -504,7 +528,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     self.view.paused = NO;
     [self setDefaultValues];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive) name:UIApplicationDidBecomeActiveNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive) name:UIApplicationDidBecomeActiveNotification object:nil];
     self.currentLevel = 0;
     [self transitionStars];
     self.currentLevel = 1;
@@ -594,6 +618,19 @@ CGFloat DegreesToRadians(CGFloat degrees)
 
 -(void)configureGestureRecognizers:(BOOL)enabled {
     flickRecognizer.enabled = tapRecognizer.enabled = enabled;
+}
+
+-(void)pauseButNoNotShow {
+    if ([shipSprite childNodeWithName:shipImageSpriteName].hidden) {
+        return;
+    }
+    self.view.paused = YES;
+    [self configureGestureRecognizers:NO];
+}
+
+-(void)unpauseOnly {
+    self.view.paused = NO;
+    [self configureGestureRecognizers:YES];
 }
 
 -(void)pause {
