@@ -780,6 +780,8 @@
 }
 
 -(void)showBlackViews {
+    float x = self.gameOverButtonContainer.frame.origin.x + self.ggUpgradeButton.frame.origin.x + self.ggUpgradeButton.frame.size.width/2;
+
     if (!body || !header) {
         header = [[UILabel alloc] init];
         header.backgroundColor = [UIColor clearColor];
@@ -812,22 +814,24 @@
         [self addSubview:header];
         [self addSubview:body];
         
-        header.frame = CGRectMake((self.frame.size.width-header.frame.size.width)/2.f, self.gameOverButtonContainer.frame.origin.y - 45, header.frame.size.width, header.frame.size.height);
-        body.frame = CGRectMake((self.frame.size.width-body.frame.size.width)/2.f, header.frame.origin.y + header.frame.size.height + 10, body.frame.size.width, body.frame.size.height);
+        
+        
+        header.frame = CGRectMake(x-header.frame.size.width/2.f, self.gameOverButtonContainer.frame.origin.y - 45, header.frame.size.width, header.frame.size.height);
+        body.frame = CGRectMake(x-body.frame.size.width/2.f, header.frame.origin.y + header.frame.size.height + 10, body.frame.size.width, body.frame.size.height);
     }
     
     [UIView animateWithDuration:0.5 animations:^{
         for (UIView *view in self.blackViews) {
-            self.ggMMRing0.alpha = self.ggMMRing1.alpha = self.ggMMRing2.alpha = self.ggMMRing3.alpha = self.ggMainMenuButton.alpha = 0;
-            self.ggPlayRing0.alpha = self.ggPlayRing1.alpha = self.ggPlayRing2.alpha = self.ggPlayRing3.alpha = self.ggPlayButton.alpha =  0;
+            self.ggMMRing0.alpha = self.ggMMRing1.alpha = self.ggMMRing2.alpha = self.ggMMRing3.alpha = self.ggMainMenuButton.alpha = 0.5;
+            self.ggPlayRing0.alpha = self.ggPlayRing1.alpha = self.ggPlayRing2.alpha = self.ggPlayRing3.alpha = self.ggPlayButton.alpha =  0.5;
             view.alpha = 0.75f;
         }
     } completion:nil];
     
     [UIView animateWithDuration:0.5 delay:0.25 options:UIViewAnimationOptionLayoutSubviews animations:^{
         header.alpha = body.alpha = 0.75f;
-        header.frame = CGRectMake((self.frame.size.width-header.frame.size.width)/2.f, self.gameOverButtonContainer.frame.origin.y, header.frame.size.width, header.frame.size.height);
-        body.frame = CGRectMake((self.frame.size.width-body.frame.size.width)/2.f, header.frame.origin.y + header.frame.size.height + 10, body.frame.size.width, body.frame.size.height);
+        header.frame = CGRectMake(x-header.frame.size.width/2.f, self.gameOverButtonContainer.frame.origin.y, header.frame.size.width, header.frame.size.height);
+        body.frame = CGRectMake(x-body.frame.size.width/2.f, header.frame.origin.y + header.frame.size.height + 10, body.frame.size.width, body.frame.size.height);
     } completion:nil];
 }
 
