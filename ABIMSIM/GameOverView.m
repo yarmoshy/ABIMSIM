@@ -785,7 +785,7 @@
     if (!body || !header) {
         header = [[UILabel alloc] init];
         header.backgroundColor = [UIColor clearColor];
-        header.textColor = [UIColor whiteColor];
+        header.textColor = [UIColor colorWithRed:211.f/255.f green:12.f/255.f blue:95.f/255.f alpha:1];
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
             header.font = [UIFont fontWithName:@"Futura-CondensedMedium" size:50];
         } else {

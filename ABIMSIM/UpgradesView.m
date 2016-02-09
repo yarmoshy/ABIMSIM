@@ -349,7 +349,7 @@
     [self.delegate upgradesViewDidSelectBackButton];
 }
 
-#define disabledAlpha 0.3f
+#define disabledButtonAlpha 0.4f
 
 -(void)configureUnlockShieldCell:(UpgradeTableViewCell*)cell {
     cell.cellType = UpgradeTableViewCellTypeUnlockShield;
@@ -360,6 +360,7 @@
     cell.descriptionLabel.text = @"The shield will become available to use and upgrade.";
     if ([ABIMSIMDefaults integerForKey:kUserDuckets] < 5) {
         cell.upgradeButton.enabled = NO;
+        cell.upgradeButton.alpha = disabledButtonAlpha;
     } else {
         cell.upgradeButton.alpha = 1;
         cell.upgradeButton.enabled = YES;
@@ -379,7 +380,7 @@
         cell.upgradeButton.enabled = NO;
         cell.ringImageView.image = [UIImage imageNamed:@"SolidRing_Full"];
     } else if ([ABIMSIMDefaults integerForKey:kUserDuckets] < 100) {
-        cell.upgradeButton.alpha = 1;
+        cell.upgradeButton.alpha = disabledButtonAlpha;
         cell.upgradeButton.enabled = NO;
     } else {
         cell.upgradeButton.alpha = 1;
@@ -398,8 +399,8 @@
         cell.upgradeButton.alpha = 0;
         cell.upgradeButton.enabled = NO;
         cell.xpRequiredLabel.text = @"FULLY UPGRADED";
-    } else if ([ABIMSIMDefaults integerForKey:kUserDuckets] < (shieldOccurance+1)*10) {
-        cell.upgradeButton.alpha = 1;
+    } else if ([ABIMSIMDefaults integerForKey:kUserDuckets] < (shieldOccurance+1)*10 || shieldOccurance == 0) {
+        cell.upgradeButton.alpha = disabledButtonAlpha;
         cell.upgradeButton.enabled = NO;
     } else {
         cell.upgradeButton.alpha = 1;
@@ -438,8 +439,8 @@
         cell.upgradeButton.alpha = 0;
         cell.upgradeButton.enabled = NO;
         cell.xpRequiredLabel.text = @"FULLY UPGRADED";
-    } else if ([ABIMSIMDefaults integerForKey:kUserDuckets] < shipShieldStrengthCost) {
-        cell.upgradeButton.alpha = 1;
+    } else if ([ABIMSIMDefaults integerForKey:kUserDuckets] < shipShieldStrengthCost || shieldOccurance == 0) {
+        cell.upgradeButton.alpha = disabledButtonAlpha;
         cell.upgradeButton.enabled = NO;
     } else {
         cell.upgradeButton.alpha = 1;
@@ -454,8 +455,8 @@
     cell.xpRequiredLabel.text = @"10 XP";
     cell.ringImageView.image = [UIImage imageNamed:@"SolidRing_Empty"];
     cell.descriptionLabel.text = @"The nukes will become available to use and upgrade.";
-    if ([ABIMSIMDefaults integerForKey:kUserDuckets] < 10) {
-        cell.upgradeButton.alpha = 1;
+    if ([ABIMSIMDefaults integerForKey:kUserDuckets] < 10 || shieldOccurance == 0) {
+        cell.upgradeButton.alpha = disabledButtonAlpha;
         cell.upgradeButton.enabled = NO;
     } else {
         cell.upgradeButton.alpha = 1;
@@ -474,8 +475,8 @@
         cell.upgradeButton.alpha = 0;
         cell.xpRequiredLabel.text = @"FULLY UPGRADED";
         cell.upgradeButton.enabled = NO;
-    } else if ([ABIMSIMDefaults integerForKey:kUserDuckets] < (mineOccurance+1)*10) {
-        cell.upgradeButton.alpha = 1;
+    } else if ([ABIMSIMDefaults integerForKey:kUserDuckets] < (mineOccurance+1)*10 || mineOccurance == 0 || shieldOccurance == 0) {
+        cell.upgradeButton.alpha = disabledButtonAlpha;
         cell.upgradeButton.enabled = NO;
     } else {
         cell.upgradeButton.alpha = 1;
@@ -494,8 +495,8 @@
         cell.upgradeButton.alpha = 0;
         cell.xpRequiredLabel.text = @"FULLY UPGRADED";
         cell.upgradeButton.enabled = NO;
-    } else if ([ABIMSIMDefaults integerForKey:kUserDuckets] < (mineBlastSpeed+1)*20) {
-        cell.upgradeButton.alpha = 1;
+    } else if ([ABIMSIMDefaults integerForKey:kUserDuckets] < (mineBlastSpeed+1)*20  || mineOccurance == 0 || shieldOccurance == 0) {
+        cell.upgradeButton.alpha = disabledButtonAlpha;
         cell.upgradeButton.enabled = NO;
     } else {
         cell.upgradeButton.alpha = 1;
@@ -510,8 +511,8 @@
     cell.xpRequiredLabel.text = @"100 XP";
     cell.ringImageView.image = [UIImage imageNamed:@"SolidRing_Empty"];
     cell.descriptionLabel.text = @"Unlocking the armory will give you access to on-ship weaponry.";
-    if ([ABIMSIMDefaults integerForKey:kUserDuckets] < 100) {
-        cell.upgradeButton.alpha = 1;
+    if ([ABIMSIMDefaults integerForKey:kUserDuckets] < 100 || shieldOccurance == 0) {
+        cell.upgradeButton.alpha = disabledButtonAlpha;
         cell.upgradeButton.enabled = NO;
     } else {
         cell.upgradeButton.alpha = 1;
@@ -530,8 +531,8 @@
         cell.upgradeButton.alpha = 0;
         cell.xpRequiredLabel.text = @"FULLY UPGRADED";
         cell.upgradeButton.enabled = NO;
-    } else if ([ABIMSIMDefaults integerForKey:kUserDuckets] < (holsterCapacity+1)*100) {
-        cell.upgradeButton.alpha = 1;
+    } else if ([ABIMSIMDefaults integerForKey:kUserDuckets] < (holsterCapacity+1)*100 || shieldOccurance == 0 || holsterCapacity == 0) {
+        cell.upgradeButton.alpha = disabledButtonAlpha;
         cell.upgradeButton.enabled = NO;
     } else {
         cell.upgradeButton.alpha = 1;
@@ -550,8 +551,8 @@
         cell.upgradeButton.alpha = 0;
         cell.xpRequiredLabel.text = @"FULL CAPACITY";
         cell.upgradeButton.enabled = NO;
-    } else if ([ABIMSIMDefaults integerForKey:kUserDuckets] < 5) {
-        cell.upgradeButton.alpha = 1;
+    } else if ([ABIMSIMDefaults integerForKey:kUserDuckets] < 5 || shieldOccurance == 0 || holsterCapacity == 0) {
+        cell.upgradeButton.alpha = disabledButtonAlpha;
         cell.upgradeButton.enabled = NO;
     } else {
         cell.upgradeButton.alpha = 1;
