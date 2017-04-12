@@ -16,6 +16,7 @@
 
 - (void)awakeFromNib {
     // Initialization code
+    [super awakeFromNib];
     NSMutableParagraphStyle *paragraphStyle = [NSParagraphStyle defaultParagraphStyle].mutableCopy;
     paragraphStyle.lineHeightMultiple= 1;
     paragraphStyle.alignment = NSTextAlignmentCenter;

@@ -1,0 +1,8 @@
+SessionM Mobile Marketing Cloud iOS SDK Release Notes
+
+Copyright: 2016 SessionM. All rights reserved.
+Date: 09/09/2016
+Version: 1.15.8
+
+Changes:
+- Fix for bug where portal and achievement content would not display correctly on iOS 10 devices.
